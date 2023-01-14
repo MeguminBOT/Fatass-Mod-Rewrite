@@ -3,6 +3,7 @@ package;
 import flixel.FlxG;
 import flixel.util.FlxSave;
 import flixel.input.keyboard.FlxKey;
+import flixel.input.gamepad.FlxGamepadInputID;
 import flixel.graphics.FlxGraphic;
 import Controls;
 
@@ -28,7 +29,6 @@ class ClientPrefs {
 	public static var scoreZoom:Bool = true;
 	public static var noReset:Bool = false;
 	public static var healthBarAlpha:Float = 1;
-	public static var controllerMode:Bool = false;
 	public static var hitsoundVolume:Float = 0;
 	public static var pauseMusic:String = 'NONE';
 	public static var checkForUpdates:Bool = true;
@@ -96,9 +96,9 @@ class ClientPrefs {
 		'note_up'		=> [J, UP],
 		'note_right'	=> [K, RIGHT],
 		
+		'ui_up'			=> [W, UP],
 		'ui_left'		=> [A, LEFT],
 		'ui_down'		=> [S, DOWN],
-		'ui_up'			=> [W, UP],
 		'ui_right'		=> [D, RIGHT],
 		
 		'accept'		=> [SPACE, ENTER],
@@ -112,6 +112,22 @@ class ClientPrefs {
 		
 		'debug_1'		=> [SEVEN],
 		'debug_2'		=> [EIGHT]
+	];
+	public static var gamepadBinds:Map<String, Array<FlxGamepadInputID>> = [
+		'note_up'		=> [DPAD_UP, LEFT_STICK_DIGITAL_UP, RIGHT_STICK_DIGITAL_UP, Y],
+		'note_left'		=> [DPAD_LEFT, LEFT_STICK_DIGITAL_LEFT, RIGHT_STICK_DIGITAL_LEFT, X],
+		'note_down'		=> [DPAD_DOWN, LEFT_STICK_DIGITAL_DOWN, RIGHT_STICK_DIGITAL_DOWN, A],
+		'note_right'	=> [DPAD_RIGHT, LEFT_STICK_DIGITAL_RIGHT, RIGHT_STICK_DIGITAL_RIGHT, B],
+		
+		'ui_up'			=> [DPAD_UP, LEFT_STICK_DIGITAL_UP],
+		'ui_left'		=> [DPAD_LEFT, LEFT_STICK_DIGITAL_LEFT],
+		'ui_down'		=> [DPAD_DOWN, LEFT_STICK_DIGITAL_DOWN],
+		'ui_right'		=> [DPAD_RIGHT, LEFT_STICK_DIGITAL_RIGHT],
+		
+		'accept'		=> [A, START],
+		'back'			=> [B],
+		'pause'			=> [START],
+		'reset'			=> [8]
 	];
 	public static var defaultKeys:Map<String, Array<FlxKey>> = null;
 
@@ -153,7 +169,6 @@ class ClientPrefs {
 		FlxG.save.data.badWindow = badWindow;
 		FlxG.save.data.safeFrames = safeFrames;
 		FlxG.save.data.gameplaySettings = gameplaySettings;
-		FlxG.save.data.controllerMode = controllerMode;
 		FlxG.save.data.hitsoundVolume = hitsoundVolume;
 		FlxG.save.data.pauseMusic = pauseMusic;
 		FlxG.save.data.checkForUpdates = checkForUpdates;
@@ -291,9 +306,6 @@ class ClientPrefs {
 		}
 		if(FlxG.save.data.safeFrames != null) {
 			safeFrames = FlxG.save.data.safeFrames;
-		}
-		if(FlxG.save.data.controllerMode != null) {
-			controllerMode = FlxG.save.data.controllerMode;
 		}
 		if(FlxG.save.data.hitsoundVolume != null) {
 			hitsoundVolume = FlxG.save.data.hitsoundVolume;
