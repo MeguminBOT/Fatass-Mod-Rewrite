@@ -229,7 +229,6 @@ class ChartingState extends MusicBeatState
 				gfVersion: 'gf',
 				speed: 1,
 				stage: 'stage',
-				validScore: false,
 				artist: '',
 				isRemix: '',
 				mod: '',
