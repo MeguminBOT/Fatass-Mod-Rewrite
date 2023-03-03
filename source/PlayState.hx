@@ -196,11 +196,7 @@ class PlayState extends MusicBeatState
 	public var timeBar:FlxBar;
 
 	public var ratingsData:Array<Rating> = Rating.loadDefault();
-	public var perfects:Int = 0;
-	public var sicks:Int = 0;
-	public var goods:Int = 0;
-	public var bads:Int = 0;
-	public var shits:Int = 0;
+
 
 	private var generatedMusic:Bool = false;
 	public var endingSong:Bool = false;
@@ -4360,7 +4356,7 @@ class PlayState extends MusicBeatState
 
 		totalNotesHit += daRating.ratingMod;
 		note.ratingMod = daRating.ratingMod;
-		if (!note.ratingDisabled) daRating.increase();
+		if(!note.ratingDisabled) daRating.hits++;
 		note.rating = daRating.name;
 
 		if (ClientPrefs.data.inputSystem == "Etterna") {
@@ -5597,12 +5593,12 @@ class PlayState extends MusicBeatState
 			ratingName = '?';
 		} else {
 			ratingPercent = Math.min(1, Math.max(0, totalNotesHit / totalPlayed));
-	
-			if (ratingPercent >= 1) {
-				ratingName = ratingStuff[ratingStuff.length - 1][0]; // Uses last string
+
+			if(ratingPercent >= 1) {
+				ratingName = ratingStuff[ratingStuff.length-1][0];
 			} else {
-				for (i in 0...ratingStuff.length - 1) {
-					if (ratingPercent < ratingStuff[i][1]) {
+				for (i in 0...ratingStuff.length-1) {
+					if(ratingPercent < ratingStuff[i][1]) {
 						ratingName = ratingStuff[i][0];
 						break;
 					}
@@ -5612,8 +5608,14 @@ class PlayState extends MusicBeatState
 	}
 	
 	public function getRatingRank():Void {
+		var perfects = ratingsData[0].hits;
+		var sicks = ratingsData[1].hits;
+		var goods = ratingsData[2].hits;
+		var bads = ratingsData[3].hits;
+		var shits = ratingsData[4].hits;
+		
 		var isStepManiaClassic:Bool = ClientPrefs.uiSkin == 'StepMania Classic';
-	
+
 		ratingFC = "";
 		if (perfects > 0) ratingFC = isStepManiaClassic ? "MFC" : "PFC";
 		if (sicks > 0) ratingFC = isStepManiaClassic ? "PFC" : "SFC";
