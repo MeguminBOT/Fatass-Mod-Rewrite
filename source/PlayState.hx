@@ -327,7 +327,8 @@ class PlayState extends MusicBeatState
 	// stores the last combo score objects in an array
 	public static var lastScore:Array<FlxSprite> = [];
 
-	//Unown Stuff
+	//Hypno's Lullaby Stuff
+	public var celebiLayer:FlxTypedGroup<FlxSprite>;
 	var unowning:Bool = false;
 	var isMonoDead:Bool = false;
 	var keyboardTimer:Int = 8;
@@ -842,6 +843,11 @@ class PlayState extends MusicBeatState
 				if(!ClientPrefs.lowQuality) foregroundSprites.add(new BGSprite('tank4', 1300, 900, 1.5, 1.5, ['fg']));
 				foregroundSprites.add(new BGSprite('tank5', 1620, 700, 1.5, 1.5, ['fg']));
 				if(!ClientPrefs.lowQuality) foregroundSprites.add(new BGSprite('tank3', 1300, 1200, 3.5, 2.5, ['fg']));
+		}
+
+		if(curStage == 'monochrome') {
+			celebiLayer = new FlxTypedGroup<FlxSprite>();
+			add(celebiLayer);
 		}
 
 		switch(Paths.formatToSongPath(SONG.song))
@@ -2060,7 +2066,7 @@ class PlayState extends MusicBeatState
 		if(ret != FunkinLua.Function_Stop) {
 			var enemyAlpha:Float = 1;
 			var playerAlpha:Float = 1;
-			if (SONG.song.toLowerCase() == 'monochrome-fatass-metal-cover' | 'monochrome') {
+			if (SONG.song.toLowerCase() == 'monochrome-fatass-metal-cover') {
 				enemyAlpha = 0;
 				playerAlpha = 0;
 			}
@@ -2345,7 +2351,7 @@ class PlayState extends MusicBeatState
 		}
 		startOnTime = 0;
 		
-		if (SONG.song.toLowerCase() == 'monochrome-fatass-metal-cover' | 'monochrome') {
+		if (SONG.song.toLowerCase() == 'monochrome-fatass-metal-cover') {
 			dad.animation.play('fadeIn', true);
 			dad.visible = true;
 		}
@@ -3368,7 +3374,7 @@ class PlayState extends MusicBeatState
 	public var isDead:Bool = false; //Don't mess with this on Lua!!!
 
 	public function die():Void {
-		if (SONG.song.toLowerCase() == 'monochrome-fatass-metal-cover' | 'monochrome') {
+		if (SONG.song.toLowerCase() == 'monochrome-fatass-metal-cover') {
 			boyfriend.stunned = true;
 			deathCounter++;
 			paused = true;
@@ -3793,7 +3799,10 @@ class PlayState extends MusicBeatState
 				reloadHealthBarColors();
 
 			case 'Unown':
-			startUnown(Std.parseInt(value1), value2);	
+				startUnown(Std.parseInt(value1), value2);	
+
+			case 'Celebi':
+				doCelebi(Std.parseFloat(value1));
 
 			case 'BG Freaks Expression':
 				if(bgGirls != null) bgGirls.swapDanceType();
@@ -3831,6 +3840,80 @@ class PlayState extends MusicBeatState
 				}
 		}
 		callOnLuas('onEvent', [eventName, value1, value2]);
+	}
+
+
+	function doCelebi(newMax:Float):Void {
+		var celebi:FlxSprite = new FlxSprite(0 + FlxG.random.int(-150, -300), 0 + FlxG.random.int(-200, 200));
+		celebi.frames = Paths.getSparrowAtlas('lostSilver/Celebi_Assets', 'shared');
+		celebi.animation.addByPrefix('spawn', 'Celebi Spawn Full', 24, false);
+		celebi.animation.addByIndices('reverseSpawn', 'Celebi Spawn Full', [14, 13, 12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1, 0],'', 24, false);
+		celebi.animation.addByPrefix('idle', 'Celebi Idle', 24, false);
+		celebi.animation.play('spawn');
+		celebi.animation.finishCallback = function (name:String) {
+			celebi.animation.play('idle');
+			var note:FlxSprite = new FlxSprite(celebi.x + FlxG.random.int(70, 100), celebi.y + FlxG.random.int(-50, 50));
+			note.frames = Paths.getSparrowAtlas('lostSilver/Note_asset', 'shared');
+			note.animation.addByPrefix('spawn', 'Note Full', 24, false);
+			note.animation.play('spawn');
+			note.animation.finishCallback = function (name:String) {
+				remove(note);
+			};
+			add(note);
+			FlxTween.tween(note, {x: note.x + FlxG.random.int(100, 190), y:FlxG.random.int(-80, 140)}, (Conductor.stepCrochet * 8 / 1000), {ease: FlxEase.quadOut});
+			celebi.animation.finishCallback = null;
+				for (i in 0...3) {
+					var note:FlxSprite = new FlxSprite(celebi.x + FlxG.random.int(70, 100), celebi.y + FlxG.random.int(-50, 50));
+					note.frames = Paths.getSparrowAtlas('lostSilver/Note_asset', 'shared');
+					note.animation.addByPrefix('spawn', 'Note Full', 24, false);
+					note.animation.play('spawn');
+					note.animation.finishCallback = function (name:String) {
+						remove(note);
+					};
+					add(note);
+					FlxTween.tween(note, {x: note.x + FlxG.random.int(100, 190), y:FlxG.random.int(-80, 140)}, (Conductor.stepCrochet * 8 / 1000), {ease: FlxEase.quadOut});
+					celebi.animation.finishCallback = null;
+				}
+				
+			};
+			celebiLayer.add(celebi);
+			
+			new FlxTimer().start(Conductor.stepCrochet * 8 / 1000, function(tmr:FlxTimer)
+			{
+				var note:FlxSprite = new FlxSprite(celebi.x + FlxG.random.int(70, 100), celebi.y + FlxG.random.int(-50, 50));
+				note.frames = Paths.getSparrowAtlas('lostSilver/Note_asset', 'shared');
+				note.animation.addByPrefix('spawn', 'Note Full', 24, false);
+				note.animation.play('spawn');
+				note.animation.finishCallback = function (name:String) {
+					remove(note);
+				};
+				add(note);
+				FlxTween.tween(note, {x: note.x + FlxG.random.int(100, 190), y:FlxG.random.int(-80, 140)}, (Conductor.stepCrochet * 8 / 1000), {ease: FlxEase.quadOut});
+
+				
+				for (i in 0...3) {
+					var note:FlxSprite = new FlxSprite(celebi.x + FlxG.random.int(70, 100), celebi.y + FlxG.random.int(-50, 50));
+					note.frames = Paths.getSparrowAtlas('lostSilver/Note_asset', 'shared');
+					note.animation.addByPrefix('spawn', 'Note Full', 24, false);
+					note.animation.play('spawn');
+					note.animation.finishCallback = function (name:String) {
+						remove(note);
+					};
+					add(note);
+					FlxTween.tween(note, {x: note.x + FlxG.random.int(100, 190), y:FlxG.random.int(-80, 140)}, (Conductor.stepCrochet * 8 / 1000), {ease: FlxEase.quadOut});
+					celebi.animation.finishCallback = null;
+				}
+				
+			});
+	
+			new FlxTimer().start(Conductor.stepCrochet * 16 / 1000, function(tmr:FlxTimer)
+			{
+				celebi.animation.play('reverseSpawn', true);
+				celebi.animation.finishCallback = function (name:String) {
+					celebiLayer.remove(celebi);
+				};
+			});
+	
 	}
 
 	function moveCameraSection():Void {
