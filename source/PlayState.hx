@@ -327,6 +327,12 @@ class PlayState extends MusicBeatState
 	// stores the last combo score objects in an array
 	public static var lastScore:Array<FlxSprite> = [];
 
+	//Unown Stuff
+	var unowning:Bool = false;
+	var isMonoDead:Bool = false;
+	var keyboardTimer:Int = 8;
+	var keyboard:FlxSprite;
+
 	override public function create()
 	{
 		//trace('Playback Rate: ' + playbackRate);
@@ -456,6 +462,9 @@ class PlayState extends MusicBeatState
 					curStage = 'schoolEvil';
 				case 'ugh' | 'guns' | 'stress':
 					curStage = 'tank';
+				//Fat-Ass additions
+				case 'monochrome-fatass-metal-cover' | 'monochrome':
+					curStage = 'no-stage';
 				default:
 					curStage = 'stage';
 			}
@@ -2049,6 +2058,13 @@ class PlayState extends MusicBeatState
 		inCutscene = false;
 		var ret:Dynamic = callOnLuas('onStartCountdown', [], false);
 		if(ret != FunkinLua.Function_Stop) {
+			var enemyAlpha:Float = 1;
+			var playerAlpha:Float = 1;
+			if (SONG.song.toLowerCase() == 'monochrome-fatass-metal-cover' | 'monochrome') {
+				enemyAlpha = 0;
+				playerAlpha = 0;
+			}
+			if (skipCountdown || startOnTime > 0) skipArrowStartTween = true;
 			if (skipCountdown || startOnTime > 0) skipArrowStartTween = true;
 
 			generateStaticArrows(0);
@@ -2060,7 +2076,7 @@ class PlayState extends MusicBeatState
 			for (i in 0...opponentStrums.length) {
 				setOnLuas('defaultOpponentStrumX' + i, opponentStrums.members[i].x);
 				setOnLuas('defaultOpponentStrumY' + i, opponentStrums.members[i].y);
-				//if(ClientPrefs.middleScroll) opponentStrums.members[i].visible = false;
+				if(ClientPrefs.middleScroll) opponentStrums.members[i].visible = false;
 			}
 
 			startedCountdown = true;
@@ -2328,6 +2344,11 @@ class PlayState extends MusicBeatState
 			setSongTime(startOnTime - 500);
 		}
 		startOnTime = 0;
+		
+		if (SONG.song.toLowerCase() == 'monochrome-fatass-metal-cover' | 'monochrome') {
+			dad.animation.play('fadeIn', true);
+			dad.visible = true;
+		}
 
 		if(paused) {
 			//trace('Oopsie doopsie! Paused sound');
@@ -2337,6 +2358,10 @@ class PlayState extends MusicBeatState
 
 		// Song duration in a float, useful for the time left feature
 		songLength = FlxG.sound.music.length;
+		if (SONG.song.toLowerCase() != 'monochrome-fatass-metal-cover') {
+			FlxTween.tween(timeBar, {alpha: 1}, 0.5, {ease: FlxEase.circOut});
+			FlxTween.tween(timeTxt, {alpha: 1}, 0.5, {ease: FlxEase.circOut});
+		}
 		FlxTween.tween(timeBar, {alpha: 1}, 0.5, {ease: FlxEase.circOut});
 		FlxTween.tween(timeTxt, {alpha: 1}, 0.5, {ease: FlxEase.circOut});
 
@@ -2794,6 +2819,11 @@ class PlayState extends MusicBeatState
 
 	function resyncVocals():Void
 	{
+		if (isMonoDead) {
+			Conductor.songPosition = 0;
+			return;
+		} 
+
 		if(finishTimer != null) return;
 
 		vocals.pause();
@@ -2815,6 +2845,25 @@ class PlayState extends MusicBeatState
 	var canPause:Bool = true;
 	var limoSpeed:Float = 0;
 
+	function startUnown(timer:Int = 15, word:String = ''):Void {
+		canPause = false;
+		unowning = true;
+		persistentUpdate = true;
+		persistentDraw = true;
+		var realTimer = timer;
+		var unownState = new UnownSubState(realTimer, word);
+		unownState.win = wonUnown;
+		unownState.lose = die;
+		unownState.cameras = [camHUD];
+		FlxG.autoPause = false;
+		openSubState(unownState);
+	}
+
+	public function wonUnown():Void {
+		canPause = true;
+		unowning = false;
+	}
+	
 	override public function update(elapsed:Float)
 	{
 		/*if (FlxG.keys.justPressed.NINE)
@@ -3083,12 +3132,18 @@ class PlayState extends MusicBeatState
 		FlxG.watch.addQuick("stepShit", curStep);
 
 		// RESET = Quick Game Over Screen
-		if (!ClientPrefs.noReset && controls.RESET && canReset && !inCutscene && startedCountdown && !endingSong)
+		if (!ClientPrefs.noReset && controls.RESET && canReset && !inCutscene && startedCountdown && !endingSong && !unowning)
 		{
 			health = 0;
 			trace("RESET = True");
 		}
 		doDeathCheck();
+
+		if (isMonoDead) {
+			if (controls.ACCEPT)
+				MusicBeatState.resetState();
+			//trace(dad.animation.curAnim.curFrame);
+		}
 
 		if (unspawnNotes[0] != null)
 		{
@@ -3254,7 +3309,7 @@ class PlayState extends MusicBeatState
 
 		#if debug
 		if(!endingSong && !startingSong) {
-			if (FlxG.keys.justPressed.ONE) {
+			if (FlxG.keys.justPressed.ONE && !unowning) {
 				KillNotes();
 				FlxG.sound.music.onComplete();
 			}
@@ -3311,6 +3366,26 @@ class PlayState extends MusicBeatState
 	}
 
 	public var isDead:Bool = false; //Don't mess with this on Lua!!!
+
+	public function die():Void {
+		if (SONG.song.toLowerCase() == 'monochrome-fatass-metal-cover' | 'monochrome') {
+			boyfriend.stunned = true;
+			deathCounter++;
+			paused = true;
+
+			vocals.stop();
+			FlxG.sound.music.stop();
+
+			isDead = true;
+			isMonoDead = true;
+			dad.debugMode = true;
+			dad.playAnim('fadeOut', true);
+			dad.animation.finishCallback = function (name:String) {
+				remove(dad);
+			}
+		}
+	}
+
 	function doDeathCheck(?skipHealthCheck:Bool = false) {
 		if (((skipHealthCheck && instakillOnMiss) || health <= 0) && !practiceMode && !isDead)
 		{
@@ -3716,6 +3791,9 @@ class PlayState extends MusicBeatState
 						}
 				}
 				reloadHealthBarColors();
+
+			case 'Unown':
+			startUnown(Std.parseInt(value1), value2);	
 
 			case 'BG Freaks Expression':
 				if(bgGirls != null) bgGirls.swapDanceType();
@@ -4966,6 +5044,40 @@ class PlayState extends MusicBeatState
 	override function beatHit()
 	{
 		super.beatHit();
+
+		switch (SONG.song.toLowerCase()) {
+			case 'monochrome-fatass-metal-cover':
+				switch (curBeat) {
+					case 28:
+						FlxTween.tween(healthBar, {alpha: 0.4}, 3, {ease: FlxEase.linear});
+						FlxTween.tween(healthBarBG, {alpha: 0.4}, 3, {ease: FlxEase.linear});
+						FlxTween.tween(scoreTxt, {alpha: 0.4}, 3, {ease: FlxEase.linear});
+						FlxTween.tween(iconP1, {alpha: 1}, 3, {ease: FlxEase.linear});
+						FlxTween.tween(iconP2, {alpha: 1}, 3, {ease: FlxEase.linear});
+						for (i in playerStrums) {
+							FlxTween.tween(i, {alpha: 0.7}, 3, {ease: FlxEase.linear});
+						}
+					case 392:
+						dad.debugMode = true;
+						dad.playAnim('fadeOut', true);
+						FlxTween.tween(healthBar, {alpha: 0}, 1, {ease: FlxEase.linear});
+						FlxTween.tween(healthBarBG, {alpha: 0}, 1, {ease: FlxEase.linear});
+						FlxTween.tween(scoreTxt, {alpha: 0}, 1, {ease: FlxEase.linear});
+						FlxTween.tween(iconP1, {alpha: 0}, 1, {ease: FlxEase.linear});
+						FlxTween.tween(iconP2, {alpha: 0}, 1, {ease: FlxEase.linear});
+						for (i in playerStrums) {
+							FlxTween.tween(i, {alpha: 0}, 1, {ease: FlxEase.linear});
+						}
+					case 224:
+						/*if (ClientPrefs.hellMode)
+							startUnown(16, 'abcdefghijklmnopqrstuvwxyz');
+						else
+							startUnown(8);*/
+					case 232:
+						/*if (!ClientPrefs.hellMode)
+							startUnown(8);*/
+				}
+		}
 
 		if(lastBeatHit >= curBeat) {
 			//trace('BEAT HIT: ' + curBeat + ', LAST HIT: ' + lastBeatHit);
