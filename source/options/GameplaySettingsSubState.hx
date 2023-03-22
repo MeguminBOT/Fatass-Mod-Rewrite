@@ -63,6 +63,19 @@ class GameplaySettingsSubState extends BaseOptionsMenu
 			true);
 		addOption(option);
 
+		var option:Option = new Option('Lane Transparency',
+			"How transparent should the background of the playfield be?\n0 = No background, 1 = Completely black.",
+			'underlay',
+			'float',
+		true);
+		option.displayFormat = '%v';
+		option.scrollSpeed = 100;
+		option.changeValue = 0.1;
+		option.decimals = 1;
+		option.minValue = 0;
+		option.maxValue = 1;
+		addOption(option);
+
 		var option:Option = new Option('Ghost Tapping',
 			"If checked, you won't get misses from pressing keys\nwhile there are no notes able to be hit.",
 			'ghostTapping',
