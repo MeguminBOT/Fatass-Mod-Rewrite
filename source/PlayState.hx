@@ -1339,7 +1339,20 @@ class PlayState extends MusicBeatState
 		RecalculateRating();
 
 		//PRECACHING MISS SOUNDS BECAUSE I THINK THEY CAN LAG PEOPLE AND FUCK THEM UP IDK HOW HAXE WORKS
-		if(ClientPrefs.hitsoundVolume > 0) precacheList.set('hitsound', 'sound');
+		if(ClientPrefs.hitsoundVolume > 0) 
+		precacheList.set('hitsound', 'sound');
+		precacheList.set('hitsound_default', 'sound');
+		precacheList.set('hitsound_default with kick', 'sound');
+		precacheList.set('hitsound_ping pong', 'sound');
+		precacheList.set('hitsound_click', 'sound');
+		precacheList.set('hitsound_tsuzumi drum', 'sound');
+		precacheList.set('hitsound_drop', 'sound');
+		precacheList.set('hitsound_muddy kick', 'sound');
+		precacheList.set('hitsound_bassy kick1', 'sound');
+		precacheList.set('hitsound_bassy kick2', 'sound');
+		precacheList.set('hitsound_bassy kick3', 'sound');
+		precacheList.set('hitsound_osu default soft', 'sound');
+		precacheList.set('hitsound_osu default normal', 'sound');
 		precacheList.set('missnote1', 'sound');
 		precacheList.set('missnote2', 'sound');
 		precacheList.set('missnote3', 'sound');
@@ -4793,7 +4806,7 @@ class PlayState extends MusicBeatState
 
 			if (ClientPrefs.hitsoundVolume > 0 && !note.hitsoundDisabled)
 			{
-				FlxG.sound.play(Paths.sound('hitsound'), ClientPrefs.hitsoundVolume);
+				FlxG.sound.play(Paths.sound(ClientPrefs.hitsoundType), ClientPrefs.hitsoundVolume);
 			}
 
 			if(note.hitCausesMiss) {

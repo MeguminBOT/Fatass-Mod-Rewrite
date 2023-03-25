@@ -63,6 +63,7 @@ class ClientPrefs {
 
 	//Fat-Ass Features
 	public static var underlay:Float = 0;
+	public static var hitsoundType:String = 'hitsound1';
 
 	//Every key has two binds, add your key bind down here and then add your control on options/ControlsSubState.hx and Controls.hx
 	public static var keyBinds:Map<String, Array<FlxKey>> = [
@@ -136,6 +137,7 @@ class ClientPrefs {
 
 		//Fat-Ass Features
 		FlxG.save.data.underlay = underlay;
+		FlxG.save.data.hitsoundType = hitsoundType;
 	
 		FlxG.save.flush();
 
@@ -277,6 +279,10 @@ class ClientPrefs {
 		if (FlxG.save.data.underlay != null)
 			{
 				underlay = FlxG.save.data.underlay;
+			}
+		if(FlxG.save.data.hitsoundType != null) 
+			{
+				hitsoundType = FlxG.save.data.hitsoundType;
 			}
 
 		var save:FlxSave = new FlxSave();

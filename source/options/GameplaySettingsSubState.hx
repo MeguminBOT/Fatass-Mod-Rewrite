@@ -103,6 +103,26 @@ class GameplaySettingsSubState extends BaseOptionsMenu
 		option.decimals = 1;
 		option.onChange = onChangeHitsoundVolume;
 
+		var option:Option = new Option('Hitsound Type:',
+			"What hitsound would you prefer?",
+			'hitsoundType',
+			'string',
+			'hitsound-default',
+			['hitsound-default', 
+			'hitsound-default with kick',
+			'hitsound-ping pong',
+			'hitsound-click',
+			'hitsound-tsuzumi drum',
+			'hitsound-drop',
+			'hitsound-muddy kick',
+			'hitsound-bassy kick1',
+			'hitsound-bassy kick2',
+			'hitsound-bassy kick3',
+			'hitsound-osu default soft',
+			'hitsound-osu default normal']);
+		addOption(option);
+		option.onChange = onChangeHitsoundType;
+
 		var option:Option = new Option('Rating Offset',
 			'Changes how late/early you have to hit for a "Sick!"\nHigher values mean you have to hit later.',
 			'ratingOffset',
@@ -163,6 +183,11 @@ class GameplaySettingsSubState extends BaseOptionsMenu
 
 	function onChangeHitsoundVolume()
 	{
-		FlxG.sound.play(Paths.sound('hitsound'), ClientPrefs.hitsoundVolume);
+		FlxG.sound.play(Paths.sound(ClientPrefs.hitsoundType), ClientPrefs.hitsoundVolume);
+	}
+
+	function onChangeHitsoundType()
+	{
+		FlxG.sound.play(Paths.sound(ClientPrefs.hitsoundType), ClientPrefs.hitsoundVolume);
 	}
 }
