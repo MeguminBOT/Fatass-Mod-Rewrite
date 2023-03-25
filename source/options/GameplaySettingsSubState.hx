@@ -107,19 +107,19 @@ class GameplaySettingsSubState extends BaseOptionsMenu
 			"What hitsound would you prefer?",
 			'hitsoundType',
 			'string',
-			'hitsound-default',
-			['hitsound-default', 
-			'hitsound-default with kick',
-			'hitsound-ping pong',
-			'hitsound-click',
-			'hitsound-tsuzumi drum',
-			'hitsound-drop',
-			'hitsound-muddy kick',
-			'hitsound-bassy kick1',
-			'hitsound-bassy kick2',
-			'hitsound-bassy kick3',
-			'hitsound-osu default soft',
-			'hitsound-osu default normal']);
+			'hitsound_default',
+			['hitsound_default', 
+			'hitsound_default with kick',
+			'hitsound_ping pong',
+			'hitsound_click',
+			'hitsound_tsuzumi drum',
+			'hitsound_drop',
+			'hitsound_muddy kick',
+			'hitsound_bassy kick1',
+			'hitsound_bassy kick2',
+			'hitsound_bassy kick3',
+			'hitsound_osu default soft',
+			'hitsound_osu default normal']);
 		addOption(option);
 		option.onChange = onChangeHitsoundType;
 
