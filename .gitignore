@@ -22,7 +22,7 @@ export/*
 
 # Fat-Ass ignore
 source/PlayState_Kade.hx
-source/Conductior_Kade.hx
+source/Conductor_Kade.hx
 source/Note_Kade.hx
 source/Ratings_Kade.hx
 source/TimingStruct_Kade.hx
