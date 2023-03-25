@@ -1347,10 +1347,10 @@ class PlayState extends MusicBeatState
 		precacheList.set('hitsound_click', 'sound');
 		precacheList.set('hitsound_tsuzumi drum', 'sound');
 		precacheList.set('hitsound_drop', 'sound');
-		precacheList.set('hitsound_muddy kick', 'sound');
-		precacheList.set('hitsound_bassy kick1', 'sound');
-		precacheList.set('hitsound_bassy kick2', 'sound');
-		precacheList.set('hitsound_bassy kick3', 'sound');
+		precacheList.set('hitsound_kick muddy', 'sound');
+		precacheList.set('hitsound_kick bassy1', 'sound');
+		precacheList.set('hitsound_kick bassy2', 'sound');
+		precacheList.set('hitsound_kick bassy3', 'sound');
 		precacheList.set('hitsound_osu default soft', 'sound');
 		precacheList.set('hitsound_osu default normal', 'sound');
 		precacheList.set('missnote1', 'sound');

@@ -114,10 +114,10 @@ class GameplaySettingsSubState extends BaseOptionsMenu
 			'hitsound_click',
 			'hitsound_tsuzumi drum',
 			'hitsound_drop',
-			'hitsound_muddy kick',
-			'hitsound_bassy kick1',
-			'hitsound_bassy kick2',
-			'hitsound_bassy kick3',
+			'hitsound_kick muddy',
+			'hitsound_kick bassy1',
+			'hitsound_kick bassy2',
+			'hitsound_kick bassy3',
 			'hitsound_osu default soft',
 			'hitsound_osu default normal']);
 		addOption(option);
