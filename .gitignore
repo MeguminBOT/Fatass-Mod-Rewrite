@@ -19,3 +19,15 @@ export/*
 !.vscode/tasks.json
 !.vscode/launch.json
 !.vscode/extensions.json
+
+# Fat-Ass ignore
+source/PlayState_Kade.hx
+source/Conductior_Kade.hx
+source/Note_Kade.hx
+source/Ratings_Kade.hx
+source/TimingStruct_Kade.hx
+source/EtternaFunctions_Kade.hx
+source/DiffCalc_Kade.hx
+source/DiffOverview_Kade.hx 
+source/CoolUtil_Kade.hx
+source/TimingStruct_Kade.hx
