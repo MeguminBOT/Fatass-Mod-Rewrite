@@ -2921,19 +2921,17 @@ class PlayState extends MusicBeatState
 	var limoSpeed:Float = 0;
 
 	function startUnown(timer:Int = 15, word:String = ''):Void {
-		if (!opponentChart || !doubleChart) {
-			canPause = false;
-			unowning = true;
-			persistentUpdate = true;
-			persistentDraw = true;
-			var realTimer = timer;
-			var unownState = new UnownSubState(realTimer, word);
-			unownState.win = wonUnown;
-			unownState.lose = die;
-			unownState.cameras = [camHUD];
-			FlxG.autoPause = false;
-			openSubState(unownState);
-		}
+		canPause = false;
+		unowning = true;
+		persistentUpdate = true;
+		persistentDraw = true;
+		var realTimer = timer;
+		var unownState = new UnownSubState(realTimer, word);
+		unownState.win = wonUnown;
+		unownState.lose = die;
+		unownState.cameras = [camHUD];
+		FlxG.autoPause = false;
+		openSubState(unownState);
 	}
 
 	public function wonUnown():Void {
@@ -3914,9 +3912,10 @@ class PlayState extends MusicBeatState
 			
 			// Fat-Ass Events
 			case 'Unown':
-				if (!opponentChart || !doubleChart) {
-					startUnown(Std.parseInt(value1), value2);	
+				if (opponentChart || doubleChart) {
+					return;
 				}
+			startUnown(Std.parseInt(value1), value2);	
 		}
 		callOnLuas('onEvent', [eventName, value1, value2]);
 	}
