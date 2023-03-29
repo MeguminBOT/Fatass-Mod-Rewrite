@@ -74,9 +74,9 @@ class UnownSubState extends MusicBeatSubstate
 		'HI SHUBS',
 		'HI ASH',
 		'HI LULU',
-		'HI LILY'
+		'HI LILY',
 		'HI ROXBEIGE',
-		'MY BUSSY IS POGGING',
+		'MY BUSSY IS POGGING'
 	];
 
 	var fuckYouWords:Array<String> = [
