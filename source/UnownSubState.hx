@@ -74,8 +74,8 @@ class UnownSubState extends MusicBeatSubstate
 		'HI SHUBS',
 		'HI ASH',
 		'HI LULU',
+		'HI LILY'
 		'HI ROXBEIGE',
-		'MICK GORDON',
 		'MY BUSSY IS POGGING',
 	];
 
@@ -141,12 +141,12 @@ class UnownSubState extends MusicBeatSubstate
 					realScale = 0.2;
 				unown.scale.set(realScale, realScale);
 				unown.updateHitbox();
-				unown.frames = Paths.getSparrowAtlas('Unown_Alphabet', 'shared');
+				unown.frames = Paths.getSparrowAtlas('unownAlphabet', 'shared');
 				unown.animation.addByPrefix('idle', selectedWord.charAt(i), 24, true);
 				unown.animation.play('idle');
 				unowns.add(unown);
 
-				var line:FlxSprite = new FlxSprite(unown.x, unown.y).loadGraphic(Paths.image('line', 'shared'));
+				var line:FlxSprite = new FlxSprite(unown.x, unown.y).loadGraphic(Paths.image('unownLine', 'shared'));
 				line.y += 500;
 				line.scale.set(unown.scale.x, unown.scale.y);
 				line.updateHitbox();
@@ -174,7 +174,7 @@ class UnownSubState extends MusicBeatSubstate
 		if (position >= realWord.length) {
 			close();
 			win();
-			FlxG.sound.play(Paths.sound('CORRECT', 'shared'));
+			FlxG.sound.play(Paths.sound('unownCorrect', 'shared'));
 		}
 	}
 	override function update(elapsed:Float)
@@ -194,17 +194,17 @@ class UnownSubState extends MusicBeatSubstate
 				if (FlxG.keys.justPressed.SLASH && FlxG.keys.pressed.SHIFT)
 					correctLetter();
 				else if (!FlxG.keys.justPressed.SHIFT)
-					FlxG.sound.play(Paths.sound('BUZZER', 'shared'));
+					FlxG.sound.play(Paths.sound('unownBuzzer', 'shared'));
 			} else if (realWord.charAt(position) == '!') {
 				if (FlxG.keys.justPressed.ONE && FlxG.keys.pressed.SHIFT)
 					correctLetter();
 				else if (!FlxG.keys.justPressed.SHIFT)
-					FlxG.sound.play(Paths.sound('BUZZER', 'shared'));
+					FlxG.sound.play(Paths.sound('unownBuzzer', 'shared'));
 			} else {
 				if (FlxG.keys.anyJustPressed([FlxKey.fromString(realWord.charAt(position))])) {
 					correctLetter();
 				} else
-					FlxG.sound.play(Paths.sound('BUZZER', 'shared'));
+					FlxG.sound.play(Paths.sound('unownBuzzer', 'shared'));
 			}
 		}
 		/*if (FlxG.keys.justPressed.Z) {
