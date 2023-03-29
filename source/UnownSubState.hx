@@ -42,6 +42,7 @@ class UnownSubState extends MusicBeatSubstate
 		'HOPELESS',
 		'RUN STREAMER',
 		'NOT WELCOME',
+		'NO MORE',
 		'CAN YOU SEE',
 		'WHERE',
 		'HELP',
@@ -55,7 +56,7 @@ class UnownSubState extends MusicBeatSubstate
 		'TING TANG',
 		'WALLA BING BANG',
 		'RIP AND TEAR',
-		'DOOM',
+		'DOOM'
 	];
 	var onePercentWords:Array<String> = [
 		'NICE COCK',
@@ -65,7 +66,7 @@ class UnownSubState extends MusicBeatSubstate
 		'RATIO',
 		"GOO",
 		'POGGERS',
-		'BUSSY',
+		'BUSSY'
 	];
 	var zeropointonePercentWords:Array<String> = [
 		'WANNA WORK ON MY FNF MOD',
