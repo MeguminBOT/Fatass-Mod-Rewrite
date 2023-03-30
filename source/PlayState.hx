@@ -4276,6 +4276,7 @@ class PlayState extends MusicBeatState
 				totalPlayed++;
 			}
 		}
+
 		var pixelShitPart1:String = "";
 		var pixelShitPart2:String = '';
 
@@ -4285,7 +4286,7 @@ class PlayState extends MusicBeatState
 			pixelShitPart2 = '-pixel';
 		}
 
-		rating.loadGraphic(Paths.image(pixelShitPart1 + daRating.image + pixelShitPart2));
+		rating.loadGraphic(Paths.image(pixelShitPart1 + daRating + pixelShitPart2));
 		rating.cameras = [camHUD];
 		rating.screenCenter();
 		rating.x = coolText.x - 40;
@@ -4726,7 +4727,7 @@ class PlayState extends MusicBeatState
 						for (shit in 0...pressArray.length)
 							{ 	// if pressing a directio that shouldn't be pressed
 								if (pressArray[shit] && !directionList.contains(shit))
-									noteMiss(shit, null);
+									noteMiss(null);
 							}
 					}
 					for (coolNote in possibleNotes)
@@ -5092,7 +5093,7 @@ class PlayState extends MusicBeatState
 					if(cpuControlled && (note.ignoreNote || note.hitCausesMiss)) return;
 		
 					if(note.hitCausesMiss) {
-						noteMiss(0, note);
+						noteMiss(note);
 						if(!note.noteSplashDisabled && !note.isSustainNote) {
 							spawnNoteSplashOnNote(note);
 						}
