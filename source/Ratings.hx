@@ -5,19 +5,18 @@ class Ratings
 	public static function GenerateLetterRank(accuracy:Float) // generate a letter ranking
 	{
 		var ranking:String = "N/A";
-		if (FlxG.save.data.botplay && !PlayState.loadRep)
+		if (PlayState.instance.cpuControlled)
 			ranking = "BotPlay";
-
-		if (PlayState.misses == 0 && PlayState.bads == 0 && PlayState.shits == 0 && PlayState.goods == 0) // Marvelous (SICK) Full Combo
-			ranking = "(MFC)";
-		else if (PlayState.misses == 0 && PlayState.bads == 0 && PlayState.shits == 0 && PlayState.goods >= 1) // Good Full Combo (Nothing but Goods & Sicks)
-			ranking = "(GFC)";
-		else if (PlayState.misses == 0) // Regular FC
-			ranking = "(FC)";
-		else if (PlayState.misses < 10) // Single Digit Combo Breaks
-			ranking = "(SDCB)";
-		else
-			ranking = "(Clear)";
+		if (PlayState.instance.songMisses == 0 && PlayState.instance.bads == 0 && PlayState.instance.shits == 0 && PlayState.instance.goods == 0) // Marvelous (SICK) Full Combo
+            ranking = "(MFC)";
+        else if (PlayState.instance.songMisses == 0 && PlayState.instance.bads == 0 && PlayState.instance.shits == 0 && PlayState.instance.goods >= 1) // Good Full Combo (Nothing but Goods & Sicks)
+            ranking = "(GFC)";
+        else if (PlayState.instance.songMisses == 0) // Regular FC
+            ranking = "(FC)";
+        else if (PlayState.instance.songMisses < 10) // Single Digit Combo Breaks
+            ranking = "(SDCB)";
+        else
+            ranking = "(Clear)";
 
 		// WIFE TIME :)))) (based on Wife3)
 
@@ -86,58 +85,46 @@ class Ratings
 
 		if (accuracy == 0)
 			ranking = "N/A";
-		else if (FlxG.save.data.botplay && !PlayState.loadRep)
+		else if (PlayState.instance.cpuControlled)
 			ranking = "BotPlay";
-
 		return ranking;
 	}
 
-	public static var timingWindows = [];
+    public static function CalculateRating(noteDiff:Float, ?customSafeZone:Float):String
+    {
+        var customTimeScale = Conductor.timeScale;
+        if (customSafeZone != null)
+            customTimeScale = customSafeZone / 166;
 
-	public static function judgeNote(noteDiff:Float)
-	{
-		var diff = Math.abs(noteDiff);
-		for (index in 0...timingWindows.length) // based on 4 timing windows, will break with anything else
-		{
-			var time = timingWindows[index];
-			var nextTime = index + 1 > timingWindows.length - 1 ? 0 : timingWindows[index + 1];
-			if (diff < time && diff >= nextTime)
-			{
-				switch (index)
-				{
-					case 0: // shit
-						return "shit";
-					case 1: // bad
-						return "bad";
-					case 2: // good
-						return "good";
-					case 3: // sick
-						return "sick";
-				}
-			}
-		}
-		return "good";
-	}
+        if (PlayState.instance.cpuControlled)
+            return "sick";
+        var rating = checkRating(noteDiff,customTimeScale);
+        return rating;
+    }
 
-	public static function CalculateRanking(score:Int, scoreDef:Int, nps:Int, maxNPS:Int, accuracy:Float):String
-	{
-		return (FlxG.save.data.npsDisplay ? // NPS Toggle
-			"NPS: "
-			+ nps
-			+ " (Max "
-			+ maxNPS
-			+ ")"
-			+ (!PlayStateChangeables.botPlay || PlayState.loadRep ? " | " : "") : "") + // 	NPS
-			(!PlayStateChangeables.botPlay
-				|| PlayState.loadRep ? "Score:" + (Conductor.safeFrames != 10 ? score + " (" + scoreDef + ")" : "" + score) + // Score
-					(FlxG.save.data.accuracyDisplay ? // Accuracy Toggle
-						" | Combo Breaks:"
-						+ PlayState.misses
-						+ // 	Misses/Combo Breaks
-						" | Accuracy:"
-						+ (PlayStateChangeables.botPlay && !PlayState.loadRep ? "N/A" : HelperFunctions.truncateFloat(accuracy, 2) + " %")
-						+ // 	Accuracy
-						" | "
-						+ GenerateLetterRank(accuracy) : "") : ""); // 	Letter Rank
-	}
+	public static function checkRating(ms:Float, ts:Float)
+    {
+        var rating = "miss";
+        if (ms < 166 * ts && ms > 135 * ts)
+            rating = "shit";
+        if (ms > -166 * ts && ms < -135 * ts)
+            rating = "shit";
+        if (ms < 135 * ts && ms > 90 * ts) 
+            rating = "bad";
+        if (ms > -135 * ts && ms < -90 * ts)
+            rating = "bad";
+        if (ms < 90 * ts && ms > 45 * ts)
+            rating = "good";
+        if (ms > -90 * ts && ms < -45 * ts)
+            rating = "good";
+        if (ms < 45 * ts && ms > -45 * ts)
+            rating = "sick";
+        return rating;
+    }
+
+    public static function CalculateRanking(score:Int,scoreDef:Int,accuracy:Float):String
+    {
+        return
+        (!PlayState.instance.cpuControlled ? "Score:" + (ClientPrefs.safeFrames != 10 ? score + " (" + scoreDef + ")" : "" + score) + " | Combo Breaks:" + PlayState.instance.songMisses + " | Accuracy:" + (PlayState.instance.cpuControlled ? "N/A" : HelperFunctions.truncateFloat(accuracy, 2) + " %") + " | " + GenerateLetterRank(accuracy) : "");
+    }
 }

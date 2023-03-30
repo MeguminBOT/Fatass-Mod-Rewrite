@@ -65,6 +65,7 @@ class ClientPrefs {
 	//Fat-Ass Features
 	public static var underlay:Float = 0;
 	public static var hitsoundType:String = 'hitsound_default';
+	public static var inputSystem:String = "Etterna";
 
 	//Every key has two binds, add your key bind down here and then add your control on options/ControlsSubState.hx and Controls.hx
 	public static var keyBinds:Map<String, Array<FlxKey>> = [
@@ -139,6 +140,7 @@ class ClientPrefs {
 		//Fat-Ass Features
 		FlxG.save.data.underlay = underlay;
 		FlxG.save.data.hitsoundType = hitsoundType;
+		FlxG.save.data.inputSystem = inputSystem;
 	
 		FlxG.save.flush();
 
@@ -286,6 +288,11 @@ class ClientPrefs {
 				hitsoundType = FlxG.save.data.hitsoundType;
 			}
 
+		if(FlxG.save.data.inputSystem != null)
+			{
+				inputSystem = FlxG.save.data.inputSystem;
+			}
+	
 		var save:FlxSave = new FlxSave();
 		save.bind('controls_v2', CoolUtil.getSavePath());
 		if(save != null && save.data.customControls != null) {

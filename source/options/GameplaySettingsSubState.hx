@@ -90,6 +90,14 @@ class GameplaySettingsSubState extends BaseOptionsMenu
 			false);
 		addOption(option);
 
+		var option:Option = new Option('Input System',
+			"Changes the input and accuracy system.\nEtterna Input System comes with Wife3 Scoring/Accuracy, which is the same as Complex Accuracy in Kade Engine.",
+			'inputSystem',
+			'string',
+			'Etterna',
+			['Etterna', 'PsychEngine']);
+		addOption(option);
+
 		var option:Option = new Option('Hitsound Volume',
 			'Funny notes does \"Tick!\" when you hit them."',
 			'hitsoundVolume',

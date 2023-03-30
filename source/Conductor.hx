@@ -26,11 +26,19 @@ class Conductor
 
 	//public static var safeFrames:Int = 10;
 	public static var safeZoneOffset:Float = (ClientPrefs.safeFrames / 60) * 1000; // is calculated in create(), is safeFrames in milliseconds
-
 	public static var bpmChangeMap:Array<BPMChangeEvent> = [];
+
+	//Fat-Ass Feature: Etterna Input
+	public static var timeScale:Float = Conductor.safeZoneOffset / 166;
 
 	public function new()
 	{
+	}
+
+	public static function recalculateTimings()
+	{
+		Conductor.safeZoneOffset = Math.floor((ClientPrefs.safeFrames / 60) * 1000);
+		Conductor.timeScale = Conductor.safeZoneOffset / 166;
 	}
 
 	public static function judgeNote(note:Note, diff:Float=0):Rating // die
