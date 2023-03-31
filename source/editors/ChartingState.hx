@@ -1,8 +1,5 @@
 package editors;
 
-#if desktop
-import Discord.DiscordClient;
-#end
 import flash.geom.Rectangle;
 import haxe.Json;
 import haxe.format.JsonParser;

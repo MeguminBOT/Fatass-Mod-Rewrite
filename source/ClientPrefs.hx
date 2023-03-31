@@ -33,6 +33,7 @@ class ClientPrefs {
 	public static var pauseMusic:String = 'NONE';
 	public static var checkForUpdates:Bool = true;
 	public static var comboStacking = true;
+	public static var discordRPC:String = 'Normal';
 	public static var gameplaySettings:Map<String, Dynamic> = [
 		'scrollspeed' => 1.0,
 		'scrolltype' => 'multiplicative', 
@@ -146,7 +147,14 @@ class ClientPrefs {
 		FlxG.save.data.hitsoundType = hitsoundType;
 		FlxG.save.data.inputSystem = inputSystem;
 		FlxG.save.data.noteskinType = noteskinType;
-	
+
+		// Better Discord RPC
+		FlxG.save.data.discordRPC = discordRPC;
+		#if desktop  // Putting this here so the game does it only when saved and not on as onChange (Giving proper time to the rpc to shutdown)  - Nex
+		if (discordRPC == 'Deactivated' && DiscordClient.isInitialized) DiscordClient.shutdown();
+		else if (discordRPC != 'Deactivated' && !DiscordClient.isInitialized) DiscordClient.initialize();
+		#end
+
 		FlxG.save.flush();
 
 		var save:FlxSave = new FlxSave();
@@ -283,8 +291,11 @@ class ClientPrefs {
 		{
 			checkForUpdates = FlxG.save.data.checkForUpdates;
 		}
-		if (FlxG.save.data.comboStacking != null)
+		if (FlxG.save.data.comboStacking != null) {
 			comboStacking = FlxG.save.data.comboStacking;
+		}
+		if(FlxG.save.data.discordRPC != null)
+			discordRPC = FlxG.save.data.discordRPC;
 
 		// Fat-Ass Features
 		if (FlxG.save.data.underlay != null)

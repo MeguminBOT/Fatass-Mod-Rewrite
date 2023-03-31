@@ -1,8 +1,5 @@
 package options;
 
-#if desktop
-import Discord.DiscordClient;
-#end
 import flash.text.TextField;
 import flixel.FlxG;
 import flixel.FlxSprite;
@@ -107,6 +104,17 @@ class VisualsUISubState extends BaseOptionsMenu
 			['None', 'Breakfast', 'Tea Time']);
 		addOption(option);
 		option.onChange = onChangePauseMusic;
+
+		#if DISCORD_ALLOWED
+		var option:Option = new Option('Discord RPC:',
+			'Change Discord Rich Presence',
+			'discordRPC',
+			'string',
+			'Normal',
+			['Deactivated', 'Normal', 'Hide Infos']);
+		addOption(option);
+		option.onChange = onChangeDiscord;
+		#end
 		
 		#if CHECK_FOR_UPDATES
 		var option:Option = new Option('Check for Updates',
@@ -149,6 +157,12 @@ class VisualsUISubState extends BaseOptionsMenu
 	{
 		if(Main.fpsVar != null)
 			Main.fpsVar.visible = ClientPrefs.showFPS;
+	}
+	#end
+
+	#if DISCORD_ALLOWED
+	function onChangeDiscord() {
+		DiscordClient.changePresence(rpcTitle, null);
 	}
 	#end
 }
