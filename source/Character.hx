@@ -291,7 +291,7 @@ class Character extends FlxSprite
 					if(animation.curAnim.finished) playAnim(animation.curAnim.name, false, false, animation.curAnim.frames.length - 3);
 			}
 
-			if (!isPlayer)
+			if (!isPlayer  && !PlayState.opponentChart)
 			{
 				if (animation.curAnim.name.startsWith('sing'))
 				{
@@ -302,6 +302,21 @@ class Character extends FlxSprite
 				{
 					dance();
 					holdTimer = 0;
+				}
+			}
+			else if (PlayState.opponentChart)
+			{
+				if (animation.curAnim.name.startsWith('sing'))
+				{
+					holdTimer += elapsed;
+				}
+				else 
+				{
+					holdTimer = 0;
+				}
+
+				if (animation.curAnim.name.endsWith('miss') && animation.curAnim.finished && !debugMode) {
+					dance();
 				}
 			}
 

@@ -64,30 +64,41 @@ class FreeplayState extends MusicBeatState
 		DiscordClient.changePresence("In the Menus", null);
 		#end
 
-		for (i in 0...WeekData.weeksList.length) {
-			if(weekIsLocked(WeekData.weeksList[i])) continue;
-
-			var leWeek:WeekData = WeekData.weeksLoaded.get(WeekData.weeksList[i]);
-			var leSongs:Array<String> = [];
-			var leChars:Array<String> = [];
-
-			for (j in 0...leWeek.songs.length)
+		//adds songs based on the category chosen
+		switch (FreeplaySelectState.categories[FreeplaySelectState.curSelected].categoryName.toLowerCase())
 			{
-				leSongs.push(leWeek.songs[j][0]);
-				leChars.push(leWeek.songs[j][1]);
-			}
+				case 'all':
+					for (i in 0...WeekData.weeksList.length) {
+						if(weekIsLocked(WeekData.weeksList[i])) continue;
+			
+						var leWeek:WeekData = WeekData.weeksLoaded.get(WeekData.weeksList[i]);
+						var leSongs:Array<String> = [];
+						var leChars:Array<String> = [];
+			
+						for (j in 0...leWeek.songs.length)
+						{
+							leSongs.push(leWeek.songs[j][0]);
+							leChars.push(leWeek.songs[j][1]);
+						}
+			
+						WeekData.setDirectoryFromWeek(leWeek);
+						for (song in leWeek.songs)
+						{
+							var colors:Array<Int> = song[2];
+							if(colors == null || colors.length < 3)
+							{
+								colors = [146, 113, 253];
+							}
+							addSong(song[0], i, song[1], FlxColor.fromRGB(colors[0], colors[1], colors[2]));
+						}
+					}
+				case 'vanilla':
+					//there is probably a better way to add all vanilla songs but this will do for now
+					addWeek(['Tutorial', 'Bopeebo', 'Fresh', 'Dad Battle', 'Spookeez', 'South', 'Monster', 'Pico', 'Philly Nice', 'Blammed', 'Satin Panties', 'High', 'Milf', 'Cocoa', 'Eggnog', 'Winter Horrorland', 'Senpai', 'Roses', 'Thorns', 'Ugh', 'Guns', 'Stress']);
+				case 'test':
+					addWeek(['Bopeebo', 'Fresh', 'Dad Battle']);
+			};
 
-			WeekData.setDirectoryFromWeek(leWeek);
-			for (song in leWeek.songs)
-			{
-				var colors:Array<Int> = song[2];
-				if(colors == null || colors.length < 3)
-				{
-					colors = [146, 113, 253];
-				}
-				addSong(song[0], i, song[1], FlxColor.fromRGB(colors[0], colors[1], colors[2]));
-			}
-		}
 		WeekData.loadTheFirstEnabledMod();
 
 		/*		//KIND OF BROKEN NOW AND ALSO PRETTY USELESS//
@@ -216,21 +227,36 @@ class FreeplayState extends MusicBeatState
 		return (!leWeek.startUnlocked && leWeek.weekBefore.length > 0 && (!StoryMenuState.weekCompleted.exists(leWeek.weekBefore) || !StoryMenuState.weekCompleted.get(leWeek.weekBefore)));
 	}
 
-	/*public function addWeek(songs:Array<String>, weekNum:Int, weekColor:Int, ?songCharacters:Array<String>)
+	public function addWeek(songs:Array<String>)
 	{
-		if (songCharacters == null)
-			songCharacters = ['bf'];
 
-		var num:Int = 0;
-		for (song in songs)
-		{
-			addSong(song, weekNum, songCharacters[num]);
-			this.songs[this.songs.length-1].color = weekColor;
+		for (i in 0...WeekData.weeksList.length) {
+			var leWeek:WeekData = WeekData.weeksLoaded.get(WeekData.weeksList[i]);
+			var leSongs:Array<String> = [];
+			var leChars:Array<String> = [];
 
-			if (songCharacters.length != 1)
-				num++;
+			for (j in 0...leWeek.songs.length)
+			{
+				leSongs.push(leWeek.songs[j][0]);
+				leChars.push(leWeek.songs[j][1]);
+			}
+
+			WeekData.setDirectoryFromWeek(leWeek);
+			for (song in leWeek.songs)
+			{
+				if (!songs.contains(song[0])) {
+					continue;
+				}
+
+				var colors:Array<Int> = song[2];
+				if(colors == null || colors.length < 3)
+				{
+					colors = [146, 113, 253];
+				}
+				addSong(song[0], i, song[1], FlxColor.fromRGB(colors[0], colors[1], colors[2]));
+			}
 		}
-	}*/
+	}
 
 	var instPlaying:Int = -1;
 	public static var vocals:FlxSound = null;
@@ -318,7 +344,7 @@ class FreeplayState extends MusicBeatState
 				colorTween.cancel();
 			}
 			FlxG.sound.play(Paths.sound('cancelMenu'));
-			MusicBeatState.switchState(new MainMenuState());
+			MusicBeatState.switchState(new FreeplaySelectState());
 		}
 
 		if(ctrl)
