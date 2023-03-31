@@ -1,7 +1,9 @@
 package;
 
 import Sys.sleep;
+#if DISCORD_ALLOWED
 import discord_rpc.DiscordRpc;
+#end
 
 #if LUA_ALLOWED
 import llua.Lua;
@@ -13,12 +15,14 @@ using StringTools;
 class DiscordClient
 {
 	public static var isInitialized:Bool = false;
+	#if DISCORD_ALLOWED
 	public static var queue:DiscordPresenceOptions = {
 		details: "In the Menus",
 		state: null,
 		largeImageKey: 'icon',
 		largeImageText: "Psych Engine"
 	}
+	#end
 
 	public function new()
 	{
@@ -53,11 +57,13 @@ class DiscordClient
 	
 	static function onReady()
 	{
+		#if DISCORD_ALLOWED
 		changePresence(
 			queue.details, queue.state, queue.smallImageKey,
 			queue.startTimestamp == 1 ? true : false,
 			queue.endTimestamp
 		);
+		#end
 	}
 
 	static function onError(_code:Int, _message:String)
