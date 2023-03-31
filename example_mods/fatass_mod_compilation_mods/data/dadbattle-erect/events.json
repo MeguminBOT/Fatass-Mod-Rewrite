@@ -1,0 +1,241 @@
+{
+	"song": {
+		"speed": 3.2,
+		"stage": "erect-stage",
+		"player1": "bf-Rox",
+		"player2": "dad-dsides",
+		"player3": null,
+		"events": [
+			[
+				20210.5263157895,
+				[
+					[
+						"CG Lights",
+						"dad",
+						"on"
+					]
+				]
+			],
+			[
+				23921.052631579,
+				[
+					[
+						"CG Lights",
+						"dad",
+						"off"
+					]
+				]
+			],
+			[
+				24000,
+				[
+					[
+						"CG Lights",
+						"bf",
+						"on"
+					]
+				]
+			],
+			[
+				40342.1052631579,
+				[
+					[
+						"CG Lights",
+						"bf",
+						"off"
+					]
+				]
+			],
+			[
+				40421.0526315789,
+				[
+					[
+						"CG Lights",
+						"dad",
+						"on"
+					]
+				]
+			],
+			[
+				49184.2105263158,
+				[
+					[
+						"CG Lights",
+						"dad",
+						"off"
+					]
+				]
+			],
+			[
+				49263.1578947368,
+				[
+					[
+						"CG Lights",
+						"bf",
+						"on"
+					]
+				]
+			],
+			[
+				60552.6315789473,
+				[
+					[
+						"CG Lights",
+						"bf",
+						"off"
+					]
+				]
+			],
+			[
+				60631.5789473684,
+				[
+					[
+						"CG Lights",
+						"dad",
+						"on"
+					]
+				]
+			],
+			[
+				63078.947368421,
+				[
+					[
+						"CG Lights",
+						"dad",
+						"off"
+					]
+				]
+			],
+			[
+				63157.8947368421,
+				[
+					[
+						"CG Lights",
+						"bf",
+						"on"
+					]
+				]
+			],
+			[
+				65605.2631578947,
+				[
+					[
+						"CG Lights",
+						"bf",
+						"off"
+					]
+				]
+			],
+			[
+				65684.2105263157,
+				[
+					[
+						"CG Lights",
+						"dad",
+						"on"
+					]
+				]
+			],
+			[
+				68131.5789473684,
+				[
+					[
+						"CG Lights",
+						"dad",
+						"off"
+					]
+				]
+			],
+			[
+				68210.5263157894,
+				[
+					[
+						"CG Lights",
+						"bf",
+						"on"
+					]
+				]
+			],
+			[
+				70657.894736842,
+				[
+					[
+						"CG Lights",
+						"bf",
+						"off"
+					]
+				]
+			],
+			[
+				70736.8421052631,
+				[
+					[
+						"CG Lights",
+						"dad",
+						"on"
+					]
+				]
+			],
+			[
+				75710.5263157894,
+				[
+					[
+						"CG Lights",
+						"dad",
+						"off"
+					]
+				]
+			],
+			[
+				75789.4736842105,
+				[
+					[
+						"CG Lights",
+						"bf",
+						"on"
+					]
+				]
+			],
+			[
+				80763.1578947368,
+				[
+					[
+						"CG Lights",
+						"bf",
+						"off"
+					]
+				]
+			],
+			[
+				101052.631578947,
+				[
+					[
+						"CG Lights",
+						"bf",
+						"on"
+					]
+				]
+			],
+			[
+				121263.157894737,
+				[
+					[
+						"CG Lights",
+						"bf",
+						"off"
+					]
+				]
+			]
+		],
+		"notes": [],
+		"splashSkin": "noteSplashes",
+		"numerator": 4,
+		"validScore": false,
+		"denominator": 4,
+		"gfVersion": "gf-hora",
+		"bpm": 190,
+		"arrowSkin": "",
+		"needsVoices": true,
+		"song": "dadbattle-erect"
+	}
+}

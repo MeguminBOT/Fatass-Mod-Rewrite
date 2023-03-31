@@ -1,0 +1,78 @@
+{
+	"animations": [
+		{
+			"offsets": [
+				-220,
+				-240
+			],
+			"loop": false,
+			"anim": "singUP",
+			"fps": 24,
+			"name": "up_",
+			"indices": []
+		},
+		{
+			"offsets": [
+				-218,
+				-280
+			],
+			"indices": [],
+			"fps": 30,
+			"anim": "idle",
+			"loop": false,
+			"name": "idle spirit_"
+		},
+		{
+			"offsets": [
+				170,
+				110
+			],
+			"indices": [],
+			"fps": 30,
+			"anim": "singDOWN",
+			"loop": false,
+			"name": "spirit down_"
+		},
+		{
+			"offsets": [
+				-200,
+				-280
+			],
+			"indices": [],
+			"fps": 30,
+			"anim": "singLEFT",
+			"loop": false,
+			"name": "left_"
+		},
+		{
+			"offsets": [
+				-220,
+				-280
+			],
+			"indices": [],
+			"fps": 30,
+			"anim": "singRIGHT",
+			"loop": false,
+			"name": "right_"
+		}
+	],
+	"no_antialiasing": true,
+	"image": "characters/spirit-fatassmod",
+	"position": [
+		-150,
+		100
+	],
+	"healthicon": "spirit-fatassmod",
+	"flip_x": false,
+	"healthbar_colors": [
+		244,
+		242,
+		114
+	],
+	"camera_position": [
+		0,
+		0
+	],
+	"sing_duration": 4,
+	"scale": 6
+}

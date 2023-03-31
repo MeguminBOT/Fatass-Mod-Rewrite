@@ -1,0 +1,40 @@
+{
+	"storyName": "Fat-Ass Mod Specials - Soulless Series",
+	"difficulties": "Expert, Unfair",
+	"hideFreeplay": false,
+	"weekBackground": "no_menu_background",
+	"freeplayColor": [
+		25,
+		28,
+		56
+	],
+	"weekBefore": "week6-bsides",
+	"startUnlocked": true,
+	"songs": [
+		[
+			"soulless4-fnf-cover",
+			"week-fatass-clonehero",
+			[
+				255,
+				140,
+				0
+			]
+		],
+		[
+			"soulless5-fnf-cover",
+			"week-fatass-clonehero",
+			[
+				146,
+				113,
+				253
+			]
+		]
+	],
+	"hideStoryMode": true,
+	"weekCharacters": [
+		"no_menu_character",
+		"no_menu_character",
+		"no_menu_character"
+	],
+	"weekName": "week-fatassmod-soulless"
+}

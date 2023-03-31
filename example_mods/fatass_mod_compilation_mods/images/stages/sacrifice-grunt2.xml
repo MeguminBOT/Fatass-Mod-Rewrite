@@ -1,0 +1,27 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TextureAtlas imagePath="sacrifice-grunt2.png">
+	<!-- Created with Adobe Animate version 21.0.4.39603 -->
+	<!-- http://www.adobe.com/products/animate.html -->
+	<SubTexture name="grunt0000" x="0" y="0" width="1148" height="653"/>
+	<SubTexture name="grunt0001" x="1148" y="0" width="1148" height="653"/>
+	<SubTexture name="grunt0002" x="2296" y="0" width="1148" height="653"/>
+	<SubTexture name="grunt0003" x="3444" y="0" width="1148" height="653"/>
+	<SubTexture name="grunt0004" x="4592" y="0" width="1148" height="653"/>
+	<SubTexture name="grunt0005" x="5740" y="0" width="1148" height="653"/>
+	<SubTexture name="grunt0006" x="6888" y="0" width="1148" height="653"/>
+	<SubTexture name="grunt0007" x="0" y="653" width="1148" height="653"/>
+	<SubTexture name="grunt0008" x="1148" y="653" width="1148" height="653"/>
+	<SubTexture name="grunt0009" x="2296" y="653" width="1148" height="653"/>
+	<SubTexture name="grunt0010" x="3444" y="653" width="1148" height="653"/>
+	<SubTexture name="grunt0011" x="4592" y="653" width="1148" height="653"/>
+	<SubTexture name="grunt0012" x="5740" y="653" width="1148" height="653"/>
+	<SubTexture name="grunt0013" x="6888" y="653" width="1148" height="653"/>
+	<SubTexture name="grunt0014" x="0" y="1306" width="1148" height="653"/>
+	<SubTexture name="grunt0015" x="1148" y="1306" width="1148" height="653"/>
+	<SubTexture name="grunt0016" x="2296" y="1306" width="1148" height="653"/>
+	<SubTexture name="grunt0017" x="3444" y="1306" width="1148" height="653"/>
+	<SubTexture name="grunt0018" x="4592" y="1306" width="1148" height="653"/>
+	<SubTexture name="grunt0019" x="5740" y="1306" width="1148" height="653"/>
+	<SubTexture name="grunt0020" x="6888" y="1306" width="1148" height="653"/>
+	<SubTexture name="grunt0021" x="6888" y="1306" width="1148" height="653"/>
+</TextureAtlas>

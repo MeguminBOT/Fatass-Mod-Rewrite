@@ -1,0 +1,49 @@
+{
+	"storyName": "High Effort Finn and Jake (Pibby x FNF)",
+	"difficulties": "Normal, Hard, Insane",
+	"hideFreeplay": false,
+	"weekBackground": "no_menu_background",
+	"freeplayColor": [
+		146,
+		113,
+		253
+	],
+	"weekBefore": "week6-bsides",
+	"startUnlocked": true,
+	"weekCharacters": [
+		"no_menu_character",
+		"no_menu_character",
+		"no_menu_character"
+	],
+	"songs": [
+		[
+			"CORRUPTED-HERO",
+			"corrupted-finn",
+			[
+				20,
+				20,
+				20
+			]
+		],
+		[
+			"BROTHERLY-BOND",
+			"corrupted-jake",
+			[
+				20,
+				20,
+				20
+			]
+		],
+		[
+			"NO-HERO",
+			"corrupted-finn",
+			[
+				20,
+				20,
+				20
+			]
+		]
+	],
+	"hideStoryMode": true,
+	"weekName": "week-pibby"
+}

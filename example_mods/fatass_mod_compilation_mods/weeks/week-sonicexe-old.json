@@ -1,0 +1,49 @@
+{
+	"storyName": "Sonic.exe V1",
+	"difficulties": "Normal, Hard, Insane",
+	"hideFreeplay": false,
+	"weekBackground": "no_menu_background",
+	"freeplayColor": [
+		50,
+		255,
+		50
+	],
+	"weekBefore": "week6-bsides",
+	"startUnlocked": true,
+	"hideStoryMode": true,
+	"weekCharacters": [
+		"no_menu_character",
+		"no_menu_character",
+		"no_menu_character"
+	],
+	"songs": [
+		[
+			"too-slow-old",
+			"sonicexe-old",
+			[
+				0,
+				70,
+				150
+			]
+		],
+		[
+			"endless-old",
+			"sonicexe-old-endless",
+			[
+				5,
+				5,
+				60
+			]
+		],
+		[
+			"execution-old",
+			"sonicexe-old-lordX",
+			[
+				90,
+				88,
+				160
+			]
+		]
+	],
+	"weekName": "week-sonicexe-old"
+}

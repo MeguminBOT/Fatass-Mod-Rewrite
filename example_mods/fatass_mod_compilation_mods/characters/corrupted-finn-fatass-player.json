@@ -1,0 +1,89 @@
+{
+	"animations": [
+		{
+			"loop": false,
+			"offsets": [
+				6,
+				-80
+			],
+			"anim": "idle",
+			"fps": 48,
+			"name": "finn idle",
+			"indices": []
+		},
+		{
+			"loop": false,
+			"offsets": [
+				-90,
+				-70
+			],
+			"anim": "singLEFT",
+			"fps": 48,
+			"name": "finn left",
+			"indices": []
+		},
+		{
+			"loop": false,
+			"offsets": [
+				19,
+				-240
+			],
+			"anim": "singDOWN",
+			"fps": 48,
+			"name": "finn down",
+			"indices": []
+		},
+		{
+			"loop": false,
+			"offsets": [
+				-68,
+				100
+			],
+			"anim": "singUP",
+			"fps": 48,
+			"name": "finn up",
+			"indices": []
+		},
+		{
+			"loop": false,
+			"offsets": [
+				59,
+				-73
+			],
+			"anim": "singRIGHT",
+			"fps": 48,
+			"name": "finn right",
+			"indices": []
+		},
+		{
+			"loop": false,
+			"offsets": [
+				285,
+				98
+			],
+			"anim": "attack",
+			"fps": 72,
+			"name": "finn attack",
+			"indices": []
+		}
+	],
+	"no_antialiasing": false,
+	"image": "characters/corrupted-finn",
+	"position": [
+		0,
+		150
+	],
+	"healthicon": "corrupted-finn",
+	"flip_x": false,
+	"healthbar_colors": [
+		0,
+		0,
+		0
+	],
+	"camera_position": [
+		200,
+		0
+	],
+	"sing_duration": 6.1,
+	"scale": 1.2
+}
