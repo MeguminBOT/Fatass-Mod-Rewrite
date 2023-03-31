@@ -1,0 +1,49 @@
+{
+	"songs": [
+		[
+			"the-anger-of-god",
+			"jebus-infected",
+			[
+				146,
+				113,
+				253
+			]
+		],
+		[
+			"1corekiller",
+			"jebus-infected",
+			[
+				146,
+				113,
+				253
+			]
+		],
+		[
+			"1corekiller-alt",
+			"jebus-infected",
+			[
+				146,
+				113,
+				253
+			]
+		]
+	],
+	"hideFreeplay": false,
+	"weekBackground": "no_menu_background",
+	"weekCharacters": [
+		"no_menu_character",
+		"no_menu_character",
+		"no_menu_character"
+	],
+	"storyName": "Madness Combat - Jebus",
+	"difficulties": "Normal, Hard, Insane, Expert",
+	"weekName": "week-madness-combat-jebus",
+	"freeplayColor": [
+		146,
+		113,
+		253
+	],
+	"hideStoryMode": true,
+	"weekBefore": "week6-bsides",
+	"startUnlocked": true
+}

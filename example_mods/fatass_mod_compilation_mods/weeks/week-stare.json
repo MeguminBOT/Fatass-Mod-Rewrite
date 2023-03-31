@@ -1,0 +1,49 @@
+{
+	"storyName": "starecrown",
+	"difficulties": "Normal, Hard, Insane",
+	"hideFreeplay": false,
+	"weekBackground": "no_menu_background",
+	"freeplayColor": [
+		146,
+		113,
+		253
+	],
+	"weekBefore": "week6-bsides",
+	"startUnlocked": true,
+	"weekCharacters": [
+		"no_menu_character",
+		"no_menu_character",
+		"no_menu_character"
+	],
+	"songs": [
+		[
+			"stare",
+			"starecrown",
+			[
+				135,
+				80,
+				20
+			]
+		],
+		[
+			"staredown",
+			"starecrown2",
+			[
+				135,
+				80,
+				20
+			]
+		],
+		[
+			"body-inversion",
+			"starecrown3",
+			[
+				46,
+				20,
+				60
+			]
+		]
+	],
+	"hideStoryMode": true,
+	"weekName": "week-stare"
+}

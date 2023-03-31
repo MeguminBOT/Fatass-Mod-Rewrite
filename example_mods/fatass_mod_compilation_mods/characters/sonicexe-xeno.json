@@ -1,0 +1,100 @@
+{
+	"animations": [
+		{
+			"offsets": [
+				18,
+				11
+			],
+			"loop": false,
+			"fps": 24,
+			"anim": "idle",
+			"indices": [],
+			"name": "Beast_IDLE"
+		},
+		{
+			"offsets": [
+				40,
+				-73
+			],
+			"loop": false,
+			"fps": 24,
+			"anim": "singDOWN",
+			"indices": [],
+			"name": "Beast_DOWN"
+		},
+		{
+			"offsets": [
+				182,
+				-73
+			],
+			"loop": false,
+			"fps": 24,
+			"anim": "singLEFT",
+			"indices": [],
+			"name": "Beast_LEFT"
+		},
+		{
+			"offsets": [
+				61,
+				79
+			],
+			"loop": false,
+			"fps": 24,
+			"anim": "singUP",
+			"indices": [],
+			"name": "Beast_UP"
+		},
+		{
+			"offsets": [
+				-159,
+				-43
+			],
+			"loop": false,
+			"fps": 24,
+			"anim": "singRIGHT",
+			"indices": [],
+			"name": "Beast_RIGHT"
+		},
+		{
+			"offsets": [
+				-101,
+				-207
+			],
+			"loop": true,
+			"fps": 64,
+			"anim": "Laugh",
+			"indices": [],
+			"name": "Beast_LAUGH"
+		},
+		{
+			"offsets": [
+				-81,
+				-190
+			],
+			"loop": false,
+			"fps": 24,
+			"anim": "singDOWN-alt",
+			"indices": [],
+			"name": "Beast_LAUGH"
+		}
+	],
+	"no_antialiasing": false,
+	"image": "characters/sonicexe-xeno",
+	"position": [
+		0,
+		-150
+	],
+	"healthicon": "sonicexe-xeno",
+	"flip_x": false,
+	"healthbar_colors": [
+		42,
+		5,
+		118
+	],
+	"camera_position": [
+		190,
+		150
+	],
+	"sing_duration": 6.1,
+	"scale": 0.9
+}

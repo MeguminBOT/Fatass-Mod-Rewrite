@@ -1,0 +1,71 @@
+{
+	"song": {
+		"speed": 3.6,
+		"stage": "sonicexe-forest",
+		"player1": "bf",
+		"player2": "sonicexe-fatass",
+		"player3": null,
+		"events": [
+			[
+				0,
+				[
+					[
+						"Hide Hud",
+						"1",
+						""
+					]
+				]
+			],
+			[
+				623.376623376623,
+				[
+					[
+						"Play Animation",
+						"I AM GOD",
+						"Dad"
+					]
+				]
+			],
+			[
+				5521.33580705009,
+				[
+					[
+						"Hide Hud",
+						"2",
+						""
+					]
+				]
+			],
+			[
+				77521.3358070501,
+				[
+					[
+						"Hide Hud",
+						"1",
+						""
+					]
+				]
+			],
+			[
+				79497.8983070501,
+				[
+					[
+						"Hide Hud",
+						"2",
+						""
+					]
+				]
+			]
+		],
+		"notes": [],
+		"splashSkin": "noteSplashes",
+		"numerator": 4,
+		"validScore": false,
+		"denominator": 4,
+		"gfVersion": "no-gf-speaker",
+		"bpm": 240,
+		"arrowSkin": "",
+		"needsVoices": true,
+		"song": "Too-Slow-Fatass-Remix"
+	}
+}

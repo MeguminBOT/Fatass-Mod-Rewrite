@@ -1,0 +1,49 @@
+{
+	"storyName": "Tabi",
+	"difficulties": "Normal, Hard, Insane",
+	"hideFreeplay": false,
+	"weekBackground": "no_menu_background",
+	"weekBefore": "week6-bsides",
+	"freeplayColor": [
+		146,
+		113,
+		253
+	],
+	"startUnlocked": true,
+	"songs": [
+		[
+			"my-battle",
+			"tabi",
+			[
+				146,
+				113,
+				75
+			]
+		],
+		[
+			"last-chance",
+			"tabi",
+			[
+				126,
+				93,
+				55
+			]
+		],
+		[
+			"genocide",
+			"tabi-mad",
+			[
+				106,
+				73,
+				35
+			]
+		]
+	],
+	"hideStoryMode": true,
+	"weekCharacters": [
+		"no_menu_character",
+		"no_menu_character",
+		"no_menu_character"
+	],
+	"weekName": "week-tabi"
+}

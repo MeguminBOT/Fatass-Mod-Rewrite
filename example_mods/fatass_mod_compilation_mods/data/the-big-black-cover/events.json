@@ -1,0 +1,71 @@
+{
+	"song": {
+		"speed": 4,
+		"stage": "tricky-island",
+		"player1": "bf",
+		"player2": "tricky",
+		"player3": null,
+		"events": [
+			[
+				61622.4567636044,
+				[
+					[
+						"imageflash",
+						"lorem-ipsum-popup",
+						"1"
+					]
+				]
+			],
+			[
+				62578.7067636044,
+				[
+					[
+						"imageflash",
+						"static",
+						"0.03"
+					]
+				]
+			],
+			[
+				62745.373430271,
+				[
+					[
+						"imageflash",
+						"static",
+						"0.03"
+					]
+				]
+			],
+			[
+				62912.0400969377,
+				[
+					[
+						"imageflash",
+						"static",
+						"0.03"
+					]
+				]
+			],
+			[
+				84662.0400969376,
+				[
+					[
+						"Change Character",
+						"BF",
+						"bf"
+					]
+				]
+			]
+		],
+		"notes": [],
+		"splashSkin": null,
+		"numerator": 4,
+		"validScore": false,
+		"denominator": 4,
+		"gfVersion": "gf",
+		"bpm": 180,
+		"arrowSkin": null,
+		"needsVoices": true,
+		"song": "The-Big-Black-cover"
+	}
+}

@@ -1,0 +1,31 @@
+{
+	"storyName": "Week 69 Erect Remixes2",
+	"difficulties": "Normal, Hard, Insane, Expert",
+	"hideFreeplay": false,
+	"weekBackground": "no_menu_background",
+	"freeplayColor": [
+		146,
+		113,
+		253
+	],
+	"weekBefore": "week6-bsides",
+	"startUnlocked": true,
+	"weekCharacters": [
+		"no_menu_character",
+		"no_menu_character",
+		"no_menu_character"
+	],
+	"songs": [
+		[
+			"thorns-leebert",
+			"spirit-grey",
+			[
+				60,
+				60,
+				60
+			]
+		]
+	],
+	"hideStoryMode": true,
+	"weekName": "week69-erect-remixes2"
+}

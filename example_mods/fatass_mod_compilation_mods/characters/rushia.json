@@ -1,0 +1,189 @@
+{
+	"animations": [
+		{
+			"loop": false,
+			"offsets": [
+				109,
+				-199
+			],
+			"anim": "singLEFT-alt",
+			"fps": 24,
+			"name": "Sing Left-alt",
+			"indices": []
+		},
+		{
+			"loop": false,
+			"offsets": [
+				66,
+				-226
+			],
+			"anim": "singDOWN-alt",
+			"fps": 24,
+			"name": "Sing Down-alt",
+			"indices": []
+		},
+		{
+			"loop": false,
+			"offsets": [
+				5,
+				-255
+			],
+			"anim": "singRIGHT-alt",
+			"fps": 24,
+			"name": "Sing Right-alt",
+			"indices": []
+		},
+		{
+			"loop": false,
+			"offsets": [
+				95,
+				-193
+			],
+			"anim": "singUP-alt",
+			"fps": 24,
+			"name": "Sing Up-alt",
+			"indices": []
+		},
+		{
+			"loop": false,
+			"offsets": [
+				140,
+				-340
+			],
+			"anim": "hey",
+			"fps": 24,
+			"name": "Hey",
+			"indices": []
+		},
+		{
+			"loop": false,
+			"offsets": [
+				66,
+				-175
+			],
+			"anim": "singDOWN",
+			"fps": 24,
+			"name": "Sing Down",
+			"indices": [
+				1,
+				2,
+				3,
+				4,
+				5,
+				6,
+				7,
+				8
+			]
+		},
+		{
+			"loop": false,
+			"offsets": [
+				76,
+				-166
+			],
+			"anim": "singUP",
+			"fps": 24,
+			"name": "Sing Up",
+			"indices": [
+				1,
+				2,
+				3,
+				4,
+				5,
+				6,
+				7,
+				8
+			]
+		},
+		{
+			"loop": false,
+			"offsets": [
+				110,
+				-151
+			],
+			"anim": "singLEFT",
+			"fps": 24,
+			"name": "Sing Left",
+			"indices": [
+				1,
+				2,
+				3,
+				4,
+				5,
+				6,
+				7,
+				8
+			]
+		},
+		{
+			"loop": false,
+			"offsets": [
+				70,
+				-192
+			],
+			"anim": "singRIGHT",
+			"fps": 24,
+			"name": "Sing Right",
+			"indices": [
+				1,
+				2,
+				3,
+				4,
+				5,
+				6,
+				7,
+				8
+			]
+		},
+		{
+			"offsets": [
+				86,
+				-244
+			],
+			"indices": [],
+			"fps": 24,
+			"anim": "idle-alt",
+			"loop": true,
+			"name": "Idle-alt"
+		},
+		{
+			"offsets": [
+				2,
+				-237
+			],
+			"indices": [
+				1,
+				2,
+				3,
+				4,
+				5,
+				6,
+				7,
+				8
+			],
+			"fps": 24,
+			"anim": "idle",
+			"loop": false,
+			"name": "Idle"
+		}
+	],
+	"no_antialiasing": false,
+	"image": "characters/rushia",
+	"position": [
+		0,
+		0
+	],
+	"healthicon": "rushia",
+	"flip_x": false,
+	"healthbar_colors": [
+		63,
+		255,
+		174
+	],
+	"camera_position": [
+		100,
+		250
+	],
+	"sing_duration": 6.1,
+	"scale": 0.8
+}

@@ -1,0 +1,2108 @@
+{
+	"song": {
+		"speed": 3.2,
+		"stage": "gunfight",
+		"player1": "bf-hank",
+		"player2": "hank",
+		"player3": null,
+		"events": [
+			[
+				34203.2967032967,
+				[
+					[
+						"Hey!",
+						"BF",
+						""
+					]
+				]
+			],
+			[
+				34532.967032967,
+				[
+					[
+						"Play Animation",
+						"shootLEFT",
+						"hank"
+					]
+				]
+			],
+			[
+				34697.8021978022,
+				[
+					[
+						"Play Animation",
+						"shootRIGHT",
+						"hank"
+					]
+				]
+			],
+			[
+				35521.978021978,
+				[
+					[
+						"Hey!",
+						"BF",
+						""
+					]
+				]
+			],
+			[
+				35851.6483516484,
+				[
+					[
+						"Play Animation",
+						"shootUP",
+						"hank"
+					]
+				]
+			],
+			[
+				36016.4835164835,
+				[
+					[
+						"Play Animation",
+						"shootRIGHT",
+						"hank"
+					]
+				]
+			],
+			[
+				36098.9010989011,
+				[
+					[
+						"Play Animation",
+						"shootDOWN",
+						"hank"
+					]
+				]
+			],
+			[
+				36263.7362637363,
+				[
+					[
+						"Play Animation",
+						"hankready",
+						"hank"
+					]
+				]
+			],
+			[
+				41456.043956044,
+				[
+					[
+						"Alt Idle Animation",
+						"GF",
+						""
+					]
+				]
+			],
+			[
+				42115.3846153846,
+				[
+					[
+						"Play Animation",
+						"shootUP",
+						"hank"
+					]
+				]
+			],
+			[
+				42280.2197802198,
+				[
+					[
+						"Play Animation",
+						"shootRIGHT",
+						"hank"
+					]
+				]
+			],
+			[
+				42445.0549450549,
+				[
+					[
+						"Play Animation",
+						"shootRIGHT",
+						"hank"
+					]
+				]
+			],
+			[
+				42609.8901098901,
+				[
+					[
+						"Play Animation",
+						"shootLEFT",
+						"hank"
+					]
+				]
+			],
+			[
+				43434.0659340659,
+				[
+					[
+						"Play Animation",
+						"shootRIGHT",
+						"hank"
+					]
+				]
+			],
+			[
+				43598.9010989011,
+				[
+					[
+						"Play Animation",
+						"shootUP",
+						"hank"
+					]
+				]
+			],
+			[
+				43763.7362637363,
+				[
+					[
+						"Play Animation",
+						"shootUP",
+						"hank"
+					]
+				]
+			],
+			[
+				44010.989010989,
+				[
+					[
+						"Play Animation",
+						"shootLEFT",
+						"hank"
+					]
+				]
+			],
+			[
+				44752.7472527472,
+				[
+					[
+						"Play Animation",
+						"shootDOWN",
+						"hank"
+					]
+				]
+			],
+			[
+				44917.5824175824,
+				[
+					[
+						"Play Animation",
+						"shootDOWN",
+						"hank"
+					]
+				]
+			],
+			[
+				45082.4175824176,
+				[
+					[
+						"Play Animation",
+						"shootDOWN",
+						"hank"
+					]
+				]
+			],
+			[
+				46071.4285714286,
+				[
+					[
+						"Play Animation",
+						"shootUP",
+						"hank"
+					]
+				]
+			],
+			[
+				46236.2637362637,
+				[
+					[
+						"Play Animation",
+						"shootRIGHT",
+						"hank"
+					]
+				]
+			],
+			[
+				46401.0989010989,
+				[
+					[
+						"Play Animation",
+						"shootUP",
+						"hank"
+					]
+				]
+			],
+			[
+				46565.9340659341,
+				[
+					[
+						"Play Animation",
+						"shootDOWN",
+						"hank"
+					]
+				]
+			],
+			[
+				46648.3516483516,
+				[
+					[
+						"Play Animation",
+						"shootDOWN",
+						"hank"
+					]
+				]
+			],
+			[
+				46978.021978022,
+				[
+					[
+						"Play Animation",
+						"hankready",
+						"hank"
+					]
+				]
+			],
+			[
+				47390.1098901099,
+				[
+					[
+						"Play Animation",
+						"shootUP",
+						"hank"
+					]
+				]
+			],
+			[
+				47554.945054945,
+				[
+					[
+						"Play Animation",
+						"shootUP",
+						"hank"
+					]
+				]
+			],
+			[
+				47719.7802197802,
+				[
+					[
+						"Play Animation",
+						"shootUP",
+						"hank"
+					]
+				]
+			],
+			[
+				47884.6153846154,
+				[
+					[
+						"Play Animation",
+						"hankready",
+						"hank"
+					]
+				]
+			],
+			[
+				48708.7912087912,
+				[
+					[
+						"Play Animation",
+						"shootDOWN",
+						"hank"
+					]
+				]
+			],
+			[
+				48873.6263736264,
+				[
+					[
+						"Play Animation",
+						"shootRIGHT",
+						"hank"
+					]
+				]
+			],
+			[
+				49038.4615384615,
+				[
+					[
+						"Play Animation",
+						"shootDOWN",
+						"hank"
+					]
+				]
+			],
+			[
+				49203.2967032967,
+				[
+					[
+						"Play Animation",
+						"hankready",
+						"hank"
+					]
+				]
+			],
+			[
+				50027.4725274725,
+				[
+					[
+						"Play Animation",
+						"shootUP",
+						"hank"
+					]
+				]
+			],
+			[
+				50192.3076923077,
+				[
+					[
+						"Play Animation",
+						"shootRIGHT",
+						"hank"
+					]
+				]
+			],
+			[
+				50357.1428571428,
+				[
+					[
+						"Play Animation",
+						"shootUP",
+						"hank"
+					]
+				]
+			],
+			[
+				50521.978021978,
+				[
+					[
+						"Play Animation",
+						"hankready",
+						"hank"
+					]
+				]
+			],
+			[
+				51346.1538461538,
+				[
+					[
+						"Play Animation",
+						"shootDOWN",
+						"hank"
+					]
+				]
+			],
+			[
+				51428.5714285714,
+				[
+					[
+						"Play Animation",
+						"shootRIGHT",
+						"hank"
+					]
+				]
+			],
+			[
+				51510.989010989,
+				[
+					[
+						"Play Animation",
+						"shootUP",
+						"hank"
+					]
+				]
+			],
+			[
+				51593.4065934066,
+				[
+					[
+						"Play Animation",
+						"shootDOWN",
+						"hank"
+					]
+				]
+			],
+			[
+				51675.8241758242,
+				[
+					[
+						"Play Animation",
+						"shootRIGHT",
+						"hank"
+					]
+				]
+			],
+			[
+				51758.2417582417,
+				[
+					[
+						"Play Animation",
+						"shootDOWN",
+						"hank"
+					]
+				]
+			],
+			[
+				51840.6593406593,
+				[
+					[
+						"Play Animation",
+						"shootDOWN",
+						"hank"
+					]
+				]
+			],
+			[
+				51923.0769230769,
+				[
+					[
+						"Play Animation",
+						"shootDOWN",
+						"hank"
+					]
+				]
+			],
+			[
+				52335.1648351648,
+				[
+					[
+						"Play Animation",
+						"shootRIGHT",
+						"hank"
+					]
+				]
+			],
+			[
+				52500,
+				[
+					[
+						"Play Animation",
+						"shootDOWN",
+						"hank"
+					]
+				]
+			],
+			[
+				53076.923076923,
+				[
+					[
+						"Play Animation",
+						"shootDOWN",
+						"hank"
+					]
+				]
+			],
+			[
+				53159.3406593406,
+				[
+					[
+						"Play Animation",
+						"shootDOWN",
+						"hank"
+					]
+				]
+			],
+			[
+				53241.7582417582,
+				[
+					[
+						"Play Animation",
+						"shootUP",
+						"hank"
+					]
+				]
+			],
+			[
+				53324.1758241758,
+				[
+					[
+						"Play Animation",
+						"shootUP",
+						"hank"
+					]
+				]
+			],
+			[
+				53653.8461538461,
+				[
+					[
+						"Play Animation",
+						"shootUP",
+						"hank"
+					]
+				]
+			],
+			[
+				53818.6813186813,
+				[
+					[
+						"Play Animation",
+						"shootDOWN",
+						"hank"
+					]
+				]
+			],
+			[
+				53983.5164835165,
+				[
+					[
+						"Play Animation",
+						"shootUP",
+						"hank"
+					]
+				]
+			],
+			[
+				54313.1868131868,
+				[
+					[
+						"Play Animation",
+						"shootDOWN",
+						"hank"
+					]
+				]
+			],
+			[
+				54478.0219780219,
+				[
+					[
+						"Play Animation",
+						"shootUP",
+						"hank"
+					]
+				]
+			],
+			[
+				54972.5274725274,
+				[
+					[
+						"Play Animation",
+						"shootUP",
+						"hank"
+					]
+				]
+			],
+			[
+				55137.3626373626,
+				[
+					[
+						"Play Animation",
+						"shootRIGHT",
+						"hank"
+					]
+				]
+			],
+			[
+				55302.1978021978,
+				[
+					[
+						"Play Animation",
+						"shootUP",
+						"hank"
+					]
+				]
+			],
+			[
+				55631.8681318681,
+				[
+					[
+						"Play Animation",
+						"shootRIGHT",
+						"hank"
+					]
+				]
+			],
+			[
+				55714.2857142857,
+				[
+					[
+						"Play Animation",
+						"shootRIGHT",
+						"hank"
+					]
+				]
+			],
+			[
+				55796.7032967033,
+				[
+					[
+						"Play Animation",
+						"shootDOWN",
+						"hank"
+					]
+				]
+			],
+			[
+				55879.1208791208,
+				[
+					[
+						"Play Animation",
+						"shootUP",
+						"hank"
+					]
+				]
+			],
+			[
+				55961.5384615384,
+				[
+					[
+						"Play Animation",
+						"shootUP",
+						"hank"
+					]
+				]
+			],
+			[
+				56126.3736263736,
+				[
+					[
+						"Play Animation",
+						"shootUP",
+						"hank"
+					]
+				]
+			],
+			[
+				56208.7912087912,
+				[
+					[
+						"Play Animation",
+						"shootRIGHT",
+						"hank"
+					]
+				]
+			],
+			[
+				56291.2087912088,
+				[
+					[
+						"Play Animation",
+						"shootRIGHT",
+						"hank"
+					]
+				]
+			],
+			[
+				56456.0439560439,
+				[
+					[
+						"Play Animation",
+						"shootUP",
+						"hank"
+					]
+				]
+			],
+			[
+				56620.8791208791,
+				[
+					[
+						"Play Animation",
+						"shootUP",
+						"hank"
+					]
+				]
+			],
+			[
+				56785.7142857143,
+				[
+					[
+						"Play Animation",
+						"shootUP",
+						"hank"
+					]
+				]
+			],
+			[
+				56950.5494505494,
+				[
+					[
+						"Play Animation",
+						"shootRIGHT",
+						"hank"
+					]
+				]
+			],
+			[
+				57115.3846153846,
+				[
+					[
+						"Play Animation",
+						"shootRIGHT",
+						"hank"
+					]
+				]
+			],
+			[
+				57197.8021978022,
+				[
+					[
+						"Play Animation",
+						"shootUP",
+						"hank"
+					]
+				]
+			],
+			[
+				58104.3956043956,
+				[
+					[
+						"Play Animation",
+						"hankready",
+						"hank"
+					]
+				]
+			],
+			[
+				60082.4175824175,
+				[
+					[
+						"Play Animation",
+						"hankready",
+						"hank"
+					]
+				]
+			],
+			[
+				61401.0989010989,
+				[
+					[
+						"Play Animation",
+						"shootRIGHT",
+						"hank"
+					]
+				]
+			],
+			[
+				61483.5164835164,
+				[
+					[
+						"Play Animation",
+						"shootUP",
+						"hank"
+					]
+				]
+			],
+			[
+				61565.934065934,
+				[
+					[
+						"Play Animation",
+						"shootRIGHT",
+						"hank"
+					]
+				]
+			],
+			[
+				62225.2747252747,
+				[
+					[
+						"Play Animation",
+						"shootRIGHT",
+						"hank"
+					]
+				]
+			],
+			[
+				62390.1098901098,
+				[
+					[
+						"Play Animation",
+						"shootRIGHT",
+						"hank"
+					]
+				]
+			],
+			[
+				63379.1208791208,
+				[
+					[
+						"Play Animation",
+						"shootRIGHT",
+						"hank"
+					]
+				]
+			],
+			[
+				63750,
+				[
+					[
+						"Play Animation",
+						"shootRIGHT",
+						"hank"
+					]
+				]
+			],
+			[
+				64862.6373626373,
+				[
+					[
+						"Play Animation",
+						"shootRIGHT",
+						"hank"
+					]
+				]
+			],
+			[
+				64945.0549450549,
+				[
+					[
+						"Play Animation",
+						"shootRIGHT",
+						"hank"
+					]
+				]
+			],
+			[
+				65027.4725274725,
+				[
+					[
+						"Play Animation",
+						"shootRIGHT",
+						"hank"
+					]
+				]
+			],
+			[
+				65109.8901098901,
+				[
+					[
+						"Play Animation",
+						"shootRIGHT",
+						"hank"
+					]
+				]
+			],
+			[
+				65769.2307692307,
+				[
+					[
+						"Play Animation",
+						"shootUP",
+						"hank"
+					]
+				]
+			],
+			[
+				66016.4835164835,
+				[
+					[
+						"Play Animation",
+						"shootRIGHT",
+						"hank"
+					]
+				]
+			],
+			[
+				66346.1538461538,
+				[
+					[
+						"Play Animation",
+						"shootRIGHT",
+						"hank"
+					]
+				]
+			],
+			[
+				67500,
+				[
+					[
+						"Play Animation",
+						"shootUP",
+						"hank"
+					]
+				]
+			],
+			[
+				67582.4175824175,
+				[
+					[
+						"Play Animation",
+						"shootRIGHT",
+						"hank"
+					]
+				]
+			],
+			[
+				67664.8351648351,
+				[
+					[
+						"Play Animation",
+						"shootUP",
+						"hank"
+					]
+				]
+			],
+			[
+				67747.2527472527,
+				[
+					[
+						"Play Animation",
+						"shootRIGHT",
+						"hank"
+					]
+				]
+			],
+			[
+				68818.6813186813,
+				[
+					[
+						"Play Animation",
+						"shootRIGHT",
+						"hank"
+					]
+				]
+			],
+			[
+				68983.5164835164,
+				[
+					[
+						"Play Animation",
+						"shootUP",
+						"hank"
+					]
+				]
+			],
+			[
+				70137.3626373626,
+				[
+					[
+						"Play Animation",
+						"shootUP",
+						"hank"
+					]
+				]
+			],
+			[
+				70302.1978021978,
+				[
+					[
+						"Play Animation",
+						"shootUP",
+						"hank"
+					]
+				]
+			],
+			[
+				70796.7032967033,
+				[
+					[
+						"Play Animation",
+						"shootUP",
+						"hank"
+					]
+				]
+			],
+			[
+				71043.956043956,
+				[
+					[
+						"Play Animation",
+						"shootUP",
+						"hank"
+					]
+				]
+			],
+			[
+				71291.2087912088,
+				[
+					[
+						"Play Animation",
+						"shootUP",
+						"hank"
+					]
+				]
+			],
+			[
+				71456.0439560439,
+				[
+					[
+						"Play Animation",
+						"shootRIGHT",
+						"hank"
+					]
+				]
+			],
+			[
+				71620.8791208791,
+				[
+					[
+						"Play Animation",
+						"shootRIGHT",
+						"hank"
+					]
+				]
+			],
+			[
+				72115.3846153846,
+				[
+					[
+						"Play Animation",
+						"shootUP",
+						"hank"
+					]
+				]
+			],
+			[
+				72527.4725274725,
+				[
+					[
+						"Play Animation",
+						"shootUP",
+						"hank"
+					]
+				]
+			],
+			[
+				72692.3076923077,
+				[
+					[
+						"Play Animation",
+						"shootRIGHT",
+						"hank"
+					]
+				]
+			],
+			[
+				72857.1428571428,
+				[
+					[
+						"Play Animation",
+						"shootUP",
+						"hank"
+					]
+				]
+			],
+			[
+				73021.978021978,
+				[
+					[
+						"Play Animation",
+						"shootRIGHT",
+						"hank"
+					]
+				]
+			],
+			[
+				74258.2417582417,
+				[
+					[
+						"Play Animation",
+						"shootRIGHT",
+						"hank"
+					]
+				]
+			],
+			[
+				75082.4175824176,
+				[
+					[
+						"Hey!",
+						"BF",
+						""
+					]
+				]
+			],
+			[
+				76071.4285714286,
+				[
+					[
+						"Play Animation",
+						"shootUP",
+						"hank"
+					]
+				]
+			],
+			[
+				76730.7692307692,
+				[
+					[
+						"Play Animation",
+						"shootUP",
+						"hank"
+					]
+				]
+			],
+			[
+				76895.6043956044,
+				[
+					[
+						"Play Animation",
+						"shootRIGHT",
+						"hank"
+					]
+				]
+			],
+			[
+				77390.1098901099,
+				[
+					[
+						"Play Animation",
+						"shootUP",
+						"hank"
+					]
+				]
+			],
+			[
+				77472.5274725275,
+				[
+					[
+						"Play Animation",
+						"shootUP",
+						"hank"
+					]
+				]
+			],
+			[
+				77554.945054945,
+				[
+					[
+						"Play Animation",
+						"shootUP",
+						"hank"
+					]
+				]
+			],
+			[
+				78131.8681318681,
+				[
+					[
+						"Play Animation",
+						"shootUP",
+						"hank"
+					]
+				]
+			],
+			[
+				78214.2857142857,
+				[
+					[
+						"Play Animation",
+						"shootUP",
+						"hank"
+					]
+				]
+			],
+			[
+				78296.7032967033,
+				[
+					[
+						"Play Animation",
+						"shootRIGHT",
+						"hank"
+					]
+				]
+			],
+			[
+				78461.5384615385,
+				[
+					[
+						"Play Animation",
+						"hankready",
+						"hank"
+					]
+				]
+			],
+			[
+				83324.1758241758,
+				[
+					[
+						"Play Animation",
+						"shootUP",
+						"hank"
+					]
+				]
+			],
+			[
+				83489.010989011,
+				[
+					[
+						"Play Animation",
+						"shootRIGHT",
+						"hank"
+					]
+				]
+			],
+			[
+				83983.5164835165,
+				[
+					[
+						"Play Animation",
+						"shootRIGHT",
+						"hank"
+					]
+				]
+			],
+			[
+				84148.3516483517,
+				[
+					[
+						"Play Animation",
+						"shootRIGHT",
+						"hank"
+					]
+				]
+			],
+			[
+				84642.8571428572,
+				[
+					[
+						"Play Animation",
+						"shootUP",
+						"hank"
+					]
+				]
+			],
+			[
+				84807.6923076923,
+				[
+					[
+						"Play Animation",
+						"shootRIGHT",
+						"hank"
+					]
+				]
+			],
+			[
+				85302.1978021978,
+				[
+					[
+						"Play Animation",
+						"shootUP",
+						"hank"
+					]
+				]
+			],
+			[
+				85631.8681318681,
+				[
+					[
+						"Play Animation",
+						"shootRIGHT",
+						"hank"
+					]
+				]
+			],
+			[
+				86043.9560439561,
+				[
+					[
+						"Play Animation",
+						"shootDOWN",
+						"hank"
+					]
+				]
+			],
+			[
+				86126.3736263737,
+				[
+					[
+						"Play Animation",
+						"shootRIGHT",
+						"hank"
+					]
+				]
+			],
+			[
+				86208.7912087912,
+				[
+					[
+						"Play Animation",
+						"shootUP",
+						"hank"
+					]
+				]
+			],
+			[
+				86620.8791208792,
+				[
+					[
+						"Play Animation",
+						"shootDOWN",
+						"hank"
+					]
+				]
+			],
+			[
+				86950.5494505495,
+				[
+					[
+						"Play Animation",
+						"shootDOWN",
+						"hank"
+					]
+				]
+			],
+			[
+				87280.2197802198,
+				[
+					[
+						"Play Animation",
+						"shootRIGHT",
+						"hank"
+					]
+				]
+			],
+			[
+				87445.054945055,
+				[
+					[
+						"Play Animation",
+						"shootDOWN",
+						"hank"
+					]
+				]
+			],
+			[
+				87939.5604395605,
+				[
+					[
+						"Play Animation",
+						"shootRIGHT",
+						"hank"
+					]
+				]
+			],
+			[
+				88186.8131868132,
+				[
+					[
+						"Hey!",
+						"BF",
+						""
+					]
+				]
+			],
+			[
+				88681.3186813187,
+				[
+					[
+						"Play Animation",
+						"shootDOWN",
+						"hank"
+					]
+				]
+			],
+			[
+				88763.7362637363,
+				[
+					[
+						"Play Animation",
+						"shootRIGHT",
+						"hank"
+					]
+				]
+			],
+			[
+				88846.1538461539,
+				[
+					[
+						"Play Animation",
+						"shootUP",
+						"hank"
+					]
+				]
+			],
+			[
+				89917.5824175825,
+				[
+					[
+						"Play Animation",
+						"shootDOWN",
+						"hank"
+					]
+				]
+			],
+			[
+				90741.7582417583,
+				[
+					[
+						"Play Animation",
+						"shootRIGHT",
+						"hank"
+					]
+				]
+			],
+			[
+				99725.2747252748,
+				[
+					[
+						"Play Animation",
+						"Scared",
+						"hank"
+					]
+				]
+			],
+			[
+				110439.560439561,
+				[
+					[
+						"Play Animation",
+						"Scared",
+						"hank"
+					]
+				]
+			],
+			[
+				121401.098901099,
+				[
+					[
+						"Play Animation",
+						"Scared",
+						"hank"
+					]
+				]
+			],
+			[
+				127087.912087912,
+				[
+					[
+						"Hey!",
+						"BF",
+						""
+					]
+				]
+			],
+			[
+				127500,
+				[
+					[
+						"Play Animation",
+						"shootRIGHT",
+						"hank"
+					]
+				]
+			],
+			[
+				128736.263736264,
+				[
+					[
+						"Hey!",
+						"BF",
+						""
+					]
+				]
+			],
+			[
+				129148.351648352,
+				[
+					[
+						"Play Animation",
+						"shootUP",
+						"hank"
+					]
+				]
+			],
+			[
+				129230.769230769,
+				[
+					[
+						"Play Animation",
+						"shootUP",
+						"hank"
+					]
+				]
+			],
+			[
+				129230.769230769,
+				[
+					[
+						"Play Animation",
+						"shootUP",
+						"hank"
+					]
+				]
+			],
+			[
+				129313.186813187,
+				[
+					[
+						"Play Animation",
+						"shootRIGHT",
+						"hank"
+					]
+				]
+			],
+			[
+				129478.021978022,
+				[
+					[
+						"Play Animation",
+						"shootRIGHT",
+						"hank"
+					]
+				]
+			],
+			[
+				129642.857142857,
+				[
+					[
+						"Play Animation",
+						"shootUP",
+						"hank"
+					]
+				]
+			],
+			[
+				131456.043956044,
+				[
+					[
+						"Play Animation",
+						"Scared",
+						"hank"
+					]
+				]
+			],
+			[
+				137142.857142857,
+				[
+					[
+						"Hey!",
+						"BF",
+						""
+					]
+				]
+			],
+			[
+				137554.945054945,
+				[
+					[
+						"Play Animation",
+						"shootUP",
+						"hank"
+					]
+				]
+			],
+			[
+				137884.615384616,
+				[
+					[
+						"Play Animation",
+						"shootRIGHT",
+						"hank"
+					]
+				],
+				null,
+				""
+			],
+			[
+				137967.032967033,
+				[
+					[
+						"Play Animation",
+						"shootDOWN",
+						"hank"
+					]
+				]
+			],
+			[
+				138049.450549451,
+				[
+					[
+						"Play Animation",
+						"shootDOWN",
+						"hank"
+					]
+				]
+			],
+			[
+				138090.659340659,
+				[
+					[
+						"Play Animation",
+						"shootDOWN",
+						"hank"
+					]
+				]
+			],
+			[
+				138173.076923077,
+				[
+					[
+						"Play Animation",
+						"shootRIGHT",
+						"hank"
+					]
+				]
+			],
+			[
+				138214.285714286,
+				[
+					[
+						"Play Animation",
+						"shootUP",
+						"hank"
+					]
+				]
+			],
+			[
+				138296.703296703,
+				[
+					[
+						"Play Animation",
+						"shootDOWN",
+						"hank"
+					]
+				]
+			],
+			[
+				138337.912087912,
+				[
+					[
+						"Play Animation",
+						"shootRIGHT",
+						"hank"
+					]
+				]
+			],
+			[
+				138379.120879121,
+				[
+					[
+						"Play Animation",
+						"shootUP",
+						"hank"
+					]
+				]
+			],
+			[
+				138708.791208791,
+				[
+					[
+						"Play Animation",
+						"shootDOWN",
+						"hank"
+					]
+				]
+			],
+			[
+				138873.626373626,
+				[
+					[
+						"Play Animation",
+						"shootUP",
+						"hank"
+					]
+				]
+			],
+			[
+				139697.802197802,
+				[
+					[
+						"Hey!",
+						"BF",
+						""
+					]
+				]
+			],
+			[
+				140192.307692308,
+				[
+					[
+						"Play Animation",
+						"shootUP",
+						"hank"
+					]
+				]
+			],
+			[
+				140521.978021978,
+				[
+					[
+						"Play Animation",
+						"shootUP",
+						"hank"
+					]
+				]
+			],
+			[
+				140686.813186813,
+				[
+					[
+						"Play Animation",
+						"shootDOWN",
+						"hank"
+					]
+				]
+			],
+			[
+				140769.230769231,
+				[
+					[
+						"Play Animation",
+						"shootUP",
+						"hank"
+					]
+				]
+			],
+			[
+				140810.43956044,
+				[
+					[
+						"Play Animation",
+						"shootRIGHT",
+						"hank"
+					]
+				]
+			],
+			[
+				140851.648351648,
+				[
+					[
+						"Play Animation",
+						"shootDOWN",
+						"hank"
+					]
+				]
+			],
+			[
+				140934.065934066,
+				[
+					[
+						"Play Animation",
+						"shootUP",
+						"hank"
+					]
+				]
+			],
+			[
+				140975.274725275,
+				[
+					[
+						"Play Animation",
+						"shootRIGHT",
+						"hank"
+					]
+				]
+			],
+			[
+				143406.593406594,
+				[
+					[
+						"Play Animation",
+						"shootDOWN",
+						"hank"
+					]
+				]
+			],
+			[
+				143489.010989011,
+				[
+					[
+						"Play Animation",
+						"shootUP",
+						"hank"
+					]
+				]
+			],
+			[
+				143571.428571429,
+				[
+					[
+						"Play Animation",
+						"shootRIGHT",
+						"hank"
+					]
+				]
+			],
+			[
+				143653.846153846,
+				[
+					[
+						"Play Animation",
+						"shootDOWN",
+						"hank"
+					]
+				]
+			],
+			[
+				147445.054945055,
+				[
+					[
+						"Play Animation",
+						"shootRIGHT",
+						"hank"
+					]
+				]
+			],
+			[
+				147609.89010989,
+				[
+					[
+						"Play Animation",
+						"shootRIGHT",
+						"hank"
+					]
+				]
+			],
+			[
+				147939.560439561,
+				[
+					[
+						"Play Animation",
+						"shootUP",
+						"hank"
+					]
+				]
+			],
+			[
+				148021.978021978,
+				[
+					[
+						"Play Animation",
+						"shootRIGHT",
+						"hank"
+					]
+				]
+			],
+			[
+				148104.395604396,
+				[
+					[
+						"Play Animation",
+						"shootUP",
+						"hank"
+					]
+				]
+			],
+			[
+				148598.901098901,
+				[
+					[
+						"Play Animation",
+						"shootDOWN",
+						"hank"
+					]
+				]
+			],
+			[
+				148763.736263736,
+				[
+					[
+						"Play Animation",
+						"shootUP",
+						"hank"
+					]
+				]
+			],
+			[
+				148928.571428571,
+				[
+					[
+						"Play Animation",
+						"shootDOWN",
+						"hank"
+					]
+				]
+			],
+			[
+				149258.241758242,
+				[
+					[
+						"Play Animation",
+						"scream",
+						"hank"
+					],
+					[
+						"Add Camera Zoom",
+						"0.4",
+						"0.03"
+					]
+				]
+			],
+			[
+				149835.164835165,
+				[
+					[
+						"Add Camera Zoom",
+						"0.015",
+						"0.03"
+					]
+				]
+			],
+			[
+				149917.582417582,
+				[
+					[
+						"Play Animation",
+						"shootUP",
+						"hank"
+					]
+				]
+			],
+			[
+				150082.417582418,
+				[
+					[
+						"Play Animation",
+						"shootDOWN",
+						"hank"
+					]
+				]
+			],
+			[
+				150247.252747253,
+				[
+					[
+						"Play Animation",
+						"shootUP",
+						"hank"
+					]
+				]
+			],
+			[
+				151236.263736264,
+				[
+					[
+						"Play Animation",
+						"shootRIGHT",
+						"hank"
+					]
+				]
+			],
+			[
+				151565.934065934,
+				[
+					[
+						"Play Animation",
+						"shootRIGHT",
+						"hank"
+					]
+				]
+			],
+			[
+				152554.945054945,
+				[
+					[
+						"Play Animation",
+						"shootRIGHT",
+						"hank"
+					]
+				]
+			],
+			[
+				152719.78021978,
+				[
+					[
+						"Play Animation",
+						"shootRIGHT",
+						"hank"
+					]
+				]
+			],
+			[
+				152884.615384615,
+				[
+					[
+						"Play Animation",
+						"shootRIGHT",
+						"hank"
+					]
+				]
+			],
+			[
+				154038.461538462,
+				[
+					[
+						"Play Animation",
+						"shootDOWN",
+						"hank"
+					]
+				]
+			],
+			[
+				155357.142857143,
+				[
+					[
+						"Play Animation",
+						"shootDOWN",
+						"hank"
+					]
+				]
+			],
+			[
+				155851.648351648,
+				[
+					[
+						"Play Animation",
+						"shootDOWN",
+						"hank"
+					]
+				]
+			],
+			[
+				156510.989010989,
+				[
+					[
+						"Play Animation",
+						"shootUP",
+						"hank"
+					]
+				]
+			],
+			[
+				156675.824175824,
+				[
+					[
+						"Play Animation",
+						"shootRIGHT",
+						"hank"
+					]
+				]
+			],
+			[
+				156840.659340659,
+				[
+					[
+						"Play Animation",
+						"shootUP",
+						"hank"
+					]
+				]
+			],
+			[
+				157252.747252747,
+				[
+					[
+						"Play Animation",
+						"shootRIGHT",
+						"hank"
+					]
+				]
+			],
+			[
+				157335.164835165,
+				[
+					[
+						"Play Animation",
+						"shootUP",
+						"hank"
+					]
+				]
+			],
+			[
+				157417.582417582,
+				[
+					[
+						"Play Animation",
+						"shootRIGHT",
+						"hank"
+					]
+				]
+			]
+		],
+		"notes": [],
+		"splashSkin": null,
+		"numerator": 4,
+		"validScore": false,
+		"denominator": 4,
+		"gfVersion": "gf-gunfight",
+		"bpm": 182,
+		"arrowSkin": null,
+		"needsVoices": true,
+		"song": "gunfight"
+	}
+}

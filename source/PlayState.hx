@@ -338,6 +338,18 @@ class PlayState extends MusicBeatState
 	var keyboardTimer:Int = 8;
 	var keyboard:FlxSprite;
 
+	public function createMsText() {
+		
+		var msText:ModchartText = new ModchartText(0, 575, '', 400);
+		modchartTexts.set('msText', msText);
+		msText.size = 26;
+		msText.borderSize = 2;
+		msText.borderColor = 0xff000000;
+		msText.font = Paths.font('rubik.ttf');
+		EtternaFunctions.msText = msText;
+		add(EtternaFunctions.msText);
+	}
+
 	override public function create()
 	{
 		//trace('Playback Rate: ' + playbackRate);
@@ -1398,6 +1410,10 @@ class PlayState extends MusicBeatState
 		
 		CustomFadeTransition.nextCamera = camOther;
 		if(eventNotes.length < 1) checkEventNote();
+
+		if (ClientPrefs.inputSystem == "Etterna") {
+			createMsText();
+		}
 	}
 
 	#if (!flash && sys)
@@ -3374,6 +3390,10 @@ class PlayState extends MusicBeatState
 		setOnLuas('cameraY', camFollowPos.y);
 		setOnLuas('botPlay', cpuControlled);
 		callOnLuas('onUpdatePost', [elapsed]);
+
+		if (ClientPrefs.inputSystem == "Etterna") {
+			EtternaFunctions.updateMsText();
+		}
 	}
 
 	function openPauseMenu()
@@ -4698,6 +4718,10 @@ class PlayState extends MusicBeatState
 		}
 
 		callOnLuas('noteMiss', [notes.members.indexOf(daNote), daNote.noteData, daNote.noteType, daNote.isSustainNote]);
+
+		if (ClientPrefs.inputSystem == "Etterna") {
+			EtternaFunctions.updateAccuracy(400, 0, 0);
+		}
 	}
 
 	function noteMissPress(direction:Int = 1):Void //You pressed a key when there was no notes to press for this key
@@ -4744,6 +4768,10 @@ class PlayState extends MusicBeatState
 			vocals.volume = 0;
 		}
 		callOnLuas('noteMissPress', [direction]);
+
+		if (ClientPrefs.inputSystem == "Etterna") {
+			EtternaFunctions.updateAccuracy(400, 0, 0);
+		}
 	}
 
 	function opponentNoteHit(note:Note):Void
@@ -4897,12 +4925,25 @@ class PlayState extends MusicBeatState
 			var leType:String = note.noteType;
 			callOnLuas('goodNoteHit', [notes.members.indexOf(note), leData, leType, isSus]);
 
+			if (ClientPrefs.inputSystem == "Etterna") {
+				goodNoteHitEtterna(notes.members.indexOf(note), leData, leType, isSus);
+			}
+
 			if (!note.isSustainNote)
 			{
 				note.kill();
 				notes.remove(note, true);
 				note.destroy();
 			}
+		}
+	}
+
+	public function goodNoteHitEtterna(id:Int, direction:Int, noteType:String, isSustainNote:Bool) {
+		if (!isSustainNote) {
+			var strumTime:Float = notes.members[id].strumTime;
+			var songPos:Float = Conductor.songPosition;
+			var rOffset:Int = ClientPrefs.ratingOffset;
+			EtternaFunctions.updateAccuracy(strumTime, songPos, rOffset);
 		}
 	}
 

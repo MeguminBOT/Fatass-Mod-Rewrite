@@ -1,0 +1,76 @@
+{
+	"storyName": "Week 69 Erect Remixes",
+	"difficulties": "Hard, Insane, Expert",
+	"hideFreeplay": false,
+	"weekBackground": "no_menu_background",
+	"freeplayColor": [
+		146,
+		113,
+		253
+	],
+	"weekBefore": "week6-bsides",
+	"startUnlocked": true,
+	"weekCharacters": [
+		"no_menu_character",
+		"no_menu_character",
+		"no_menu_character"
+	],
+	"songs": [
+		[
+			"dadbattle-erect",
+			"dad-dsides",
+			[
+				80,
+				80,
+				80
+			]
+		],
+		[
+			"south-erect",
+			"spooky",
+			[
+				175,
+				115,
+				0
+			]
+		],
+		[
+			"blammed-erect",
+			"pico",
+			[
+				180,
+				255,
+				0
+			]
+		],
+		[
+			"senpai-erect",
+			"senpai-erect",
+			[
+				35,
+				215,
+				135
+			]
+		],
+		[
+			"roses-erect",
+			"senpai-erect",
+			[
+				35,
+				215,
+				135
+			]
+		],
+		[
+			"thorns-brightfyre",
+			"spirit-bsides",
+			[
+				255,
+				120,
+				191
+			]
+		]
+	],
+	"hideStoryMode": true,
+	"weekName": "week69-erect-remixes"
+}

@@ -1,0 +1,1011 @@
+{
+	"song": {
+		"speed": 3.2,
+		"stage": "schoolEvil-recolour",
+		"player1": "bfPixel-isak",
+		"player2": "spirit-grey",
+		"player3": null,
+		"events": [
+			[
+				19200,
+				[
+					[
+						"CG Lights",
+						"dad",
+						"on"
+					]
+				]
+			],
+			[
+				19950,
+				[
+					[
+						"Play Animation",
+						"singRIGHT",
+						"dad"
+					]
+				]
+			],
+			[
+				22350,
+				[
+					[
+						"CG Lights",
+						"dad",
+						"off"
+					]
+				]
+			],
+			[
+				22501.687626572,
+				[
+					[
+						"imageflash",
+						"static",
+						"0.145"
+					],
+					[
+						"Drain",
+						"0.45",
+						""
+					],
+					[
+						"Screen Shake",
+						"0.145, 0.02",
+						""
+					]
+				]
+			],
+			[
+				22651.6988774158,
+				[
+					[
+						"imageflash",
+						"static",
+						"0.145"
+					],
+					[
+						"Drain",
+						"0.45",
+						""
+					],
+					[
+						"Screen Shake",
+						"0.145, 0.02",
+						""
+					]
+				]
+			],
+			[
+				22800,
+				[
+					[
+						"CG Lights",
+						"dad",
+						"on"
+					]
+				]
+			],
+			[
+				23925,
+				[
+					[
+						"CG Lights",
+						"dad",
+						"off"
+					]
+				]
+			],
+			[
+				24000,
+				[
+					[
+						"CG Lights",
+						"bf",
+						"on"
+					]
+				]
+			],
+			[
+				28202.1151586369,
+				[
+					[
+						"Play Animation",
+						"singUP",
+						"Dad"
+					]
+				]
+			],
+			[
+				28800,
+				[
+					[
+						"CG Lights",
+						"bf",
+						"off"
+					]
+				]
+			],
+			[
+				29102.1826636998,
+				[
+					[
+						"Trigger BG Ghouls",
+						"",
+						""
+					]
+				]
+			],
+			[
+				29700,
+				[
+					[
+						"Trigger BG Ghouls",
+						"",
+						""
+					]
+				]
+			],
+			[
+				30300,
+				[
+					[
+						"Trigger BG Ghouls",
+						"",
+						""
+					]
+				]
+			],
+			[
+				30900,
+				[
+					[
+						"Trigger BG Ghouls",
+						"",
+						""
+					]
+				]
+			],
+			[
+				31500,
+				[
+					[
+						"Trigger BG Ghouls",
+						"",
+						""
+					]
+				]
+			],
+			[
+				32102.407680576,
+				[
+					[
+						"Trigger BG Ghouls",
+						"",
+						""
+					]
+				]
+			],
+			[
+				32702.4526839513,
+				[
+					[
+						"Trigger BG Ghouls",
+						"",
+						""
+					]
+				]
+			],
+			[
+				33302.4976873265,
+				[
+					[
+						"Trigger BG Ghouls",
+						"",
+						""
+					]
+				]
+			],
+			[
+				33902.5426907018,
+				[
+					[
+						"Trigger BG Ghouls",
+						"",
+						""
+					]
+				]
+			],
+			[
+				34502.5876940771,
+				[
+					[
+						"Trigger BG Ghouls",
+						"",
+						""
+					]
+				]
+			],
+			[
+				35102.6326974523,
+				[
+					[
+						"Trigger BG Ghouls",
+						"",
+						""
+					]
+				]
+			],
+			[
+				35702.6777008276,
+				[
+					[
+						"Trigger BG Ghouls",
+						"",
+						""
+					]
+				]
+			],
+			[
+				36302.7227042028,
+				[
+					[
+						"Trigger BG Ghouls",
+						"",
+						""
+					]
+				]
+			],
+			[
+				36902.7677075781,
+				[
+					[
+						"Trigger BG Ghouls",
+						"",
+						""
+					]
+				]
+			],
+			[
+				37502.8127109533,
+				[
+					[
+						"Trigger BG Ghouls",
+						"",
+						""
+					]
+				]
+			],
+			[
+				38102.8577143286,
+				[
+					[
+						"Trigger BG Ghouls",
+						"",
+						""
+					]
+				]
+			],
+			[
+				38400,
+				[
+					[
+						"CG Lights",
+						"dad",
+						"on"
+					]
+				]
+			],
+			[
+				38775,
+				[
+					[
+						"Trigger BG Ghouls",
+						"",
+						""
+					]
+				]
+			],
+			[
+				39300,
+				[
+					[
+						"Trigger BG Ghouls",
+						"",
+						""
+					]
+				]
+			],
+			[
+				39900,
+				[
+					[
+						"Trigger BG Ghouls",
+						"",
+						""
+					]
+				]
+			],
+			[
+				40500,
+				[
+					[
+						"Trigger BG Ghouls",
+						"",
+						""
+					]
+				]
+			],
+			[
+				41100,
+				[
+					[
+						"Trigger BG Ghouls",
+						"",
+						""
+					]
+				]
+			],
+			[
+				41550,
+				[
+					[
+						"CG Lights",
+						"dad",
+						"off"
+					]
+				]
+			],
+			[
+				41703.1277345801,
+				[
+					[
+						"imageflash",
+						"static",
+						"0.145"
+					],
+					[
+						"Drain",
+						"0.45",
+						""
+					],
+					[
+						"Screen Shake",
+						"0.145, 0.02",
+						""
+					],
+					[
+						"Trigger BG Ghouls",
+						"",
+						""
+					]
+				]
+			],
+			[
+				41853.1389854239,
+				[
+					[
+						"imageflash",
+						"static",
+						"0.145"
+					],
+					[
+						"Drain",
+						"0.45",
+						""
+					],
+					[
+						"Screen Shake",
+						"0.145, 0.02",
+						""
+					]
+				]
+			],
+			[
+				42000,
+				[
+					[
+						"CG Lights",
+						"dad",
+						"on"
+					]
+				]
+			],
+			[
+				42300,
+				[
+					[
+						"Trigger BG Ghouls",
+						"",
+						""
+					]
+				]
+			],
+			[
+				42900,
+				[
+					[
+						"Trigger BG Ghouls",
+						"",
+						""
+					]
+				]
+			],
+			[
+				43125,
+				[
+					[
+						"CG Lights",
+						"dad",
+						"off"
+					]
+				]
+			],
+			[
+				43200,
+				[
+					[
+						"CG Lights",
+						"bf",
+						"on"
+					]
+				]
+			],
+			[
+				43500,
+				[
+					[
+						"Trigger BG Ghouls",
+						"",
+						""
+					]
+				]
+			],
+			[
+				44100,
+				[
+					[
+						"Trigger BG Ghouls",
+						"",
+						""
+					]
+				]
+			],
+			[
+				44700,
+				[
+					[
+						"Trigger BG Ghouls",
+						"",
+						""
+					]
+				]
+			],
+			[
+				45300,
+				[
+					[
+						"Trigger BG Ghouls",
+						"",
+						""
+					]
+				]
+			],
+			[
+				45903.4427582069,
+				[
+					[
+						"Trigger BG Ghouls",
+						"",
+						""
+					]
+				]
+			],
+			[
+				46500,
+				[
+					[
+						"Trigger BG Ghouls",
+						"",
+						""
+					]
+				]
+			],
+			[
+				47100,
+				[
+					[
+						"Trigger BG Ghouls",
+						"",
+						""
+					]
+				]
+			],
+			[
+				47703.5777683326,
+				[
+					[
+						"Trigger BG Ghouls",
+						"",
+						""
+					]
+				]
+			],
+			[
+				48000,
+				[
+					[
+						"CG Lights",
+						"bf",
+						"off"
+					]
+				]
+			],
+			[
+				48300,
+				[
+					[
+						"Trigger BG Ghouls",
+						"stop",
+						""
+					]
+				]
+			],
+			[
+				56404.2303172738,
+				[
+					[
+						"imageflash",
+						"black",
+						"0.04"
+					],
+					[
+						"Hide Hud",
+						"1",
+						""
+					]
+				]
+			],
+			[
+				56441.7331299848,
+				[
+					[
+						"Hide Hud",
+						"2",
+						""
+					]
+				]
+			],
+			[
+				56479.2359426957,
+				[
+					[
+						"Hide Hud",
+						"1",
+						""
+					],
+					[
+						"imageflash",
+						"black",
+						"0.04"
+					]
+				]
+			],
+			[
+				56554.2415681176,
+				[
+					[
+						"imageflash",
+						"black",
+						"0.03"
+					],
+					[
+						"Hide Hud",
+						"2",
+						""
+					]
+				]
+			],
+			[
+				56587.5,
+				[
+					[
+						"Hide Hud",
+						"2",
+						""
+					]
+				]
+			],
+			[
+				56629.2471935395,
+				[
+					[
+						"Hide Hud",
+						"1",
+						""
+					],
+					[
+						"imageflash",
+						"black",
+						"0.03"
+					]
+				]
+			],
+			[
+				56704.2528189614,
+				[
+					[
+						"imageflash",
+						"black",
+						"0.013"
+					],
+					[
+						"Hide Hud",
+						"2",
+						""
+					]
+				]
+			],
+			[
+				56854.2640698052,
+				[
+					[
+						"imageflash",
+						"black",
+						"0.013"
+					],
+					[
+						"Hide Hud",
+						"1",
+						""
+					]
+				]
+			],
+			[
+				57004.275320649,
+				[
+					[
+						"imageflash",
+						"black",
+						"0.013"
+					],
+					[
+						"Hide Hud",
+						"2",
+						""
+					]
+				]
+			],
+			[
+				57154.2865714929,
+				[
+					[
+						"imageflash",
+						"black",
+						"0.013"
+					],
+					[
+						"Hide Hud",
+						"1",
+						""
+					]
+				]
+			],
+			[
+				57304.2978223367,
+				[
+					[
+						"imageflash",
+						"black",
+						"0.055"
+					],
+					[
+						"Hide Hud",
+						"2",
+						""
+					]
+				]
+			],
+			[
+				66379.9784983874,
+				[
+					[
+						"Trigger BG Ghouls",
+						"",
+						""
+					]
+				]
+			],
+			[
+				66905.0178763407,
+				[
+					[
+						"Trigger BG Ghouls",
+						"",
+						""
+					]
+				]
+			],
+			[
+				67055.0291271845,
+				[
+					[
+						"Trigger BG Ghouls",
+						"",
+						""
+					]
+				]
+			],
+			[
+				67505.062879716,
+				[
+					[
+						"Trigger BG Ghouls",
+						"",
+						""
+					]
+				]
+			],
+			[
+				67950,
+				[
+					[
+						"Trigger BG Ghouls",
+						"",
+						""
+					]
+				]
+			],
+			[
+				68105.1078830912,
+				[
+					[
+						"Trigger BG Ghouls",
+						"",
+						""
+					]
+				]
+			],
+			[
+				68700,
+				[
+					[
+						"Trigger BG Ghouls",
+						"",
+						""
+					]
+				]
+			],
+			[
+				69305.1978898417,
+				[
+					[
+						"Trigger BG Ghouls",
+						"",
+						""
+					]
+				]
+			],
+			[
+				69900,
+				[
+					[
+						"Trigger BG Ghouls",
+						"",
+						""
+					]
+				]
+			],
+			[
+				70505.2878965923,
+				[
+					[
+						"Trigger BG Ghouls",
+						"",
+						""
+					]
+				]
+			],
+			[
+				71100,
+				[
+					[
+						"Trigger BG Ghouls",
+						"",
+						""
+					]
+				]
+			],
+			[
+				71700,
+				[
+					[
+						"Trigger BG Ghouls",
+						"",
+						""
+					]
+				]
+			],
+			[
+				72305.422906718,
+				[
+					[
+						"Trigger BG Ghouls",
+						"",
+						""
+					]
+				]
+			],
+			[
+				72900,
+				[
+					[
+						"Trigger BG Ghouls",
+						"",
+						""
+					]
+				]
+			],
+			[
+				73500,
+				[
+					[
+						"Trigger BG Ghouls",
+						"",
+						""
+					]
+				]
+			],
+			[
+				74105.5579168438,
+				[
+					[
+						"Trigger BG Ghouls",
+						"",
+						""
+					]
+				]
+			],
+			[
+				74775,
+				[
+					[
+						"Trigger BG Ghouls",
+						"",
+						""
+					]
+				]
+			],
+			[
+				75300,
+				[
+					[
+						"Trigger BG Ghouls",
+						"",
+						""
+					]
+				]
+			],
+			[
+				75900,
+				[
+					[
+						"Trigger BG Ghouls",
+						"stop",
+						""
+					]
+				]
+			],
+			[
+				76800,
+				[
+					[
+						"CG Lights",
+						"dad",
+						"on"
+					]
+				]
+			],
+			[
+				79875,
+				[
+					[
+						"CG Lights",
+						"dad",
+						"off"
+					]
+				]
+			],
+			[
+				80106.0079505964,
+				[
+					[
+						"imageflash",
+						"static",
+						"0.145"
+					],
+					[
+						"Drain",
+						"0.45",
+						""
+					],
+					[
+						"Screen Shake",
+						"0.145, 0.02",
+						""
+					]
+				]
+			],
+			[
+				80256.0192014402,
+				[
+					[
+						"imageflash",
+						"static",
+						"0.145"
+					],
+					[
+						"Drain",
+						"0.45",
+						""
+					],
+					[
+						"Screen Shake",
+						"0.145, 0.02",
+						""
+					]
+				]
+			],
+			[
+				80400,
+				[
+					[
+						"CG Lights",
+						"dad",
+						"on"
+					]
+				]
+			],
+			[
+				81525,
+				[
+					[
+						"CG Lights",
+						"dad",
+						"off"
+					]
+				]
+			],
+			[
+				81600,
+				[
+					[
+						"CG Lights",
+						"bf",
+						"on"
+					]
+				]
+			],
+			[
+				87525,
+				[
+					[
+						"CG Lights",
+						"bf",
+						"off"
+					]
+				]
+			]
+		],
+		"notes": [],
+		"splashSkin": "noteSplashes",
+		"numerator": 4,
+		"validScore": false,
+		"denominator": 4,
+		"gfVersion": "gfPixel-hora",
+		"bpm": 200,
+		"arrowSkin": "",
+		"needsVoices": true,
+		"song": "thorns-leebert"
+	}
+}

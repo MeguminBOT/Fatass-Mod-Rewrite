@@ -1,0 +1,58 @@
+{
+	"storyName": "Madness Combat - Tricky",
+	"difficulties": "Normal, Hard, Insane",
+	"hideFreeplay": false,
+	"weekBackground": "no_menu_background",
+	"freeplayColor": [
+		146,
+		113,
+		253
+	],
+	"weekBefore": "week6-bsides",
+	"startUnlocked": true,
+	"hideStoryMode": true,
+	"weekCharacters": [
+		"no_menu_character",
+		"no_menu_character",
+		"no_menu_character"
+	],
+	"songs": [
+		[
+			"Improbable-outset",
+			"tricky-mask",
+			[
+				100,
+				20,
+				20
+			]
+		],
+		[
+			"madness",
+			"tricky",
+			[
+				100,
+				20,
+				20
+			]
+		],
+		[
+			"hellclown",
+			"tricky-hellclown",
+			[
+				100,
+				20,
+				20
+			]
+		],
+		[
+			"expurgation",
+			"tricky-expurgation",
+			[
+				100,
+				20,
+				20
+			]
+		]
+	],
+	"weekName": "week-madness-combat-tricky"
+}

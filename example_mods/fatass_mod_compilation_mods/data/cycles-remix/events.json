@@ -1,0 +1,41 @@
+{
+	"song": {
+		"speed": 3.2,
+		"stage": "sonicexe-forest-isak",
+		"player1": "bfisakphilly",
+		"player2": "soniclordX",
+		"player3": null,
+		"events": [
+			[
+				30384.6153846154,
+				[
+					[
+						"Play Animation",
+						"cheer",
+						"gf"
+					]
+				]
+			],
+			[
+				106153.846153846,
+				[
+					[
+						"Play Animation",
+						"cheer",
+						"gf"
+					]
+				]
+			]
+		],
+		"notes": [],
+		"splashSkin": "noteSplashes",
+		"numerator": 4,
+		"validScore": false,
+		"denominator": 4,
+		"gfVersion": "Kaity-test2small",
+		"bpm": 156,
+		"arrowSkin": "",
+		"needsVoices": true,
+		"song": "cycles-remix"
+	}
+}
