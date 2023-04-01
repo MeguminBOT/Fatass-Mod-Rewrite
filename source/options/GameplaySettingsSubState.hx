@@ -35,7 +35,7 @@ class GameplaySettingsSubState extends BaseOptionsMenu
 		rpcTitle = 'Gameplay Settings Menu'; //for Discord Rich Presence
 
 		var option:Option = new Option('Controller Mode',
-			'Check this if you want to play with\na controller instead of using your Keyboard.',
+			'Check this if you want to play with\na controller instead of using your Keyboard. Can be buggy with some controllers.',
 			'controllerMode',
 			'bool',
 			false);
@@ -43,28 +43,28 @@ class GameplaySettingsSubState extends BaseOptionsMenu
 
 		//I'd suggest using "Downscroll" as an example for making your own option since it is the simplest here
 		var option:Option = new Option('Downscroll', //Name
-			'If checked, notes go Down instead of Up, simple enough.', //Description
+			'If checked, notes go Down instead of Up', //Description
 			'downScroll', //Save data variable name
 			'bool', //Variable type
 			false); //Default value
 		addOption(option);
 
 		var option:Option = new Option('Middlescroll',
-			'If checked, your notes get centered.',
+			'Centers the playfield in the middle of the screen',
 			'middleScroll',
 			'bool',
 			false);
 		addOption(option);
 
 		var option:Option = new Option('Opponent Notes',
-			'If unchecked, opponent notes get hidden.',
+			'Hides the opponents notes.',
 			'opponentStrums',
 			'bool',
 			true);
 		addOption(option);
 
 		var option:Option = new Option('Lane Transparency',
-			"How transparent should the background of the playfield be?\n0 = No background, 1 = Completely black.",
+			"Changes the transparency of the area behind the playfield\n0 = No background, 1 = Completely black.",
 			'underlay',
 			'float',
 		true);
@@ -77,21 +77,21 @@ class GameplaySettingsSubState extends BaseOptionsMenu
 		addOption(option);
 
 		var option:Option = new Option('Ghost Tapping',
-			"If checked, you won't get misses from pressing keys\nwhile there are no notes able to be hit.",
+			"You won't get misses from pressing keys\nwhile there are no notes able to be hit.",
 			'ghostTapping',
 			'bool',
 			true);
 		addOption(option);
 
 		var option:Option = new Option('Disable Reset Button',
-			"If checked, pressing Reset won't do anything.",
+			"Pressing Reset won't do anything.",
 			'noReset',
 			'bool',
 			false);
 		addOption(option);
 
-		var option:Option = new Option('Input System',
-			"Changes the input and accuracy system.\nEtterna Input System comes with Wife3 Scoring/Accuracy, which is the same as Complex Accuracy in Kade Engine.",
+		var option:Option = new Option('Accuracy System',
+			'Changes the accuracy system.\nEtterna Accuracy System uses "Wife3" Scoring/Accuracy, which is the same as Complex Accuracy in Kade Engine.',
 			'inputSystem',
 			'string',
 			'Etterna',
@@ -99,7 +99,7 @@ class GameplaySettingsSubState extends BaseOptionsMenu
 		addOption(option);
 
 		var option:Option = new Option('Hitsound Volume',
-			'Funny notes does \"Tick!\" when you hit them."',
+			'Plays a sound whenever you hit a note. \nLike in osu!',
 			'hitsoundVolume',
 			'percent',
 			0);
@@ -111,8 +111,8 @@ class GameplaySettingsSubState extends BaseOptionsMenu
 		option.decimals = 1;
 		option.onChange = onChangeHitsoundVolume;
 
-		var option:Option = new Option('Hitsound Type:',
-			"What hitsound would you prefer?",
+		var option:Option = new Option('Hitsound Type:', //To Do: Find a easier way to handle this, perhaps adding something that hides the first part of the file name aswell.
+			"What kind hitsound would you prefer?",
 			'hitsoundType',
 			'string',
 			'hitsound_default',
@@ -132,7 +132,7 @@ class GameplaySettingsSubState extends BaseOptionsMenu
 		option.onChange = onChangeHitsoundType;
 
 		var option:Option = new Option('Rating Offset',
-			'Changes how late/early you have to hit for a "Sick!"\nHigher values mean you have to hit later.',
+			'Changes how late/early you have to hit the notes\nHigher values mean you have to hit later.',
 			'ratingOffset',
 			'int',
 			0);
@@ -142,6 +142,18 @@ class GameplaySettingsSubState extends BaseOptionsMenu
 		option.maxValue = 30;
 		addOption(option);
 
+		// Currently whack, will be reimplemented later.
+		// var option:Option = new Option('Perfect Sick! Hit Window',
+		// 	'Changes the amount of time you have\nfor hitting a "Perfect Sick!" in milliseconds.\nPerfect Sicks are blue.',
+		// 	'perfectWindow',
+		// 	'int',
+		// 	22);
+		// option.displayFormat = '%vms';
+		// option.scrollSpeed = 15;
+		// option.minValue = 4.5;
+		// option.maxValue = 22;
+		// addOption(option);
+
 		var option:Option = new Option('Sick! Hit Window',
 			'Changes the amount of time you have\nfor hitting a "Sick!" in milliseconds.',
 			'sickWindow',
@@ -149,7 +161,7 @@ class GameplaySettingsSubState extends BaseOptionsMenu
 			45);
 		option.displayFormat = '%vms';
 		option.scrollSpeed = 15;
-		option.minValue = 15;
+		option.minValue = 9;
 		option.maxValue = 45;
 		addOption(option);
 
@@ -160,7 +172,7 @@ class GameplaySettingsSubState extends BaseOptionsMenu
 			90);
 		option.displayFormat = '%vms';
 		option.scrollSpeed = 30;
-		option.minValue = 15;
+		option.minValue = 18;
 		option.maxValue = 90;
 		addOption(option);
 
@@ -171,7 +183,7 @@ class GameplaySettingsSubState extends BaseOptionsMenu
 			135);
 		option.displayFormat = '%vms';
 		option.scrollSpeed = 60;
-		option.minValue = 15;
+		option.minValue = 27;
 		option.maxValue = 135;
 		addOption(option);
 

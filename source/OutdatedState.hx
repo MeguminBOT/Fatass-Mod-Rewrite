@@ -24,12 +24,11 @@ class OutdatedState extends MusicBeatState
 		add(bg);
 
 		warnText = new FlxText(0, 0, FlxG.width,
-			"Sup bro, looks like you're running an   \n
-			outdated version of Psych Engine (" + MainMenuState.psychEngineVersion + "),\n
+			"It looks like you're running an \n
+			outdated version of the Fat-Ass Mod (" + MainMenuState.fatassVersion + "),\n
 			please update to " + TitleState.updateVersion + "!\n
-			Press ESCAPE to proceed anyway.\n
 			\n
-			Thank you for using the Engine!",
+			Thank you for using the Fat-Ass Client!",
 			32);
 		warnText.setFormat("Rubik Medium", 24, FlxColor.WHITE, CENTER);
 		warnText.screenCenter(Y);
@@ -41,7 +40,7 @@ class OutdatedState extends MusicBeatState
 		if(!leftState) {
 			if (controls.ACCEPT) {
 				leftState = true;
-				CoolUtil.browserLoad("https://github.com/ShadowMario/FNF-PsychEngine/releases");
+				CoolUtil.browserLoad("http://github.com/MeguminBOT/PsychEngine-TheFatAssModCompilation/releases");
 			}
 			else if(controls.BACK) {
 				leftState = true;
