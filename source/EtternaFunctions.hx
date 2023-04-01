@@ -27,7 +27,7 @@ class EtternaFunctions
 		}
 
     	if (PlayState.instance.ratingName == '?') {
-        	var beforeScoreTxt = 'Score:0 | Combo Breaks:0 | Accuracy:0.00% | N/A';
+        	var beforeScoreTxt = 'Score: 0 | Combo Breaks: 0 | Accuracy: 0.00% | N/A';
         	PlayState.instance.scoreTxt.text = beforeScoreTxt;
 		}
 		else
@@ -41,7 +41,7 @@ class EtternaFunctions
         	var ratingFullAsStr = EtternaFunctions.floatToStringPrecision(ratingFull, 3);
 
         	var tempRatingNameVery = EtternaFunctions.accuracyToRatingString(ratingFull);
-        	var finalScoreTxt = 'Score:' + PlayState.instance.songScore + ' | Combo Breaks:' + PlayState.instance.songMisses + ' | Accuracy:' + ratingFullAsStr + '% | (' + ratingName + ') ' + tempRatingNameVery;
+        	var finalScoreTxt = 'Score: ' + PlayState.instance.songScore + ' | Combo Breaks: ' + PlayState.instance.songMisses + ' | Accuracy: ' + ratingFullAsStr + '% | (' + ratingName + ') ' + tempRatingNameVery;
         	PlayState.instance.scoreTxt.text = finalScoreTxt;
 		}	
 	}

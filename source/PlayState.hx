@@ -85,15 +85,15 @@ class PlayState extends MusicBeatState
 	public static var STRUM_X_MIDDLESCROLL = -278;
 
 	public static var ratingStuff:Array<Dynamic> = [
-		['You Suck!', 0.2], //From 0% to 19%
-		['Shit', 0.4], //From 20% to 39%
-		['Bad', 0.5], //From 40% to 49%
-		['Bruh', 0.6], //From 50% to 59%
-		['Meh', 0.69], //From 60% to 68%
-		['Nice', 0.7], //69%
-		['Good', 0.8], //From 70% to 79%
-		['Great', 0.9], //From 80% to 89%
-		['Sick!', 1], //From 90% to 99%
+		['Uninstall', 0.5], //From 0% to 50%
+		['Change Difficulty NOW', 0.75], //From 50% to 75%
+		['Change Difficulty', 0.8], //From 75% to 80%
+		['Bad', 0.85], //From 80% to 85%
+		['OK', 0.9], //From 85% to 90%
+		['Decent', 0.94], //From 90% to 95%
+		['Good', 0.9625], //From 90% to 95%
+		['Very Good', 0.98], //From 95% to 98%
+		['Great', 1], //From 98% to 99%
 		['Perfect!!', 1] //The value on this one isn't used actually, since Perfect is always "1"
 	];
 
@@ -191,6 +191,7 @@ class PlayState extends MusicBeatState
 	public var timeBar:FlxBar;
 
 	public var ratingsData:Array<Rating> = [];
+	//public var perfects:Int = 0;
 	public var sicks:Int = 0;
 	public var goods:Int = 0;
 	public var bads:Int = 0;
@@ -342,12 +343,21 @@ class PlayState extends MusicBeatState
 
 	public function createMsText() {
 		
-		var msText:ModchartText = new ModchartText(0, 575, '', 400);
+		var msText:ModchartText = new ModchartText(500, 200, '', 400);
 		modchartTexts.set('msText', msText);
+		msText.cameras = [camHUD];
+		msText.screenCenter();
 		msText.size = 26;
 		msText.borderSize = 2;
 		msText.borderColor = 0xff000000;
 		msText.font = Paths.font('rubik.ttf');
+		msText.x = 325;
+		msText.y += 75;
+		msText.x += ClientPrefs.comboOffset[0];
+		msText.y -= ClientPrefs.comboOffset[1];
+		msText.acceleration.y = 550 * playbackRate * playbackRate;
+		msText.velocity.y -= FlxG.random.int(140, 175) * playbackRate;
+		msText.velocity.x -= FlxG.random.int(0, 10) * playbackRate;
 		EtternaFunctions.msText = msText;
 		add(EtternaFunctions.msText);
 	}
@@ -380,7 +390,14 @@ class PlayState extends MusicBeatState
 		];
 
 		//Ratings
+		//ratingsData.push(new Rating('perfect'));
 		ratingsData.push(new Rating('sick')); //default rating
+
+		// var rating:Rating = new Rating('sick');
+		// rating.ratingMod = 1;
+		// rating.score = 300;
+		// rating.noteSplash = false;
+		// ratingsData.push(rating);
 
 		var rating:Rating = new Rating('good');
 		rating.ratingMod = 0.7;
@@ -4227,6 +4244,7 @@ class PlayState extends MusicBeatState
 			pixelShitPart2 = '-pixel';
 		}
 
+		// Paths.image(pixelShitPart1 + "perfect" + pixelShitPart2);
 		Paths.image(pixelShitPart1 + "sick" + pixelShitPart2);
 		Paths.image(pixelShitPart1 + "good" + pixelShitPart2);
 		Paths.image(pixelShitPart1 + "bad" + pixelShitPart2);
@@ -5468,6 +5486,7 @@ class PlayState extends MusicBeatState
 
 			// Rating FC
 			ratingFC = "";
+			// if (perfects > 0) ratingFC = "PFC";
 			if (sicks > 0) ratingFC = "SFC";
 			if (goods > 0) ratingFC = "GFC";
 			if (bads > 0 || shits > 0) ratingFC = "FC";
