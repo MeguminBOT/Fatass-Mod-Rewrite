@@ -1,7 +1,0 @@
-Cassette Girl Vignette Lights. Epilepsy/Seizure safe version.
-
-value1 = bf or dad
-
-value2 = on // off
-
-Both can be on in the same time via 2 events
