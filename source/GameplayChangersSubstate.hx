@@ -85,6 +85,9 @@ class GameplayChangersSubstate extends MusicBeatSubstate
 		option.changeValue = 0.1;
 		option.displayFormat = '%vX';
 		optionsArray.push(option);
+
+		var option:GameplayOption = new GameplayOption('Hidden Mode', 'hiddenmode', 'bool', false);
+		optionsArray.push(option);
 		
 		var option:GameplayOption = new GameplayOption('Play As Opponent', 'opponentplay', 'bool', false);
 		optionsArray.push(option);

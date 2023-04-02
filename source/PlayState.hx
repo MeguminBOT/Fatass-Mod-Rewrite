@@ -329,6 +329,9 @@ class PlayState extends MusicBeatState
 	public static var lastScore:Array<FlxSprite> = [];
 
 	//Fat-Ass Stuff
+	public var hiddenPlayfield:FlxSprite;
+	public var hiddenPlayfieldOpponent:FlxSprite;
+	public static var hiddenMode:Bool = false;
 	public var laneunderlay:FlxSprite;
 	public var laneunderlayOpponent:FlxSprite;
 	public static var opponentChart:Bool = false;
@@ -434,6 +437,7 @@ class PlayState extends MusicBeatState
 		cpuControlled = ClientPrefs.getGameplaySetting('botplay', false);
 
 		// Fat-Ass Gameplay settings
+		hiddenMode = ClientPrefs.getGameplaySetting('hiddenmode', false);
 		opponentChart = ClientPrefs.getGameplaySetting('opponentplay', false);
 		doubleChart = ClientPrefs.getGameplaySetting('doubleplay', false);
 
@@ -1064,6 +1068,15 @@ class PlayState extends MusicBeatState
 		if(ClientPrefs.downScroll) strumLine.y = FlxG.height - 150;
 		strumLine.scrollFactor.set();
 
+		//Fat-Ass Mod: Hidden Mode
+		hiddenPlayfieldOpponent = new FlxSprite().loadGraphic(Paths.image('playfieldOverlay'));
+		hiddenPlayfieldOpponent.alpha = 1;
+		hiddenPlayfieldOpponent.scrollFactor.set();
+
+		hiddenPlayfield = new FlxSprite().loadGraphic(Paths.image('playfieldOverlay'));
+		hiddenPlayfield.alpha = 1;
+		hiddenPlayfield.scrollFactor.set();
+
 		//Fat-Ass Mod: Lane Underlay
 		laneunderlayOpponent = new FlxSprite(0, 0).makeGraphic(110 * 4 + 50, FlxG.height * 2);
 		laneunderlayOpponent.alpha = ClientPrefs.underlay;
@@ -1075,6 +1088,14 @@ class PlayState extends MusicBeatState
 		laneunderlay.color = FlxColor.BLACK;
 		laneunderlay.scrollFactor.set();
 
+		if (hiddenMode)
+		{
+			add(hiddenPlayfield);
+			if (!ClientPrefs.middleScroll)
+			{
+				add(hiddenPlayfieldOpponent);
+			}
+		}
 		if (!ClientPrefs.middleScroll)
 		{
 			add(laneunderlayOpponent);
@@ -1230,9 +1251,11 @@ class PlayState extends MusicBeatState
 		timeBarBG.cameras = [camHUD];
 		timeTxt.cameras = [camHUD];
 		doof.cameras = [camHUD];
-		//Fat-Ass Mod: Lane Underlay
+		//Fat-Ass Mod Stuff
 		laneunderlay.cameras = [camHUD];
 		laneunderlayOpponent.cameras = [camHUD];
+		hiddenPlayfield.cameras = [camOther];
+		hiddenPlayfieldOpponent.cameras = [camOther];
 
 		// if (SONG.song == 'South')
 		// FlxG.camera.alpha = 0.7;
@@ -2153,6 +2176,11 @@ class PlayState extends MusicBeatState
 			laneunderlayOpponent.x = opponentStrums.members[0].x - 25;
 			laneunderlay.screenCenter(Y);
 			laneunderlayOpponent.screenCenter(Y);
+
+			hiddenPlayfield.x = playerStrums.members[0].x - 25;
+			hiddenPlayfieldOpponent.x = opponentStrums.members[0].x - 25;
+			hiddenPlayfield.screenCenter(Y);
+			hiddenPlayfieldOpponent.screenCenter(Y);
 
 			for (i in 0...playerStrums.length) {
 				setOnLuas('defaultPlayerStrumX' + i, playerStrums.members[i].x);
