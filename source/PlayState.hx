@@ -337,6 +337,7 @@ class PlayState extends MusicBeatState
 	public static var opponentChart:Bool = false;
 	public static var doubleChart:Bool = false;
 	public var opponentIsPlaying:Bool = false;
+	var bulletNoteHit:FlxSound;
 	
 	//Hypno's Lullaby Stuff
 	var unowning:Bool = false;
@@ -440,6 +441,9 @@ class PlayState extends MusicBeatState
 		hiddenMode = ClientPrefs.getGameplaySetting('hiddenmode', false);
 		opponentChart = ClientPrefs.getGameplaySetting('opponentplay', false);
 		doubleChart = ClientPrefs.getGameplaySetting('doubleplay', false);
+
+		// Fat-Ass SFX
+		bulletNoteHit = FlxG.sound.load(Paths.sound('bulletNoteHit'));
 
 		// var gameCam:FlxCamera = FlxG.camera;
 		camGame = new FlxCamera();
@@ -1411,8 +1415,6 @@ class PlayState extends MusicBeatState
 			precacheList.set('missnote3', 'sound');
 		}
 
-		precacheList.set('bulletNoteHit', 'sound');
-		
 		if (PauseSubState.songName != null) {
 			precacheList.set(PauseSubState.songName, 'music');
 		} else if(ClientPrefs.pauseMusic != 'None') {
@@ -4966,8 +4968,11 @@ class PlayState extends MusicBeatState
 
 				// Fat-Ass Specific Note Types
 				if(note.noteType == 'Bullet Note') {
-					ClientPrefs.hitsoundVolume = 0;
-					FlxG.sound.play(Paths.sound('bulletNoteHit'), 0.1);
+					bulletNoteHit.play();
+					bulletNoteHit.volume = 0.15;
+						if (bulletNoteHit.playing) {
+							bulletNoteHit.play(true);
+						}
 					if(boyfriend.animOffsets.exists('dodge')) {
 						boyfriend.playAnim('dodge', true);
 						boyfriend.specialAnim = true;
