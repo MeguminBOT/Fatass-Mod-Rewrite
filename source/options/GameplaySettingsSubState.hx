@@ -131,6 +131,15 @@ class GameplaySettingsSubState extends BaseOptionsMenu
 		addOption(option);
 		option.onChange = onChangeHitsoundType;
 
+		var option:Option = new Option('Note Skin:', //To Do: Find a easier way to handle this, perhaps adding something that hides the first part of the file name aswell.
+			"What kind hitsound would you prefer?",
+			'noteskinType',
+			'string',
+			'Fatass',
+			['Fatass', 
+			'FNF']);
+		addOption(option);
+	
 		var option:Option = new Option('Rating Offset',
 			'Changes how late/early you have to hit the notes\nHigher values mean you have to hit later.',
 			'ratingOffset',
