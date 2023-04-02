@@ -152,6 +152,22 @@ class Note extends FlxSprite
 					noMissAnimation = true;
 				case 'GF Sing':
 					gfNote = true;
+
+				// Fat-Ass Generic Note Types
+				case 'Dodge Note':
+					mustPress;
+					reloadNote('DODGE');
+					noteSplashTexture = 'CUSTOMnoteSplashes';
+					colorSwap.hue = 0;
+					colorSwap.saturation = 0;
+					colorSwap.brightness = 0;
+					lowPriority = false;
+					if(isSustainNote) {
+						missHealth = 0.1;
+					} else {
+						missHealth = 0.3;
+					}
+					hitCausesMiss = false;
 			}
 			noteType = value;
 		}

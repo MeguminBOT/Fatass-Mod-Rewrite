@@ -4897,6 +4897,19 @@ class PlayState extends MusicBeatState
 						gf.heyTimer = 0.6;
 					}
 				}
+
+				// Fat-Ass Generic Note Types
+				if(note.noteType == 'Dodge Note') {
+					if(char.animOffsets.exists('dodge')) {
+						char.playAnim('dodge', true);
+						char.specialAnim = true;
+					}
+
+					if(gf != null && gf.animOffsets.exists('scared')) {
+						gf.playAnim('scared', true);
+						gf.specialAnim = true;
+					}
+				}
 			}
 
 			if(cpuControlled) {
