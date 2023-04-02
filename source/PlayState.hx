@@ -4880,6 +4880,11 @@ class PlayState extends MusicBeatState
 								boyfriend.playAnim('hurt', true);
 								boyfriend.specialAnim = true;
 							}
+						case 'Instakill Note':
+							if(boyfriend.animation.getByName('hurt') != null) {
+								boyfriend.playAnim('hurt', true);
+								boyfriend.specialAnim = true;
+							}
 					}
 				}
 
@@ -4928,9 +4933,44 @@ class PlayState extends MusicBeatState
 
 				// Fat-Ass Generic Note Types
 				if(note.noteType == 'Dodge Note') {
-					if(char.animOffsets.exists('dodge')) {
-						char.playAnim('dodge', true);
+					if(boyfriend.animOffsets.exists('dodge')) {
+						boyfriend.playAnim('dodge', true);
+						boyfriend.specialAnim = true;
+					}
+
+					if(dad.animOffsets.exists('attack')) {
+						dad.playAnim('attack', true);
+						dad.specialAnim = true;
+					}
+
+					if(gf != null && gf.animOffsets.exists('scared')) {
+						gf.playAnim('scared', true);
+						gf.specialAnim = true;
+					}
+				}
+
+				if(note.noteType == 'Heal Note') {
+					if(char.animOffsets.exists('hey')) {
+						char.playAnim('hey', true);
 						char.specialAnim = true;
+					}
+
+					if(gf != null && gf.animOffsets.exists('cheer')) {
+						gf.playAnim('cheer', true);
+						gf.specialAnim = true;
+					}
+				}
+
+				// Fat-Ass Specific Note Types
+				if(note.noteType == 'Bullet Note') {
+					if(boyfriend.animOffsets.exists('dodge')) {
+						boyfriend.playAnim('dodge', true);
+						boyfriend.specialAnim = true;
+					}
+
+					if(dad.animOffsets.exists('attack')) {
+						dad.playAnim('attack', true);
+						dad.specialAnim = true;
 					}
 
 					if(gf != null && gf.animOffsets.exists('scared')) {

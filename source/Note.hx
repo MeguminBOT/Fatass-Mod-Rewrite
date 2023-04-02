@@ -138,26 +138,70 @@ class Note extends FlxSprite
 					colorSwap.saturation = 0;
 					colorSwap.brightness = 0;
 					lowPriority = true;
-
 					if(isSustainNote) {
 						missHealth = 0.1;
 					} else {
 						missHealth = 0.3;
 					}
 					hitCausesMiss = true;
+
 				case 'Alt Animation':
 					animSuffix = '-alt';
+
 				case 'No Animation':
 					noAnimation = true;
 					noMissAnimation = true;
+
 				case 'GF Sing':
 					gfNote = true;
+				
+				case 'Instakill Note':
+					ignoreNote = mustPress;
+					reloadNote('INSTAKILL');
+					noteSplashTexture = 'INSTAKILLnoteSplashes';
+					colorSwap.hue = 0;
+					colorSwap.saturation = 0;
+					colorSwap.brightness = 0;
+					lowPriority = true;
+					missHealth = 500;
+					hitCausesMiss = true;
 
 				// Fat-Ass Generic Note Types
 				case 'Dodge Note':
 					mustPress;
 					reloadNote('DODGE');
 					noteSplashTexture = 'CUSTOMnoteSplashes';
+					colorSwap.hue = 0;
+					colorSwap.saturation = 0;
+					colorSwap.brightness = 0;
+					lowPriority = false;
+					if(isSustainNote) {
+						missHealth = 0.1;
+					} else {
+						missHealth = 0.3;
+					}
+					hitCausesMiss = false;
+				
+				case 'Heal Note':
+					mustPress;
+					reloadNote('HEAL');
+					noteSplashTexture = 'HEALnoteSplashes';
+					colorSwap.hue = 0;
+					colorSwap.saturation = 0;
+					colorSwap.brightness = 0;
+					lowPriority = false;
+					if(isSustainNote) {
+						hitHealth = 0.1;
+					} else {
+						hitHealth = 0.25;
+					}
+					hitCausesMiss = false;
+
+				// Fat-Ass Specific Note Types
+				case 'Bullet Note':
+					mustPress;
+					reloadNote('BULLET');
+					noteSplashTexture = 'BULLETnoteSplashes';
 					colorSwap.hue = 0;
 					colorSwap.saturation = 0;
 					colorSwap.brightness = 0;
