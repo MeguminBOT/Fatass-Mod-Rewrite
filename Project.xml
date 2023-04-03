@@ -190,10 +190,10 @@
 	<haxedef name="HXCPP_CHECK_POINTER" if="CRASH_HANDLER" />
 	<haxedef name="HXCPP_STACK_LINE" if="CRASH_HANDLER" />
 
-	<haxelib name="hxbit" />
+	<!-- <haxelib name="hxbit" />
 	<haxelib name="zip" />
 	<haxelib name="haxeui-core" />
-	<haxelib name="haxeui-html5" />
+	<haxelib name="haxeui-html5" /> -->
 
 
 	<!-- _________________________________ Custom _______________________________ -->
