@@ -35,7 +35,7 @@ class StrumNote extends FlxSprite
 		super(x, y);
 
 		//Fat-Ass Note Skin
-		if (ClientPrefs.noteskinType == "Fatass") {
+		if (ClientPrefs.noteskinType == "Fatass" && !PlayState.isPixelStage) {
 			var skin:String = 'NOTE_assets_fatass';
 			if(PlayState.SONG.arrowSkin != null && PlayState.SONG.arrowSkin.length > 1) skin = PlayState.SONG.arrowSkin;
 			texture = skin; //Load texture and anims
