@@ -1080,6 +1080,7 @@ class PlayState extends MusicBeatState
 		hiddenPlayfield = new FlxSprite().loadGraphic(Paths.image('playfieldOverlay'));
 		hiddenPlayfield.alpha = 1;
 		hiddenPlayfield.scrollFactor.set();
+		hiddenPlayfield.y = -175;
 
 		//Fat-Ass Mod: Lane Underlay
 		laneunderlayOpponent = new FlxSprite(0, 0).makeGraphic(110 * 4 + 50, FlxG.height * 2);
@@ -2182,10 +2183,10 @@ class PlayState extends MusicBeatState
 			laneunderlay.screenCenter(Y);
 			laneunderlayOpponent.screenCenter(Y);
 
-			hiddenPlayfield.x = playerStrums.members[0].x - 25;
-			hiddenPlayfieldOpponent.x = opponentStrums.members[0].x - 25;
-			hiddenPlayfield.screenCenter(Y);
-			hiddenPlayfieldOpponent.screenCenter(Y);
+			//hiddenPlayfield.x = playerStrums.members[0].x - 25;
+			//hiddenPlayfieldOpponent.x = opponentStrums.members[0].x - 25;
+			//hiddenPlayfield.screenCenter(Y);
+			//hiddenPlayfieldOpponent.screenCenter(Y);
 
 			for (i in 0...playerStrums.length) {
 				setOnLuas('defaultPlayerStrumX' + i, playerStrums.members[i].x);
