@@ -94,9 +94,336 @@ class FreeplayState extends MusicBeatState
 					}
 				case 'vanilla':
 					//there is probably a better way to add all vanilla songs but this will do for now
-					addWeek(['Tutorial', 'Bopeebo', 'Fresh', 'Dad Battle', 'Spookeez', 'South', 'Monster', 'Pico', 'Philly Nice', 'Blammed', 'Satin Panties', 'High', 'Milf', 'Cocoa', 'Eggnog', 'Winter Horrorland', 'Senpai', 'Roses', 'Thorns', 'Ugh', 'Guns', 'Stress']);
-				case 'test':
-					addWeek(['Bopeebo', 'Fresh', 'Dad Battle']);
+					//addWeek(['Tutorial', 'Bopeebo', 'Fresh', 'Dad Battle', 'Spookeez', 'South', 'Monster', 'Pico', 'Philly Nice', 'Blammed', 'Satin Panties', 'High', 'Milf', 'Cocoa', 'Eggnog', 'Winter Horrorland', 'Senpai', 'Roses', 'Thorns', 'Ugh', 'Guns', 'Stress']);
+					var loadWeeks:Array<String> = ['week1', 'week2', 'week3', 'week4', 'week5', 'week6', 'week7'];
+					for (week in loadWeeks)
+					{
+						var leWeek:WeekData = WeekData.weeksLoaded.get(week);
+						for (song in leWeek.songs)
+						{
+							var colors:Array<Int> = song[2];
+							if(colors == null || colors.length < 3)
+							{
+								colors = [146, 113, 253];
+							}
+							addSong(song[0], WeekData.weeksList.indexOf(week), song[1], FlxColor.fromRGB(colors[0], colors[1], colors[2]));
+						}
+					}
+				case 'fat-ass stuff':
+					var loadWeeks:Array<String> = ['week-fatassmod', 'week-fatassmod-dumbstuff', 'week-fatassmod-soulless', 'week-fatassmod-tripletrouble'];
+					for (week in loadWeeks)
+					{
+						var leWeek:WeekData = WeekData.weeksLoaded.get(week);
+						for (song in leWeek.songs)
+						{
+							var colors:Array<Int> = song[2];
+							if(colors == null || colors.length < 3)
+							{
+								colors = [146, 113, 253];
+							}
+							addSong(song[0], WeekData.weeksList.indexOf(week), song[1], FlxColor.fromRGB(colors[0], colors[1], colors[2]));
+						}
+					}
+				case 'various remixes':
+					var loadWeeks:Array<String> = ['week69-erect-remixes', 'week69-erect-remixes2', 'week-pico-remixes', 'week-madness-combat-tricky-neutroa-remixes', 'week-sonicexe-remixes'];
+					for (week in loadWeeks)
+					{
+						var leWeek:WeekData = WeekData.weeksLoaded.get(week);
+						for (song in leWeek.songs)
+						{
+							var colors:Array<Int> = song[2];
+							if(colors == null || colors.length < 3)
+							{
+								colors = [146, 113, 253];
+							}
+							addSong(song[0], WeekData.weeksList.indexOf(week), song[1], FlxColor.fromRGB(colors[0], colors[1], colors[2]));
+						}
+					}
+					case 'b-sides':
+						var loadWeeks:Array<String> = ['week1-bsides', 'week2-bsides', 'week3-bsides', 'week4-bsides', 'week5-bsides', 'week6-bsides'];
+						for (week in loadWeeks)
+						{
+							var leWeek:WeekData = WeekData.weeksLoaded.get(week);
+							for (song in leWeek.songs)
+							{
+								var colors:Array<Int> = song[2];
+								if(colors == null || colors.length < 3)
+								{
+									colors = [146, 113, 253];
+								}
+								addSong(song[0], WeekData.weeksList.indexOf(week), song[1], FlxColor.fromRGB(colors[0], colors[1], colors[2]));
+							}
+						}
+					case 'tricky the clown':
+						var loadWeeks:Array<String> = ['week-madness-combat-tricky', 'week-madness-combat-tricky-rechart'];
+						for (week in loadWeeks)
+						{
+							var leWeek:WeekData = WeekData.weeksLoaded.get(week);
+							for (song in leWeek.songs)
+							{
+								var colors:Array<Int> = song[2];
+								if(colors == null || colors.length < 3)
+								{
+									colors = [146, 113, 253];
+								}
+								addSong(song[0], WeekData.weeksList.indexOf(week), song[1], FlxColor.fromRGB(colors[0], colors[1], colors[2]));
+							}
+						}
+					case 'madness combat stuff':
+						var loadWeeks:Array<String> = ['week-madness-combat-jebus', 'week-madness-combat-deimos', 'week-madness-combat-hank'];
+						for (week in loadWeeks)
+						{
+							var leWeek:WeekData = WeekData.weeksLoaded.get(week);
+							for (song in leWeek.songs)
+							{
+								var colors:Array<Int> = song[2];
+								if(colors == null || colors.length < 3)
+								{
+									colors = [146, 113, 253];
+								}
+								addSong(song[0], WeekData.weeksList.indexOf(week), song[1], FlxColor.fromRGB(colors[0], colors[1], colors[2]));
+							}
+						}
+						case "hypno's lullaby":
+							var loadWeeks:Array<String> = ['week-hypnos-lullaby'];
+							for (week in loadWeeks)
+							{
+								var leWeek:WeekData = WeekData.weeksLoaded.get(week);
+								for (song in leWeek.songs)
+								{
+									var colors:Array<Int> = song[2];
+									if(colors == null || colors.length < 3)
+									{
+										colors = [146, 113, 253];
+									}
+									addSong(song[0], WeekData.weeksList.indexOf(week), song[1], FlxColor.fromRGB(colors[0], colors[1], colors[2]));
+								}
+							}
+						case 'sonic.exe':
+							var loadWeeks:Array<String> = ['week-sonicexe-v1'];
+							for (week in loadWeeks)
+							{
+								var leWeek:WeekData = WeekData.weeksLoaded.get(week);
+								for (song in leWeek.songs)
+								{
+									var colors:Array<Int> = song[2];
+									if(colors == null || colors.length < 3)
+									{
+										colors = [146, 113, 253];
+									}
+									addSong(song[0], WeekData.weeksList.indexOf(week), song[1], FlxColor.fromRGB(colors[0], colors[1], colors[2]));
+								}
+							}
+						case 'graffiti groovin v1':
+							var loadWeeks:Array<String> = ['week-graffiti-groovin-v1'];
+							for (week in loadWeeks)
+							{
+								var leWeek:WeekData = WeekData.weeksLoaded.get(week);
+								for (song in leWeek.songs)
+								{
+									var colors:Array<Int> = song[2];
+									if(colors == null || colors.length < 3)
+									{
+										colors = [146, 113, 253];
+									}
+									addSong(song[0], WeekData.weeksList.indexOf(week), song[1], FlxColor.fromRGB(colors[0], colors[1], colors[2]));
+								}
+							}
+						case 'pibby':
+							var loadWeeks:Array<String> = ['week-pibby', 'week-corrupted-hero-rechart'];
+							for (week in loadWeeks)
+							{
+								var leWeek:WeekData = WeekData.weeksLoaded.get(week);
+								for (song in leWeek.songs)
+								{
+									var colors:Array<Int> = song[2];
+									if(colors == null || colors.length < 3)
+									{
+										colors = [146, 113, 253];
+									}
+									addSong(song[0], WeekData.weeksList.indexOf(week), song[1], FlxColor.fromRGB(colors[0], colors[1], colors[2]));
+								}
+							}
+						case "sarvente's mid-fight masses":
+							var loadWeeks:Array<String> = ['week-sarvente', 'week-sarvente-fatassmod'];
+							for (week in loadWeeks)
+							{
+								var leWeek:WeekData = WeekData.weeksLoaded.get(week);
+								for (song in leWeek.songs)
+								{
+									var colors:Array<Int> = song[2];
+									if(colors == null || colors.length < 3)
+									{
+										colors = [146, 113, 253];
+									}
+									addSong(song[0], WeekData.weeksList.indexOf(week), song[1], FlxColor.fromRGB(colors[0], colors[1], colors[2]));
+								}
+							}						
+						case 'sky':
+							var loadWeeks:Array<String> = ['week-sky'];
+							for (week in loadWeeks)
+							{
+								var leWeek:WeekData = WeekData.weeksLoaded.get(week);
+								for (song in leWeek.songs)
+								{
+									var colors:Array<Int> = song[2];
+									if(colors == null || colors.length < 3)
+									{
+										colors = [146, 113, 253];
+									}
+									addSong(song[0], WeekData.weeksList.indexOf(week), song[1], FlxColor.fromRGB(colors[0], colors[1], colors[2]));
+								}
+							}
+						case 'whitty v1':
+							var loadWeeks:Array<String> = ['week-whitty', 'week-whitty-ballistic'];
+							for (week in loadWeeks)
+							{
+								var leWeek:WeekData = WeekData.weeksLoaded.get(week);
+								for (song in leWeek.songs)
+								{
+									var colors:Array<Int> = song[2];
+									if(colors == null || colors.length < 3)
+									{
+										colors = [146, 113, 253];
+									}
+									addSong(song[0], WeekData.weeksList.indexOf(week), song[1], FlxColor.fromRGB(colors[0], colors[1], colors[2]));
+								}
+							}
+						case 'tabi':
+							var loadWeeks:Array<String> = ['week-tabi'];
+							for (week in loadWeeks)
+							{
+								var leWeek:WeekData = WeekData.weeksLoaded.get(week);
+								for (song in leWeek.songs)
+								{
+									var colors:Array<Int> = song[2];
+									if(colors == null || colors.length < 3)
+									{
+										colors = [146, 113, 253];
+									}
+									addSong(song[0], WeekData.weeksList.indexOf(week), song[1], FlxColor.fromRGB(colors[0], colors[1], colors[2]));
+								}
+							}
+						case 'zardy':
+							var loadWeeks:Array<String> = ['week-zardy'];
+							for (week in loadWeeks)
+							{
+								var leWeek:WeekData = WeekData.weeksLoaded.get(week);
+								for (song in leWeek.songs)
+								{
+									var colors:Array<Int> = song[2];
+									if(colors == null || colors.length < 3)
+									{
+										colors = [146, 113, 253];
+									}
+									addSong(song[0], WeekData.weeksList.indexOf(week), song[1], FlxColor.fromRGB(colors[0], colors[1], colors[2]));
+								}
+							}
+						case 'impostor':
+							var loadWeeks:Array<String> = ['week-impostor'];
+							for (week in loadWeeks)
+							{
+								var leWeek:WeekData = WeekData.weeksLoaded.get(week);
+								for (song in leWeek.songs)
+								{
+									var colors:Array<Int> = song[2];
+									if(colors == null || colors.length < 3)
+									{
+										colors = [146, 113, 253];
+									}
+									addSong(song[0], WeekData.weeksList.indexOf(week), song[1], FlxColor.fromRGB(colors[0], colors[1], colors[2]));
+								}
+							}
+						case 'holofunk':
+							var loadWeeks:Array<String> = ['week-holofunk'];
+							for (week in loadWeeks)
+							{
+								var leWeek:WeekData = WeekData.weeksLoaded.get(week);
+								for (song in leWeek.songs)
+								{
+									var colors:Array<Int> = song[2];
+									if(colors == null || colors.length < 3)
+									{
+										colors = [146, 113, 253];
+									}
+									addSong(song[0], WeekData.weeksList.indexOf(week), song[1], FlxColor.fromRGB(colors[0], colors[1], colors[2]));
+								}
+							}		
+						case 'hatsune miku':
+							var loadWeeks:Array<String> = ['week-hatsune-miku'];
+							for (week in loadWeeks)
+							{
+								var leWeek:WeekData = WeekData.weeksLoaded.get(week);
+								for (song in leWeek.songs)
+								{
+									var colors:Array<Int> = song[2];
+									if(colors == null || colors.length < 3)
+									{
+										colors = [146, 113, 253];
+									}
+									addSong(song[0], WeekData.weeksList.indexOf(week), song[1], FlxColor.fromRGB(colors[0], colors[1], colors[2]));
+								}
+							}
+						case 'garcello':
+							var loadWeeks:Array<String> = ['week-garcello'];
+							for (week in loadWeeks)
+							{
+								var leWeek:WeekData = WeekData.weeksLoaded.get(week);
+								for (song in leWeek.songs)
+								{
+									var colors:Array<Int> = song[2];
+									if(colors == null || colors.length < 3)
+									{
+										colors = [146, 113, 253];
+									}
+									addSong(song[0], WeekData.weeksList.indexOf(week), song[1], FlxColor.fromRGB(colors[0], colors[1], colors[2]));
+								}
+							}
+						case 'starecrown':
+							var loadWeeks:Array<String> = ['week-stare'];
+							for (week in loadWeeks)
+							{
+								var leWeek:WeekData = WeekData.weeksLoaded.get(week);
+								for (song in leWeek.songs)
+								{
+									var colors:Array<Int> = song[2];
+									if(colors == null || colors.length < 3)
+									{
+										colors = [146, 113, 253];
+									}
+									addSong(song[0], WeekData.weeksList.indexOf(week), song[1], FlxColor.fromRGB(colors[0], colors[1], colors[2]));
+								}
+							}		
+						case 'bob':
+							var loadWeeks:Array<String> = ['week-bob'];
+							for (week in loadWeeks)
+							{
+								var leWeek:WeekData = WeekData.weeksLoaded.get(week);
+								for (song in leWeek.songs)
+								{
+									var colors:Array<Int> = song[2];
+									if(colors == null || colors.length < 3)
+									{
+										colors = [146, 113, 253];
+									}
+									addSong(song[0], WeekData.weeksList.indexOf(week), song[1], FlxColor.fromRGB(colors[0], colors[1], colors[2]));
+								}
+							}
+						case 'osu converts':
+							var loadWeeks:Array<String> = ['z-osu'];
+							for (week in loadWeeks)
+							{
+								var leWeek:WeekData = WeekData.weeksLoaded.get(week);
+								for (song in leWeek.songs)
+								{
+									var colors:Array<Int> = song[2];
+									if(colors == null || colors.length < 3)
+									{
+										colors = [146, 113, 253];
+									}
+									addSong(song[0], WeekData.weeksList.indexOf(week), song[1], FlxColor.fromRGB(colors[0], colors[1], colors[2]));
+								}
+							}
 			};
 
 		WeekData.loadTheFirstEnabledMod();
