@@ -25,9 +25,30 @@ import sys.FileSystem;
 
 class FreeplaySelectState extends MusicBeatState {
 	public static var categories:Array<CategoryMetaData> = [
-		new CategoryMetaData("all", 0, "pico", FlxColor.fromRGB(0, 255, 0)),
+		new CategoryMetaData("all", 0, "pico", FlxColor.fromRGB(255, 255, 255)),
 		new CategoryMetaData("vanilla", 0, "bf", FlxColor.fromRGB(135, 206, 250)),
-		new CategoryMetaData("test", 0, "gf", FlxColor.fromRGB(255, 0, 0))
+		new CategoryMetaData("fat-ass stuff", 0, "week-fatass-dumbshit", FlxColor.fromRGB(160, 160, 160)),
+		new CategoryMetaData("various remixes", 0, "face", FlxColor.fromRGB(150, 0, 0)),
+		new CategoryMetaData("b-sides", 0, "bf-bsides", FlxColor.fromRGB(160, 160, 160)),
+		new CategoryMetaData("the full-ass tricky mod", 0, "tricky-expurgation", FlxColor.fromRGB(160, 160, 160)),
+		new CategoryMetaData("madness combat stuff", 0, "hank", FlxColor.fromRGB(160, 160, 160)),
+		new CategoryMetaData("hypno's lullaby", 0, "gold", FlxColor.fromRGB(160, 160, 160)),
+		new CategoryMetaData("sonic.exe", 0, "sonicexe-fatass", FlxColor.fromRGB(160, 160, 160)),
+		new CategoryMetaData("graffiti groovin", 0, "skarlet", FlxColor.fromRGB(160, 160, 160)),
+		new CategoryMetaData("pibby", 0, "corrupted-finn", FlxColor.fromRGB(160, 160, 160)),
+		new CategoryMetaData("sarvente's mid-fight masses", 0, "sarvente-succubus", FlxColor.fromRGB(160, 160, 160)),
+		new CategoryMetaData("sky", 0, "sky", FlxColor.fromRGB(160, 160, 160)),
+		new CategoryMetaData("whitty", 0, "whitty-ballistic", FlxColor.fromRGB(160, 160, 160)),
+		new CategoryMetaData("tabi", 0, "tabi-mad", FlxColor.fromRGB(160, 160, 160)),
+		new CategoryMetaData("zardy", 0, "zardy", FlxColor.fromRGB(160, 160, 160)),
+		new CategoryMetaData("amogus", 0, "imposter-green", FlxColor.fromRGB(160, 160, 160)),
+		new CategoryMetaData("holofunk", 0, "aloe-mano", FlxColor.fromRGB(160, 160, 160)),
+		new CategoryMetaData("hatsune miku", 0, "hatsune-miku", FlxColor.fromRGB(160, 160, 160)),
+		new CategoryMetaData("garcello", 0, "garcello", FlxColor.fromRGB(160, 160, 160)),
+		new CategoryMetaData("starecrown", 0, "starecrown2", FlxColor.fromRGB(160, 160, 160)),
+		new CategoryMetaData("bob", 0, "bob", FlxColor.fromRGB(160, 160, 160)),
+		new CategoryMetaData("osu converts", 0, "osu", FlxColor.fromRGB(160, 160, 160)),
+		new CategoryMetaData("test", 0, "gf", FlxColor.fromRGB(160, 160, 160)),
 	];
     
 	var selector:FlxText;
