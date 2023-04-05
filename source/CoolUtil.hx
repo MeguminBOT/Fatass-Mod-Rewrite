@@ -1,12 +1,16 @@
 package;
 
+import CoolUtil;
+import Paths;
 import flixel.util.FlxSave;
 import flixel.FlxG;
 import openfl.utils.Assets;
+import haxe.io.Path;
 import lime.utils.Assets as LimeAssets;
 import lime.utils.AssetLibrary;
 import lime.utils.AssetManifest;
 import flixel.system.FlxSound;
+import haxe.display.Display.Package;
 #if sys
 import sys.io.File;
 import sys.FileSystem;
@@ -150,5 +154,44 @@ class CoolUtil
 		return #if (flixel < "5.0.0") folder #else FlxG.stage.application.meta.get('company')
 			+ '/'
 			+ FlxSave.validate(FlxG.stage.application.meta.get('file')) #end;
+	}
+
+	public static function findFilesInPath(path:String, extns:Array<String>, ?filePath:Bool = false, ?deepSearch:Bool = true):Array<String>
+	{
+		var files:Array<String> = [];
+
+		if (FileSystem.exists(path))
+		{
+			for (file in FileSystem.readDirectory(path))
+			{
+				var path = haxe.io.Path.join([path, file]);
+				if (!FileSystem.isDirectory(path))
+				{
+					for (extn in extns)
+					{
+						if (file.endsWith(extn))
+						{
+							if (filePath)
+								files.push(path);
+							else
+								files.push(file);
+						}
+					}
+				}
+				else if (deepSearch)
+				{
+					var pathsFiles:Array<String> = findFilesInPath(path, extns);
+
+					for (_ in pathsFiles)
+						files.push(_);
+				}
+			}
+		}
+		return files;
+	}
+	
+	public static inline function getFileStringFromPath(file:String):String
+	{
+		return Path.withoutDirectory(Path.withoutExtension(file));
 	}
 }
