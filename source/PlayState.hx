@@ -334,6 +334,10 @@ class PlayState extends MusicBeatState
 	public static var opponentChart:Bool = false;
 	public static var doubleChart:Bool = false;
 	public var opponentIsPlaying:Bool = false;
+
+	//Fat-Ass Custom Note stuff
+	private var dodgeAnimations:Array<String> = ['dodgeLEFT', 'dodgeDOWN', 'dodgeUP', 'dodgeRIGHT'];
+	private var attackAnimations:Array<String> = ['attackLEFT', 'attackDOWN', 'attackUP', 'attackRIGHT'];
 	var bulletNoteHit:FlxSound;
 	
 	//Hypno's Lullaby Stuff
@@ -3875,7 +3879,6 @@ class PlayState extends MusicBeatState
 					}
 				}
 
-
 			case 'Change Character':
 				var charType:Int = 0;
 				switch(value1.toLowerCase().trim()) {
@@ -4913,6 +4916,8 @@ class PlayState extends MusicBeatState
 
 			if(!note.noAnimation) {
 				var animToPlay:String = singAnimations[Std.int(Math.abs(note.noteData))];
+				var dodgeAnim:String = dodgeAnimations[Std.int(Math.abs(note.noteData))];
+				var attackAnim:String = attackAnimations[Std.int(Math.abs(note.noteData))];
 
 				var char:Character = opponentIsPlaying ? dad : boyfriend;
 				if(note.gfNote && gf != null)
@@ -4968,23 +4973,18 @@ class PlayState extends MusicBeatState
 
 				// Fat-Ass Specific Note Types
 				if(note.noteType == 'Bullet Note') {
-					if (!ClientPrefs.customNoteSound) {
+					if (ClientPrefs.customNoteSound) {
 						bulletNoteHit.play();
-						bulletNoteHit.volume = 0.15;
+						bulletNoteHit.volume = 0.5;
 						if (bulletNoteHit.playing) {
 							bulletNoteHit.play(true);
 						}
 					}
-					if(boyfriend.animOffsets.exists('dodge')) {
-						boyfriend.playAnim('dodge', true);
-						boyfriend.specialAnim = true;
-					}
 
-					if(dad.animOffsets.exists('attack')) {
-						dad.playAnim('attack', true);
-						dad.specialAnim = true;
-					}
-
+					boyfriend.playAnim(dodgeAnim, true);
+					boyfriend.specialAnim = true;
+					dad.playAnim(attackAnim, true);
+					dad.specialAnim = true;
 					if(gf != null && gf.animOffsets.exists('scared')) {
 						gf.playAnim('scared', true);
 						gf.specialAnim = true;
