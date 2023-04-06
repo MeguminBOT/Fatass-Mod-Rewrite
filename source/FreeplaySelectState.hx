@@ -1,9 +1,6 @@
 package;
 
 import flixel.math.FlxPoint.FlxCallbackPoint;
-#if desktop
-import Discord.DiscordClient;
-#end
 import flixel.group.FlxGroup.FlxTypedGroup;
 import flixel.FlxSprite;
 import flixel.FlxG;
@@ -72,11 +69,6 @@ class FreeplaySelectState extends MusicBeatState {
 			
 			persistentUpdate = true;
 			PlayState.isStoryMode = false;
-	
-			#if desktop
-			// Updating Discord Rich Presence
-			DiscordClient.changePresence("In the Menus", null);
-			#end
 	
 			bg = new FlxSprite().loadGraphic(Paths.image('menuDesat'));
 			bg.antialiasing = ClientPrefs.globalAntialiasing;
