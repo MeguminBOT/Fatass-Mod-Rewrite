@@ -191,7 +191,7 @@ class PlayState extends MusicBeatState
 	public var timeBar:FlxBar;
 
 	public var ratingsData:Array<Rating> = [];
-	//public var perfects:Int = 0;
+	public var perfects:Int = 0;
 	public var sicks:Int = 0;
 	public var goods:Int = 0;
 	public var bads:Int = 0;
@@ -394,14 +394,14 @@ class PlayState extends MusicBeatState
 		];
 
 		//Ratings
-		//ratingsData.push(new Rating('perfect'));
-		ratingsData.push(new Rating('sick')); //default rating
+		ratingsData.push(new Rating('perfect'));
+		//ratingsData.push(new Rating('sick')); //default rating
 
-		// var rating:Rating = new Rating('sick');
-		// rating.ratingMod = 1;
-		// rating.score = 300;
-		// rating.noteSplash = false;
-		// ratingsData.push(rating);
+		var rating:Rating = new Rating('sick');
+		rating.ratingMod = 1;
+		rating.score = 300;
+		rating.noteSplash = false;
+		ratingsData.push(rating);
 
 		var rating:Rating = new Rating('good');
 		rating.ratingMod = 0.7;
@@ -4278,7 +4278,7 @@ class PlayState extends MusicBeatState
 			pixelShitPart2 = '-pixel';
 		}
 
-		// Paths.image(pixelShitPart1 + "perfect" + pixelShitPart2);
+		Paths.image(pixelShitPart1 + "perfect" + pixelShitPart2);
 		Paths.image(pixelShitPart1 + "sick" + pixelShitPart2);
 		Paths.image(pixelShitPart1 + "good" + pixelShitPart2);
 		Paths.image(pixelShitPart1 + "bad" + pixelShitPart2);
