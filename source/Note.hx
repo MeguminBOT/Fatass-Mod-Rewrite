@@ -241,8 +241,8 @@ class Note extends FlxSprite
 		this.noteData = noteData;
 
 		if(noteData > -1) {
-			if (ClientPrefs.noteskinType == "Fatass" && !PlayState.isPixelStage) {
-				texture = 'NOTE_assets_fatass';
+			if (ClientPrefs.noteskinType == "Fatass") {
+				texture = 'NOTEFATASS_assets';
 				colorSwap = new ColorSwap();
 				shader = colorSwap.shader;
 				x += swagWidth * (noteData);
@@ -351,6 +351,7 @@ class Note extends FlxSprite
 				height = height / 5;
 				loadGraphic(Paths.image('pixelUI/' + blahblah), true, Math.floor(width), Math.floor(height));
 			}
+			
 			setGraphicSize(Std.int(width * PlayState.daPixelZoom));
 			loadPixelNoteAnims();
 			antialiasing = false;
