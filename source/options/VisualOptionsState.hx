@@ -24,29 +24,21 @@ import Controls;
 
 using StringTools;
 
-class OptionsState extends MusicBeatState
+class VisualOptionsState extends MusicBeatState
 {
-	var options:Array<String> = ['Note Colors', 'Controls', 'Adjust Delay and Combo', 'Graphics', 'Visuals', 'Gameplay', 'Miscellaneous'];
+	var options:Array<String> = ['Gameplay Visuals', 'Song Event Visuals', 'UI Visuals'];
 	private var grpOptions:FlxTypedGroup<Alphabet>;
 	private static var curSelected:Int = 0;
 	public static var menuBG:FlxSprite;
 
 	function openSelectedSubstate(label:String) {
 		switch(label) {
-			case 'Note Colors':
-				openSubState(new options.NotesSubState());
-			case 'Controls':
-				openSubState(new options.ControlsSubState());
-			case 'Graphics':
-				openSubState(new options.GraphicsSettingsSubState());
-			case 'Visuals':
-				MusicBeatState.switchState(new options.VisualOptionsState());
-			case 'Gameplay':
-				openSubState(new options.GameplaySettingsSubState());
-			case 'Miscellaneous':
-				openSubState(new options.MiscOptions());
-			case 'Adjust Delay and Combo':
-				LoadingState.loadAndSwitchState(new options.NoteOffsetState());
+			case 'Gameplay Visuals':
+				openSubState(new options.VisualsGameplay());
+			case 'Song Event Visuals':
+				openSubState(new options.VisualsSongEvents());
+			case 'UI Visuals':
+				openSubState(new options.VisualsHUD());
 		}
 	}
 
@@ -105,7 +97,7 @@ class OptionsState extends MusicBeatState
 
 		if (controls.BACK) {
 			FlxG.sound.play(Paths.sound('cancelMenu'));
-			MusicBeatState.switchState(new MainMenuState());
+			MusicBeatState.switchState(new options.OptionsState());
 		}
 
 		if (controls.ACCEPT) {

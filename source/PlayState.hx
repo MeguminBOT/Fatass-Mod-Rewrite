@@ -2985,17 +2985,19 @@ class PlayState extends MusicBeatState
 	var limoSpeed:Float = 0;
 
 	function startUnown(timer:Int = 15, word:String = ''):Void {
-		canPause = false;
-		unowning = true;
-		persistentUpdate = true;
-		persistentDraw = true;
-		var realTimer = timer;
-		var unownState = new UnownSubState(realTimer, word);
-		unownState.win = wonUnown;
-		unownState.lose = die;
-		unownState.cameras = [camHUD];
-		FlxG.autoPause = false;
-		openSubState(unownState);
+		if (!ClientPrefs.customMechanicEvent) {
+			canPause = false;
+			unowning = true;
+			persistentUpdate = true;
+			persistentDraw = true;
+			var realTimer = timer;
+			var unownState = new UnownSubState(realTimer, word);
+			unownState.win = wonUnown;
+			unownState.lose = die;
+			unownState.cameras = [camHUD];
+			FlxG.autoPause = false;
+			openSubState(unownState);
+		}
 	}
 
 	public function wonUnown():Void {
@@ -3980,7 +3982,7 @@ class PlayState extends MusicBeatState
 			
 			// Fat-Ass Events
 			case 'Unown':
-				if (opponentChart || doubleChart) {
+				if (!ClientPrefs.customMechanicEvent || opponentChart || doubleChart) {
 					return;
 				}
 			startUnown(Std.parseInt(value1), value2);	
@@ -4966,11 +4968,13 @@ class PlayState extends MusicBeatState
 
 				// Fat-Ass Specific Note Types
 				if(note.noteType == 'Bullet Note') {
-					bulletNoteHit.play();
-					bulletNoteHit.volume = 0.15;
+					if (!ClientPrefs.customNoteSound) {
+						bulletNoteHit.play();
+						bulletNoteHit.volume = 0.15;
 						if (bulletNoteHit.playing) {
 							bulletNoteHit.play(true);
 						}
+					}
 					if(boyfriend.animOffsets.exists('dodge')) {
 						boyfriend.playAnim('dodge', true);
 						boyfriend.specialAnim = true;

@@ -53,26 +53,6 @@ class GameplaySettingsSubState extends BaseOptionsMenu
 			false);
 		addOption(option);
 
-		var option:Option = new Option('Opponent Notes',
-			'Hides the opponents notes.',
-			'opponentStrums',
-			'bool',
-			true);
-		addOption(option);
-
-		var option:Option = new Option('Lane Transparency',
-			"Changes the transparency of the area behind the playfield\n0 = No background, 1 = Completely black.",
-			'underlay',
-			'float',
-		true);
-		option.displayFormat = '%v';
-		option.scrollSpeed = 100;
-		option.changeValue = 0.1;
-		option.decimals = 1;
-		option.minValue = 0;
-		option.maxValue = 1;
-		addOption(option);
-
 		var option:Option = new Option('Ghost Tapping',
 			"You won't get misses from pressing keys\nwhile there are no notes able to be hit.",
 			'ghostTapping',
@@ -128,13 +108,25 @@ class GameplaySettingsSubState extends BaseOptionsMenu
 		addOption(option);
 		option.onChange = onChangeHitsoundType;
 
-		var option:Option = new Option('Note Skin:', //To Do: Find a easier way to handle this, perhaps adding something that hides the first part of the file name aswell.
-			"What kind hitsound would you prefer?",
-			'noteskinType',
-			'string',
-			'Fatass',
-			['Fatass', 
-			'FNF']);
+		var option:Option = new Option('Custom Note Sounds',
+			"Uncheck this if you don't want Custom Notes to play sounds.",
+			'customNoteSound',
+			'bool',
+			true);
+		addOption(option);
+
+		var option:Option = new Option('Custom Sound Events',
+			"Uncheck this if you don't want charts to play sounds.",
+			'customSoundEvent',
+			'bool',
+			true);
+		addOption(option);
+
+		var option:Option = new Option('Custom Mechanic Events',
+			"Uncheck this if you don't want custom mechanics like Unown in Monochrome.",
+			'customMechanicEvent',
+			'bool',
+			true);
 		addOption(option);
 	
 		var option:Option = new Option('Rating Offset',

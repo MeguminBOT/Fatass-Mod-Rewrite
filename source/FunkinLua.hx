@@ -155,7 +155,7 @@ class FunkinLua {
 		set('rating', 0);
 		set('ratingName', '');
 		set('ratingFC', '');
-		set('version', MainMenuState.psychEngineVersion.trim());
+		set('version', MainMenuState.fatassVersion.trim());
 
 		set('inGameOver', false);
 		set('mustHitSection', false);
@@ -207,6 +207,16 @@ class FunkinLua {
 		set('shadersEnabled', ClientPrefs.shaders);
 		set('scriptName', scriptName);
 		set('currentModDirectory', Paths.currentModDirectory);
+
+		//Fat-Ass Stuff
+		set('hitsoundVolume', ClientPrefs.hitsoundVolume);
+		set('hitsoundType', ClientPrefs.hitsoundType);
+		set('noteskinType', ClientPrefs.noteskinType);
+
+		//Fat-Ass Stuff: Modcharts
+		set('customNoteSound', ClientPrefs.customNoteSound);
+		set('customSoundEvent', ClientPrefs.customSoundEvent);
+		set('customMechanicEvent', ClientPrefs.customMechanicEvent);
 
 		#if windows
 		set('buildTarget', 'windows');
