@@ -568,6 +568,9 @@ class PlayState extends MusicBeatState
 
 		//Forever-Engine Noteskin Selector Test
 		setUISkin();
+		for (img in imagesToCheck) {
+			precacheList.set(getUIFile(img), 'image');
+		}
 
 		boyfriendGroup = new FlxSpriteGroup(BF_X, BF_Y);
 		dadGroup = new FlxSpriteGroup(DAD_X, DAD_Y);
@@ -1129,7 +1132,7 @@ class PlayState extends MusicBeatState
 		}
 		updateTime = showTime;
 
-		timeBarBG = new AttachedSprite('timeBar');
+		timeBarBG = new AttachedSprite(getUIFile('timeBar'));  //Forever-Engine Noteskin Selector Test
 		timeBarBG.x = timeTxt.x;
 		timeBarBG.y = timeTxt.y + (timeTxt.height / 4);
 		timeBarBG.scrollFactor.set();
@@ -1201,7 +1204,7 @@ class PlayState extends MusicBeatState
 		FlxG.fixedTimestep = false;
 		moveCameraSection();
 
-		healthBarBG = new AttachedSprite('healthBar');
+		healthBarBG = new AttachedSprite(getUIFile('healthBar'));  //Forever-Engine Noteskin Selector Test
 		healthBarBG.y = FlxG.height * 0.89;
 		healthBarBG.screenCenter(X);
 		healthBarBG.scrollFactor.set();
@@ -2158,16 +2161,9 @@ class PlayState extends MusicBeatState
 
 	function cacheCountdown()
 	{
-		var introAssets:Map<String, Array<String>> = new Map<String, Array<String>>();
-		introAssets.set('default', ['ready', 'set', 'go']);
-		introAssets.set('pixel', ['pixelUI/ready-pixel', 'pixelUI/set-pixel', 'pixelUI/date-pixel']);
+		var introAssets:Map<Array<String>> = new Map<Array<String>>();
+		introAssets.set(['ready', 'set', 'go']);
 
-		var introAlts:Array<String> = introAssets.get('default');
-		if (isPixelStage) introAlts = introAssets.get('pixel');
-		
-		for (asset in introAlts)
-			Paths.image(asset);
-		
 		Paths.sound('intro3' + introSoundsSuffix);
 		Paths.sound('intro2' + introSoundsSuffix);
 		Paths.sound('intro1' + introSoundsSuffix);
@@ -2252,14 +2248,11 @@ class PlayState extends MusicBeatState
 					dad.dance();
 				}
 
-				var introAssets:Map<String, Array<String>> = new Map<String, Array<String>>();
-				introAssets.set('default', ['ready', 'set', 'go']);
-				introAssets.set('pixel', ['pixelUI/ready-pixel', 'pixelUI/set-pixel', 'pixelUI/date-pixel']);
+				var introAssets:Map<Array<String>> = new Map<Array<String>>();
+				introAssets.set(['ready', 'set', 'go']);
 
-				var introAlts:Array<String> = introAssets.get('default');
 				var antialias:Bool = ClientPrefs.globalAntialiasing;
 				if(isPixelStage) {
-					introAlts = introAssets.get('pixel');
 					antialias = false;
 				}
 
@@ -2277,7 +2270,7 @@ class PlayState extends MusicBeatState
 					case 0:
 						FlxG.sound.play(Paths.sound('intro3' + introSoundsSuffix), 0.6);
 					case 1:
-						countdownReady = new FlxSprite().loadGraphic(Paths.image(introAlts[0]));
+						countdownReady = new FlxSprite().loadGraphic(Paths.image(getUIFile('ready')));  //Forever-Engine Noteskin Selector Test
 						countdownReady.cameras = [camHUD];
 						countdownReady.scrollFactor.set();
 						countdownReady.updateHitbox();
@@ -2298,7 +2291,7 @@ class PlayState extends MusicBeatState
 						});
 						FlxG.sound.play(Paths.sound('intro2' + introSoundsSuffix), 0.6);
 					case 2:
-						countdownSet = new FlxSprite().loadGraphic(Paths.image(introAlts[1]));
+						countdownSet = new FlxSprite().loadGraphic(Paths.image(getUIFile('set')));  //Forever-Engine Noteskin Selector Test
 						countdownSet.cameras = [camHUD];
 						countdownSet.scrollFactor.set();
 
@@ -2318,7 +2311,7 @@ class PlayState extends MusicBeatState
 						});
 						FlxG.sound.play(Paths.sound('intro1' + introSoundsSuffix), 0.6);
 					case 3:
-						countdownGo = new FlxSprite().loadGraphic(Paths.image(introAlts[2]));
+						countdownGo = new FlxSprite().loadGraphic(Paths.image(getUIFile('go')));  //Forever-Engine Noteskin Selector Test
 						countdownGo.cameras = [camHUD];
 						countdownGo.scrollFactor.set();
 
@@ -4360,8 +4353,8 @@ class PlayState extends MusicBeatState
 			pixelShitPart1 = 'pixelUI/';
 			pixelShitPart2 = '-pixel';
 		}
-
-		rating.loadGraphic(Paths.image(pixelShitPart1 + daRating.image + pixelShitPart2));
+		
+		rating.loadGraphic(Paths.image(getUIFile(daRating.image))); //Forever-Engine Noteskin Selector Test
 		rating.cameras = [camHUD];
 		rating.screenCenter();
 		rating.x = coolText.x - 40;
@@ -4373,7 +4366,7 @@ class PlayState extends MusicBeatState
 		rating.x += ClientPrefs.comboOffset[0];
 		rating.y -= ClientPrefs.comboOffset[1];
 
-		var comboSpr:FlxSprite = new FlxSprite().loadGraphic(Paths.image(pixelShitPart1 + 'combo' + pixelShitPart2));
+		var comboSpr:FlxSprite = new FlxSprite().loadGraphic(Paths.image(getUIFile('combo'))); //Forever-Engine Noteskin Selector Test
 		comboSpr.cameras = [camHUD];
 		comboSpr.screenCenter();
 		comboSpr.x = coolText.x;
@@ -4439,7 +4432,7 @@ class PlayState extends MusicBeatState
 		}
 		for (i in seperatedScore)
 		{
-			var numScore:FlxSprite = new FlxSprite().loadGraphic(Paths.image(pixelShitPart1 + 'num' + Std.int(i) + pixelShitPart2));
+			var numScore:FlxSprite = new FlxSprite().loadGraphic(Paths.image(getUIFile('num') + Std.int(i))); //Forever-Engine Noteskin Selector Test
 			numScore.cameras = [camHUD];
 			numScore.screenCenter();
 			numScore.x = coolText.x + (43 * daLoop) - 90;
