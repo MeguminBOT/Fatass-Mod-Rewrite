@@ -74,6 +74,10 @@ class ClientPrefs {
 	public static var customSoundEvent:Bool = true;
 	public static var customMechanicEvent:Bool = true;
 
+	//Forever-Engine Noteskin Selector Test
+	public static var noteSkin:String = 'Default';
+	public static var uiSkin:String = 'Default';
+
 	//Every key has two binds, add your key bind down here and then add your control on options/ControlsSubState.hx and Controls.hx
 	public static var keyBinds:Map<String, Array<FlxKey>> = [
 		//Key Bind, Name for ControlsSubState
@@ -153,6 +157,10 @@ class ClientPrefs {
 		FlxG.save.data.customNoteSound = customNoteSound;
 		FlxG.save.data.customSoundEvent = customSoundEvent;
 		FlxG.save.data.customMechanicEvent = customMechanicEvent;
+
+		//Forever-Engine Noteskin Selector Test
+		FlxG.save.data.noteSkin = noteSkin;
+		FlxG.save.data.uiSkin = uiSkin;
 
 		// Better Discord RPC
 		FlxG.save.data.discordRPC = discordRPC;
@@ -331,6 +339,16 @@ class ClientPrefs {
 		if(FlxG.save.data.customMechanicEvent != null)
 		{
 			customMechanicEvent = FlxG.save.data.customMechanicEvent;
+		}
+		
+		//Forever-Engine Noteskin Selector Test
+		if(FlxG.save.data.noteSkin != null)
+		{
+			noteSkin = FlxG.save.data.noteSkin;
+		}
+		if(FlxG.save.data.uiSkin != null)
+		{
+			uiSkin = FlxG.save.data.uiSkin;
 		}
 	
 		var save:FlxSave = new FlxSave();

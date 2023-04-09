@@ -337,19 +337,22 @@ class Note extends FlxSprite
 		arraySkin[arraySkin.length-1] = prefix + arraySkin[arraySkin.length-1] + suffix;
 
 		var lastScaleY:Float = scale.y;
-		var blahblah:String = arraySkin.join('/');
-		if(PlayState.isPixelStage) {
+
+		//Forever-Engine Noteskin Selector Test
+		var folder = PlayState.isPixelStage ? 'notes_pixel' : 'notes_base'; 
+		var image = SkinData.getNoteFile(arraySkin.join('/'), folder, ClientPrefs.noteSkin);
+		if (!Paths.fileExists('images/$image.xml', TEXT)) { //assume it is pixel notes
 			if(isSustainNote) {
-				loadGraphic(Paths.image('pixelUI/' + blahblah + 'ENDS'));
+				loadGraphic(Paths.image(image + 'ENDS'));
 				width = width / 4;
 				height = height / 2;
 				originalHeightForCalcs = height;
-				loadGraphic(Paths.image('pixelUI/' + blahblah + 'ENDS'), true, Math.floor(width), Math.floor(height));
+				loadGraphic(Paths.image(image + 'ENDS'), true, Math.floor(width), Math.floor(height));
 			} else {
-				loadGraphic(Paths.image('pixelUI/' + blahblah));
+				loadGraphic(Paths.image(image));
 				width = width / 4;
 				height = height / 5;
-				loadGraphic(Paths.image('pixelUI/' + blahblah), true, Math.floor(width), Math.floor(height));
+				loadGraphic(Paths.image(image), true, Math.floor(width), Math.floor(height));
 			}
 			
 			setGraphicSize(Std.int(width * PlayState.daPixelZoom));
@@ -369,9 +372,9 @@ class Note extends FlxSprite
 				}*/
 			}
 		} else {
-			frames = Paths.getSparrowAtlas(blahblah);
+			frames = Paths.getSparrowAtlas(image);
 			loadNoteAnims();
-			antialiasing = ClientPrefs.globalAntialiasing;
+			antialiasing = ClientPrefs.globalAntialiasing && !PlayState.isPixelStage;
 		}
 		if(isSustainNote) {
 			scale.y = lastScaleY;

@@ -232,6 +232,9 @@ class ChartingState extends MusicBeatState
 
 		// Paths.clearMemory();
 
+		//Forever-Engine Noteskin Selector Test
+		setUISkin();
+
 		#if desktop
 		// Updating Discord Rich Presence
 		DiscordClient.changePresence("Chart Editor", StringTools.replace(_song.song, '-', ' '));
@@ -603,6 +606,10 @@ class ChartingState extends MusicBeatState
 
 		var reloadNotesButton:FlxButton = new FlxButton(noteSplashesInputText.x + 5, noteSplashesInputText.y + 20, 'Change Notes', function() {
 			_song.arrowSkin = noteSkinInputText.text;
+
+			//Forever-Engine Noteskin Selector Test
+			setUISkin();
+
 			updateGrid();
 		});
 
@@ -2950,6 +2957,15 @@ class ChartingState extends MusicBeatState
 		}
 
 		return noteData;
+	}
+	
+	//Forever-Engine Noteskin Selector Test
+	var uiSkinFolder:String = 'base';
+	function setUISkin():Void {
+		uiSkinFolder = PlayState.isPixelStage ? 'pixel' : 'base';
+		if (_song.uiSkin != null && _song.uiSkin.length > 0 && _song.uiSkin != 'base' && _song.uiSkin != 'pixel') {
+			uiSkinFolder = _song.uiSkin;
+		}
 	}
 
 	function loadJson(song:String):Void

@@ -51,15 +51,19 @@ class StrumNote extends FlxSprite
 
 	public function reloadNote()
 	{
+		
 		var lastAnim:String = null;
 		if(animation.curAnim != null) lastAnim = animation.curAnim.name;
 
-		if(PlayState.isPixelStage)
-		{
-			loadGraphic(Paths.image('pixelUI/' + texture));
+		//Forever-Engine Noteskin Selector Test
+		var folder = PlayState.isPixelStage ? 'notes_pixel' : 'notes_base';
+		var image = SkinData.getNoteFile(texture, folder, ClientPrefs.noteSkin);
+		if (!Paths.fileExists('images/$image.xml', TEXT)) //assume it is pixel notes
+		{ 
+			loadGraphic(Paths.image(image));
 			width = width / 4;
 			height = height / 5;
-			loadGraphic(Paths.image('pixelUI/' + texture), true, Math.floor(width), Math.floor(height));
+			loadGraphic(Paths.image(image), true, Math.floor(width), Math.floor(height));
 
 			antialiasing = false;
 			setGraphicSize(Std.int(width * PlayState.daPixelZoom));
@@ -90,13 +94,13 @@ class StrumNote extends FlxSprite
 		}
 		else
 		{
-			frames = Paths.getSparrowAtlas(texture);
+			frames = Paths.getSparrowAtlas(image);
 			animation.addByPrefix('green', 'arrowUP');
 			animation.addByPrefix('blue', 'arrowDOWN');
 			animation.addByPrefix('purple', 'arrowLEFT');
 			animation.addByPrefix('red', 'arrowRIGHT');
 
-			antialiasing = ClientPrefs.globalAntialiasing;
+			antialiasing = ClientPrefs.globalAntialiasing && !PlayState.isPixelStage;
 			setGraphicSize(Std.int(width * 0.7));
 
 			switch (Math.abs(noteData) % 4)

@@ -335,6 +335,9 @@ class PlayState extends MusicBeatState
 	public static var doubleChart:Bool = false;
 	public var opponentIsPlaying:Bool = false;
 
+	//Forever-Engine Noteskin Selector Test
+	public var uiSkinFolder:String = 'base';
+
 	//Fat-Ass Custom Note stuff
 	private var dodgeAnimations:Array<String> = ['dodgeLEFT', 'dodgeDOWN', 'dodgeUP', 'dodgeRIGHT'];
 	private var attackAnimations:Array<String> = ['attackLEFT', 'attackDOWN', 'attackUP', 'attackRIGHT'];
@@ -393,6 +396,9 @@ class PlayState extends MusicBeatState
 			'NOTE_UP',
 			'NOTE_RIGHT'
 		];
+
+		//Forever-Engine Noteskin Selector Test
+		setUISkin();
 
 		//Ratings
 		ratingsData.push(new Rating('perfect'));
@@ -1068,6 +1074,10 @@ class PlayState extends MusicBeatState
 		doof.skipDialogueThing = skipDialogue;
 
 		Conductor.songPosition = -5000 / Conductor.songPosition;
+
+		//Forever-Engine Noteskin Selector Test
+		for (img in imagesToCheck) {
+			precacheList.set(getUIFile(img), 'image');
 
 		strumLine = new FlxSprite((ClientPrefs.middleScroll || doubleChart) ? STRUM_X_MIDDLESCROLL : STRUM_X, 50).makeGraphic(FlxG.width, 10);
 		if(ClientPrefs.downScroll) strumLine.y = FlxG.height - 150;
@@ -5664,4 +5674,18 @@ class PlayState extends MusicBeatState
 
 	var curLight:Int = -1;
 	var curLightEvent:Int = -1;
+
+	//Forever-Engine Noteskin Selector Test
+	function setUISkin():Void {
+		uiSkinFolder = isPixelStage ? 'pixel' : 'base';
+		if (SONG.uiSkin != null && SONG.uiSkin.length > 0) {
+			uiSkinFolder = SONG.uiSkin;
+		}
+		setOnScripts('uiSkinFolder', uiSkinFolder);
+	}
+
+	function getUIFile(file:String) {
+		return SkinData.getUIFile(file, uiSkinFolder, ClientPrefs.uiSkin);
+	}
+
 }
