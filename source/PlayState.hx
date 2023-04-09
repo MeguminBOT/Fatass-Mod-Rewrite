@@ -568,9 +568,6 @@ class PlayState extends MusicBeatState
 
 		//Forever-Engine Noteskin Selector Test
 		setUISkin();
-		for (img in imagesToCheck) {
-			precacheList.set(getUIFile(img), 'image');
-		}
 
 		boyfriendGroup = new FlxSpriteGroup(BF_X, BF_Y);
 		dadGroup = new FlxSpriteGroup(DAD_X, DAD_Y);
@@ -2161,8 +2158,8 @@ class PlayState extends MusicBeatState
 
 	function cacheCountdown()
 	{
-		var introAssets:Map<Array<String>> = new Map<Array<String>>();
-		introAssets.set(['ready', 'set', 'go']);
+		var introAssets:Map<String, Array<String>> = new Map<String, Array<String>>();
+		introAssets.set('default', ['ready', 'set', 'go']);
 
 		Paths.sound('intro3' + introSoundsSuffix);
 		Paths.sound('intro2' + introSoundsSuffix);
@@ -2248,8 +2245,8 @@ class PlayState extends MusicBeatState
 					dad.dance();
 				}
 
-				var introAssets:Map<Array<String>> = new Map<Array<String>>();
-				introAssets.set(['ready', 'set', 'go']);
+				var introAssets:Map<String, Array<String>> = new Map<String, Array<String>>();
+				introAssets.set('default', ['ready', 'set', 'go']);
 
 				var antialias:Bool = ClientPrefs.globalAntialiasing;
 				if(isPixelStage) {

@@ -241,18 +241,10 @@ class Note extends FlxSprite
 		this.noteData = noteData;
 
 		if(noteData > -1) {
-			if (ClientPrefs.noteskinType == "Fatass") {
-				texture = 'NOTEFATASS_assets';
-				colorSwap = new ColorSwap();
-				shader = colorSwap.shader;
-				x += swagWidth * (noteData);
-			}
-			else {
-				texture = '';
-				colorSwap = new ColorSwap();
-				shader = colorSwap.shader;
-				x += swagWidth * (noteData);
-			}
+			texture = '';
+			colorSwap = new ColorSwap();
+			shader = colorSwap.shader;
+			x += swagWidth * (noteData);
 			if(!isSustainNote && noteData > -1 && noteData < 4) { //Doing this 'if' check to fix the warnings on Senpai songs
 				var animToPlay:String = '';
 				animToPlay = colArray[noteData % 4];

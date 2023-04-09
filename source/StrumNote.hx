@@ -34,19 +34,10 @@ class StrumNote extends FlxSprite
 		this.noteData = leData;
 		super(x, y);
 
-		//Fat-Ass Note Skin
-		if (ClientPrefs.noteskinType == "Fatass") {
-			var skin:String = 'NOTEFATASS_assets';
-			if(PlayState.SONG.arrowSkin != null && PlayState.SONG.arrowSkin.length > 1) skin = PlayState.SONG.arrowSkin;
-			texture = skin; //Load texture and anims
-			scrollFactor.set();
-		}
-		else {
-			var skin:String = 'NOTE_assets';
-			if(PlayState.SONG.arrowSkin != null && PlayState.SONG.arrowSkin.length > 1) skin = PlayState.SONG.arrowSkin;
-			texture = skin; //Load texture and anims
-			scrollFactor.set();
-		}
+		var skin:String = 'NOTE_assets';
+		if(PlayState.SONG.arrowSkin != null && PlayState.SONG.arrowSkin.length > 1) skin = PlayState.SONG.arrowSkin;
+		texture = skin; //Load texture and anims
+		scrollFactor.set();
 	}
 
 	public function reloadNote()

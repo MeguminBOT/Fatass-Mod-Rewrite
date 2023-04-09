@@ -25,7 +25,8 @@ class NoteSplash extends FlxSprite
 		antialiasing = ClientPrefs.globalAntialiasing;
 	}
 
-	public function setupNoteSplash(x:Float, y:Float, note:Int = 0, texture:String = null, hueColor:Float = 0, satColor:Float = 0, brtColor:Float = 0) {
+	public function setupNoteSplash(x:Float, y:Float, note:Int = 0, texture:String = null, hueColor:Float = 0, satColor:Float = 0, brtColor:Float = 0) 
+	{
 		if(PlayState.isPixelStage) {
 			setPosition(x + 30, (y + Note.swagWidth) / 2);
 		} else {
@@ -51,18 +52,18 @@ class NoteSplash extends FlxSprite
 		if(animation.curAnim != null)animation.curAnim.frameRate = 24 + FlxG.random.int(-2, 2);
 	}
 
-	function loadAnims(skin:String) {
-		//Forever-Engine Noteskin Selector Test
-		if (daNote == null) {
-			frames = Paths.getSparrowAtlas('noteskins/default/base/noteSplashes');
-		} else {
-			var folder = PlayState.isPixelStage ? 'pixel' : 'base';
-			if (PlayState.SONG.uiSkin != null && PlayState.SONG.uiSkin.length > 0 && PlayState.SONG.uiSkin != 'default' && PlayState.SONG.uiSkin != 'base' && PlayState.SONG.uiSkin != 'pixel') {
-				folder = PlayState.SONG.uiSkin;
-			}
-			var image = SkinData.getNoteFile(skin, folder, ClientPrefs.noteSkin);
-			frames = Paths.getSparrowAtlas(image);
+	function loadAnims(skin:String) 
+	{
+		frames = Paths.getSparrowAtlas('noteskins/default/base/noteSplashes');
+
+		var folder = PlayState.isPixelStage ? 'pixel' : 'base';
+		if (PlayState.SONG.uiSkin != null && PlayState.SONG.uiSkin.length > 0 && PlayState.SONG.uiSkin != 'default' && PlayState.SONG.uiSkin != 'base' && PlayState.SONG.uiSkin != 'pixel') {
+			folder = PlayState.SONG.uiSkin;
 		}
+
+		var image = SkinData.getNoteFile(skin, folder, ClientPrefs.noteSkin);
+		frames = Paths.getSparrowAtlas(image);
+
 		for (i in 1...3) {
 			animation.addByPrefix("note1-" + i, "note splash blue " + i, 24, false);
 			animation.addByPrefix("note2-" + i, "note splash green " + i, 24, false);
