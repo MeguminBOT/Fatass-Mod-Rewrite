@@ -330,20 +330,29 @@ class Note extends FlxSprite
 
 		var lastScaleY:Float = scale.y;
 
-		//Forever-Engine Noteskin Selector Test
+		// Whether to use "pixel" or "base" folder.
 		var folder = PlayState.isPixelStage ? 'pixel' : 'base';
-		if (PlayState.SONG.uiSkin != null && PlayState.SONG.uiSkin.length > 0 && PlayState.SONG.uiSkin != 'default' && PlayState.SONG.uiSkin != 'base' && PlayState.SONG.uiSkin != 'pixel') {
+		if (PlayState.SONG.uiSkin != null && PlayState.SONG.uiSkin.length > 0 && PlayState.SONG.uiSkin != 'default' && PlayState.SONG.uiSkin != 'base' && PlayState.SONG.uiSkin != 'pixel') 
+		{
 			folder = PlayState.SONG.uiSkin;
 		}
+
+		// Get NOTE_assets from selected skin
 		var image = SkinData.getNoteFile(arraySkin.join('/'), folder, ClientPrefs.noteSkin);
-		if (!Paths.fileExists('images/$image.xml', TEXT)) { //assume it is pixel notes
-			if(isSustainNote) {
+
+		// Load NOTE_assets
+		if (!Paths.fileExists('images/$image.xml', TEXT)) // If the note image file does not have a corresponding XML file, assume it is a pixel note
+		{
+			if(isSustainNote) 
+			{
 				loadGraphic(Paths.image(image + 'ENDS'));
 				width = width / 4;
 				height = height / 2;
 				originalHeightForCalcs = height;
 				loadGraphic(Paths.image(image + 'ENDS'), true, Math.floor(width), Math.floor(height));
-			} else {
+			} 
+			else 
+			{
 				loadGraphic(Paths.image(image));
 				width = width / 4;
 				height = height / 5;

@@ -72,10 +72,8 @@ class ClientPrefs {
 	public static var customNoteSound:Bool = true;
 	public static var customSoundEvent:Bool = true;
 	public static var customMechanicEvent:Bool = true;
-
-	//Forever-Engine Noteskin Selector Test
-	public static var noteSkin:String = 'default';
-	public static var uiSkin:String = 'default';
+	public static var noteSkin:String = 'Fatass';
+	public static var uiSkin:String = 'Fatass';
 
 	//Every key has two binds, add your key bind down here and then add your control on options/ControlsSubState.hx and Controls.hx
 	public static var keyBinds:Map<String, Array<FlxKey>> = [
@@ -155,8 +153,6 @@ class ClientPrefs {
 		FlxG.save.data.customNoteSound = customNoteSound;
 		FlxG.save.data.customSoundEvent = customSoundEvent;
 		FlxG.save.data.customMechanicEvent = customMechanicEvent;
-
-		//Forever-Engine Noteskin Selector Test
 		FlxG.save.data.noteSkin = noteSkin;
 		FlxG.save.data.uiSkin = uiSkin;
 
@@ -334,8 +330,6 @@ class ClientPrefs {
 		{
 			customMechanicEvent = FlxG.save.data.customMechanicEvent;
 		}
-
-		//Forever-Engine Noteskin Selector Test
 		if(FlxG.save.data.noteSkin != null)
 		{
 			noteSkin = FlxG.save.data.noteSkin;

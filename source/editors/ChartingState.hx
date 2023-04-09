@@ -233,8 +233,7 @@ class ChartingState extends MusicBeatState
 
 		// Paths.clearMemory();
 
-		//Forever-Engine Noteskin Selector Test
-		setUISkin();
+		setUISkin(); //Sets the UI skin
 
 		#if desktop
 		// Updating Discord Rich Presence
@@ -608,8 +607,8 @@ class ChartingState extends MusicBeatState
 		var reloadNotesButton:FlxButton = new FlxButton(noteSplashesInputText.x + 5, noteSplashesInputText.y + 20, 'Change Notes', function() {
 			_song.arrowSkin = noteSkinInputText.text;
 
-			//Forever-Engine Noteskin Selector Test
-			setUISkin();
+			
+			setUISkin(); //Sets the UI skin
 
 			updateGrid();
 		});
@@ -2960,15 +2959,6 @@ class ChartingState extends MusicBeatState
 		return noteData;
 	}
 
-	//Forever-Engine Noteskin Selector Test
-	var uiSkinFolder:String = 'base';
-	function setUISkin():Void {
-		uiSkinFolder = PlayState.isPixelStage ? 'pixel' : 'base';
-		if (_song.uiSkin != null && _song.uiSkin.length > 0 && _song.uiSkin != 'base' && _song.uiSkin != 'pixel') {
-			uiSkinFolder = _song.uiSkin;
-		}
-	}
-
 	function loadJson(song:String):Void
 	{
 		//shitty null fix, i fucking hate it when this happens
@@ -3083,6 +3073,15 @@ class ChartingState extends MusicBeatState
 		
 		if(_song.notes[section] != null) val = _song.notes[section].sectionBeats;
 		return val != null ? val : 4;
+	}
+
+	// Custom Skin Functions
+	var uiSkinFolder:String = 'base';
+	function setUISkin():Void {
+		uiSkinFolder = PlayState.isPixelStage ? 'pixel' : 'base'; // Wheter to load Base or Pixel assets
+		if (_song.uiSkin != null && _song.uiSkin.length > 0 && _song.uiSkin != 'base' && _song.uiSkin != 'pixel') {
+			uiSkinFolder = _song.uiSkin;
+		}
 	}
 }
 

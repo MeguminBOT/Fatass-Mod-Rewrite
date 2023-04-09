@@ -31,33 +31,22 @@ class VisualsGameplay extends BaseOptionsMenu
 		title = 'Gameplay Visuals';
 		rpcTitle = 'Gameplay Visuals Settings Menu'; //for Discord Rich Presence
 
-		//Forever-Engine Noteskin Selector Test
-		var option:Option = new Option('Note Skin:', //To Do: Find a easier way to handle this, perhaps adding something that hides the first part of the file name aswell.
+		var option:Option = new Option('Note Skin:',
 			"Changes the look of the notes. Doesn't affect custom notes.",
 			'noteSkin',
 			'string',
-			'default',
-			['default', 
-			'fatass']);
+			'Fatass',
+			['Default', 
+			'Fatass']);
 		addOption(option);
 
-		//Forever-Engine Noteskin Selector Test
-		var option:Option = new Option('UI Skin:', //To Do: Find a easier way to handle this, perhaps adding something that hides the first part of the file name aswell.
+		var option:Option = new Option('UI Skin:',
 			"Changes the look of the UI. Affects Combo, Ratings, Healthbar and Timebar.",
 			'uiSkin',
 			'string',
-			'default',
-			['default', 
-			'fatass']);
-		addOption(option);
-
-		var option:Option = new Option('Note Skin:', //To Do: Find a easier way to handle this, perhaps adding something that hides the first part of the file name aswell.
-			"What kind hitsound would you prefer?",
-			'noteskinType',
-			'string',
 			'Fatass',
-			['Fatass', 
-			'FNF']);
+			['Default', 
+			'Fatass']);
 		addOption(option);
 
 		var option:Option = new Option('Note Splashes',

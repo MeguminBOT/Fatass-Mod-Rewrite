@@ -326,19 +326,17 @@ class PlayState extends MusicBeatState
 	public static var lastScore:Array<FlxSprite> = [];
 
 	//Fat-Ass Stuff
+	public static var hiddenMode:Bool = false;
 	public var hiddenPlayfield:FlxSprite;
 	public var hiddenPlayfieldOpponent:FlxSprite;
-	public static var hiddenMode:Bool = false;
 	public var laneunderlay:FlxSprite;
 	public var laneunderlayOpponent:FlxSprite;
 	public static var opponentChart:Bool = false;
 	public static var doubleChart:Bool = false;
 	public var opponentIsPlaying:Bool = false;
-
-	//Forever-Engine Noteskin Selector Test
 	public var uiSkinFolder:String = 'base';
 
-	//Fat-Ass Custom Note stuff
+	//Fat-Ass Custom Note Stuff
 	private var dodgeAnimations:Array<String> = ['dodgeLEFT', 'dodgeDOWN', 'dodgeUP', 'dodgeRIGHT'];
 	private var attackAnimations:Array<String> = ['attackLEFT', 'attackDOWN', 'attackUP', 'attackRIGHT'];
 	var bulletNoteHit:FlxSound;
@@ -566,8 +564,7 @@ class PlayState extends MusicBeatState
 		if(girlfriendCameraOffset == null)
 			girlfriendCameraOffset = [0, 0];
 
-		//Forever-Engine Noteskin Selector Test
-		setUISkin();
+		setUISkin(); //Sets the UI skin onCreate
 
 		boyfriendGroup = new FlxSpriteGroup(BF_X, BF_Y);
 		dadGroup = new FlxSpriteGroup(DAD_X, DAD_Y);
@@ -1129,7 +1126,7 @@ class PlayState extends MusicBeatState
 		}
 		updateTime = showTime;
 
-		timeBarBG = new AttachedSprite(getUIFile('timeBar'));  //Forever-Engine Noteskin Selector Test
+		timeBarBG = new AttachedSprite(getUIFile('timeBar'));
 		timeBarBG.x = timeTxt.x;
 		timeBarBG.y = timeTxt.y + (timeTxt.height / 4);
 		timeBarBG.scrollFactor.set();
@@ -1201,7 +1198,7 @@ class PlayState extends MusicBeatState
 		FlxG.fixedTimestep = false;
 		moveCameraSection();
 
-		healthBarBG = new AttachedSprite(getUIFile('healthBar'));  //Forever-Engine Noteskin Selector Test
+		healthBarBG = new AttachedSprite(getUIFile('healthBar'));
 		healthBarBG.y = FlxG.height * 0.89;
 		healthBarBG.screenCenter(X);
 		healthBarBG.scrollFactor.set();
@@ -2282,7 +2279,7 @@ class PlayState extends MusicBeatState
 					case 0:
 						FlxG.sound.play(Paths.sound('intro3' + introSoundsSuffix), 0.6);
 					case 1:
-						countdownReady = new FlxSprite().loadGraphic(Paths.image(getUIFile('ready')));  //Forever-Engine Noteskin Selector Test
+						countdownReady = new FlxSprite().loadGraphic(Paths.image(getUIFile('ready')));
 						countdownReady.cameras = [camHUD];
 						countdownReady.scrollFactor.set();
 						countdownReady.updateHitbox();
@@ -2303,7 +2300,7 @@ class PlayState extends MusicBeatState
 						});
 						FlxG.sound.play(Paths.sound('intro2' + introSoundsSuffix), 0.6);
 					case 2:
-						countdownSet = new FlxSprite().loadGraphic(Paths.image(getUIFile('set')));  //Forever-Engine Noteskin Selector Test
+						countdownSet = new FlxSprite().loadGraphic(Paths.image(getUIFile('set')));
 						countdownSet.cameras = [camHUD];
 						countdownSet.scrollFactor.set();
 
@@ -2323,7 +2320,7 @@ class PlayState extends MusicBeatState
 						});
 						FlxG.sound.play(Paths.sound('intro1' + introSoundsSuffix), 0.6);
 					case 3:
-						countdownGo = new FlxSprite().loadGraphic(Paths.image(getUIFile('go')));  //Forever-Engine Noteskin Selector Test
+						countdownGo = new FlxSprite().loadGraphic(Paths.image(getUIFile('go')));
 						countdownGo.cameras = [camHUD];
 						countdownGo.scrollFactor.set();
 
@@ -4366,7 +4363,7 @@ class PlayState extends MusicBeatState
 			pixelShitPart2 = '-pixel';
 		}
 		
-		rating.loadGraphic(Paths.image(getUIFile(daRating.image))); //Forever-Engine Noteskin Selector Test
+		rating.loadGraphic(Paths.image(getUIFile(daRating.image)));
 		rating.cameras = [camHUD];
 		rating.screenCenter();
 		rating.x = coolText.x - 40;
@@ -4378,7 +4375,7 @@ class PlayState extends MusicBeatState
 		rating.x += ClientPrefs.comboOffset[0];
 		rating.y -= ClientPrefs.comboOffset[1];
 
-		var comboSpr:FlxSprite = new FlxSprite().loadGraphic(Paths.image(getUIFile('combo'))); //Forever-Engine Noteskin Selector Test
+		var comboSpr:FlxSprite = new FlxSprite().loadGraphic(Paths.image(getUIFile('combo')));
 		comboSpr.cameras = [camHUD];
 		comboSpr.screenCenter();
 		comboSpr.x = coolText.x;
@@ -4444,7 +4441,7 @@ class PlayState extends MusicBeatState
 		}
 		for (i in seperatedScore)
 		{
-			var numScore:FlxSprite = new FlxSprite().loadGraphic(Paths.image(getUIFile('num' + Std.int(i)))); //Forever-Engine Noteskin Selector Test
+			var numScore:FlxSprite = new FlxSprite().loadGraphic(Paths.image(getUIFile('num' + Std.int(i))));
 			numScore.cameras = [camHUD];
 			numScore.screenCenter();
 			numScore.x = coolText.x + (43 * daLoop) - 90;
@@ -5688,17 +5685,21 @@ class PlayState extends MusicBeatState
 	var curLight:Int = -1;
 	var curLightEvent:Int = -1;
 
-	//Forever-Engine Noteskin Selector Test
-	function setUISkin():Void {
-		uiSkinFolder = isPixelStage ? 'pixel' : 'base';
-		if (SONG.uiSkin != null && SONG.uiSkin.length > 0 && SONG.uiSkin != 'default' && SONG.uiSkin != 'base' && SONG.uiSkin != 'pixel') {
-			uiSkinFolder = SONG.uiSkin;
-		}
-		setOnLuas('uiSkinFolder', uiSkinFolder);
-	}
-
-	function getUIFile(file:String) {
+	// Custom Skin Functions
+	function getUIFile(file:String)
+	{
+		// Handles which skin to load from
 		return SkinData.getUIFile(file, uiSkinFolder, ClientPrefs.uiSkin);
 	}
-
+	function setUISkin():Void
+	{
+		// Wheter to load Base or Pixel assets
+		uiSkinFolder = isPixelStage ? 'pixel' : 'base';
+		if (SONG.uiSkin != null && SONG.uiSkin.length > 0 && SONG.uiSkin != 'default' && SONG.uiSkin != 'base' && SONG.uiSkin != 'pixel')
+		{
+			uiSkinFolder = SONG.uiSkin;
+		}
+		// Lua Support
+		setOnLuas('uiSkinFolder', uiSkinFolder);
+	}
 }

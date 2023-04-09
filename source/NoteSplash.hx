@@ -9,7 +9,7 @@ class NoteSplash extends FlxSprite
 	public var colorSwap:ColorSwap = null;
 	private var idleAnim:String;
 	private var textureLoaded:String = null;
-	var daNote:Note = null;
+	var daNote:Note = null; // To prevent crashing
 
 	public function new(x:Float = 0, y:Float = 0, ?note:Int = 0) {
 		super(x, y);
@@ -53,12 +53,15 @@ class NoteSplash extends FlxSprite
 		if(animation.curAnim != null)animation.curAnim.frameRate = 24 + FlxG.random.int(-2, 2);
 	}
 
-	//Forever-Engine Noteskin Selector Test
 	function loadAnims(skin:String) 
 	{
+		// Whether to use the "pixel" or "base" folder.
 		var folder = PlayState.isPixelStage ? 'pixel' : 'base';
+
+		// Get the noteSplashes from selected skin
 		var image = SkinData.getNoteFile(skin, folder, ClientPrefs.noteSkin);
 
+		// Fallback method: Load default noteSplashes
 		if (daNote == null) 
 		{
 			frames = Paths.getSparrowAtlas('noteskins/default/base/noteSplashes');
@@ -70,21 +73,23 @@ class NoteSplash extends FlxSprite
 			}
 		}
 
+		// Loads custom noteSplashes defined inside chart.json if available.
 		if (PlayState.SONG.uiSkin != null && PlayState.SONG.uiSkin.length > 0 && PlayState.SONG.uiSkin != 'default' && PlayState.SONG.uiSkin != 'base' && PlayState.SONG.uiSkin != 'pixel') 
 		{
 			folder = PlayState.SONG.uiSkin;
 		}
 
-		if (!Paths.fileExists('images/$image.xml', TEXT)) //assume it is pixel notes
+		// Load noteSplashes
+		if (!Paths.fileExists('images/$image.xml', TEXT)) // If the noteSplashes does not have a corresponding XML file, assume it is a pixel note
 		{ 
 			loadGraphic(Paths.image(image));
 			width = width / 8;
 			height = height / 4;
-			loadGraphic(Paths.image(image), true, Math.floor(width), Math.floor(height));
-
 			antialiasing = false;
+			loadGraphic(Paths.image(image), true, Math.floor(width), Math.floor(height));
 			setGraphicSize(Std.int(width * PlayState.daPixelZoom));
 
+			// Since Pixel assets doesn't use XML files, we need to define the frames manually.
 			animation.add("note0-1", [0, 1, 2, 3], 12, false);
 			animation.add("note0-2", [4, 5, 6, 7], 12, false);
 			animation.add("note1-1", [8, 9, 10, 11], 12, false);
@@ -93,11 +98,10 @@ class NoteSplash extends FlxSprite
 			animation.add("note2-2", [20, 21, 22, 23], 12, false);
 			animation.add("note3-1", [24, 25, 26, 27], 12, false);
 			animation.add("note3-2", [28, 29, 30, 31], 12, false);
-		} 
-		else 
+		}
+		else
 		{
 			frames = Paths.getSparrowAtlas(image);
-			scale.set(1, 1);
 			for (i in 1...3) {
 				animation.addByPrefix("note0-" + i, "note splash purple " + i, 24, false);
 				animation.addByPrefix("note1-" + i, "note splash blue " + i, 24, false);

@@ -211,16 +211,14 @@ class FunkinLua {
 		//Fat-Ass Stuff
 		set('hitsoundVolume', ClientPrefs.hitsoundVolume);
 		set('hitsoundType', ClientPrefs.hitsoundType);
+		set('uiSkinFolder', PlayState.instance.uiSkinFolder);
+		set('noteSkin', ClientPrefs.noteSkin);
+		set('uiSkin', ClientPrefs.uiSkin);
 
 		//Fat-Ass Stuff: Modcharts
 		set('customNoteSound', ClientPrefs.customNoteSound);
 		set('customSoundEvent', ClientPrefs.customSoundEvent);
 		set('customMechanicEvent', ClientPrefs.customMechanicEvent);
-
-		//Forever-Engine Noteskin Selector Test
-		set('uiSkinFolder', PlayState.instance.uiSkinFolder);
-		set('noteSkin', ClientPrefs.noteSkin);
-		set('uiSkin', ClientPrefs.uiSkin);
 
 		#if windows
 		set('buildTarget', 'windows');

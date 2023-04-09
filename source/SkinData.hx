@@ -1,4 +1,4 @@
-//Forever-Engine Noteskin Selector Test
+//Based of Forever Engine
 #if MODS_ALLOWED
 import sys.FileSystem;
 #end

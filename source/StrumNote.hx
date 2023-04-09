@@ -46,13 +46,18 @@ class StrumNote extends FlxSprite
 		var lastAnim:String = null;
 		if(animation.curAnim != null) lastAnim = animation.curAnim.name;
 
-		//Forever-Engine Noteskin Selector Test
+		// Whether to use "pixel" or "base" folder.
 		var folder = PlayState.isPixelStage ? 'pixel' : 'base';
-		if (PlayState.SONG.uiSkin != null && PlayState.SONG.uiSkin.length > 0 && PlayState.SONG.uiSkin != 'default' && PlayState.SONG.uiSkin != 'base' && PlayState.SONG.uiSkin != 'pixel') {
+		if (PlayState.SONG.uiSkin != null && PlayState.SONG.uiSkin.length > 0 && PlayState.SONG.uiSkin != 'default' && PlayState.SONG.uiSkin != 'base' && PlayState.SONG.uiSkin != 'pixel')
+		{
 			folder = PlayState.SONG.uiSkin;
 		}
+
+		// Get NOTE_assets from selected skin
 		var image = SkinData.getNoteFile(texture, folder, ClientPrefs.noteSkin);
-		if (!Paths.fileExists('images/$image.xml', TEXT)) //assume it is pixel notes
+
+		// Load NOTE_assets
+		if (!Paths.fileExists('images/$image.xml', TEXT)) // If the note image file does not have a corresponding XML file, assume it is a pixel note
 		{ 
 			loadGraphic(Paths.image(image));
 			width = width / 4;
