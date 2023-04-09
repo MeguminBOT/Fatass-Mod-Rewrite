@@ -2160,6 +2160,14 @@ class PlayState extends MusicBeatState
 	{
 		var introAssets:Map<String, Array<String>> = new Map<String, Array<String>>();
 		introAssets.set('default', ['ready', 'set', 'go']);
+		introAssets.set('pixel', ['pixelUI/ready-pixel', 'pixelUI/set-pixel', 'pixelUI/date-pixel']);
+
+		var introAlts:Array<String> = introAssets.get('default');
+		if (isPixelStage) 
+			introAlts = introAssets.get('pixel');
+		
+		for (asset in introAlts)
+			Paths.image(asset);
 
 		Paths.sound('intro3' + introSoundsSuffix);
 		Paths.sound('intro2' + introSoundsSuffix);
@@ -2247,9 +2255,16 @@ class PlayState extends MusicBeatState
 
 				var introAssets:Map<String, Array<String>> = new Map<String, Array<String>>();
 				introAssets.set('default', ['ready', 'set', 'go']);
+				introAssets.set('pixel', ['pixelUI/ready-pixel', 'pixelUI/set-pixel', 'pixelUI/date-pixel']);
+
+				var introAlts:Array<String> = introAssets.get('default');
+				
+				for (asset in introAlts)
+					Paths.image(asset);
 
 				var antialias:Bool = ClientPrefs.globalAntialiasing;
 				if(isPixelStage) {
+					introAlts = introAssets.get('pixel');
 					antialias = false;
 				}
 
@@ -4429,7 +4444,7 @@ class PlayState extends MusicBeatState
 		}
 		for (i in seperatedScore)
 		{
-			var numScore:FlxSprite = new FlxSprite().loadGraphic(Paths.image(getUIFile('num') + Std.int(i))); //Forever-Engine Noteskin Selector Test
+			var numScore:FlxSprite = new FlxSprite().loadGraphic(Paths.image(getUIFile('num' + Std.int(i)))); //Forever-Engine Noteskin Selector Test
 			numScore.cameras = [camHUD];
 			numScore.screenCenter();
 			numScore.x = coolText.x + (43 * daLoop) - 90;

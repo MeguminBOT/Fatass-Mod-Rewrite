@@ -211,7 +211,6 @@ class FunkinLua {
 		//Fat-Ass Stuff
 		set('hitsoundVolume', ClientPrefs.hitsoundVolume);
 		set('hitsoundType', ClientPrefs.hitsoundType);
-		set('noteskinType', ClientPrefs.noteskinType);
 
 		//Fat-Ass Stuff: Modcharts
 		set('customNoteSound', ClientPrefs.customNoteSound);

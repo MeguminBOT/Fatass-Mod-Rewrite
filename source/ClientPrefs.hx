@@ -69,14 +69,13 @@ class ClientPrefs {
 	public static var underlay:Float = 0;
 	public static var hitsoundType:String = 'hitsound_default';
 	public static var inputSystem:String = "Etterna";
-	public static var noteskinType:String = "Fatass";
 	public static var customNoteSound:Bool = true;
 	public static var customSoundEvent:Bool = true;
 	public static var customMechanicEvent:Bool = true;
 
 	//Forever-Engine Noteskin Selector Test
-	public static var noteSkin:String = 'Default';
-	public static var uiSkin:String = 'Default';
+	public static var noteSkin:String = 'default';
+	public static var uiSkin:String = 'default';
 
 	//Every key has two binds, add your key bind down here and then add your control on options/ControlsSubState.hx and Controls.hx
 	public static var keyBinds:Map<String, Array<FlxKey>> = [
@@ -153,7 +152,6 @@ class ClientPrefs {
 		FlxG.save.data.underlay = underlay;
 		FlxG.save.data.hitsoundType = hitsoundType;
 		FlxG.save.data.inputSystem = inputSystem;
-		FlxG.save.data.noteskinType = noteskinType;
 		FlxG.save.data.customNoteSound = customNoteSound;
 		FlxG.save.data.customSoundEvent = customSoundEvent;
 		FlxG.save.data.customMechanicEvent = customMechanicEvent;
@@ -324,10 +322,6 @@ class ClientPrefs {
 		{
 			inputSystem = FlxG.save.data.inputSystem;
 		}
-		if(FlxG.save.data.noteskinType != null)
-		{
-			noteskinType = FlxG.save.data.noteskinType;
-		}
 		if(FlxG.save.data.customNoteSound != null)
 		{
 			customNoteSound = FlxG.save.data.customNoteSound;
@@ -340,7 +334,7 @@ class ClientPrefs {
 		{
 			customMechanicEvent = FlxG.save.data.customMechanicEvent;
 		}
-		
+
 		//Forever-Engine Noteskin Selector Test
 		if(FlxG.save.data.noteSkin != null)
 		{
