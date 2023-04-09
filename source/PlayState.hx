@@ -1423,6 +1423,18 @@ class PlayState extends MusicBeatState
 			precacheList.set('missnote3', 'sound');
 		}
 
+		//cache note splashes
+		var textureMap:Map<String, Bool> = new Map();
+		precacheList.set('noteskins/default/base/noteSplashes', 'image');
+		textureMap.set('noteskins/default/base/noteSplashes', true);
+		for (note in unspawnNotes) {
+			if (note.noteSplashTexture != null && note.noteSplashTexture.length > 0 && !note.noteSplashDisabled && !textureMap.exists(note.noteSplashTexture)) {
+				var skin = SkinData.getNoteFile(note.noteSplashTexture, uiSkinFolder, ClientPrefs.noteSkin);
+				precacheList.set(skin, 'image');
+				textureMap.set(skin, true);
+			}
+		}
+
 		if (PauseSubState.songName != null) {
 			precacheList.set(PauseSubState.songName, 'music');
 		} else if(ClientPrefs.pauseMusic != 'None') {
