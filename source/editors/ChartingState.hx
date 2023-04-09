@@ -219,6 +219,7 @@ class ChartingState extends MusicBeatState
 				needsVoices: true,
 				arrowSkin: '',
 				splashSkin: 'noteSplashes',//idk it would crash if i didn't
+				uiSkin:'',
 				player1: 'bf',
 				player2: 'dad',
 				gfVersion: 'gf',
@@ -2958,7 +2959,7 @@ class ChartingState extends MusicBeatState
 
 		return noteData;
 	}
-	
+
 	//Forever-Engine Noteskin Selector Test
 	var uiSkinFolder:String = 'base';
 	function setUISkin():Void {

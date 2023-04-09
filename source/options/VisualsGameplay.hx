@@ -31,6 +31,16 @@ class VisualsGameplay extends BaseOptionsMenu
 		title = 'Gameplay Visuals';
 		rpcTitle = 'Gameplay Visuals Settings Menu'; //for Discord Rich Presence
 
+		//Forever-Engine Noteskin Selector Test
+		var option:Option = new Option('Note Skin NEW:', //To Do: Find a easier way to handle this, perhaps adding something that hides the first part of the file name aswell.
+			"Select your desired note skin (no preview feature yet)",
+			'noteSkin',
+			'string',
+			'default',
+			['default', 
+			'fatass']);
+		addOption(option);
+
 		var option:Option = new Option('Note Skin:', //To Do: Find a easier way to handle this, perhaps adding something that hides the first part of the file name aswell.
 			"What kind hitsound would you prefer?",
 			'noteskinType',

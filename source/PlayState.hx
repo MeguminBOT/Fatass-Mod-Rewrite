@@ -397,9 +397,6 @@ class PlayState extends MusicBeatState
 			'NOTE_RIGHT'
 		];
 
-		//Forever-Engine Noteskin Selector Test
-		setUISkin();
-
 		//Ratings
 		ratingsData.push(new Rating('perfect'));
 		//ratingsData.push(new Rating('sick')); //default rating
@@ -568,6 +565,9 @@ class PlayState extends MusicBeatState
 		girlfriendCameraOffset = stageData.camera_girlfriend;
 		if(girlfriendCameraOffset == null)
 			girlfriendCameraOffset = [0, 0];
+
+		//Forever-Engine Noteskin Selector Test
+		setUISkin();
 
 		boyfriendGroup = new FlxSpriteGroup(BF_X, BF_Y);
 		dadGroup = new FlxSpriteGroup(DAD_X, DAD_Y);
@@ -1074,10 +1074,6 @@ class PlayState extends MusicBeatState
 		doof.skipDialogueThing = skipDialogue;
 
 		Conductor.songPosition = -5000 / Conductor.songPosition;
-
-		//Forever-Engine Noteskin Selector Test
-		for (img in imagesToCheck) {
-			precacheList.set(getUIFile(img), 'image');
 
 		strumLine = new FlxSprite((ClientPrefs.middleScroll || doubleChart) ? STRUM_X_MIDDLESCROLL : STRUM_X, 50).makeGraphic(FlxG.width, 10);
 		if(ClientPrefs.downScroll) strumLine.y = FlxG.height - 150;
@@ -5678,10 +5674,10 @@ class PlayState extends MusicBeatState
 	//Forever-Engine Noteskin Selector Test
 	function setUISkin():Void {
 		uiSkinFolder = isPixelStage ? 'pixel' : 'base';
-		if (SONG.uiSkin != null && SONG.uiSkin.length > 0) {
+		if (SONG.uiSkin != null && SONG.uiSkin.length > 0 && SONG.uiSkin != 'default' && SONG.uiSkin != 'base' && SONG.uiSkin != 'pixel') {
 			uiSkinFolder = SONG.uiSkin;
 		}
-		setOnScripts('uiSkinFolder', uiSkinFolder);
+		setOnLuas('uiSkinFolder', uiSkinFolder);
 	}
 
 	function getUIFile(file:String) {

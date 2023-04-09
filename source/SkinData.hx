@@ -12,10 +12,15 @@ class SkinData {
         }
         #end
         var path = 'noteskins/$skin/$folder/$file';
-        if (!Paths.fileExists('images/$path.png', IMAGE))
+        if (!Paths.fileExists('images/$path.png', IMAGE)) {
             path = 'noteskins/default/$folder/$file';
-        if (!Paths.fileExists('images/$path.png', IMAGE))
-            path = (folder == 'notes_pixel' && Paths.fileExists('images/pixelUI/$file.png', IMAGE) ? 'pixelUI' : '') + file;
+        }
+        if (!Paths.fileExists('images/$path.png', IMAGE)) {
+            path = 'noteskins/default/base/$file';
+        }
+        if (!Paths.fileExists('images/$path.png', IMAGE)) {
+            path = (folder == 'pixel' && Paths.fileExists('images/pixelUI/$file.png', IMAGE) ? 'pixelUI' : '') + file;
+        }
         return path;
     }
 
@@ -27,12 +32,19 @@ class SkinData {
             return file;
         }
         #end
-        if (!Paths.fileExists('images/$path.png', IMAGE))
+        trace(path);
+        if (!Paths.fileExists('images/$path.png', IMAGE)) {
             path = 'uiskins/default/$folder/$file';
-        if (!Paths.fileExists('images/$path.png', IMAGE))
+            trace(path);
+        }
+        if (!Paths.fileExists('images/$path.png', IMAGE)) {
             path = 'uiskins/default/base/$file';
-        if (!Paths.fileExists('images/$path.png', IMAGE))
+            trace(path);
+        }
+        if (!Paths.fileExists('images/$path.png', IMAGE)) {
             path = (folder == 'pixel' && Paths.fileExists('images/pixelUI/$file.png', IMAGE) ? 'pixelUI' : '') + file;
+            trace(path);
+        }
         return path;
     }
 }
