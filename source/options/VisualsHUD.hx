@@ -29,6 +29,7 @@ class VisualsHUD extends BaseOptionsMenu
 	public function new()
 	{
 		title = 'UI Visuals';
+		description = 'Options for Menu and Gameplay UI';
 		rpcTitle = 'UI Visuals Settings Menu'; //for Discord Rich Presence
 
 		var option:Option = new Option('UI Skin:',

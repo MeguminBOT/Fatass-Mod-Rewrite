@@ -29,6 +29,7 @@ class VisualsSongEvents extends BaseOptionsMenu
 	public function new()
 	{
 		title = 'Song Event Visuals';
+		description = 'Options affecting Song Events';
 		rpcTitle = 'Song Event Visuals Settings Menu'; //for Discord Rich Presence
 
 		var option:Option = new Option('Flashing Lights',

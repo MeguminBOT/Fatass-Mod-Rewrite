@@ -29,6 +29,7 @@ class VisualsGameplay extends BaseOptionsMenu
 	public function new()
 	{
 		title = 'Gameplay Visuals';
+		description = 'Options that visually affects your gameplay';
 		rpcTitle = 'Gameplay Visuals Settings Menu'; //for Discord Rich Presence
 
 		var option:Option = new Option('Note Skin:',

@@ -29,6 +29,7 @@ class MiscOptions extends BaseOptionsMenu
 	public function new()
 	{
 		title = 'Miscellaneous Options';
+		description = "Options that doesn't fit any categories";
 		rpcTitle = 'Miscellaneous Settings Menu'; //for Discord Rich Presence
 		
 		var option:Option = new Option('Pause Screen Song:',

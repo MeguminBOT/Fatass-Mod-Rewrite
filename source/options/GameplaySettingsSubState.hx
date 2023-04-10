@@ -29,6 +29,7 @@ class GameplaySettingsSubState extends BaseOptionsMenu
 	public function new()
 	{
 		title = 'Gameplay Settings';
+		description = 'Options that directly affects your gameplay';
 		rpcTitle = 'Gameplay Settings Menu'; //for Discord Rich Presence
 
 		var option:Option = new Option('Controller Mode',
