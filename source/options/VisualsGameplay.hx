@@ -40,15 +40,6 @@ class VisualsGameplay extends BaseOptionsMenu
 			'Fatass']);
 		addOption(option);
 
-		var option:Option = new Option('UI Skin:',
-			"Changes the look of the UI. Affects Combo, Ratings, Healthbar and Timebar.",
-			'uiSkin',
-			'string',
-			'Fatass',
-			['Default', 
-			'Fatass']);
-		addOption(option);
-
 		var option:Option = new Option('Note Splashes',
 			"If unchecked, hitting \"Sick!\" notes won't show particles.",
 			'noteSplashes',

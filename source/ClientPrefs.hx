@@ -74,6 +74,7 @@ class ClientPrefs {
 	public static var customMechanicEvent:Bool = true;
 	public static var noteSkin:String = 'Fatass';
 	public static var uiSkin:String = 'Fatass';
+	public static var judgeCounter:Bool = true;
 
 	//Every key has two binds, add your key bind down here and then add your control on options/ControlsSubState.hx and Controls.hx
 	public static var keyBinds:Map<String, Array<FlxKey>> = [
@@ -155,6 +156,7 @@ class ClientPrefs {
 		FlxG.save.data.customMechanicEvent = customMechanicEvent;
 		FlxG.save.data.noteSkin = noteSkin;
 		FlxG.save.data.uiSkin = uiSkin;
+		FlxG.save.data.judgeCounter = judgeCounter;
 
 		// Better Discord RPC
 		FlxG.save.data.discordRPC = discordRPC;
@@ -337,6 +339,10 @@ class ClientPrefs {
 		if(FlxG.save.data.uiSkin != null)
 		{
 			uiSkin = FlxG.save.data.uiSkin;
+		}
+		if(FlxG.save.data.judgeCounter != null)
+		{
+			judgeCounter = FlxG.save.data.judgeCounter;
 		}
 	
 		var save:FlxSave = new FlxSave();

@@ -335,6 +335,7 @@ class PlayState extends MusicBeatState
 	public static var doubleChart:Bool = false;
 	public var opponentIsPlaying:Bool = false;
 	public var uiSkinFolder:String = 'base';
+	public var judgeCounterTxt:FlxText;
 
 	//Fat-Ass Custom Note Stuff
 	private var dodgeAnimations:Array<String> = ['dodgeLEFT', 'dodgeDOWN', 'dodgeUP', 'dodgeRIGHT'];
@@ -402,7 +403,7 @@ class PlayState extends MusicBeatState
 		var rating:Rating = new Rating('sick');
 		rating.ratingMod = 1;
 		rating.score = 300;
-		rating.noteSplash = false;
+		rating.noteSplash = true;
 		ratingsData.push(rating);
 
 		var rating:Rating = new Rating('good');
@@ -1097,6 +1098,18 @@ class PlayState extends MusicBeatState
 		laneunderlay.color = FlxColor.BLACK;
 		laneunderlay.scrollFactor.set();
 
+		//Fat-Ass Mod: Judgement Counter
+		judgeCounterTxt = new FlxText(0, 0);
+		judgeCounterTxt.setFormat(Paths.font("rubik.ttf"), 16, FlxColor.WHITE, CENTER, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
+		judgeCounterTxt.scrollFactor.set();
+		judgeCounterTxt.borderSize = 1.25;
+		judgeCounterTxt.visible = !ClientPrefs.hideHud;
+		judgeCounterTxt.x = 565;
+		judgeCounterTxt.y = 565;
+		//judgeCounterTxt.x += ClientPrefs.comboOffset[4]; // Moveable in Adjust Combo menu, currently wack so disabling for now
+		//judgeCounterTxt.y -= ClientPrefs.comboOffset[5]; // Moveable in Adjust Combo menu, currently wack so disabling for now
+		add(judgeCounterTxt);
+
 		if (hiddenMode)
 		{
 			add(hiddenPlayfield);
@@ -1265,6 +1278,7 @@ class PlayState extends MusicBeatState
 		laneunderlayOpponent.cameras = [camHUD];
 		hiddenPlayfield.cameras = [camOther];
 		hiddenPlayfieldOpponent.cameras = [camOther];
+		judgeCounterTxt.cameras = [camOther];
 
 		// if (SONG.song == 'South')
 		// FlxG.camera.alpha = 0.7;
@@ -5567,6 +5581,7 @@ class PlayState extends MusicBeatState
 		setOnLuas('score', songScore);
 		setOnLuas('misses', songMisses);
 		setOnLuas('hits', songHits);
+		judgeCounterTxt.text = 'Perfect Sicks: ' + perfects + '\nSicks: ' + sicks + '\nGoods: ' + goods + '\nBads: ' + bads + '\nShits: ' + shits;
 
 		var ret:Dynamic = callOnLuas('onRecalculateRating', [], false);
 		if(ret != FunkinLua.Function_Stop)

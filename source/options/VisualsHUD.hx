@@ -31,6 +31,22 @@ class VisualsHUD extends BaseOptionsMenu
 		title = 'UI Visuals';
 		rpcTitle = 'UI Visuals Settings Menu'; //for Discord Rich Presence
 
+		var option:Option = new Option('UI Skin:',
+			"Changes the look of the UI. Affects Combo, Ratings, Healthbar and Timebar.",
+			'uiSkin',
+			'string',
+			'Fatass',
+			['Default', 
+			'Fatass']);
+		addOption(option);
+
+		var option:Option = new Option('Judgement Counter',
+			'Displays how many hits you got of each judgement rating',
+			'judgeCounter',
+			'bool',
+		false);
+		addOption(option);
+
 		var option:Option = new Option('Hide HUD',
 			'If checked, hides most HUD elements.',
 			'hideHud',
