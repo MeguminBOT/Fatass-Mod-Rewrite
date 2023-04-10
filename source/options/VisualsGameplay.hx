@@ -38,7 +38,8 @@ class VisualsGameplay extends BaseOptionsMenu
 			'string',
 			'Fatass',
 			['Default', 
-			'Fatass']);
+			'Fatass',
+			'StepMania']);
 		addOption(option);
 
 		var option:Option = new Option('Note Splashes',
