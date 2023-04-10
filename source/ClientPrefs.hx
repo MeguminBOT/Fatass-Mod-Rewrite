@@ -69,10 +69,11 @@ class ClientPrefs {
 	public static var underlay:Float = 0;
 	public static var hitsoundType:String = 'hitsound_default';
 	public static var inputSystem:String = "Etterna";
-	public static var noteskinType:String = "Fatass";
 	public static var customNoteSound:Bool = true;
 	public static var customSoundEvent:Bool = true;
 	public static var customMechanicEvent:Bool = true;
+	public static var noteSkin:String = 'Fatass';
+	public static var uiSkin:String = 'Fatass';
 
 	//Every key has two binds, add your key bind down here and then add your control on options/ControlsSubState.hx and Controls.hx
 	public static var keyBinds:Map<String, Array<FlxKey>> = [
@@ -149,10 +150,11 @@ class ClientPrefs {
 		FlxG.save.data.underlay = underlay;
 		FlxG.save.data.hitsoundType = hitsoundType;
 		FlxG.save.data.inputSystem = inputSystem;
-		FlxG.save.data.noteskinType = noteskinType;
 		FlxG.save.data.customNoteSound = customNoteSound;
 		FlxG.save.data.customSoundEvent = customSoundEvent;
 		FlxG.save.data.customMechanicEvent = customMechanicEvent;
+		FlxG.save.data.noteSkin = noteSkin;
+		FlxG.save.data.uiSkin = uiSkin;
 
 		// Better Discord RPC
 		FlxG.save.data.discordRPC = discordRPC;
@@ -316,10 +318,6 @@ class ClientPrefs {
 		{
 			inputSystem = FlxG.save.data.inputSystem;
 		}
-		if(FlxG.save.data.noteskinType != null)
-		{
-			noteskinType = FlxG.save.data.noteskinType;
-		}
 		if(FlxG.save.data.customNoteSound != null)
 		{
 			customNoteSound = FlxG.save.data.customNoteSound;
@@ -331,6 +329,14 @@ class ClientPrefs {
 		if(FlxG.save.data.customMechanicEvent != null)
 		{
 			customMechanicEvent = FlxG.save.data.customMechanicEvent;
+		}
+		if(FlxG.save.data.noteSkin != null)
+		{
+			noteSkin = FlxG.save.data.noteSkin;
+		}
+		if(FlxG.save.data.uiSkin != null)
+		{
+			uiSkin = FlxG.save.data.uiSkin;
 		}
 	
 		var save:FlxSave = new FlxSave();

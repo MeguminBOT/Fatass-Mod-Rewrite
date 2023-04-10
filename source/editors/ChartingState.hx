@@ -219,6 +219,7 @@ class ChartingState extends MusicBeatState
 				needsVoices: true,
 				arrowSkin: '',
 				splashSkin: 'noteSplashes',//idk it would crash if i didn't
+				uiSkin:'',
 				player1: 'bf',
 				player2: 'dad',
 				gfVersion: 'gf',
@@ -231,6 +232,8 @@ class ChartingState extends MusicBeatState
 		}
 
 		// Paths.clearMemory();
+
+		setUISkin(); //Sets the UI skin
 
 		#if desktop
 		// Updating Discord Rich Presence
@@ -603,6 +606,10 @@ class ChartingState extends MusicBeatState
 
 		var reloadNotesButton:FlxButton = new FlxButton(noteSplashesInputText.x + 5, noteSplashesInputText.y + 20, 'Change Notes', function() {
 			_song.arrowSkin = noteSkinInputText.text;
+
+			
+			setUISkin(); //Sets the UI skin
+
 			updateGrid();
 		});
 
@@ -3066,6 +3073,15 @@ class ChartingState extends MusicBeatState
 		
 		if(_song.notes[section] != null) val = _song.notes[section].sectionBeats;
 		return val != null ? val : 4;
+	}
+
+	// Custom Skin Functions
+	var uiSkinFolder:String = 'base';
+	function setUISkin():Void {
+		uiSkinFolder = PlayState.isPixelStage ? 'pixel' : 'base'; // Wheter to load Base or Pixel assets
+		if (_song.uiSkin != null && _song.uiSkin.length > 0 && _song.uiSkin != 'base' && _song.uiSkin != 'pixel') {
+			uiSkinFolder = _song.uiSkin;
+		}
 	}
 }
 

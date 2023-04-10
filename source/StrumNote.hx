@@ -34,32 +34,35 @@ class StrumNote extends FlxSprite
 		this.noteData = leData;
 		super(x, y);
 
-		//Fat-Ass Note Skin
-		if (ClientPrefs.noteskinType == "Fatass") {
-			var skin:String = 'NOTEFATASS_assets';
-			if(PlayState.SONG.arrowSkin != null && PlayState.SONG.arrowSkin.length > 1) skin = PlayState.SONG.arrowSkin;
-			texture = skin; //Load texture and anims
-			scrollFactor.set();
-		}
-		else {
-			var skin:String = 'NOTE_assets';
-			if(PlayState.SONG.arrowSkin != null && PlayState.SONG.arrowSkin.length > 1) skin = PlayState.SONG.arrowSkin;
-			texture = skin; //Load texture and anims
-			scrollFactor.set();
-		}
+		var skin:String = 'NOTE_assets';
+		if(PlayState.SONG.arrowSkin != null && PlayState.SONG.arrowSkin.length > 1) skin = PlayState.SONG.arrowSkin;
+		texture = skin; //Load texture and anims
+		scrollFactor.set();
 	}
 
 	public function reloadNote()
 	{
+		
 		var lastAnim:String = null;
 		if(animation.curAnim != null) lastAnim = animation.curAnim.name;
 
-		if(PlayState.isPixelStage)
+		// Whether to use "pixel" or "base" folder.
+		var folder = PlayState.isPixelStage ? 'pixel' : 'base';
+		if (PlayState.SONG.uiSkin != null && PlayState.SONG.uiSkin.length > 0 && PlayState.SONG.uiSkin != 'default' && PlayState.SONG.uiSkin != 'base' && PlayState.SONG.uiSkin != 'pixel')
 		{
-			loadGraphic(Paths.image('pixelUI/' + texture));
+			folder = PlayState.SONG.uiSkin;
+		}
+
+		// Get NOTE_assets from selected skin
+		var image = SkinData.getNoteFile(texture, folder, ClientPrefs.noteSkin);
+
+		// Load NOTE_assets
+		if (!Paths.fileExists('images/$image.xml', TEXT)) // If the note image file does not have a corresponding XML file, assume it is a pixel note
+		{ 
+			loadGraphic(Paths.image(image));
 			width = width / 4;
 			height = height / 5;
-			loadGraphic(Paths.image('pixelUI/' + texture), true, Math.floor(width), Math.floor(height));
+			loadGraphic(Paths.image(image), true, Math.floor(width), Math.floor(height));
 
 			antialiasing = false;
 			setGraphicSize(Std.int(width * PlayState.daPixelZoom));
@@ -90,13 +93,13 @@ class StrumNote extends FlxSprite
 		}
 		else
 		{
-			frames = Paths.getSparrowAtlas(texture);
+			frames = Paths.getSparrowAtlas(image);
 			animation.addByPrefix('green', 'arrowUP');
 			animation.addByPrefix('blue', 'arrowDOWN');
 			animation.addByPrefix('purple', 'arrowLEFT');
 			animation.addByPrefix('red', 'arrowRIGHT');
 
-			antialiasing = ClientPrefs.globalAntialiasing;
+			antialiasing = ClientPrefs.globalAntialiasing && !PlayState.isPixelStage;
 			setGraphicSize(Std.int(width * 0.7));
 
 			switch (Math.abs(noteData) % 4)
