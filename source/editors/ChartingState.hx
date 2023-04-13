@@ -225,7 +225,11 @@ class ChartingState extends MusicBeatState
 				gfVersion: 'gf',
 				speed: 1,
 				stage: 'stage',
-				validScore: false
+				validScore: false,
+				charter: '',
+				hasCustomNotes: false,
+				hasCustomMechanics: false,
+				hasFlashingLights: false
 			};
 			addSection();
 			PlayState.SONG = _song;
@@ -333,6 +337,8 @@ class ChartingState extends MusicBeatState
 			{name: "Note", label: 'Note'},
 			{name: "Events", label: 'Events'},
 			{name: "Charting", label: 'Charting'},
+			{name: "MetaData", label: 'MetaData'},
+			
 		];
 
 		UI_box = new FlxUITabMenu(null, tabs, true);
@@ -374,6 +380,7 @@ class ChartingState extends MusicBeatState
 		addNoteUI();
 		addEventsUI();
 		addChartingUI();
+		addMetaDataUI();
 		updateHeads();
 		updateWaveform();
 		//UI_box.selected_tab = 4;
@@ -607,7 +614,6 @@ class ChartingState extends MusicBeatState
 		var reloadNotesButton:FlxButton = new FlxButton(noteSplashesInputText.x + 5, noteSplashesInputText.y + 20, 'Change Notes', function() {
 			_song.arrowSkin = noteSkinInputText.text;
 
-			
 			setUISkin(); //Sets the UI skin
 
 			updateGrid();
@@ -3082,6 +3088,51 @@ class ChartingState extends MusicBeatState
 		if (_song.uiSkin != null && _song.uiSkin.length > 0 && _song.uiSkin != 'base' && _song.uiSkin != 'pixel') {
 			uiSkinFolder = _song.uiSkin;
 		}
+	}
+
+
+	function addMetaDataUI():Void
+	{
+		var text:FlxText = new FlxText(10, 70, 150, "Charter:");
+		var charterNameInput:FlxUIInputText = new FlxUIInputText(10, 80, 150, _song.charter);
+		blockPressWhileTypingOn.push(charterNameInput);
+	
+		var customNotesCheckBox:FlxUICheckBox = new FlxUICheckBox(10, 100, null, null, "Custom Notes", 100);
+		var customMechanicsCheckBox:FlxUICheckBox = new FlxUICheckBox(10, 120, null, null, "Custom Mechanics", 100);
+		var flashingLightsCheckBox:FlxUICheckBox = new FlxUICheckBox(10, 140, null, null, "Flashing Lights", 100);
+
+		var tab_group_metaData = new FlxUI(null, UI_box);
+		tab_group_metaData.name = "MetaData";
+		tab_group_metaData.add(charterNameInput);
+		tab_group_metaData.add(customNotesCheckBox);
+		tab_group_metaData.add(customMechanicsCheckBox);
+		tab_group_metaData.add(flashingLightsCheckBox);
+		tab_group_metaData.add(text);
+		UI_box.addGroup(tab_group_metaData);
+
+		customNotesCheckBox.checked = _song.hasCustomNotes;
+		customNotesCheckBox.callback = function()
+		{
+			_song.hasCustomNotes = customNotesCheckBox.checked;
+		};
+
+		customMechanicsCheckBox.checked = _song.hasCustomMechanics;
+		customMechanicsCheckBox.callback = function()
+		{
+			_song.hasCustomMechanics = customMechanicsCheckBox.checked;
+		};
+
+		flashingLightsCheckBox.checked = _song.hasFlashingLights;
+		flashingLightsCheckBox.callback = function()
+		{
+			_song.hasFlashingLights = flashingLightsCheckBox.checked;
+		};
+
+		charterNameInput.text = _song.charter;
+		charterNameInput.callback = function()
+		{
+			_song.charter = charterNameInput.text;
+		};
 	}
 }
 
