@@ -3129,9 +3129,9 @@ class ChartingState extends MusicBeatState
 		};
 
 		charterNameInput.text = _song.charter;
-		charterNameInput.callback = function()
+		charterNameInput.callback = function(_:String, text:String):Void
 		{
-			_song.charter = charterNameInput.text;
+			_song.charter = text;
 		};
 	}
 }
