@@ -203,6 +203,9 @@ class ChartingState extends MusicBeatState
 	var text:String = "";
 	public static var vortex:Bool = false;
 	public var mouseQuant:Bool = false;
+
+	var totalNotesText:FlxText;
+
 	override function create()
 	{
 		if (PlayState.SONG != null)
@@ -226,6 +229,9 @@ class ChartingState extends MusicBeatState
 				speed: 1,
 				stage: 'stage',
 				validScore: false,
+				artist: '',
+				isRemix: false,
+				mod: '',
 				charter: '',
 				hasCustomNotes: false,
 				hasCustomMechanics: false,
@@ -400,8 +406,24 @@ class ChartingState extends MusicBeatState
 		zoomTxt.scrollFactor.set();
 		add(zoomTxt);
 
+		totalNotesText = new FlxText(10, 40, 0, "Total Notes: 0", 16);
+		totalNotesText.scrollFactor.set();
+		add(totalNotesText);
+		
 		updateGrid();
 		super.create();
+	}
+
+	function getTotalNotes():Int {
+		var totalNotes:Int = 0;
+		for (section in _song.notes) {
+			totalNotes += section.sectionNotes.length;
+		}
+		return totalNotes;
+	}
+
+	function updateTotalNotesUI():Void {
+		totalNotesText.text = "Total Notes: " + getTotalNotes();
 	}
 
 	var check_mute_inst:FlxUICheckBox = null;
@@ -1488,6 +1510,15 @@ class ChartingState extends MusicBeatState
 			if(sender == noteSplashesInputText) {
 				_song.splashSkin = noteSplashesInputText.text;
 			}
+			else if(sender == charterNameInput) {
+				_song.charter = charterNameInput.text;
+			}
+			else if(sender == artistNameInput) {
+				_song.artist = artistNameInput.text;
+			}
+			else if(sender == modNameInput) {
+				_song.mod = modNameInput.text;
+			}
 			else if(curSelectedNote != null)
 			{
 				if(sender == value1InputText) {
@@ -2048,12 +2079,8 @@ class ChartingState extends MusicBeatState
 						strumLineNotes.members[noteDataToCheck].resetAnim = ((note.sustainLength / 1000) + 0.15) / playbackSpeed;
 					if(!playedSound[data]) {
 						if((playSoundBf.checked && note.mustPress) || (playSoundDad.checked && !note.mustPress)){
-							var soundToPlay = 'hitsound';
-							if(_song.player1 == 'gf') { //Easter egg
-								soundToPlay = 'GF_' + Std.string(data + 1);
-							}
-
-							FlxG.sound.play(Paths.sound(soundToPlay)).pan = note.noteData < 4? -0.3 : 0.3; //would be coolio
+							FlxG.sound.play(Paths.sound(ClientPrefs.hitsoundType));
+							FlxG.sound.play(Paths.sound(ClientPrefs.hitsoundType)).pan = note.noteData < 4? -0.3 : 0.3; //would be coolio
 							playedSound[data] = true;
 						}
 
@@ -2842,7 +2869,7 @@ class ChartingState extends MusicBeatState
 				}
 			}
 		}
-
+		updateTotalNotesUI();
 		updateGrid();
 	}
 
@@ -2873,6 +2900,7 @@ class ChartingState extends MusicBeatState
 		}
 
 		updateGrid();
+		updateTotalNotesUI();
 	}
 
 	private function addNote(strum:Null<Float> = null, data:Null<Int> = null, type:Null<Int> = null):Void
@@ -2916,6 +2944,7 @@ class ChartingState extends MusicBeatState
 
 		updateGrid();
 		updateNoteUI();
+		updateTotalNotesUI();
 	}
 
 	// will figure this out l8r
@@ -3090,25 +3119,59 @@ class ChartingState extends MusicBeatState
 		}
 	}
 
-
+	// Create an input field for the Artist/Mod/Charter name.
+	var artistNameInput:FlxUIInputText = new FlxUIInputText(10, 80, 150, '');
+	var modNameInput:FlxUIInputText = new FlxUIInputText(10, 140, 150, '');
+	var charterNameInput:FlxUIInputText = new FlxUIInputText(10, 180, 150, '');
+	
+	// Metadata Tab
 	function addMetaDataUI():Void
 	{
-		var text:FlxText = new FlxText(10, 70, 150, "Charter:");
-		var charterNameInput:FlxUIInputText = new FlxUIInputText(10, 80, 150, _song.charter);
-		blockPressWhileTypingOn.push(charterNameInput);
-	
-		var customNotesCheckBox:FlxUICheckBox = new FlxUICheckBox(10, 100, null, null, "Custom Notes", 100);
-		var customMechanicsCheckBox:FlxUICheckBox = new FlxUICheckBox(10, 120, null, null, "Custom Mechanics", 100);
-		var flashingLightsCheckBox:FlxUICheckBox = new FlxUICheckBox(10, 140, null, null, "Flashing Lights", 100);
+		// Create text above the input field for Artist name and add checkbox for marking song as remix.
+		var artistNameText:FlxText = new FlxText(10, 60, 150, "Artist:");
+		var remixCheckBox:FlxUICheckBox = new FlxUICheckBox(10, 100, null, null, "Remix", 100);
+		blockPressWhileTypingOn.push(artistNameInput); // Disables keybinds while inputfield is being focused.
 
+		// Create text above the input field for Mod name
+		var modNameText:FlxText = new FlxText(10, 120, 150, "Mod:");
+		blockPressWhileTypingOn.push(modNameInput); // Disables keybinds while inputfield is being focused.
+
+		// Create text above the input field for Charter name
+		var charterNameText:FlxText = new FlxText(10, 160, 150, "Charter:");
+		blockPressWhileTypingOn.push(charterNameInput); // Disables keybinds while inputfield is being focused.
+	
+		// Create checkboxes for custom notes, custom mechanics, and flashing lights options
+		var customNotesCheckBox:FlxUICheckBox = new FlxUICheckBox(10, 200, null, null, "Custom Notes", 100);
+		var customMechanicsCheckBox:FlxUICheckBox = new FlxUICheckBox(10, 220, null, null, "Custom Mechanics", 100);
+		var flashingLightsCheckBox:FlxUICheckBox = new FlxUICheckBox(10, 240, null, null, "Flashing Lights", 100);
+
+		// Create a "Save Metadata" button and set its click event handler
+		var saveMetaDataButton:FlxButton = new FlxButton(10, 300, "Save Metadata", onSaveMetadataButtonClick);
+
+		// Create a new UI group for the metadata tab and add it to the main UI box
 		var tab_group_metaData = new FlxUI(null, UI_box);
 		tab_group_metaData.name = "MetaData";
+		tab_group_metaData.add(saveMetaDataButton);
+		tab_group_metaData.add(charterNameText);
 		tab_group_metaData.add(charterNameInput);
+		tab_group_metaData.add(artistNameText);
+		tab_group_metaData.add(artistNameInput);
+		tab_group_metaData.add(modNameText);
+		tab_group_metaData.add(modNameInput);
+		tab_group_metaData.add(remixCheckBox);
 		tab_group_metaData.add(customNotesCheckBox);
 		tab_group_metaData.add(customMechanicsCheckBox);
 		tab_group_metaData.add(flashingLightsCheckBox);
-		tab_group_metaData.add(text);
+
 		UI_box.addGroup(tab_group_metaData);
+
+		// Set the initial state of the checkboxes and define their callbacks
+
+		remixCheckBox.checked = _song.isRemix;
+		remixCheckBox.callback = function()
+		{
+			_song.isRemix = remixCheckBox.checked;
+		};
 
 		customNotesCheckBox.checked = _song.hasCustomNotes;
 		customNotesCheckBox.callback = function()
@@ -3127,12 +3190,54 @@ class ChartingState extends MusicBeatState
 		{
 			_song.hasFlashingLights = flashingLightsCheckBox.checked;
 		};
+	}
 
-		charterNameInput.text = _song.charter;
-		charterNameInput.callback = function(_:String, text:String):Void
-		{
-			_song.charter = text;
+	// Dumb function that handles button click
+	function onSaveMetadataButtonClick():Void
+	{
+		saveMetaData();
+	}
+	
+	// ------- INFORMATION ------- \\
+	// Gonna look for a better alternative to do this in the future, 
+	// but this is to prevent issues when parsing json data in FreeplayState mostly.
+	// downside to this method is the fact it doesn't take song difficulty in mind.
+	//------------------------------\\
+	// Save metadata to a JSON file
+	private function saveMetaData():Void
+	{
+		// Create an object containing the metadata properties
+		var metaData:Dynamic = {
+			song: _song.song,
+			artist: _song.artist,
+			isRemix: _song.isRemix,
+			mod: _song.mod,
+			BPM: _song.bpm,
+			scrollSpeed: _song.speed,
+			hasCustomMechanics: _song.hasCustomMechanics,
+			hasFlashingLights: _song.hasFlashingLights,
+			hasCustomNotes: _song.hasCustomNotes,
+			charter: _song.charter
 		};
+		
+		// JSON formatting shit
+		var json = {
+			"metadata": metaData
+		};
+	
+		// Convert the JSON object to a formatted string
+		var data:String = Json.stringify(json, "\t");
+	
+		// Checks if the data isn't empty
+		if ((data != null) && (data.length > 0))
+		{
+			_file = new FileReference();
+			_file.addEventListener(Event.COMPLETE, onSaveComplete);
+			_file.addEventListener(Event.CANCEL, onSaveCancel);
+			_file.addEventListener(IOErrorEvent.IO_ERROR, onSaveError);
+			// Save the formatted JSON data to a file named "metadata.json"
+			_file.save(data.trim(), "metadata.json");
+		}
 	}
 }
 

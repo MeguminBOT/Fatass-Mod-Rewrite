@@ -31,6 +31,10 @@ typedef SwagSong =
 	var splashSkin:String;
 	var validScore:Bool;
 
+	//Fatass Data
+	var artist:String;
+	var isRemix:Bool;
+	var mod:String;
 	var charter:String;
 	var hasCustomNotes:Bool;
 	var hasCustomMechanics:Bool;
@@ -51,7 +55,12 @@ class Song
 	public var player1:String = 'bf';
 	public var player2:String = 'dad';
 	public var gfVersion:String = 'gf';
-	public var charter:String;
+
+	//Fatass Data
+	public var artist:String = '';
+	public var isRemix:Bool = false;
+	public var modOrigin:String = '';
+	public var charter:String = '';
 	public var hasCustomNotes:Bool = false;
 	public var hasCustomMechanics:Bool = false;
 	public var hasFlashingLights:Bool = false;
