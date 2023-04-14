@@ -3212,7 +3212,7 @@ class ChartingState extends MusicBeatState
 			artist: _song.artist,
 			isRemix: _song.isRemix,
 			mod: _song.mod,
-			BPM: _song.bpm,
+			bpm: _song.bpm,
 			scrollSpeed: _song.speed,
 			hasCustomMechanics: _song.hasCustomMechanics,
 			hasFlashingLights: _song.hasFlashingLights,

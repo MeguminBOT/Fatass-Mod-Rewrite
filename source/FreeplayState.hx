@@ -18,6 +18,10 @@ import WeekData;
 #if MODS_ALLOWED
 import sys.FileSystem;
 #end
+import haxe.Json;
+import sys.io.File;
+import ChartMetaData;
+
 
 using StringTools;
 
@@ -30,6 +34,7 @@ class FreeplayState extends MusicBeatState
 	var curDifficulty:Int = -1;
 	private static var lastDifficultyName:String = '';
 
+	var chartMetaDataBG:FlxSprite;
 	var scoreBG:FlxSprite;
 	var scoreText:FlxText;
 	var diffText:FlxText;
@@ -46,6 +51,8 @@ class FreeplayState extends MusicBeatState
 	var bg:FlxSprite;
 	var intendedColor:Int;
 	var colorTween:FlxTween;
+
+	var metaDataText:FlxText;
 
 	override function create()
 	{
@@ -477,8 +484,18 @@ class FreeplayState extends MusicBeatState
 		scoreText.setFormat(Paths.font("rubik.ttf"), 24, FlxColor.WHITE, RIGHT);
 
 		scoreBG = new FlxSprite(scoreText.x - 6, 0).makeGraphic(1, 66, 0xFF000000);
-		scoreBG.alpha = 0.6;
+		scoreBG.alpha = 0.5;
 		add(scoreBG);
+
+		chartMetaDataBG = new FlxSprite().makeGraphic(350, 350, FlxColor.BLACK);
+		chartMetaDataBG.x = 950;
+		chartMetaDataBG.y = 150;
+		chartMetaDataBG.alpha = 0.5;
+		add(chartMetaDataBG);
+
+		metaDataText = new FlxText(975, 175, FlxG.width, "");
+		metaDataText.setFormat(Paths.font("rubik.ttf"), 24, FlxColor.WHITE, RIGHT);
+   		add(metaDataText);
 
 		diffText = new FlxText(scoreText.x, scoreText.y + 36, 0, "", 24);
 		diffText.font = scoreText.font;
@@ -883,6 +900,27 @@ class FreeplayState extends MusicBeatState
 		diffText.x = Std.int(scoreBG.x + (scoreBG.width / 2));
 		diffText.x -= diffText.width / 2;
 	}
+
+	public function displayMetaData(metadata:MetaData) 
+	{
+		var currentSongPath:String = Paths.formatToSongPath(songs[curSelected].songName);
+		ChartMetaData.loadFromJson("metadata.json", currentSongPath);
+
+		var metaDataString = 
+		"Song: " + metadata.song + "\n" +         
+		"BPM: " + metadata.bpm + "\n" +
+		"Speed: " + metadata.speed + "\n" +
+		"Artist: " + metadata.artist + "\n" +
+		"Is Remix: " + metadata.isRemix + "\n" +
+		"Mod: " + metadata.mod + "\n" +
+		"Charter: " + metadata.charter + "\n" +
+		"Has Custom Notes: " + metadata.hasCustomNotes + "\n" +
+		"Has Custom Mechanics: " + metadata.hasCustomMechanics + "\n" +
+		"Has Flashing Lights: " + metadata.hasFlashingLights;
+
+		metaDataText.text = metaDataString;
+		add(metaDataText);
+	}		
 }
 
 class SongMetadata
