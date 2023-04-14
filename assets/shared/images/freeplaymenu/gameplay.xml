@@ -1,0 +1,17 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TextureAtlas imagePath="gameplay.png">
+	<!-- Created with Adobe Animate version 22.0.8.217 -->
+	<!-- http://www.adobe.com/products/animate.html -->
+	<SubTexture name="gameplayAnim 10000" x="2" y="2" width="254" height="66"/>
+	<SubTexture name="gameplayAnim 10001" x="2" y="2" width="254" height="66"/>
+	<SubTexture name="gameplayAnim 10002" x="2" y="70" width="254" height="66"/>
+	<SubTexture name="gameplayAnim 10003" x="2" y="70" width="254" height="66"/>
+	<SubTexture name="gameplayAnim 10004" x="2" y="2" width="254" height="66"/>
+	<SubTexture name="gameplayAnim 10005" x="2" y="2" width="254" height="66"/>
+	<SubTexture name="gameplayAnim 10006" x="2" y="70" width="254" height="66"/>
+	<SubTexture name="gameplayAnim 10007" x="2" y="70" width="254" height="66"/>
+	<SubTexture name="gameplayAnim 10008" x="2" y="2" width="254" height="66"/>
+	<SubTexture name="gameplayAnim 10009" x="2" y="2" width="254" height="66"/>
+	<SubTexture name="gameplayAnim 10010" x="2" y="70" width="254" height="66"/>
+	<SubTexture name="gameplayAnim 10011" x="2" y="70" width="254" height="66"/>
+</TextureAtlas>

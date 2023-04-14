@@ -22,6 +22,8 @@ import haxe.Json;
 import sys.io.File;
 import ChartMetaData;
 
+import flixel.ui.FlxButton;
+import flixel.ui.FlxSpriteButton;
 
 using StringTools;
 
@@ -53,9 +55,11 @@ class FreeplayState extends MusicBeatState
 	var colorTween:FlxTween;
 
 	var metaDataText:FlxText;
+	var quickOptionsButton:FlxButton;
 
 	override function create()
 	{
+		FlxG.mouse.visible = true;
 		//Paths.clearStoredMemory();
 		//Paths.clearUnusedMemory();
 		
@@ -497,6 +501,9 @@ class FreeplayState extends MusicBeatState
 		metaDataText.setFormat(Paths.font("rubik.ttf"), 24, FlxColor.WHITE, RIGHT);
    		add(metaDataText);
 
+		quickOptionsButton = new FlxButton(975, 525, "Quick Options", qoClick);
+		add(quickOptionsButton);
+
 		diffText = new FlxText(scoreText.x, scoreText.y + 36, 0, "", 24);
 		diffText.font = scoreText.font;
 		add(diffText);
@@ -605,6 +612,8 @@ class FreeplayState extends MusicBeatState
 	var holdTime:Float = 0;
 	override function update(elapsed:Float)
 	{
+
+
 		if (FlxG.sound.music.volume < 0.7)
 		{
 			FlxG.sound.music.volume += 0.5 * FlxG.elapsed;
@@ -635,6 +644,7 @@ class FreeplayState extends MusicBeatState
 		var accepted = controls.ACCEPT;
 		var space = FlxG.keys.justPressed.SPACE;
 		var ctrl = FlxG.keys.justPressed.CONTROL;
+		var alt = FlxG.keys.justPressed.ALT;
 
 		var shiftMult:Int = 1;
 		if(FlxG.keys.pressed.SHIFT) shiftMult = 3;
@@ -688,7 +698,11 @@ class FreeplayState extends MusicBeatState
 			FlxG.sound.play(Paths.sound('cancelMenu'));
 			MusicBeatState.switchState(new FreeplaySelectState());
 		}
-
+		if (alt)
+		{
+			persistentUpdate = false;
+			openSubState(new QOGameplaySettings());
+		}
 		if(ctrl)
 		{
 			persistentUpdate = false;
@@ -920,7 +934,14 @@ class FreeplayState extends MusicBeatState
 
 		metaDataText.text = metaDataString;
 		add(metaDataText);
-	}		
+	}
+
+	function qoClick()
+	{
+		persistentUpdate = false;
+		openSubState(new QOGameplaySettings());
+	}
+			
 }
 
 class SongMetadata
