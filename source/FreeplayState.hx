@@ -56,6 +56,8 @@ class FreeplayState extends MusicBeatState
 
 	var metaDataText:FlxText;
 	var quickOptionsButton:FlxButton;
+	var gameVisualsButton:FlxButton;
+	var uiVisualsButton:FlxButton;
 
 	override function create()
 	{
@@ -501,8 +503,14 @@ class FreeplayState extends MusicBeatState
 		metaDataText.setFormat(Paths.font("rubik.ttf"), 24, FlxColor.WHITE, RIGHT);
    		add(metaDataText);
 
-		quickOptionsButton = new FlxButton(975, 525, "Quick Options", qoClick);
+		quickOptionsButton = new FlxButton(975, 525, "Game Options", qoClick);
 		add(quickOptionsButton);
+
+		gameVisualsButton = new FlxButton(1075, 525, "Game Visuals", gameVisualsClick);
+		add(gameVisualsButton);
+
+		uiVisualsButton = new FlxButton(1175, 525, "UI Visuals", uiVisualsClick);
+		add(uiVisualsButton);
 
 		diffText = new FlxText(scoreText.x, scoreText.y + 36, 0, "", 24);
 		diffText.font = scoreText.font;
@@ -612,8 +620,6 @@ class FreeplayState extends MusicBeatState
 	var holdTime:Float = 0;
 	override function update(elapsed:Float)
 	{
-
-
 		if (FlxG.sound.music.volume < 0.7)
 		{
 			FlxG.sound.music.volume += 0.5 * FlxG.elapsed;
@@ -763,6 +769,7 @@ class FreeplayState extends MusicBeatState
 				LoadingState.loadAndSwitchState(new ChartingState());
 			}else{
 				LoadingState.loadAndSwitchState(new PlayState());
+				FlxG.mouse.visible = false;
 			}
 
 			FlxG.sound.music.volume = 0;
@@ -940,6 +947,16 @@ class FreeplayState extends MusicBeatState
 	{
 		persistentUpdate = false;
 		openSubState(new QOGameplaySettings());
+	}
+	function gameVisualsClick()
+	{
+		persistentUpdate = false;
+		openSubState(new QOVisualsGameplay());
+	}
+	function uiVisualsClick()
+	{
+		persistentUpdate = false;
+		openSubState(new QOVisualsHUD());
 	}
 			
 }

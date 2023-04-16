@@ -25,7 +25,7 @@ import QOption;
 
 using StringTools;
 
-class QOGameplaySettings extends MusicBeatSubstate
+class QOVisualsGameplay extends MusicBeatSubstate
 {
 	var curOption:QOption = null;
 	var curSelected:Int = 0;
@@ -37,64 +37,26 @@ class QOGameplaySettings extends MusicBeatSubstate
 
 	function getOptions()
 	{
-		var option:QOption = new QOption('Downscroll', 'downScroll', 'bool', false);
+		var option:QOption = new QOption('Note Skin', 'noteSkin', 'string', 'Fatass',
+			['Default', 
+			'Fatass',
+			'StepMania']);
 		optionsArray.push(option);
 
-		var option:QOption = new QOption('Middlescroll', 'middleScroll', 'bool', false);
+		var option:QOption = new QOption('Note Splashes', 'noteSplashes', 'bool', true);
 		optionsArray.push(option);
 
-		var option:QOption = new QOption('Ghost Tapping', 'ghostTapping', 'bool', true);
+		var option:QOption = new QOption('Lane Transparency', 'underlay', 'float', true);
+		option.displayFormat = '%v';
+		option.scrollSpeed = 100;
+		option.changeValue = 0.1;
+		option.decimals = 1;
+		option.minValue = 0;
+		option.maxValue = 1;
 		optionsArray.push(option);
 
-		var option:QOption = new QOption('Hitsound Volume', 'hitsoundVolume', 'percent', 0);
-			option.displayFormat = '%v';
-			option.scrollSpeed = 1.6;
-			option.minValue = 0.0;
-			option.maxValue = 1;
-			option.changeValue = 0.1;
-			option.decimals = 1;
-			option.onChange = onChangeHitsoundVolume;
+		var option:QOption = new QOption('Opponent Notes', 'opponentStrums', 'bool', true);
 		optionsArray.push(option);
-		
-		var option:QOption = new QOption('Hitsound Type', 'hitsoundType', 'string', 'hitsound_default', 
-			['hitsound_default', 
-			'hitsound_default with kick',
-			'hitsound_ping pong',
-			'hitsound_click',
-			'hitsound_tsuzumi drum',
-			'hitsound_drop',
-			'hitsound_kick muddy',
-			'hitsound_kick bassy1',
-			'hitsound_kick bassy2',
-			'hitsound_kick bassy3',
-			'hitsound_osu default soft',
-			'hitsound_osu default normal']);
-			option.onChange = onChangeHitsoundType;
-		optionsArray.push(option);
-
-		var option:QOption = new QOption('Custom Note Sounds', 'customNoteSound', 'bool', true);
-		optionsArray.push(option);
-
-		var option:QOption = new QOption('Custom Sound Events', 'customSoundEvent', 'bool', true);
-		optionsArray.push(option);
-
-		var option:QOption = new QOption('Custom Mechanic Events', 'customMechanicEvent', 'bool', true);
-		optionsArray.push(option);
-
-		var option:QOption = new QOption('Rating Offset', 'ratingOffset', 'int', 0);
-			option.displayFormat = '%v ms';
-			option.scrollSpeed = 20;
-			option.minValue = -30;
-			option.maxValue = 30;
-		optionsArray.push(option);
-
-		var option:QOption = new QOption('Safe Frames', 'safeFrames', 'float', 10);
-			option.scrollSpeed = 5;
-			option.minValue = 2;
-			option.maxValue = 10;
-			option.changeValue = 0.1;
-		optionsArray.push(option);
-
 	}
 
 	public function getOptionByName(name:String)
@@ -379,11 +341,12 @@ class QOGameplaySettings extends MusicBeatSubstate
 			checkbox.daValue = (optionsArray[checkbox.ID].getValue() == true);
 		}
 	}
+
 	function onChangeHitsoundVolume()
 	{
 		FlxG.sound.play(Paths.sound(ClientPrefs.hitsoundType), ClientPrefs.hitsoundVolume);
 	}
-
+	
 	function onChangeHitsoundType()
 	{
 		FlxG.sound.play(Paths.sound(ClientPrefs.hitsoundType), ClientPrefs.hitsoundVolume);
