@@ -21,7 +21,8 @@ import sys.FileSystem;
 import haxe.Json;
 import sys.io.File;
 import ChartMetaData;
-
+import Song;
+import Song.SwagSong;
 import flixel.ui.FlxButton;
 import flixel.ui.FlxSpriteButton;
 
@@ -54,6 +55,7 @@ class FreeplayState extends MusicBeatState
 	var intendedColor:Int;
 	var colorTween:FlxTween;
 
+	var infoText:FlxText;
 	var metaDataText:FlxText;
 	var quickOptionsButton:FlxButton;
 	var gameVisualsButton:FlxButton;
@@ -503,6 +505,11 @@ class FreeplayState extends MusicBeatState
 		metaDataText.setFormat(Paths.font("rubik.ttf"), 24, FlxColor.WHITE, RIGHT);
    		add(metaDataText);
 
+		infoText = new FlxText(975, 175, 0, "");
+		infoText.setFormat(Paths.font("rubik.ttf"), 16, FlxColor.WHITE, LEFT);
+		add(infoText);
+		
+
 		quickOptionsButton = new FlxButton(975, 525, "Game Options", qoClick);
 		add(quickOptionsButton);
 
@@ -782,7 +789,9 @@ class FreeplayState extends MusicBeatState
 			openSubState(new ResetScoreSubState(songs[curSelected].songName, curDifficulty, songs[curSelected].songCharacter));
 			FlxG.sound.play(Paths.sound('scrollMenu'));
 		}
+
 		super.update(elapsed);
+		displayMetaData();
 	}
 
 	public static function destroyFreeplayVocals() {
@@ -812,6 +821,7 @@ class FreeplayState extends MusicBeatState
 		PlayState.storyDifficulty = curDifficulty;
 		diffText.text = '< ' + CoolUtil.difficultyString() + ' >';
 		positionHighscore();
+		displayMetaData();
 	}
 
 	function changeSelection(change:Int = 0, playSound:Bool = true)
@@ -911,6 +921,7 @@ class FreeplayState extends MusicBeatState
 		{
 			curDifficulty = newPos;
 		}
+		displayMetaData();
 	}
 
 	private function positionHighscore() {
@@ -922,25 +933,27 @@ class FreeplayState extends MusicBeatState
 		diffText.x -= diffText.width / 2;
 	}
 
-	public function displayMetaData(metadata:MetaData) 
+	public function displayMetaData() 
 	{
-		var currentSongPath:String = Paths.formatToSongPath(songs[curSelected].songName);
-		ChartMetaData.loadFromJson("metadata.json", currentSongPath);
-
-		var metaDataString = 
-		"Song: " + metadata.song + "\n" +         
-		"BPM: " + metadata.bpm + "\n" +
-		"Speed: " + metadata.speed + "\n" +
-		"Artist: " + metadata.artist + "\n" +
-		"Is Remix: " + metadata.isRemix + "\n" +
-		"Mod: " + metadata.mod + "\n" +
-		"Charter: " + metadata.charter + "\n" +
-		"Has Custom Notes: " + metadata.hasCustomNotes + "\n" +
-		"Has Custom Mechanics: " + metadata.hasCustomMechanics + "\n" +
-		"Has Flashing Lights: " + metadata.hasFlashingLights;
-
-		metaDataText.text = metaDataString;
-		add(metaDataText);
+		var songLowercase:String = Paths.formatToSongPath(songs[curSelected].songName);
+		var chartJson:String = Highscore.formatSong(songLowercase, curDifficulty);
+		PlayState.SONG = Song.loadFromJson(chartJson, songLowercase);
+		var loadedSong:SwagSong = PlayState.SONG;
+		var infoLines:Array<String> = [];
+		// Only displays the Metadata if the song folder contains a metadata.json file, doesnt matter if file is empty or not.
+		// Conditionally push lines into the array only when their values are not null
+			if (loadedSong.song != null) infoLines.push("Song: " + loadedSong.song);
+			if (loadedSong.artist != null) infoLines.push("Artist: " + loadedSong.artist);
+			if (loadedSong.mod != null) infoLines.push("Mod: " + loadedSong.mod);
+			infoLines.push("BPM: " + Std.string(loadedSong.bpm));
+			infoLines.push("Scroll Speed: " + Std.string(loadedSong.speed));
+			infoLines.push("Is Remix: " + Std.string(loadedSong.isRemix));
+			if (loadedSong.charter != null) infoLines.push("Charter: " + loadedSong.charter);
+			infoLines.push("Has Custom Notes: " + Std.string(loadedSong.hasCustomNotes));
+			infoLines.push("Has Custom Mechanics: " + Std.string(loadedSong.hasCustomMechanics));
+			infoLines.push("Has Flashing Lights: " + Std.string(loadedSong.hasFlashingLights));
+		// Update the infoText with the values from the loaded song
+		infoText.text = infoLines.join("\n");
 	}
 
 	function qoClick()

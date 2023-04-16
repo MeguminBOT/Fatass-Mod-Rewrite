@@ -59,7 +59,7 @@ class Song
 	//Fatass Data
 	public var artist:String = '';
 	public var isRemix:Bool = false;
-	public var modOrigin:String = '';
+	public var mod:String = '';
 	public var charter:String = '';
 	public var hasCustomNotes:Bool = false;
 	public var hasCustomMechanics:Bool = false;
@@ -108,50 +108,55 @@ class Song
 	public static function loadFromJson(jsonInput:String, ?folder:String):SwagSong
 	{
 		var rawJson = null;
-		
-		var formattedFolder:String = Paths.formatToSongPath(folder);
-		var formattedSong:String = Paths.formatToSongPath(jsonInput);
-		#if MODS_ALLOWED
-		var moddyFile:String = Paths.modsJson(formattedFolder + '/' + formattedSong);
-		if(FileSystem.exists(moddyFile)) {
-			rawJson = File.getContent(moddyFile).trim();
-		}
-		#end
-
-		if(rawJson == null) {
-			#if sys
-			rawJson = File.getContent(Paths.json(formattedFolder + '/' + formattedSong)).trim();
-			#else
-			rawJson = Assets.getText(Paths.json(formattedFolder + '/' + formattedSong)).trim();
+		try {
+			var formattedFolder:String = Paths.formatToSongPath(folder);
+			var formattedSong:String = Paths.formatToSongPath(jsonInput);
+			#if MODS_ALLOWED
+			var moddyFile:String = Paths.modsJson(formattedFolder + '/' + formattedSong);
+			if(FileSystem.exists(moddyFile)) {
+				rawJson = File.getContent(moddyFile).trim();
+			}
 			#end
-		}
 
-		while (!rawJson.endsWith("}"))
-		{
-			rawJson = rawJson.substr(0, rawJson.length - 1);
-			// LOL GOING THROUGH THE BULLSHIT TO CLEAN IDK WHATS STRANGE
-		}
-
-		// FIX THE CASTING ON WINDOWS/NATIVE
-		// Windows???
-		// trace(songData);
-
-		// trace('LOADED FROM JSON: ' + songData.notes);
-		/* 
-			for (i in 0...songData.notes.length)
-			{
-				trace('LOADED FROM JSON: ' + songData.notes[i].sectionNotes);
-				// songData.notes[i].sectionNotes = songData.notes[i].sectionNotes
+			if(rawJson == null) {
+				#if sys
+				rawJson = File.getContent(Paths.json(formattedFolder + '/' + formattedSong)).trim();
+				#else
+				rawJson = Assets.getText(Paths.json(formattedFolder + '/' + formattedSong)).trim();
+				#end
 			}
 
-				daNotes = songData.notes;
-				daSong = songData.song;
-				daBpm = songData.bpm; */
+			while (!rawJson.endsWith("}"))
+			{
+				rawJson = rawJson.substr(0, rawJson.length - 1);
+				// LOL GOING THROUGH THE BULLSHIT TO CLEAN IDK WHATS STRANGE
+			}
 
-		var songJson:Dynamic = parseJSONshit(rawJson);
-		if(jsonInput != 'events') StageData.loadDirectory(songJson);
-		onLoadJson(songJson);
-		return songJson;
+			// FIX THE CASTING ON WINDOWS/NATIVE
+			// Windows???
+			// trace(songData);
+
+			// trace('LOADED FROM JSON: ' + songData.notes);
+			/* 
+				for (i in 0...songData.notes.length)
+				{
+					trace('LOADED FROM JSON: ' + songData.notes[i].sectionNotes);
+					// songData.notes[i].sectionNotes = songData.notes[i].sectionNotes
+				}
+
+					daNotes = songData.notes;
+					daSong = songData.song;
+					daBpm = songData.bpm; */
+
+			var songJson:Dynamic = parseJSONshit(rawJson);
+			if(jsonInput != 'events') StageData.loadDirectory(songJson);
+			onLoadJson(songJson);
+			return songJson;
+		} catch (e:Dynamic) {
+			trace('Error loading JSON file: ' + e);
+			// Fallback to a default SwagSong object or handle the error appropriately.
+			return getDefaultSwagSong();
+		}
 	}
 
 	public static function parseJSONshit(rawJson:String):SwagSong
@@ -159,5 +164,32 @@ class Song
 		var swagShit:SwagSong = cast Json.parse(rawJson).song;
 		swagShit.validScore = true;
 		return swagShit;
+	}
+	private static function getDefaultSwagSong():SwagSong
+	{
+		return 
+		{
+			song: "",
+			notes: [],
+			events: [],
+			bpm: 0,
+			needsVoices: true,
+			speed: 0,
+			player1: "bf",
+			player2: "dad",
+			gfVersion: "gf",
+			stage: "",
+			uiSkin: "",
+			arrowSkin: "",
+			splashSkin: "",
+			validScore: false,
+			artist: "",
+			isRemix: false,
+			mod: "",
+			charter: "",
+			hasCustomNotes: false,
+			hasCustomMechanics: false,
+			hasFlashingLights: false
+    	};
 	}
 }
