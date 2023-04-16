@@ -15,29 +15,29 @@ using StringTools;
 typedef MetaData =
 {
 	var song:String;
-	var bpm:Float;
-	var speed:Float;
 	var artist:String;
-	var isRemix:Bool;
 	var mod:String;
+	var bpm:Float;
+	var isRemix:String;
 	var charter:String;
-	var hasCustomNotes:Bool;
-	var hasCustomMechanics:Bool;
-	var hasFlashingLights:Bool;
+	var hasCustomNotes:String;
+	var hasCustomMechanics:String;
+	var hasFlashingLights:String;
+	var extraComment:String;
 }
 
 class ChartMetaData
 {
 	public var song:String;
-	public var bpm:Float;
-	public var speed:Float = 1;
 	public var artist:String = '';
-	public var isRemix:Bool = false;
 	public var mod:String = '';
+	public var bpm:Float;
+	public var isRemix:String = '';
 	public var charter:String = '';
-	public var hasCustomNotes:Bool = false;
-	public var hasCustomMechanics:Bool = false;
-	public var hasFlashingLights:Bool = false;
+	public var hasCustomNotes:String = '';
+	public var hasCustomMechanics:String = '';
+	public var hasFlashingLights:String = '';
+	public var extraComment:String = '';
 
 	public static function loadFromJson(jsonInput:String, ?folder:String):MetaData
 	{

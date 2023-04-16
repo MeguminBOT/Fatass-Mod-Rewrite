@@ -33,12 +33,13 @@ typedef SwagSong =
 
 	//Fatass Data
 	var artist:String;
-	var isRemix:Bool;
 	var mod:String;
+	var isRemix:String;
 	var charter:String;
-	var hasCustomNotes:Bool;
-	var hasCustomMechanics:Bool;
-	var hasFlashingLights:Bool;
+	var hasCustomNotes:String;
+	var hasCustomMechanics:String;
+	var hasFlashingLights:String;
+	var extraComment:String;
 }
 
 class Song
@@ -58,12 +59,13 @@ class Song
 
 	//Fatass Data
 	public var artist:String = '';
-	public var isRemix:Bool = false;
 	public var mod:String = '';
+	public var isRemix:String = '';
 	public var charter:String = '';
-	public var hasCustomNotes:Bool = false;
-	public var hasCustomMechanics:Bool = false;
-	public var hasFlashingLights:Bool = false;
+	public var hasCustomNotes:String = '';
+	public var hasCustomMechanics:String = '';
+	public var hasFlashingLights:String = '';
+	public var extraComment:String = '';
 
 	private static function onLoadJson(songJson:Dynamic) // Convert old charts to newest format
 	{
@@ -184,12 +186,13 @@ class Song
 			splashSkin: "",
 			validScore: false,
 			artist: "",
-			isRemix: false,
+			isRemix: "",
 			mod: "",
 			charter: "",
-			hasCustomNotes: false,
-			hasCustomMechanics: false,
-			hasFlashingLights: false
+			hasCustomNotes: "",
+			hasCustomMechanics: "",
+			hasFlashingLights: "",
+			extraComment: "ERROR: JSON NOT FOUND"
     	};
 	}
 }

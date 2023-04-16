@@ -230,12 +230,13 @@ class ChartingState extends MusicBeatState
 				stage: 'stage',
 				validScore: false,
 				artist: '',
-				isRemix: false,
+				isRemix: '',
 				mod: '',
 				charter: '',
-				hasCustomNotes: false,
-				hasCustomMechanics: false,
-				hasFlashingLights: false
+				hasCustomNotes: '',
+				hasCustomMechanics: '',
+				hasFlashingLights: '',
+				extraComment: ''
 			};
 			addSection();
 			PlayState.SONG = _song;
@@ -1510,14 +1511,29 @@ class ChartingState extends MusicBeatState
 			if(sender == noteSplashesInputText) {
 				_song.splashSkin = noteSplashesInputText.text;
 			}
-			else if(sender == charterNameInput) {
-				_song.charter = charterNameInput.text;
-			}
 			else if(sender == artistNameInput) {
 				_song.artist = artistNameInput.text;
 			}
 			else if(sender == modNameInput) {
 				_song.mod = modNameInput.text;
+			}
+			else if(sender == remixInput) {
+				_song.isRemix = remixInput.text;
+			}
+			else if(sender == charterNameInput) {
+				_song.charter = charterNameInput.text;
+			}
+			else if(sender == customNoteInput) {
+				_song.hasCustomNotes = customNoteInput.text;
+			}
+			else if(sender == customMechanicInput) {
+				_song.hasCustomMechanics = customMechanicInput.text;
+			}
+			else if(sender == flashingLightsInput) {
+				_song.hasFlashingLights = flashingLightsInput.text;
+			}
+			else if(sender == extraCommentInput) {
+				_song.extraComment = extraCommentInput.text;
 			}
 			else if(curSelectedNote != null)
 			{
@@ -3119,77 +3135,65 @@ class ChartingState extends MusicBeatState
 		}
 	}
 
-	// Create an input field for the Artist/Mod/Charter name.
-	var artistNameInput:FlxUIInputText = new FlxUIInputText(10, 80, 150, '');
-	var modNameInput:FlxUIInputText = new FlxUIInputText(10, 140, 150, '');
-	var charterNameInput:FlxUIInputText = new FlxUIInputText(10, 180, 150, '');
-	
+	// Create an input fields. Using Strings instead of bools so we can hide null entries.
+	var artistNameInput:FlxUIInputText = new FlxUIInputText(10, 40, 150, '');
+	var remixInput:FlxUIInputText = new FlxUIInputText(10, 80, 150, '');
+	var modNameInput:FlxUIInputText = new FlxUIInputText(10, 120, 150, '');
+	var charterNameInput:FlxUIInputText = new FlxUIInputText(10, 160, 150, '');
+	var customNoteInput:FlxUIInputText = new FlxUIInputText(10, 200, 150, '');
+	var customMechanicInput:FlxUIInputText = new FlxUIInputText(10, 240, 150, '');
+	var flashingLightsInput:FlxUIInputText = new FlxUIInputText(10, 280, 150, '');
+	var extraCommentInput:FlxUIInputText = new FlxUIInputText(10, 320, 150, '');
+
 	// Metadata Tab
 	function addMetaDataUI():Void
 	{
-		// Create text above the input field for Artist name and add checkbox for marking song as remix.
-		var artistNameText:FlxText = new FlxText(10, 60, 150, "Artist:");
-		var remixCheckBox:FlxUICheckBox = new FlxUICheckBox(10, 100, null, null, "Remix", 100);
-		blockPressWhileTypingOn.push(artistNameInput); // Disables keybinds while inputfield is being focused.
-
-		// Create text above the input field for Mod name
-		var modNameText:FlxText = new FlxText(10, 120, 150, "Mod:");
-		blockPressWhileTypingOn.push(modNameInput); // Disables keybinds while inputfield is being focused.
-
-		// Create text above the input field for Charter name
-		var charterNameText:FlxText = new FlxText(10, 160, 150, "Charter:");
-		blockPressWhileTypingOn.push(charterNameInput); // Disables keybinds while inputfield is being focused.
-	
-		// Create checkboxes for custom notes, custom mechanics, and flashing lights options
-		var customNotesCheckBox:FlxUICheckBox = new FlxUICheckBox(10, 200, null, null, "Custom Notes", 100);
-		var customMechanicsCheckBox:FlxUICheckBox = new FlxUICheckBox(10, 220, null, null, "Custom Mechanics", 100);
-		var flashingLightsCheckBox:FlxUICheckBox = new FlxUICheckBox(10, 240, null, null, "Flashing Lights", 100);
+		// Create text for the FlxUIInputText objects
+		var artistNameText:FlxText = new FlxText(10, 20, 150, "Artist:");
+		var remixText:FlxText = new FlxText(10, 60, 150, "Remix:");
+		var modNameText:FlxText = new FlxText(10, 100, 150, "Mod:");
+		var charterNameText:FlxText = new FlxText(10, 140, 150, "Charter:");
+		var customNoteText:FlxText = new FlxText(10, 180, 150, "Custom Notes:");
+		var customMechanicText:FlxText = new FlxText(10, 220, 150, "Custom Mechanics:");
+		var flashingLightsText:FlxText = new FlxText(10, 260, 150, "Custom Notes:");
+		var extraCommentText:FlxText = new FlxText(10, 300, 150, "Extra Comment:");
 
 		// Create a "Save Metadata" button and set its click event handler
-		var saveMetaDataButton:FlxButton = new FlxButton(10, 300, "Save Metadata", onSaveMetadataButtonClick);
+		var saveMetaDataButton:FlxButton = new FlxButton(30, 360, "Save Metadata", onSaveMetadataButtonClick);
 
 		// Create a new UI group for the metadata tab and add it to the main UI box
 		var tab_group_metaData = new FlxUI(null, UI_box);
 		tab_group_metaData.name = "MetaData";
-		tab_group_metaData.add(saveMetaDataButton);
-		tab_group_metaData.add(charterNameText);
-		tab_group_metaData.add(charterNameInput);
 		tab_group_metaData.add(artistNameText);
 		tab_group_metaData.add(artistNameInput);
+		tab_group_metaData.add(remixText);
+		tab_group_metaData.add(remixInput);
 		tab_group_metaData.add(modNameText);
 		tab_group_metaData.add(modNameInput);
-		tab_group_metaData.add(remixCheckBox);
-		tab_group_metaData.add(customNotesCheckBox);
-		tab_group_metaData.add(customMechanicsCheckBox);
-		tab_group_metaData.add(flashingLightsCheckBox);
-
+		tab_group_metaData.add(charterNameText);
+		tab_group_metaData.add(charterNameInput);
+		tab_group_metaData.add(customNoteText);
+		tab_group_metaData.add(customNoteInput);
+		tab_group_metaData.add(customMechanicText);
+		tab_group_metaData.add(customMechanicInput);
+		tab_group_metaData.add(flashingLightsText);
+		tab_group_metaData.add(flashingLightsInput);
+		tab_group_metaData.add(extraCommentText);
+		tab_group_metaData.add(extraCommentInput);
+		tab_group_metaData.add(saveMetaDataButton);
 		UI_box.addGroup(tab_group_metaData);
 
-		// Set the initial state of the checkboxes and define their callbacks
+		// Disables keybinds while inputfield is being focused.
+		blockPressWhileTypingOn.push(artistNameInput); 
+		blockPressWhileTypingOn.push(modNameInput); 
+		blockPressWhileTypingOn.push(remixInput);
+		blockPressWhileTypingOn.push(modNameInput);
+		blockPressWhileTypingOn.push(charterNameInput);
+		blockPressWhileTypingOn.push(customNoteInput);
+		blockPressWhileTypingOn.push(customMechanicInput);
+		blockPressWhileTypingOn.push(flashingLightsInput);
+		blockPressWhileTypingOn.push(extraCommentInput);
 
-		remixCheckBox.checked = _song.isRemix;
-		remixCheckBox.callback = function()
-		{
-			_song.isRemix = remixCheckBox.checked;
-		};
-
-		customNotesCheckBox.checked = _song.hasCustomNotes;
-		customNotesCheckBox.callback = function()
-		{
-			_song.hasCustomNotes = customNotesCheckBox.checked;
-		};
-
-		customMechanicsCheckBox.checked = _song.hasCustomMechanics;
-		customMechanicsCheckBox.callback = function()
-		{
-			_song.hasCustomMechanics = customMechanicsCheckBox.checked;
-		};
-
-		flashingLightsCheckBox.checked = _song.hasFlashingLights;
-		flashingLightsCheckBox.callback = function()
-		{
-			_song.hasFlashingLights = flashingLightsCheckBox.checked;
-		};
 	}
 
 	// Dumb function that handles button click
@@ -3210,14 +3214,14 @@ class ChartingState extends MusicBeatState
 		var metaData:Dynamic = {
 			song: _song.song,
 			artist: _song.artist,
-			isRemix: _song.isRemix,
 			mod: _song.mod,
 			bpm: _song.bpm,
-			scrollSpeed: _song.speed,
+			isRemix: _song.isRemix,
+			charter: _song.charter,
 			hasCustomMechanics: _song.hasCustomMechanics,
 			hasFlashingLights: _song.hasFlashingLights,
 			hasCustomNotes: _song.hasCustomNotes,
-			charter: _song.charter
+			extraComment: _song.extraComment
 		};
 		
 		// JSON formatting shit

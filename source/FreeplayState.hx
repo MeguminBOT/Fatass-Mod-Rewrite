@@ -56,7 +56,6 @@ class FreeplayState extends MusicBeatState
 	var colorTween:FlxTween;
 
 	var infoText:FlxText;
-	var metaDataText:FlxText;
 	var quickOptionsButton:FlxButton;
 	var gameVisualsButton:FlxButton;
 	var uiVisualsButton:FlxButton;
@@ -472,6 +471,14 @@ class FreeplayState extends MusicBeatState
 			{
 				songText.scaleX = maxWidth / songText.width;
 			}
+			//   else
+			// {
+			// 	// Scale the object down by 50%
+			// 	songText.scaleX *= 0.5;
+			// }
+
+			// Scale the object down by 50% on the y-axis
+			// songText.scaleY *= 0.5;
 			songText.snapToPosition();
 
 			Paths.currentModDirectory = songs[i].folder;
@@ -501,14 +508,9 @@ class FreeplayState extends MusicBeatState
 		chartMetaDataBG.alpha = 0.5;
 		add(chartMetaDataBG);
 
-		metaDataText = new FlxText(975, 175, FlxG.width, "");
-		metaDataText.setFormat(Paths.font("rubik.ttf"), 24, FlxColor.WHITE, RIGHT);
-   		add(metaDataText);
-
-		infoText = new FlxText(975, 175, 0, "");
+		infoText = new FlxText(975, 200, 0, "");
 		infoText.setFormat(Paths.font("rubik.ttf"), 16, FlxColor.WHITE, LEFT);
 		add(infoText);
-		
 
 		quickOptionsButton = new FlxButton(975, 525, "Game Options", qoClick);
 		add(quickOptionsButton);
@@ -926,7 +928,6 @@ class FreeplayState extends MusicBeatState
 
 	private function positionHighscore() {
 		scoreText.x = FlxG.width - scoreText.width - 6;
-
 		scoreBG.scale.x = FlxG.width - scoreText.x + 6;
 		scoreBG.x = FlxG.width - (scoreBG.scale.x / 2);
 		diffText.x = Std.int(scoreBG.x + (scoreBG.width / 2));
@@ -940,18 +941,19 @@ class FreeplayState extends MusicBeatState
 		PlayState.SONG = Song.loadFromJson(chartJson, songLowercase);
 		var loadedSong:SwagSong = PlayState.SONG;
 		var infoLines:Array<String> = [];
-		// Only displays the Metadata if the song folder contains a metadata.json file, doesnt matter if file is empty or not.
+
 		// Conditionally push lines into the array only when their values are not null
 			if (loadedSong.song != null) infoLines.push("Song: " + loadedSong.song);
 			if (loadedSong.artist != null) infoLines.push("Artist: " + loadedSong.artist);
 			if (loadedSong.mod != null) infoLines.push("Mod: " + loadedSong.mod);
 			infoLines.push("BPM: " + Std.string(loadedSong.bpm));
 			infoLines.push("Scroll Speed: " + Std.string(loadedSong.speed));
-			infoLines.push("Is Remix: " + Std.string(loadedSong.isRemix));
+			if (loadedSong.isRemix != null) infoLines.push("Is Remix: " + loadedSong.isRemix);
 			if (loadedSong.charter != null) infoLines.push("Charter: " + loadedSong.charter);
-			infoLines.push("Has Custom Notes: " + Std.string(loadedSong.hasCustomNotes));
-			infoLines.push("Has Custom Mechanics: " + Std.string(loadedSong.hasCustomMechanics));
-			infoLines.push("Has Flashing Lights: " + Std.string(loadedSong.hasFlashingLights));
+			if (loadedSong.hasCustomNotes != null) infoLines.push("Has Custom Notes: " + loadedSong.hasCustomNotes);
+			if (loadedSong.hasCustomMechanics != null) infoLines.push("Has Custom Mechanics: " + loadedSong.hasCustomMechanics);
+			if (loadedSong.hasFlashingLights != null) infoLines.push("Has Flashing Lights: " + loadedSong.hasFlashingLights);		
+			if (loadedSong.extraComment != null) infoLines.push("Extra Comment: " + loadedSong.extraComment);	
 		// Update the infoText with the values from the loaded song
 		infoText.text = infoLines.join("\n");
 	}
