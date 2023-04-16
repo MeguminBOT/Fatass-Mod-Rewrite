@@ -502,13 +502,12 @@ class FreeplayState extends MusicBeatState
 		scoreBG.alpha = 0.5;
 		add(scoreBG);
 
-		chartMetaDataBG = new FlxSprite().makeGraphic(350, 350, FlxColor.BLACK);
-		chartMetaDataBG.x = 950;
+		chartMetaDataBG = new FlxSprite().loadGraphic(Paths.image('metadataBox'));
+		chartMetaDataBG.x = 935;
 		chartMetaDataBG.y = 150;
-		chartMetaDataBG.alpha = 0.5;
 		add(chartMetaDataBG);
 
-		infoText = new FlxText(975, 200, 0, "");
+		infoText = new FlxText(975, 250, 0, "");
 		infoText.setFormat(Paths.font("rubik.ttf"), 16, FlxColor.WHITE, LEFT);
 		add(infoText);
 
