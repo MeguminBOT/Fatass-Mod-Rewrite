@@ -30,6 +30,7 @@ import Character;
 import flixel.system.debug.interaction.tools.Pointer.GraphicCursorCross;
 import lime.system.Clipboard;
 import flixel.animation.FlxAnimation;
+import SkinData;
 
 #if MODS_ALLOWED
 import sys.FileSystem;
@@ -74,6 +75,7 @@ class CharacterEditorState extends MusicBeatState
 
 	var cameraFollowPointer:FlxSprite;
 	var healthBarBG:FlxSprite;
+	var uiSkinFolder:String = 'base';
 
 	override function create()
 	{
@@ -111,7 +113,7 @@ class CharacterEditorState extends MusicBeatState
 
 		loadChar(!daAnim.startsWith('bf'), false);
 
-		healthBarBG = new FlxSprite(30, FlxG.height - 75).loadGraphic(Paths.image('healthBar'));
+		healthBarBG = new FlxSprite(30, FlxG.height - 75).loadGraphic(getUIFile('healthBar'));
 		healthBarBG.scrollFactor.set();
 		add(healthBarBG);
 		healthBarBG.cameras = [camHUD];
@@ -139,11 +141,14 @@ class CharacterEditorState extends MusicBeatState
 		camFollow.screenCenter();
 		add(camFollow);
 
-		var tipTextArray:Array<String> = "E/Q - Camera Zoom In/Out
+		var tipTextArray:Array<String> = 
+		"E/Q - Camera Zoom In/Out
 		\nR - Reset Camera Zoom
-		\nJKLI - Move Camera
+		\nJ/K/L/I - Move Camera
 		\nW/S - Previous/Next Animation
-		\nSpace - Play Animation
+		\nSpace - Play Selected Animation
+		\n1/2/3/4 - Play Sing Animations
+		\n5 - Play Idle Animation
 		\nArrow Keys - Move Character Offset
 		\nT - Reset Current Offset
 		\nHold Shift to Move 10x faster\n".split('\n');
@@ -176,6 +181,7 @@ class CharacterEditorState extends MusicBeatState
 		var tabs = [
 			{name: 'Character', label: 'Character'},
 			{name: 'Animations', label: 'Animations'},
+			//{name: 'Test Animations', label: 'Test Animations'}, <-- For the future, for now we're using the 1,2,3,4 buttons to test singAnimations.
 		];
 		UI_characterbox = new FlxUITabMenu(null, tabs, true);
 		UI_characterbox.cameras = [camMenu];
@@ -190,9 +196,9 @@ class CharacterEditorState extends MusicBeatState
 
 		//addOffsetsUI();
 		addSettingsUI();
-
 		addCharacterUI();
 		addAnimationsUI();
+		//testAnimationsUI(); <-- For the future, for now we're using the 1,2,3,4 buttons to test singAnimations.
 		UI_characterbox.selected_tab_id = 'Character';
 
 		FlxG.mouse.visible = true;
@@ -329,7 +335,7 @@ class CharacterEditorState extends MusicBeatState
 		UI_box.addGroup(tab_group);
 	}*/
 
-	var TemplateCharacter:String = '{
+	var templateCharacterDad:String = '{
 			"animations": [
 				{
 					"loop": false,
@@ -385,6 +391,94 @@ class CharacterEditorState extends MusicBeatState
 					"anim": "singRIGHT",
 					"loop": false,
 					"name": "Dad Sing Note RIGHT"
+				},
+				{
+					"offsets": [
+						0,
+						0
+					],
+					"indices": [],
+					"fps": 24,
+					"anim": "attackLEFT",
+					"loop": false,
+					"name": "Dad Attack Note LEFT"
+				},
+				{
+					"offsets": [
+						0,
+						0
+					],
+					"indices": [],
+					"fps": 24,
+					"anim": "attackDOWN",
+					"loop": false,
+					"name": "Dad Attack Note DOWN"
+				},
+				{
+					"offsets": [
+						0,
+						0
+					],
+					"indices": [],
+					"fps": 24,
+					"anim": "attackUP",
+					"loop": false,
+					"name": "Dad Attack Note UP"
+				},
+				{
+					"offsets": [
+						0,
+						0
+					],
+					"indices": [],
+					"fps": 24,
+					"anim": "attackRIGHT",
+					"loop": false,
+					"name": "Dad Attack Note RIGHT"
+				},
+				{
+					"offsets": [
+						0,
+						0
+					],
+					"indices": [],
+					"fps": 24,
+					"anim": "dodgeLEFT",
+					"loop": false,
+					"name": "Dad Dodge Note LEFT"
+				},
+				{
+					"offsets": [
+						0,
+						0
+					],
+					"indices": [],
+					"fps": 24,
+					"anim": "dodgeDOWN",
+					"loop": false,
+					"name": "Dad Dodge Note DOWN"
+				},
+				{
+					"offsets": [
+						0,
+						0
+					],
+					"indices": [],
+					"fps": 24,
+					"anim": "dodgeUP",
+					"loop": false,
+					"name": "Dad Dodge Note UP"
+				},
+				{
+					"offsets": [
+						0,
+						0
+					],
+					"indices": [],
+					"fps": 24,
+					"anim": "dodgeRIGHT",
+					"loop": false,
+					"name": "Dad Dodge Note RIGHT"
 				}
 			],
 			"no_antialiasing": false,
@@ -407,6 +501,405 @@ class CharacterEditorState extends MusicBeatState
 			"sing_duration": 6.1,
 			"scale": 1
 		}';
+
+	var templateCharacterBF:String = '{
+		"animations": [
+			{
+				"offsets": [
+					-5,
+					0
+				],
+				"loop": false,
+				"fps": 24,
+				"anim": "idle",
+				"indices": [],
+				"name": "BF idle dance"
+			},
+			{
+				"offsets": [
+					5,
+					-6
+				],
+				"loop": false,
+				"fps": 24,
+				"anim": "singLEFT",
+				"indices": [],
+				"name": "BF NOTE LEFT0"
+			},
+			{
+				"offsets": [
+					-20,
+					-51
+				],
+				"loop": false,
+				"fps": 24,
+				"anim": "singDOWN",
+				"indices": [],
+				"name": "BF NOTE DOWN0"
+			},
+			{
+				"offsets": [
+					-46,
+					27
+				],
+				"loop": false,
+				"fps": 24,
+				"anim": "singUP",
+				"indices": [],
+				"name": "BF NOTE UP0"
+			},
+			{
+				"offsets": [
+					-48,
+					-7
+				],
+				"loop": false,
+				"fps": 24,
+				"anim": "singRIGHT",
+				"indices": [],
+				"name": "BF NOTE RIGHT0"
+			},
+			{
+				"offsets": [
+					7,
+					19
+				],
+				"loop": false,
+				"fps": 24,
+				"anim": "singLEFTmiss",
+				"indices": [],
+				"name": "BF NOTE LEFT MISS"
+			},
+			{
+				"offsets": [
+					-15,
+					-19
+				],
+				"loop": false,
+				"fps": 24,
+				"anim": "singDOWNmiss",
+				"indices": [],
+				"name": "BF NOTE DOWN MISS"
+			},
+			{
+				"offsets": [
+					-46,
+					27
+				],
+				"loop": false,
+				"fps": 24,
+				"anim": "singUPmiss",
+				"indices": [],
+				"name": "BF NOTE UP MISS"
+			},
+			{
+				"offsets": [
+					-44,
+					22
+				],
+				"loop": false,
+				"fps": 24,
+				"anim": "singRIGHTmiss",
+				"indices": [],
+				"name": "BF NOTE RIGHT MISS"
+			},
+			{
+				"offsets": [
+					-3,
+					5
+				],
+				"loop": false,
+				"fps": 24,
+				"anim": "hey",
+				"indices": [],
+				"name": "BF HEY"
+			},
+			{
+				"offsets": [
+					14,
+					18
+				],
+				"loop": false,
+				"fps": 24,
+				"anim": "hurt",
+				"indices": [],
+				"name": "BF hit"
+			},
+			{
+				"offsets": [
+					-4,
+					0
+				],
+				"loop": true,
+				"fps": 24,
+				"anim": "scared",
+				"indices": [],
+				"name": "BF idle shaking"
+			},
+			{
+				"offsets": [
+					-10,
+					-16
+				],
+				"loop": false,
+				"fps": 24,
+				"anim": "dodge",
+				"indices": [],
+				"name": "boyfriend dodge"
+			},
+			{
+				"offsets": [
+					294,
+					267
+				],
+				"loop": false,
+				"fps": 24,
+				"anim": "attack",
+				"indices": [],
+				"name": "boyfriend attack"
+			},
+			{
+				"offsets": [
+					-40,
+					-40
+				],
+				"loop": false,
+				"fps": 24,
+				"anim": "pre-attack",
+				"indices": [],
+				"name": "bf pre attack"
+			}
+		],
+		"no_antialiasing": false,
+		"image": "characters/BOYFRIEND",
+		"position": [
+			0,
+			350
+		],
+		"healthicon": "bf",
+		"flip_x": true,
+		"healthbar_colors": [
+			49,
+			176,
+			209
+		],
+		"camera_position": [
+			0,
+			0
+		],
+		"sing_duration": 4,
+		"scale": 1
+	}';
+
+	var templateCharacterGF:String = '{
+		"animations": [
+			{
+				"loop": false,
+				"offsets": [
+					3,
+					0
+				],
+				"fps": 24,
+				"anim": "cheer",
+				"indices": [],
+				"name": "GF Cheer"
+			},
+			{
+				"loop": false,
+				"offsets": [
+					0,
+					-19
+				],
+				"fps": 24,
+				"anim": "singLEFT",
+				"indices": [],
+				"name": "GF left note"
+			},
+			{
+				"loop": false,
+				"offsets": [
+					0,
+					-20
+				],
+				"fps": 24,
+				"anim": "singDOWN",
+				"indices": [],
+				"name": "GF Down Note"
+			},
+			{
+				"loop": false,
+				"offsets": [
+					0,
+					4
+				],
+				"fps": 24,
+				"anim": "singUP",
+				"indices": [],
+				"name": "GF Up Note"
+			},
+			{
+				"loop": false,
+				"offsets": [
+					0,
+					-20
+				],
+				"fps": 24,
+				"anim": "singRIGHT",
+				"indices": [],
+				"name": "GF Right Note"
+			},
+			{
+				"loop": false,
+				"offsets": [
+					-2,
+					-21
+				],
+				"fps": 24,
+				"anim": "sad",
+				"indices": [
+					0,
+					1,
+					2,
+					3,
+					4,
+					5,
+					6,
+					7,
+					8,
+					9,
+					10,
+					11,
+					12
+				],
+				"name": "gf sad"
+			},
+			{
+				"loop": false,
+				"offsets": [
+					0,
+					-9
+				],
+				"fps": 24,
+				"anim": "danceLeft",
+				"indices": [
+					30,
+					0,
+					1,
+					2,
+					3,
+					4,
+					5,
+					6,
+					7,
+					8,
+					9,
+					10,
+					11,
+					12,
+					13,
+					14
+				],
+				"name": "GF Dancing Beat"
+			},
+			{
+				"loop": false,
+				"offsets": [
+					0,
+					-9
+				],
+				"fps": 24,
+				"anim": "danceRight",
+				"indices": [
+					15,
+					16,
+					17,
+					18,
+					19,
+					20,
+					21,
+					22,
+					23,
+					24,
+					25,
+					26,
+					27,
+					28,
+					29
+				],
+				"name": "GF Dancing Beat"
+			},
+			{
+				"loop": true,
+				"offsets": [
+					45,
+					-8
+				],
+				"fps": 24,
+				"anim": "hairBlow",
+				"indices": [
+					0,
+					1,
+					2,
+					3
+				],
+				"name": "GF Dancing Beat Hair blowing"
+			},
+			{
+				"loop": false,
+				"offsets": [
+					0,
+					-9
+				],
+				"fps": 24,
+				"anim": "hairFall",
+				"indices": [
+					0,
+					1,
+					2,
+					3,
+					4,
+					5,
+					6,
+					7,
+					8,
+					9,
+					10,
+					11
+				],
+				"name": "GF Dancing Beat Hair Landing"
+			},
+			{
+				"loop": true,
+				"offsets": [
+					-2,
+					-17
+				],
+				"fps": 24,
+				"anim": "scared",
+				"indices": [],
+				"name": "GF FEAR"
+			}
+		],
+		"no_antialiasing": false,
+		"image": "characters/GF_assets",
+		"position": [
+			0,
+			0
+		],
+		"healthicon": "gf",
+		"flip_x": false,
+		"healthbar_colors": [
+			165,
+			0,
+			77
+		],
+		"camera_position": [
+			0,
+			0
+		],
+		"sing_duration": 4,
+		"scale": 1
+	}';
 
 	var charDropDown:FlxUIDropDownMenuCustom;
 	function addSettingsUI() {
@@ -435,15 +928,15 @@ class CharacterEditorState extends MusicBeatState
 		charDropDown.selectedLabel = daAnim;
 		reloadCharacterDropDown();
 
-		var reloadCharacter:FlxButton = new FlxButton(140, 20, "Reload Char", function()
+		var reloadCharacter:FlxButton = new FlxButton(140, 0, "Reload Char", function()
 		{
 			loadChar(!check_player.checked);
 			reloadCharacterDropDown();
 		});
 
-		var templateCharacter:FlxButton = new FlxButton(140, 50, "Load Template", function()
+		var templateCharacterDad:FlxButton = new FlxButton(140, 20, "Dad Template", function()
 		{
-			var parsedJson:CharacterFile = cast Json.parse(TemplateCharacter);
+			var parsedJson:CharacterFile = cast Json.parse(templateCharacterDad);
 			var characters:Array<Character> = [char, ghostChar];
 			for (character in characters)
 			{
@@ -477,15 +970,93 @@ class CharacterEditorState extends MusicBeatState
 			updatePointerPos();
 			genBoyOffsets();
 		});
-		templateCharacter.color = FlxColor.RED;
-		templateCharacter.label.color = FlxColor.WHITE;
+		var templateCharacterBF:FlxButton = new FlxButton(140, 40, "BF Template", function()
+		{
+			var parsedJson:CharacterFile = cast Json.parse(templateCharacterBF);
+			var characters:Array<Character> = [char, ghostChar];
+			for (character in characters)
+			{
+				character.animOffsets.clear();
+				character.animationsArray = parsedJson.animations;
+				for (anim in character.animationsArray)
+				{
+					character.addOffset(anim.anim, anim.offsets[0], anim.offsets[1]);
+				}
+				if(character.animationsArray[0] != null) {
+					character.playAnim(character.animationsArray[0].anim, true);
+				}
+
+				character.singDuration = parsedJson.sing_duration;
+				character.positionArray = parsedJson.position;
+				character.cameraPosition = parsedJson.camera_position;
+
+				character.imageFile = parsedJson.image;
+				character.jsonScale = parsedJson.scale;
+				character.noAntialiasing = parsedJson.no_antialiasing;
+				character.originalFlipX = parsedJson.flip_x;
+				character.healthIcon = parsedJson.healthicon;
+				character.healthColorArray = parsedJson.healthbar_colors;
+				character.setPosition(character.positionArray[0] + OFFSET_X + 100, character.positionArray[1]);
+			}
+
+			reloadCharacterImage();
+			reloadCharacterDropDown();
+			reloadCharacterOptions();
+			resetHealthBarColor();
+			updatePointerPos();
+			genBoyOffsets();
+		});
+		var templateCharacterGF:FlxButton = new FlxButton(140, 60, "GF Template", function()
+		{
+			var parsedJson:CharacterFile = cast Json.parse(templateCharacterGF);
+			var characters:Array<Character> = [char, ghostChar];
+			for (character in characters)
+			{
+				character.animOffsets.clear();
+				character.animationsArray = parsedJson.animations;
+				for (anim in character.animationsArray)
+				{
+					character.addOffset(anim.anim, anim.offsets[0], anim.offsets[1]);
+				}
+				if(character.animationsArray[0] != null) {
+					character.playAnim(character.animationsArray[0].anim, true);
+				}
+
+				character.singDuration = parsedJson.sing_duration;
+				character.positionArray = parsedJson.position;
+				character.cameraPosition = parsedJson.camera_position;
+
+				character.imageFile = parsedJson.image;
+				character.jsonScale = parsedJson.scale;
+				character.noAntialiasing = parsedJson.no_antialiasing;
+				character.originalFlipX = parsedJson.flip_x;
+				character.healthIcon = parsedJson.healthicon;
+				character.healthColorArray = parsedJson.healthbar_colors;
+				character.setPosition(character.positionArray[0] + OFFSET_X + 100, character.positionArray[1]);
+			}
+
+			reloadCharacterImage();
+			reloadCharacterDropDown();
+			reloadCharacterOptions();
+			resetHealthBarColor();
+			updatePointerPos();
+			genBoyOffsets();
+		});
+		templateCharacterDad.color = FlxColor.RED;
+		templateCharacterDad.label.color = FlxColor.WHITE;
+		templateCharacterBF.color = FlxColor.RED;
+		templateCharacterBF.label.color = FlxColor.WHITE;
+		templateCharacterGF.color = FlxColor.RED;
+		templateCharacterGF.label.color = FlxColor.WHITE;
 
 		tab_group.add(new FlxText(charDropDown.x, charDropDown.y - 18, 0, 'Character:'));
 		tab_group.add(check_player);
 		tab_group.add(reloadCharacter);
 		tab_group.add(charDropDown);
 		tab_group.add(reloadCharacter);
-		tab_group.add(templateCharacter);
+		tab_group.add(templateCharacterDad);
+		tab_group.add(templateCharacterBF);
+		tab_group.add(templateCharacterGF);
 		UI_box.addGroup(tab_group);
 	}
 
@@ -505,6 +1076,11 @@ class CharacterEditorState extends MusicBeatState
 	var healthColorStepperR:FlxUINumericStepper;
 	var healthColorStepperG:FlxUINumericStepper;
 	var healthColorStepperB:FlxUINumericStepper;
+
+	// function testAnimationsUI () { <-- For the future, for now we're using the 1,2,3,4 buttons to test singAnimations.
+	// 	var tab_group = new FlxUI(null, UI_box);
+	// 	tab_group.name = "Test Animations";
+	// }
 
 	function addCharacterUI() {
 		var tab_group = new FlxUI(null, UI_box);
@@ -836,12 +1412,6 @@ class CharacterEditorState extends MusicBeatState
 		} else {
 			char.frames = Paths.getSparrowAtlas(char.imageFile);
 		}
-
-
-
-
-
-
 
 		if(char.animationsArray != null && char.animationsArray.length > 0) {
 			for (anim in char.animationsArray) {
@@ -1185,7 +1755,21 @@ class CharacterEditorState extends MusicBeatState
 
 				var controlArray:Array<Bool> = [FlxG.keys.justPressed.LEFT, FlxG.keys.justPressed.RIGHT, FlxG.keys.justPressed.UP, FlxG.keys.justPressed.DOWN];
 
-
+				if (FlxG.keys.justPressed.ONE) {
+					char.playAnim("singLEFT", true);
+				}
+				if (FlxG.keys.justPressed.TWO) {
+					char.playAnim("singDOWN", true);
+				}
+				if (FlxG.keys.justPressed.THREE) {
+					char.playAnim("singUP", true);
+				}
+				if (FlxG.keys.justPressed.FOUR) {
+					char.playAnim("singRIGHT", true);
+				}
+				if (FlxG.keys.justPressed.FIVE) {
+					char.playAnim("idle", true);
+				}
 
 				for (i in 0...controlArray.length) {
 					if(controlArray[i]) {
@@ -1304,5 +1888,11 @@ class CharacterEditorState extends MusicBeatState
 
 		var text:String = prefix + Clipboard.text.replace('\n', '');
 		return text;
+	}
+
+	function getUIFile(file:String)
+	{
+		// Handles which skin to load from
+		return SkinData.getUIFile(file, uiSkinFolder, ClientPrefs.uiSkin);
 	}
 }
