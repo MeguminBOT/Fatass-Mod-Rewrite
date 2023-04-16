@@ -30,7 +30,6 @@ import Character;
 import flixel.system.debug.interaction.tools.Pointer.GraphicCursorCross;
 import lime.system.Clipboard;
 import flixel.animation.FlxAnimation;
-import SkinData;
 
 #if MODS_ALLOWED
 import sys.FileSystem;
@@ -75,7 +74,6 @@ class CharacterEditorState extends MusicBeatState
 
 	var cameraFollowPointer:FlxSprite;
 	var healthBarBG:FlxSprite;
-	var uiSkinFolder:String = 'base';
 
 	override function create()
 	{
@@ -113,7 +111,7 @@ class CharacterEditorState extends MusicBeatState
 
 		loadChar(!daAnim.startsWith('bf'), false);
 
-		healthBarBG = new FlxSprite(30, FlxG.height - 75).loadGraphic(getUIFile('healthBar'));
+		healthBarBG = new FlxSprite(30, FlxG.height - 75).loadGraphic(Paths.image('uiskins/default/base/healthBar'));
 		healthBarBG.scrollFactor.set();
 		add(healthBarBG);
 		healthBarBG.cameras = [camHUD];
@@ -1888,11 +1886,5 @@ class CharacterEditorState extends MusicBeatState
 
 		var text:String = prefix + Clipboard.text.replace('\n', '');
 		return text;
-	}
-
-	function getUIFile(file:String)
-	{
-		// Handles which skin to load from
-		return SkinData.getUIFile(file, uiSkinFolder, ClientPrefs.uiSkin);
 	}
 }
