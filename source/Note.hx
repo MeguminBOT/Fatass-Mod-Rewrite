@@ -450,4 +450,21 @@ class Note extends FlxSprite
 				alpha = 0.3;
 		}
 	}
+	
+	public function getDeltaTime():Float {
+		// Calculate deltaTime based on prevNote and nextNote
+		var deltaTime:Float;
+		
+		if (prevNote != null && nextNote != null) {
+			deltaTime = nextNote.strumTime - prevNote.strumTime;
+		} else if (prevNote != null) {
+			deltaTime = strumTime - prevNote.strumTime;
+		} else if (nextNote != null) {
+			deltaTime = nextNote.strumTime - strumTime;
+		} else {
+			deltaTime = 0; // Or any default value
+		}
+	
+		return deltaTime;
+	}
 }

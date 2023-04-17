@@ -20,6 +20,7 @@ import sys.FileSystem;
 #end
 import haxe.Json;
 import sys.io.File;
+import StarRating;
 import ChartMetaData;
 import Song;
 import Song.SwagSong;
@@ -58,6 +59,8 @@ class FreeplayState extends MusicBeatState
 	var chartMetaDataBG:FlxSprite;
 	var infoText:FlxText;
 	var noteCountText:FlxText;
+	var starRatingPlayer:FlxText;
+	var starRatingOpponent:FlxText;
 	var quickOptionsButton:FlxButton;
 	var gameVisualsButton:FlxButton;
 	var uiVisualsButton:FlxButton;
@@ -514,6 +517,14 @@ class FreeplayState extends MusicBeatState
 		infoText.setFormat(Paths.font("rubik.ttf"), 16, FlxColor.WHITE, LEFT);
 		add(infoText);
 
+		starRatingPlayer = new FlxText(500, 225, 0, "");
+		starRatingPlayer.setFormat(Paths.font("rubik.ttf"), 16, FlxColor.WHITE, LEFT);
+		add(starRatingPlayer);
+
+		starRatingOpponent = new FlxText(500, 325, 0, "");
+		starRatingOpponent.setFormat(Paths.font("rubik.ttf"), 16, FlxColor.WHITE, LEFT);
+		add(starRatingOpponent);
+
 		quickOptionsButton = new FlxButton(975, 525, "Game Options", qoClick);
 		add(quickOptionsButton);
 
@@ -942,6 +953,13 @@ class FreeplayState extends MusicBeatState
 		var songLowercase:String = Paths.formatToSongPath(songs[curSelected].songName);
 		var chartJson:String = Highscore.formatSong(songLowercase, curDifficulty);
 		PlayState.SONG = Song.loadFromJson(chartJson, songLowercase);
+		
+		// Create a new StarRating instance and calculate difficulty
+		var starRating:StarRating = new StarRating();
+		var starRatingData:Dynamic = starRating.calculateDifficulty();
+		starRatingPlayer.text = Std.string(starRatingData.mustHit);
+		starRatingOpponent.text = Std.string(starRatingData.nonMustHit);
+
 
 		// Get Metadata from the loaded song.
 		var loadedSong:SwagSong = PlayState.SONG;
