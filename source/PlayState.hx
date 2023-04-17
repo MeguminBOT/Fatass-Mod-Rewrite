@@ -1104,7 +1104,7 @@ class PlayState extends MusicBeatState
 		judgeCounterTxt.setFormat(Paths.font("rubik.ttf"), 16, FlxColor.WHITE, CENTER, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
 		judgeCounterTxt.scrollFactor.set();
 		judgeCounterTxt.borderSize = 1.25;
-		judgeCounterTxt.visible = !ClientPrefs.hideHud;
+		judgeCounterTxt.visible = ClientPrefs.judgeCounter;
 		judgeCounterTxt.x = 565;
 		judgeCounterTxt.y = 565;
 		//judgeCounterTxt.x += ClientPrefs.comboOffset[4]; // Moveable in Adjust Combo menu, currently wack so disabling for now
