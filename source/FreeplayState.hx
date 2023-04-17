@@ -37,7 +37,6 @@ class FreeplayState extends MusicBeatState
 	var curDifficulty:Int = -1;
 	private static var lastDifficultyName:String = '';
 
-	var chartMetaDataBG:FlxSprite;
 	var scoreBG:FlxSprite;
 	var scoreText:FlxText;
 	var diffText:FlxText;
@@ -55,7 +54,10 @@ class FreeplayState extends MusicBeatState
 	var intendedColor:Int;
 	var colorTween:FlxTween;
 
+	// Fat-Ass Stuff
+	var chartMetaDataBG:FlxSprite;
 	var infoText:FlxText;
+	var noteCountText:FlxText;
 	var quickOptionsButton:FlxButton;
 	var gameVisualsButton:FlxButton;
 	var uiVisualsButton:FlxButton;
@@ -505,9 +507,10 @@ class FreeplayState extends MusicBeatState
 		chartMetaDataBG = new FlxSprite().loadGraphic(Paths.image('metadataBox'));
 		chartMetaDataBG.x = 935;
 		chartMetaDataBG.y = 150;
+		chartMetaDataBG.scale.set(1, 1.1);
 		add(chartMetaDataBG);
 
-		infoText = new FlxText(975, 250, 0, "");
+		infoText = new FlxText(965, 225, 0, "");
 		infoText.setFormat(Paths.font("rubik.ttf"), 16, FlxColor.WHITE, LEFT);
 		add(infoText);
 
@@ -935,13 +938,33 @@ class FreeplayState extends MusicBeatState
 
 	public function displayMetaData() 
 	{
+		// Get the path for the currently selected song and load the JSON.
 		var songLowercase:String = Paths.formatToSongPath(songs[curSelected].songName);
 		var chartJson:String = Highscore.formatSong(songLowercase, curDifficulty);
 		PlayState.SONG = Song.loadFromJson(chartJson, songLowercase);
-		var loadedSong:SwagSong = PlayState.SONG;
-		var infoLines:Array<String> = [];
 
-		// Conditionally push lines into the array only when their values are not null
+		// Get Metadata from the loaded song.
+		var loadedSong:SwagSong = PlayState.SONG;
+
+		// Get the amount of notes for each column from the loaded song.
+		var noteCounts:Array<Int> = [0, 0, 0, 0];
+		for (section in PlayState.SONG.notes)
+		{
+			for (note in section.sectionNotes)
+			{
+				if (note[1] >= 0 && note[1] < 4)
+				{
+					noteCounts[note[1]]++;
+				}
+			}
+		}
+
+		// Calculate the total amount of notes by adding the column values together.
+		var totalCount:Int = noteCounts[0] + noteCounts[1] + noteCounts[2] + noteCounts[3];
+
+		// Make Metadata into text objects.
+		// Conditionally push lines into the array only when their values are not null.
+		var infoLines:Array<String> = [];
 			if (loadedSong.song != null) infoLines.push("Song: " + loadedSong.song);
 			if (loadedSong.artist != null) infoLines.push("Artist: " + loadedSong.artist);
 			if (loadedSong.mod != null) infoLines.push("Mod: " + loadedSong.mod);
@@ -952,9 +975,11 @@ class FreeplayState extends MusicBeatState
 			if (loadedSong.hasCustomNotes != null) infoLines.push("Has Custom Notes: " + loadedSong.hasCustomNotes);
 			if (loadedSong.hasCustomMechanics != null) infoLines.push("Has Custom Mechanics: " + loadedSong.hasCustomMechanics);
 			if (loadedSong.hasFlashingLights != null) infoLines.push("Has Flashing Lights: " + loadedSong.hasFlashingLights);		
-			if (loadedSong.extraComment != null) infoLines.push("Extra Comment: " + loadedSong.extraComment);	
-		// Update the infoText with the values from the loaded song
-		infoText.text = infoLines.join("\n");
+			if (loadedSong.extraComment != null) infoLines.push("Extra Comment: " + loadedSong.extraComment);
+			infoLines.push("");
+			infoLines.push("Notes: " +  Std.string(noteCounts[0]) + " / " + Std.string(noteCounts[1]) + " / " + Std.string(noteCounts[2]) + " / " + Std.string(noteCounts[3]));
+			infoLines.push("Notes Total: " + Std.string(totalCount));
+		infoText.text = infoLines.join("\n"); // Update the infoText with the values from the loaded song.
 	}
 
 	function qoClick()
