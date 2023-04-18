@@ -1,18 +1,23 @@
 package options;
 
-import flixel.util.FlxStringUtil;
-import flixel.tweens.FlxEase;
-import flixel.tweens.FlxTween;
-import flixel.tweens.FlxEase;
-import flixel.text.FlxText;
-import flixel.group.FlxSpriteGroup;
-import flixel.group.FlxGroup.FlxTypedGroup;
-import flixel.util.FlxColor;
-import flixel.FlxSprite;
+import flixel.FlxBasic;
 import flixel.FlxCamera;
 import flixel.FlxG;
-import flixel.ui.FlxBar;
+import flixel.FlxGame;
+import flixel.FlxObject;
+import flixel.FlxSprite;
+import flixel.FlxState;
+import flixel.FlxSubState;
+import flixel.group.FlxGroup.FlxTypedGroup;
+import flixel.group.FlxSpriteGroup;
+import flixel.input.mouse.FlxMouse;
 import flixel.math.FlxPoint;
+import flixel.text.FlxText;
+import flixel.tweens.FlxEase;
+import flixel.tweens.FlxTween;
+import flixel.ui.FlxBar;
+import flixel.util.FlxColor;
+import flixel.util.FlxStringUtil;
 
 using StringTools;
 
@@ -20,6 +25,7 @@ class NoteOffsetState extends MusicBeatState
 {
 	var boyfriend:Character;
 	var gf:Character;
+	var dad:Character;
 
 	public var camHUD:FlxCamera;
 	public var camGame:FlxCamera;
@@ -41,8 +47,27 @@ class NoteOffsetState extends MusicBeatState
 
 	var changeModeText:FlxText;
 
+	//Fatass modifications
+	var selectedObject:FlxObject = null;
+
+	var judgeCounterTxt:FlxText;
+	var healthBar:FlxBar;
+	var healthBarBG:FlxSprite;
+	var iconP1:HealthIcon;
+	var iconP2:HealthIcon;
+	var scoreTxt:FlxText;
+	var botplayTxt:FlxText;
+	var botplaySine:Float = 0;
+
+	var startMousePos:FlxPoint = new FlxPoint();
+	var startComboOffset:FlxPoint = new FlxPoint();
+	var prevMouseX:Float = 0;
+	var prevMouseY:Float = 0;
+	var objectPositionManager = new ObjectPositionManager();
+	
 	override public function create()
 	{
+		FlxG.mouse.visible = true;
 		// Cameras
 		camGame = new FlxCamera();
 		camHUD = new FlxCamera();
@@ -94,8 +119,12 @@ class NoteOffsetState extends MusicBeatState
 		boyfriend = new Character(770, 100, 'bf', true);
 		boyfriend.x += boyfriend.positionArray[0];
 		boyfriend.y += boyfriend.positionArray[1];
+		dad = new Character(100, 100, 'dad');
+		dad.x += dad.positionArray[0];
+		dad.y += dad.positionArray[1];
 		add(gf);
 		add(boyfriend);
+		add(dad);
 
 		// Combo stuff
 
@@ -180,6 +209,59 @@ class NoteOffsetState extends MusicBeatState
 		add(timeBar);
 		add(timeTxt);
 
+		judgeCounterTxt = new FlxText(0, 0);
+        judgeCounterTxt.text = 'Perfect Sicks: 233' + '\nSicks: 46 ' + '\nGoods: 1 ' + '\nBads: 0' + '\nShits: 0';
+		judgeCounterTxt.setFormat(Paths.font("rubik.ttf"), 16, FlxColor.WHITE, CENTER, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
+		judgeCounterTxt.scrollFactor.set();
+		judgeCounterTxt.borderSize = 1.25;
+		judgeCounterTxt.x = 565;
+		judgeCounterTxt.y = 565;
+		judgeCounterTxt.cameras = [camHUD];
+
+		healthBarBG = new FlxSprite().loadGraphic(Paths.image('uiskins/default/base/healthBar'));
+		healthBarBG.y = FlxG.height * 0.89;
+		healthBarBG.screenCenter(X);
+		healthBarBG.scrollFactor.set();
+		if(ClientPrefs.downScroll) healthBarBG.y = 0.11 * FlxG.height;
+		healthBarBG.cameras = [camHUD];
+
+		healthBar = new FlxBar(healthBarBG.x + 4, healthBarBG.y + 4, (LEFT_TO_RIGHT), Std.int(healthBarBG.width - 8), Std.int(healthBarBG.height - 8));
+		healthBar.scrollFactor.set();
+		healthBar.cameras = [camHUD];
+
+		iconP1 = new HealthIcon(boyfriend.healthIcon, true);
+		iconP1.y = healthBar.y - 75;
+		iconP1.cameras = [camHUD];
+
+		iconP2 = new HealthIcon(dad.healthIcon, false);
+		iconP2.y = healthBar.y - 75;
+		iconP2.cameras = [camHUD];
+
+		reloadHealthBarColors();
+
+		scoreTxt = new FlxText(0, healthBarBG.y + 36, FlxG.width, "Score: 1024000 | Misses: 0 | Rating: Very Good (99.84%) - GFC", 20);
+		scoreTxt.setFormat(Paths.font("rubik.ttf"), 16, FlxColor.WHITE, CENTER, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
+		scoreTxt.scrollFactor.set();
+		scoreTxt.borderSize = 1.25;
+		scoreTxt.cameras = [camHUD];
+
+		botplayTxt = new FlxText(400, timeBarBG.y + 55, FlxG.width - 800, "BOTPLAY", 32);
+		botplayTxt.setFormat(Paths.font("rubik.ttf"), 24, FlxColor.WHITE, CENTER, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
+		botplayTxt.scrollFactor.set();
+		botplayTxt.borderSize = 1.25;
+		if(ClientPrefs.downScroll) {
+			botplayTxt.y = timeBarBG.y - 78;
+		}
+		botplayTxt.cameras = [camHUD];
+
+		add(judgeCounterTxt);
+		add(healthBarBG);
+		add(healthBar);
+		add(iconP1);
+		add(iconP2);
+		add(scoreTxt);
+		add(botplayTxt);
+
 		///////////////////////
 
 		var blackBox:FlxSprite = new FlxSprite().makeGraphic(FlxG.width, 40, FlxColor.BLACK);
@@ -201,145 +283,92 @@ class NoteOffsetState extends MusicBeatState
 		super.create();
 	}
 
+	public function reloadHealthBarColors() {
+		healthBar.createFilledBar(FlxColor.fromRGB(gf.healthColorArray[0], gf.healthColorArray[1], gf.healthColorArray[2]), FlxColor.fromRGB(boyfriend.healthColorArray[0], boyfriend.healthColorArray[1], boyfriend.healthColorArray[2]));
+		healthBar.updateBar();
+	}
+
 	var holdTime:Float = 0;
 	var onComboMenu:Bool = true;
 	var holdingObjectType:Null<Bool> = null;
 
-	var startMousePos:FlxPoint = new FlxPoint();
-	var startComboOffset:FlxPoint = new FlxPoint();
 
 	override public function update(elapsed:Float)
 	{
+		if (FlxG.mouse.justPressed) {
+			var mousePos:FlxPoint = FlxG.mouse.getScreenPosition(camHUD);
+			
+			if (judgeCounterTxt.overlapsPoint(mousePos)) {
+				selectObject(judgeCounterTxt);
+			}
+			else if (healthBarBG.overlapsPoint(mousePos)) {
+				selectObject(healthBarBG);
+			}
+			else if (healthBar.overlapsPoint(mousePos)) {
+				selectObject(healthBar);
+			}
+			else if (iconP1.overlapsPoint(mousePos)) {
+				selectObject(iconP1);
+			}
+			else if (iconP2.overlapsPoint(mousePos)) {
+				selectObject(iconP2);
+			}
+			else if (scoreTxt.overlapsPoint(mousePos)) {
+				selectObject(scoreTxt);
+			}
+			else if (botplayTxt.overlapsPoint(mousePos)) {
+				selectObject(botplayTxt);
+			}
+			else {
+				deselectObject();
+			}
+		}
+		
+		if (FlxG.mouse.justMoved && selectedObject != null) {
+			var deltaX:Float = FlxG.mouse.screenX - prevMouseX;
+			var deltaY:Float = FlxG.mouse.screenY - prevMouseY;
+			moveSelectedObject(deltaX, deltaY);
+		}
+		
+		if (FlxG.mouse.justReleased) {
+			deselectObject();
+		}
+		
 		var addNum:Int = 1;
 		if(FlxG.keys.pressed.SHIFT) addNum = 10;
 
-		if(onComboMenu)
+		if(controls.UI_LEFT_P)
 		{
-			var controlArray:Array<Bool> = [
-				FlxG.keys.justPressed.LEFT,
-				FlxG.keys.justPressed.RIGHT,
-				FlxG.keys.justPressed.UP,
-				FlxG.keys.justPressed.DOWN,
-			
-				FlxG.keys.justPressed.A,
-				FlxG.keys.justPressed.D,
-				FlxG.keys.justPressed.W,
-				FlxG.keys.justPressed.S
-			];
-
-			if(controlArray.contains(true))
-			{
-				for (i in 0...controlArray.length)
-				{
-					if(controlArray[i])
-					{
-						switch(i)
-						{
-							case 0:
-								ClientPrefs.comboOffset[0] -= addNum;
-							case 1:
-								ClientPrefs.comboOffset[0] += addNum;
-							case 2:
-								ClientPrefs.comboOffset[1] += addNum;
-							case 3:
-								ClientPrefs.comboOffset[1] -= addNum;
-							case 4:
-								ClientPrefs.comboOffset[2] -= addNum;
-							case 5:
-								ClientPrefs.comboOffset[2] += addNum;
-							case 6:
-								ClientPrefs.comboOffset[3] += addNum;
-							case 7:
-								ClientPrefs.comboOffset[3] -= addNum;
-						}
-					}
-				}
-				repositionCombo();
-			}
-
-			// probably there's a better way to do this but, oh well.
-			if (FlxG.mouse.justPressed)
-			{
-				holdingObjectType = null;
-				FlxG.mouse.getScreenPosition(camHUD, startMousePos);
-				if (startMousePos.x - comboNums.x >= 0 && startMousePos.x - comboNums.x <= comboNums.width &&
-					startMousePos.y - comboNums.y >= 0 && startMousePos.y - comboNums.y <= comboNums.height)
-				{
-					holdingObjectType = true;
-					startComboOffset.x = ClientPrefs.comboOffset[2];
-					startComboOffset.y = ClientPrefs.comboOffset[3];
-					//trace('yo bro');
-				}
-				else if (startMousePos.x - rating.x >= 0 && startMousePos.x - rating.x <= rating.width &&
-						 startMousePos.y - rating.y >= 0 && startMousePos.y - rating.y <= rating.height)
-				{
-					holdingObjectType = false;
-					startComboOffset.x = ClientPrefs.comboOffset[0];
-					startComboOffset.y = ClientPrefs.comboOffset[1];
-					//trace('heya');
-				}
-			}
-			if(FlxG.mouse.justReleased) {
-				holdingObjectType = null;
-				//trace('dead');
-			}
-
-			if(holdingObjectType != null)
-			{
-				if(FlxG.mouse.justMoved)
-				{
-					var mousePos:FlxPoint = FlxG.mouse.getScreenPosition(camHUD);
-					var addNum:Int = holdingObjectType ? 2 : 0;
-					ClientPrefs.comboOffset[addNum + 0] = Math.round((mousePos.x - startMousePos.x) + startComboOffset.x);
-					ClientPrefs.comboOffset[addNum + 1] = -Math.round((mousePos.y - startMousePos.y) - startComboOffset.y);
-					repositionCombo();
-				}
-			}
-
-			if(controls.RESET)
-			{
-				for (i in 0...ClientPrefs.comboOffset.length)
-				{
-					ClientPrefs.comboOffset[i] = 0;
-				}
-				repositionCombo();
-			}
+			barPercent = Math.max(delayMin, Math.min(ClientPrefs.noteOffset - 1, delayMax));
+			updateNoteDelay();
 		}
-		else
+		else if(controls.UI_RIGHT_P)
 		{
-			if(controls.UI_LEFT_P)
-			{
-				barPercent = Math.max(delayMin, Math.min(ClientPrefs.noteOffset - 1, delayMax));
-				updateNoteDelay();
-			}
-			else if(controls.UI_RIGHT_P)
-			{
-				barPercent = Math.max(delayMin, Math.min(ClientPrefs.noteOffset + 1, delayMax));
-				updateNoteDelay();
-			}
+			barPercent = Math.max(delayMin, Math.min(ClientPrefs.noteOffset + 1, delayMax));
+			updateNoteDelay();
+		}
 
-			var mult:Int = 1;
-			if(controls.UI_LEFT || controls.UI_RIGHT)
-			{
-				holdTime += elapsed;
-				if(controls.UI_LEFT) mult = -1;
-			}
+		var mult:Int = 1;
+		if(controls.UI_LEFT || controls.UI_RIGHT)
+		{
+			holdTime += elapsed;
+			if(controls.UI_LEFT) mult = -1;
+		}
 
-			if(controls.UI_LEFT_R || controls.UI_RIGHT_R) holdTime = 0;
+		if(controls.UI_LEFT_R || controls.UI_RIGHT_R) holdTime = 0;
 
-			if(holdTime > 0.5)
-			{
-				barPercent += 100 * elapsed * mult;
-				barPercent = Math.max(delayMin, Math.min(barPercent, delayMax));
-				updateNoteDelay();
-			}
+		if(holdTime > 0.5)
+		{
+			barPercent += 100 * elapsed * mult;
+			barPercent = Math.max(delayMin, Math.min(barPercent, delayMax));
+			updateNoteDelay();
+		}
 
-			if(controls.RESET)
-			{
-				holdTime = 0;
-				barPercent = 0;
-				updateNoteDelay();
-			}
+		if(controls.RESET)
+		{
+			holdTime = 0;
+			barPercent = 0;
+			updateNoteDelay();
 		}
 
 		if(controls.ACCEPT)
@@ -361,6 +390,9 @@ class NoteOffsetState extends MusicBeatState
 		}
 
 		Conductor.songPosition = FlxG.sound.music.time;
+
+		prevMouseX = FlxG.mouse.screenX;
+		prevMouseY = FlxG.mouse.screenY;
 		super.update(elapsed);
 	}
 
@@ -474,5 +506,37 @@ class NoteOffsetState extends MusicBeatState
 
 		changeModeText.text = changeModeText.text.toUpperCase();
 		FlxG.mouse.visible = onComboMenu;
+	}
+
+	function selectObject(obj:FlxObject):Void {
+		selectedObject = obj;
+	}
+	
+	function deselectObject():Void {
+		selectedObject = null;
+	}
+	
+	private function moveSelectedObject(deltaX:Float, deltaY:Float):Void {
+		if (selectedObject != null) {
+			selectedObject.x += deltaX;
+			selectedObject.y += deltaY;
+	
+			// Save the new position
+			var objectName:String = getObjectIdentifier(selectedObject);
+			if (objectName != null) {
+				ObjectPositionManager.savePositions(objectName, selectedObject);
+			}
+		}
+	}
+	
+	private function getObjectIdentifier(obj:FlxObject):String {
+		if (obj == judgeCounterTxt) return "judgeCounterTxt";
+		else if (obj == healthBarBG) return "healthBarBG";
+		else if (obj == healthBar) return "healthBar";
+		else if (obj == iconP1) return "iconP1";
+		else if (obj == iconP2) return "iconP2";
+		else if (obj == scoreTxt) return "scoreTxt";
+		else if (obj == botplayTxt) return "botplayTxt";
+		else return null;
 	}
 }
