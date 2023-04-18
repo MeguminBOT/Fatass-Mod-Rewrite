@@ -53,6 +53,7 @@ class ClientPrefs {
 		'practice' => false,
 		'botplay' => false,
 		'hiddenmode' => false,
+		'mirrormode' => false,
 		'opponentplay' => false,
 		'doubleplay' => false
 	];

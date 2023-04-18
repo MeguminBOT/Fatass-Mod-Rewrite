@@ -327,6 +327,7 @@ class PlayState extends MusicBeatState
 	public static var lastScore:Array<FlxSprite> = [];
 
 	//Fat-Ass Stuff
+	public static var mirrorMode:Bool = false;
 	public static var hiddenMode:Bool = false;
 	public var hiddenPlayfield:FlxSprite;
 	public var hiddenPlayfieldOpponent:FlxSprite;
@@ -443,6 +444,7 @@ class PlayState extends MusicBeatState
 
 		// Fat-Ass Gameplay settings
 		hiddenMode = ClientPrefs.getGameplaySetting('hiddenmode', false);
+		mirrorMode = ClientPrefs.getGameplaySetting('mirrormode', false);
 		opponentChart = ClientPrefs.getGameplaySetting('opponentplay', false);
 		doubleChart = ClientPrefs.getGameplaySetting('doubleplay', false);
 
@@ -2617,6 +2619,20 @@ class PlayState extends MusicBeatState
 
 				var gottaHitNote:Bool = section.mustHitSection;
 				
+				if (mirrorMode)
+				{
+					switch(daNoteData)
+					{
+						case 0:
+							daNoteData = 3;
+						case 1:
+							daNoteData = 2;
+						case 2:
+							daNoteData = 1;
+						case 3:
+							daNoteData = 0;
+					}
+				}
 				if (!doubleChart) {
 					if (songNotes[1] > 3 && !opponentChart)
 					{

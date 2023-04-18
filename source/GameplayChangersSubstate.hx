@@ -85,6 +85,9 @@ class GameplayChangersSubstate extends MusicBeatSubstate
 
 		var option:GameplayOption = new GameplayOption('Hidden Mode', 'hiddenmode', 'bool', false);
 		optionsArray.push(option);
+
+		var option:GameplayOption = new GameplayOption('Mirror Mode', 'mirrormode', 'bool', false);
+		optionsArray.push(option);
 		
 		var option:GameplayOption = new GameplayOption('Play As Opponent', 'opponentplay', 'bool', false);
 		optionsArray.push(option);
