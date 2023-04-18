@@ -32,18 +32,18 @@ class SkinData {
             return file;
         }
         #end
-        trace(path);
+        //trace(path);
         if (!Paths.fileExists('images/$path.png', IMAGE)) {
             path = 'uiskins/default/$folder/$file';
-            trace(path);
+            //trace(path);
         }
         if (!Paths.fileExists('images/$path.png', IMAGE)) {
             path = 'uiskins/default/base/$file';
-            trace(path);
+            //trace(path);
         }
         if (!Paths.fileExists('images/$path.png', IMAGE)) {
             path = (folder == 'pixel' && Paths.fileExists('images/pixelUI/$file.png', IMAGE) ? 'pixelUI' : '') + file;
-            trace(path);
+            //trace(path);
         }
         return path;
     }
