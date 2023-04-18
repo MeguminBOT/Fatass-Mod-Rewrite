@@ -53,7 +53,7 @@ class VisualsGameplay extends BaseOptionsMenu
 			"Changes the transparency of the area behind the playfield\n0 = No background, 1 = Completely black.",
 			'underlay',
 			'float',
-		true);
+			0);
 		option.displayFormat = '%v';
 		option.scrollSpeed = 100;
 		option.changeValue = 0.1;
@@ -67,6 +67,28 @@ class VisualsGameplay extends BaseOptionsMenu
 			'opponentStrums',
 			'bool',
 			true);
+		addOption(option);
+
+		var option:Option = new Option('Strumline Y Offset',
+			"Moves the Strumline up or down.\nNegative value = Up / Positive value = Down. \nAffects both player and opponent.",
+			'strumlineOffsetY',
+			'float',
+			0);
+		option.scrollSpeed = 10;
+		option.changeValue = 0.1;
+		option.minValue = -100;
+		option.maxValue = 100;
+		addOption(option);
+
+		var option:Option = new Option('Strumline X Offset',
+			"Moves the Strumline left or right.\nNegative value = Left / Positive value = Right.\nAffects both player and opponent.",
+			'strumlineOffsetX',
+			'float',
+			0);
+		option.scrollSpeed = 10;
+		option.changeValue = 0.1;
+		option.minValue = -100;
+		option.maxValue = 100;
 		addOption(option);
 
 		super();

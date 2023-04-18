@@ -76,6 +76,8 @@ class ClientPrefs {
 	public static var noteSkin:String = 'Fatass';
 	public static var uiSkin:String = 'Fatass';
 	public static var judgeCounter:Bool = true;
+	public static var strumlineOffsetY:Float = 0;
+	public static var strumlineOffsetX:Float = 0;
 
 	//Every key has two binds, add your key bind down here and then add your control on options/ControlsSubState.hx and Controls.hx
 	public static var keyBinds:Map<String, Array<FlxKey>> = [
@@ -158,7 +160,9 @@ class ClientPrefs {
 		FlxG.save.data.noteSkin = noteSkin;
 		FlxG.save.data.uiSkin = uiSkin;
 		FlxG.save.data.judgeCounter = judgeCounter;
-
+		FlxG.save.data.strumlineOffsetY = strumlineOffsetY;
+		FlxG.save.data.strumlineOffsetX = strumlineOffsetX;
+		
 		// Better Discord RPC
 		FlxG.save.data.discordRPC = discordRPC;
 		#if desktop  // Putting this here so the game does it only when saved and not on as onChange (Giving proper time to the rpc to shutdown)  - Nex
@@ -345,7 +349,15 @@ class ClientPrefs {
 		{
 			judgeCounter = FlxG.save.data.judgeCounter;
 		}
-	
+		if(FlxG.save.data.strumlineOffsetY != null)
+		{
+			strumlineOffsetY = FlxG.save.data.strumlineOffsetY;
+		}
+		if(FlxG.save.data.strumlineOffsetX != null)
+		{
+			strumlineOffsetX = FlxG.save.data.strumlineOffsetX;
+		}
+
 		var save:FlxSave = new FlxSave();
 		save.bind('fatass_controls_v2', CoolUtil.getSavePath());
 		if(save != null && save.data.customControls != null) {

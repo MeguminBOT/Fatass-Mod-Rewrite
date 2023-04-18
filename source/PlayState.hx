@@ -1076,8 +1076,8 @@ class PlayState extends MusicBeatState
 
 		Conductor.songPosition = -5000 / Conductor.songPosition;
 
-		strumLine = new FlxSprite((ClientPrefs.middleScroll || doubleChart) ? STRUM_X_MIDDLESCROLL : STRUM_X, 50).makeGraphic(FlxG.width, 10);
-		if(ClientPrefs.downScroll) strumLine.y = FlxG.height - 150;
+		strumLine = new FlxSprite((ClientPrefs.middleScroll || doubleChart) ? STRUM_X_MIDDLESCROLL : STRUM_X + ClientPrefs.strumlineOffsetX, 50 + ClientPrefs.strumlineOffsetY).makeGraphic(FlxG.width, 10);
+		if(ClientPrefs.downScroll) strumLine.y = FlxG.height - 150 + ClientPrefs.strumlineOffsetY;
 		strumLine.scrollFactor.set();
 
 		//Fat-Ass Mod: Hidden Mode

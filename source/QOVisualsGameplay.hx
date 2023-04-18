@@ -57,6 +57,20 @@ class QOVisualsGameplay extends MusicBeatSubstate
 
 		var option:QOption = new QOption('Opponent Notes', 'opponentStrums', 'bool', true);
 		optionsArray.push(option);
+
+		var option:QOption = new QOption('Strumline Y Offset', 'strumlineOffsetY', 'float', 0);
+		option.scrollSpeed = 10;
+		option.changeValue = 0.1;
+		option.minValue = -100;
+		option.maxValue = 100;
+		optionsArray.push(option);
+
+		var option:QOption = new QOption('Strumline X Offset', 'strumlineOffsetX', 'float', 0);
+		option.scrollSpeed = 10;
+		option.changeValue = 0.1;
+		option.minValue = -100;
+		option.maxValue = 100;
+		optionsArray.push(option);
 	}
 
 	public function getOptionByName(name:String)
