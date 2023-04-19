@@ -46,73 +46,19 @@ class ObjectPositionManager {
 	var iconP2:HealthIcon;
 	var scoreTxt:FlxText;
 	var botplayTxt:FlxText;
-	var botplaySine:Float = 0;
 
-    public function new() {
+	public function new(judgeCounterTxt:FlxText, healthBar:FlxBar, healthBarBG:FlxSprite, iconP1:HealthIcon, iconP2:HealthIcon, scoreTxt:FlxText, botplayTxt:FlxText) {
 		instance = this;
-    }
-
-	private function getObjectIdentifier(obj:FlxObject):String {
-		if (obj == judgeCounterTxt) return "judgeCounterTxt";
-		else if (obj == healthBarBG) return "healthBarBG";
-		else if (obj == healthBar) return "healthBar";
-		else if (obj == iconP1) return "iconP1";
-		else if (obj == iconP2) return "iconP2";
-		else if (obj == scoreTxt) return "scoreTxt";
-		else if (obj == botplayTxt) return "botplayTxt";
-		else return null;
+		
+		this.judgeCounterTxt = judgeCounterTxt;
+		this.healthBar = healthBar;
+		this.healthBarBG = healthBarBG;
+		this.iconP1 = iconP1;
+		this.iconP2 = iconP2;
+		this.scoreTxt = scoreTxt;
+		this.botplayTxt = botplayTxt;
 	}
 
-	function loadPositions():Void {
-        var objectPositions:Array<ObjectPosition> = getObjectPositionsFromJson("positions.json");
-        if (objectPositions != null) {
-            setObjectPositions(objectPositions);
-        }
-    }
-
-	function getObjectPositionsFromJson(fileName:String):Array<ObjectPosition> {
-        var json:String = loadJSONFromFile(fileName);
-        if (json == null) return null;
-
-        try {
-            var objectPositions:Array<ObjectPosition> = Json.parse(json);
-            return objectPositions;
-        } catch (e:Dynamic) {
-            trace('Error loading JSON file: ' + e);
-            return null;
-        }
-    }
-	
-	function setObjectPositions(objectPositions:Array<ObjectPosition>):Void {
-		for (position in objectPositions) {
-			switch (position.name) {
-				case "judgeCounterTxt":
-					judgeCounterTxt.x = position.x;
-					judgeCounterTxt.y = position.y;
-				case "healthBarBG":
-					healthBarBG.x = position.x;
-					healthBarBG.y = position.y;
-				case "healthBar":
-					healthBar.x = position.x;
-					healthBar.y = position.y;
-				case "iconP1":
-					iconP1.x = position.x;
-					iconP1.y = position.y;
-				case "iconP2":
-					iconP2.x = position.x;
-					iconP2.y = position.y;
-				case "scoreTxt":
-					scoreTxt.x = position.x;
-					scoreTxt.y = position.y;
-				case "botplayTxt":
-					botplayTxt.x = position.x;
-					botplayTxt.y = position.y;
-				default:
-			}
-		}
-	}
-
-	
 	function createObjectPositionsArray():Array<ObjectPosition> {
 		return [
             {
@@ -145,13 +91,61 @@ class ObjectPositionManager {
 				x: scoreTxt.x,
 				y: scoreTxt.y
 			},
+			{
+				name: "botplayTxt",
+				x: botplayTxt.x,
+				y: botplayTxt.y
+			},
 		];
 	}
 	
+	public function updateObjectPosition(objectPositions:Array<ObjectPosition>):Void {
+		for (position in objectPositions) {
+			switch (position.name) {
+				case "judgeCounterTxt":
+					judgeCounterTxt.x = position.x;
+					judgeCounterTxt.y = position.y;
+				case "healthBarBG":
+					healthBarBG.x = position.x;
+					healthBarBG.y = position.y;
+				case "healthBar":
+					healthBar.x = position.x;
+					healthBar.y = position.y;
+				case "iconP1":
+					iconP1.x = position.x;
+					iconP1.y = position.y;
+				case "iconP2":
+					iconP2.x = position.x;
+					iconP2.y = position.y;
+				case "scoreTxt":
+					scoreTxt.x = position.x;
+					scoreTxt.y = position.y;
+				case "botplayTxt":
+					botplayTxt.x = position.x;
+					botplayTxt.y = position.y;
+				default:
+			}
+		}
+	}
+
+	public function getObjectPositionsFromJson(fileName:String):Array<ObjectPosition> {
+		var json:String = loadJSONFromFile(fileName);
+		if (json == null) return null;
+	
+		try {
+			var objectPositions:Array<ObjectPosition> = Json.parse(json);
+			return objectPositions;
+		} catch (e:Dynamic) {
+			trace('Error loading JSON file: ' + e);
+			return null;
+		}
+	}
+
 	public function savePositions():Void {
         var objectPositions:Array<ObjectPosition> = createObjectPositionsArray();
         var json:String = Json.stringify(objectPositions);
         saveJSONToFile(json, "positions.json");
+		trace("File saved: positions.json");
     }
 	
     function saveJSONToFile(json:String, fileName:String):Void {
@@ -160,34 +154,33 @@ class ObjectPositionManager {
         var file = sys.io.File.write(filePath, false);
         file.writeString(json);
         file.close();
+		trace('File saved successfully: ' + filePath);
         #end
+		
     }
+	
+	public function loadPositions():Void {
+		var objectPositions:Array<ObjectPosition> = getObjectPositionsFromJson("positions.json");
+		if (objectPositions != null) {
+			updateObjectPosition(objectPositions);
+		}
+	}
     
 	function loadJSONFromFile(fileName:String):String {
 		var rawJson = null;
 		try {
 			var formattedPath:String = 'config/' + fileName;
-	
-			#if MODS_ALLOWED
-			var moddyFile:String = Paths.modsJson(formattedPath);
-			if (FileSystem.exists(moddyFile)) {
-				rawJson = File.getContent(moddyFile).trim();
+			#if sys
+			if (sys.FileSystem.exists(formattedPath)) {
+				rawJson = File.getContent(formattedPath).trim();
 			}
-			#end
-	
-			if (rawJson == null) {
-				#if sys
-				rawJson = File.getContent(Paths.json(formattedPath)).trim();
-				#else
-				rawJson = Assets.getText(Paths.json(formattedPath)).trim();
-				#end
-			}
-	
 			while (!rawJson.endsWith("}")) {
 				rawJson = rawJson.substr(0, rawJson.length - 1);
 			}
-	
+			trace('Raw JSON content: ' + rawJson);
+			#end
 			return rawJson;
+			
 		} catch (e:Dynamic) {
 			trace('Error loading JSON file: ' + e);
 			return null;
@@ -195,3 +188,7 @@ class ObjectPositionManager {
 	}
 	
 }
+
+
+
+

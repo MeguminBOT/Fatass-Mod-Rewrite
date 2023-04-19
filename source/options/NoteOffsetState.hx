@@ -63,7 +63,7 @@ class NoteOffsetState extends MusicBeatState
 	var startComboOffset:FlxPoint = new FlxPoint();
 	var prevMouseX:Float = 0;
 	var prevMouseY:Float = 0;
-	var opm:ObjectPositionManager = new ObjectPositionManager();
+	var opm:ObjectPositionManager;
 	
 	override public function create()
 	{
@@ -261,6 +261,7 @@ class NoteOffsetState extends MusicBeatState
 		add(iconP2);
 		add(scoreTxt);
 		add(botplayTxt);
+		
 
 		///////////////////////
 
@@ -281,6 +282,8 @@ class NoteOffsetState extends MusicBeatState
 		FlxG.sound.playMusic(Paths.music('offsetSong'), 1, true);
 
 		super.create();
+		opm = new ObjectPositionManager(judgeCounterTxt, healthBar, healthBarBG, iconP1, iconP2, scoreTxt, botplayTxt);
+		opm.loadPositions();
 	}
 
 	public function reloadHealthBarColors() {
@@ -291,7 +294,6 @@ class NoteOffsetState extends MusicBeatState
 	var holdTime:Float = 0;
 	var onComboMenu:Bool = true;
 	var holdingObjectType:Null<Bool> = null;
-
 
 	override public function update(elapsed:Float)
 	{
@@ -524,11 +526,16 @@ class NoteOffsetState extends MusicBeatState
 			// Save the new position
 			var objectName:String = getObjectIdentifier(selectedObject);
 			if (objectName != null) {
+				var singleObjectPosition:Array<ObjectPosition> = [{
+					name: objectName,
+					x: selectedObject.x,
+					y: selectedObject.y
+				}];
+				opm.updateObjectPosition(singleObjectPosition);
 				opm.savePositions();
 			}
 		}
 	}
-	
 
 	private function getObjectIdentifier(obj:FlxObject):String {
 		if (obj == judgeCounterTxt) return "judgeCounterTxt";
@@ -540,4 +547,10 @@ class NoteOffsetState extends MusicBeatState
 		else if (obj == botplayTxt) return "botplayTxt";
 		else return null;
 	}
+}
+
+typedef ObjectPosition = {
+    var name: String;
+    var x: Float;
+    var y: Float;
 }
