@@ -9,9 +9,13 @@ The base code is forked from ShadowMario's Psych Engine and then has been modifi
 
 The goal of Rhythm Engine is to provide players with a better experience that's up to par with other games in the Rhythm Game category.
 This includes: 
+
 More precise input system
+
 Complex calculations for accuracy 
+
 Ingame song/mod download system
+
 Fully modular and skinnable UI
 
 ## Friday Night Funkin'
