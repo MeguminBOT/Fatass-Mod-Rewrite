@@ -28,9 +28,9 @@ import sys.io.File;
 using StringTools;
 
 typedef ObjectPosition = {
-    var name: String;
-    var x: Float;
-    var y: Float;
+    var name:String;
+    var x:Float;
+    var y:Float;
 }
 
 class ObjectPositionManager {
@@ -142,22 +142,23 @@ class ObjectPositionManager {
 	}
 
 	public function savePositions():Void {
-        var objectPositions:Array<ObjectPosition> = createObjectPositionsArray();
-        var json:String = Json.stringify(objectPositions);
-        saveJSONToFile(json, "positions.json");
-		trace("File saved: positions.json");
-    }
-	
-    function saveJSONToFile(json:String, fileName:String):Void {
-        #if sys
-        var filePath = 'config/' + fileName;
-        var file = sys.io.File.write(filePath, false);
-        file.writeString(json);
-        file.close();
-		trace('File saved successfully: ' + filePath);
-        #end
+		var objectPositions:Array<ObjectPosition> = createObjectPositionsArray();
+		var json:String = Json.stringify(objectPositions, null, "   ");
 		
-    }
+		saveJSONToFile(json, "positions.json");
+		trace("File saved: positions.json");
+	}
+
+	function saveJSONToFile(json:String, fileName:String):Void {
+		#if sys
+		var filePath = 'config/' + fileName;
+		var file = sys.io.File.write(filePath, false);
+		file.writeString(json);
+		file.close();
+		trace('File saved successfully: ' + filePath);
+		#end
+	}
+
 	
 	public function loadPositions():Void {
 		var objectPositions:Array<ObjectPosition> = getObjectPositionsFromJson("positions.json");
@@ -174,10 +175,16 @@ class ObjectPositionManager {
 			if (sys.FileSystem.exists(formattedPath)) {
 				rawJson = File.getContent(formattedPath).trim();
 			}
-			while (!rawJson.endsWith("}")) {
+	
+			// Remove any trailing invalid characters
+			while (!rawJson.endsWith("}") && !rawJson.endsWith("]")) {
 				rawJson = rawJson.substr(0, rawJson.length - 1);
 			}
 			trace('Raw JSON content: ' + rawJson);
+	
+			var parsedJson = Json.parse(rawJson);
+			var formattedJson = Json.stringify(parsedJson, "  ");
+			trace('Formatted JSON content: ' + formattedJson);
 			#end
 			return rawJson;
 			
@@ -186,7 +193,6 @@ class ObjectPositionManager {
 			return null;
 		}
 	}
-	
 }
 
 

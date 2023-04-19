@@ -550,7 +550,7 @@ class NoteOffsetState extends MusicBeatState
 }
 
 typedef ObjectPosition = {
-    var name: String;
-    var x: Float;
-    var y: Float;
+    var name:String;
+    var x:Float;
+    var y:Float;
 }
