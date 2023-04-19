@@ -63,7 +63,7 @@ class NoteOffsetState extends MusicBeatState
 	var startComboOffset:FlxPoint = new FlxPoint();
 	var prevMouseX:Float = 0;
 	var prevMouseY:Float = 0;
-	var objectPositionManager = new ObjectPositionManager();
+	var opm:ObjectPositionManager = new ObjectPositionManager();
 	
 	override public function create()
 	{
@@ -524,11 +524,12 @@ class NoteOffsetState extends MusicBeatState
 			// Save the new position
 			var objectName:String = getObjectIdentifier(selectedObject);
 			if (objectName != null) {
-				ObjectPositionManager.savePositions(objectName, selectedObject);
+				opm.savePositions();
 			}
 		}
 	}
 	
+
 	private function getObjectIdentifier(obj:FlxObject):String {
 		if (obj == judgeCounterTxt) return "judgeCounterTxt";
 		else if (obj == healthBarBG) return "healthBarBG";
