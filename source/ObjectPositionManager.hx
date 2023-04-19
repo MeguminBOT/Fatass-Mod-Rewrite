@@ -86,9 +86,9 @@ class ObjectPositionManager {
 	function setObjectPositions(objectPositions:Array<ObjectPosition>):Void {
 		for (position in objectPositions) {
 			switch (position.name) {
-                case "judgeCounterTxt":
-                    judgeCounterTxt.x = position.x;
-                    judgeCounterTxt.y = position.y;
+				case "judgeCounterTxt":
+					judgeCounterTxt.x = position.x;
+					judgeCounterTxt.y = position.y;
 				case "healthBarBG":
 					healthBarBG.x = position.x;
 					healthBarBG.y = position.y;
@@ -96,21 +96,22 @@ class ObjectPositionManager {
 					healthBar.x = position.x;
 					healthBar.y = position.y;
 				case "iconP1":
-					iconP1.x = iconP1.x;
-					iconP1.y = iconP1.y;
-                case "iconP2":
-					iconP2.x = iconP2.x;
-					iconP2.y = iconP2.y;
-                case "scoreTxt":
-					scoreTxt.x = scoreTxt.x;
-					scoreTxt.y = scoreTxt.y;
-                case "botplayTxt":
-					botplayTxt.x = botplayTxt.x;
-					botplayTxt.y = botplayTxt.y;
+					iconP1.x = position.x;
+					iconP1.y = position.y;
+				case "iconP2":
+					iconP2.x = position.x;
+					iconP2.y = position.y;
+				case "scoreTxt":
+					scoreTxt.x = position.x;
+					scoreTxt.y = position.y;
+				case "botplayTxt":
+					botplayTxt.x = position.x;
+					botplayTxt.y = position.y;
 				default:
 			}
 		}
 	}
+
 	
 	function createObjectPositionsArray():Array<ObjectPosition> {
 		return [
