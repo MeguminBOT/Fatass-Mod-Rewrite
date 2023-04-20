@@ -11,6 +11,7 @@ import flixel.FlxSubState;
 import flixel.group.FlxGroup.FlxTypedGroup;
 import flixel.group.FlxSpriteGroup;
 import flixel.input.mouse.FlxMouse;
+import flixel.math.FlxMath;
 import flixel.math.FlxPoint;
 import flixel.text.FlxText;
 import flixel.tweens.FlxEase;
@@ -32,8 +33,6 @@ class NoteOffsetState extends MusicBeatState
 	public var camOther:FlxCamera;
 
 	var coolText:FlxText;
-	var rating:FlxSprite;
-	var comboNums:FlxSpriteGroup;
 	var dumbTexts:FlxTypedGroup<FlxText>;
 
 	var barPercent:Float = 0;
@@ -48,7 +47,8 @@ class NoteOffsetState extends MusicBeatState
 	var changeModeText:FlxText;
 
 	//Fatass modifications
-	var selectedObject:FlxObject = null;
+	var health:Float = 1;
+	var botplaySine:Float = 0;
 
 	var judgeCounterTxt:FlxText;
 	var healthBar:FlxBar;
@@ -57,8 +57,10 @@ class NoteOffsetState extends MusicBeatState
 	var iconP2:HealthIcon;
 	var scoreTxt:FlxText;
 	var botplayTxt:FlxText;
-	var botplaySine:Float = 0;
+	var rating:FlxSprite;
+	var comboNums:FlxSpriteGroup;
 
+	var selectedObject:FlxObject = null;
 	var startMousePos:FlxPoint = new FlxPoint();
 	var startComboOffset:FlxPoint = new FlxPoint();
 	var prevMouseX:Float = 0;
@@ -127,7 +129,6 @@ class NoteOffsetState extends MusicBeatState
 		add(dad);
 
 		// Combo stuff
-
 		coolText = new FlxText(0, 0, 0, '', 32);
 		coolText.screenCenter();
 		coolText.x = FlxG.width * 0.35;
@@ -135,13 +136,18 @@ class NoteOffsetState extends MusicBeatState
 		rating = new FlxSprite().loadGraphic(Paths.image('uiskins/default/base/sick'));
 		rating.cameras = [camHUD];
 		rating.setGraphicSize(Std.int(rating.width * 0.7));
+		rating.screenCenter();
+		rating.x = coolText.x - 40;
+		rating.y -= 60;
 		rating.updateHitbox();
 		rating.antialiasing = ClientPrefs.globalAntialiasing;
-		
 		add(rating);
 
 		comboNums = new FlxSpriteGroup();
+		comboNums.x = coolText.x - 90;
+		comboNums.y += 80;
 		comboNums.cameras = [camHUD];
+		comboNums.screenCenter();
 		add(comboNums);
 
 		var seperatedScore:Array<Int> = [];
@@ -153,7 +159,7 @@ class NoteOffsetState extends MusicBeatState
 		var daLoop:Int = 0;
 		for (i in seperatedScore)
 		{
-			var numScore:FlxSprite = new FlxSprite(43 * daLoop).loadGraphic(Paths.image('num' + i));
+			var numScore:FlxSprite = new FlxSprite(43 * daLoop).loadGraphic(Paths.image('uiskins/default/base/num' + i));
 			numScore.cameras = [camHUD];
 			numScore.setGraphicSize(Std.int(numScore.width * 0.5));
 			numScore.updateHitbox();
@@ -166,8 +172,6 @@ class NoteOffsetState extends MusicBeatState
 		dumbTexts.cameras = [camHUD];
 		add(dumbTexts);
 		createTexts();
-
-		repositionCombo();
 
 		// Note delay stuff
 		
@@ -190,7 +194,7 @@ class NoteOffsetState extends MusicBeatState
 		barPercent = ClientPrefs.noteOffset;
 		updateNoteDelay();
 		
-		timeBarBG = new FlxSprite(0, timeTxt.y + 8).loadGraphic(Paths.image('timeBar'));
+		timeBarBG = new FlxSprite(0, timeTxt.y + 8).loadGraphic(Paths.image('uiskins/default/base/timeBar'));
 		timeBarBG.setGraphicSize(Std.int(timeBarBG.width * 1.2));
 		timeBarBG.updateHitbox();
 		timeBarBG.cameras = [camHUD];
@@ -225,15 +229,20 @@ class NoteOffsetState extends MusicBeatState
 		if(ClientPrefs.downScroll) healthBarBG.y = 0.11 * FlxG.height;
 		healthBarBG.cameras = [camHUD];
 
-		healthBar = new FlxBar(healthBarBG.x + 4, healthBarBG.y + 4, (LEFT_TO_RIGHT), Std.int(healthBarBG.width - 8), Std.int(healthBarBG.height - 8));
+		healthBar = new FlxBar(healthBarBG.x + 4, healthBarBG.y + 4, RIGHT_TO_LEFT, Std.int(healthBarBG.width - 8), Std.int(healthBarBG.height - 8), this,
+			'health', 0, 2);
 		healthBar.scrollFactor.set();
 		healthBar.cameras = [camHUD];
 
+		var iconOffset:Int = 26;
+
 		iconP1 = new HealthIcon(boyfriend.healthIcon, true);
+		iconP1.x = healthBar.x + (healthBar.width * (FlxMath.remapToRange(healthBar.percent, 0, 100, 100, 0) * 0.01)) + (150 * iconP1.scale.x - 150) / 2 - iconOffset;
 		iconP1.y = healthBar.y - 75;
 		iconP1.cameras = [camHUD];
 
 		iconP2 = new HealthIcon(dad.healthIcon, false);
+		iconP2.x = healthBar.x + (healthBar.width * (FlxMath.remapToRange(healthBar.percent, 0, 100, 100, 0) * 0.01)) - (150 * iconP2.scale.x) / 2 - iconOffset * 2;
 		iconP2.y = healthBar.y - 75;
 		iconP2.cameras = [camHUD];
 
@@ -282,12 +291,14 @@ class NoteOffsetState extends MusicBeatState
 		FlxG.sound.playMusic(Paths.music('offsetSong'), 1, true);
 
 		super.create();
-		opm = new ObjectPositionManager(judgeCounterTxt, healthBar, healthBarBG, iconP1, iconP2, scoreTxt, botplayTxt);
+		opm = new ObjectPositionManager(judgeCounterTxt, healthBar, healthBarBG, iconP1, iconP2, scoreTxt, botplayTxt, rating, comboNums);
 		opm.loadPositions();
 	}
 
 	public function reloadHealthBarColors() {
-		healthBar.createFilledBar(FlxColor.fromRGB(gf.healthColorArray[0], gf.healthColorArray[1], gf.healthColorArray[2]), FlxColor.fromRGB(boyfriend.healthColorArray[0], boyfriend.healthColorArray[1], boyfriend.healthColorArray[2]));
+		healthBar.createFilledBar(FlxColor.fromRGB(dad.healthColorArray[0], dad.healthColorArray[1], dad.healthColorArray[2]),
+			FlxColor.fromRGB(boyfriend.healthColorArray[0], boyfriend.healthColorArray[1], boyfriend.healthColorArray[2]));
+
 		healthBar.updateBar();
 	}
 
@@ -321,11 +332,16 @@ class NoteOffsetState extends MusicBeatState
 			else if (botplayTxt.overlapsPoint(mousePos)) {
 				selectObject(botplayTxt);
 			}
+			else if (rating.overlapsPoint(mousePos)) {
+				selectObject(rating);
+			}
+			else if (comboNums.overlapsPoint(mousePos)) {
+				selectObject(comboNums);
+			}
 			else {
 				deselectObject();
 			}
 		}
-		
 		if (FlxG.mouse.justMoved && selectedObject != null) {
 			var deltaX:Float = FlxG.mouse.screenX - prevMouseX;
 			var deltaY:Float = FlxG.mouse.screenY - prevMouseY;
@@ -391,6 +407,14 @@ class NoteOffsetState extends MusicBeatState
 			FlxG.mouse.visible = false;
 		}
 
+		var multP1:Float = FlxMath.lerp(1, iconP1.scale.x, CoolUtil.boundTo(1 - (elapsed * 9), 0, 1));
+		iconP1.scale.set(multP1, multP1);
+		iconP1.updateHitbox();
+
+		var multP2:Float = FlxMath.lerp(1, iconP2.scale.x, CoolUtil.boundTo(1 - (elapsed * 9), 0, 1));
+		iconP2.scale.set(multP2, multP2);
+		iconP2.updateHitbox();
+
 		Conductor.songPosition = FlxG.sound.music.time;
 
 		prevMouseX = FlxG.mouse.screenX;
@@ -428,18 +452,6 @@ class NoteOffsetState extends MusicBeatState
 		}
 
 		lastBeatHit = curBeat;
-	}
-
-	function repositionCombo()
-	{
-		rating.screenCenter();
-		rating.x = coolText.x - 40 + ClientPrefs.comboOffset[0];
-		rating.y -= 60 + ClientPrefs.comboOffset[1];
-
-		comboNums.screenCenter();
-		comboNums.x = coolText.x - 90 + ClientPrefs.comboOffset[2];
-		comboNums.y += 80 - ClientPrefs.comboOffset[3];
-		reloadTexts();
 	}
 
 	function createTexts()
@@ -535,6 +547,8 @@ class NoteOffsetState extends MusicBeatState
 		else if (obj == iconP2) return "iconP2";
 		else if (obj == scoreTxt) return "scoreTxt";
 		else if (obj == botplayTxt) return "botplayTxt";
+		else if (obj == rating) return "rating";
+		else if (obj == comboNums) return "comboNums";
 		else return null;
 	}
 }

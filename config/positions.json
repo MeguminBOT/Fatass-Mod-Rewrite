@@ -33,5 +33,15 @@
       "x": 400,
       "y": 530,
       "name": "botplayTxt"
+   },
+   {
+      "x": 0,
+      "y": 0,
+      "name": "rating"
+   },
+   {
+      "x": 0,
+      "y": 0,
+      "name": "comboNums"
    }
 ]

@@ -1,6 +1,7 @@
 package;
 
 import flixel.FlxSprite;
+import flixel.group.FlxSpriteGroup;
 import flixel.text.FlxText;
 import flixel.ui.FlxBar;
 import haxe.Json;
@@ -31,8 +32,20 @@ class ObjectPositionManager {
 	var iconP2:HealthIcon;
 	var scoreTxt:FlxText;
 	var botplayTxt:FlxText;
+	var rating:FlxSprite;
+	var comboNums:FlxSpriteGroup;
 
-	public function new(judgeCounterTxt:FlxText, healthBar:FlxBar, healthBarBG:FlxSprite, iconP1:HealthIcon, iconP2:HealthIcon, scoreTxt:FlxText, botplayTxt:FlxText) {
+	public function new
+		(judgeCounterTxt:FlxText, 
+		healthBar:FlxBar, 
+		healthBarBG:FlxSprite, 
+		iconP1:HealthIcon, 
+		iconP2:HealthIcon, 
+		scoreTxt:FlxText, 
+		botplayTxt:FlxText,
+		rating:FlxSprite,
+		comboNums:FlxSpriteGroup) {
+
 		instance = this;
 		
 		this.judgeCounterTxt = judgeCounterTxt;
@@ -42,6 +55,8 @@ class ObjectPositionManager {
 		this.iconP2 = iconP2;
 		this.scoreTxt = scoreTxt;
 		this.botplayTxt = botplayTxt;
+		this.rating = rating;
+		this.comboNums = comboNums;
 	}
 
 	function createObjectPositionsArray():Array<ObjectPosition> {
@@ -81,6 +96,16 @@ class ObjectPositionManager {
 				x: botplayTxt.x,
 				y: botplayTxt.y
 			},
+			{
+				name: "rating",
+				x: rating.x,
+				y: rating.y
+			},
+			{
+				name: "comboNums",
+				x: comboNums.x,
+				y: comboNums.y
+			},
 		];
 	}
 	
@@ -108,6 +133,12 @@ class ObjectPositionManager {
 				case "botplayTxt":
 					botplayTxt.x = position.x;
 					botplayTxt.y = position.y;
+				case "rating":
+					rating.x = position.x;
+					rating.y = position.y;
+				case "comboNums":
+					comboNums.x = position.x;
+					comboNums.y = position.y;	
 				default:
 			}
 		}
