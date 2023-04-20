@@ -338,8 +338,7 @@ class PlayState extends MusicBeatState
 	public var opponentIsPlaying:Bool = false;
 	public var uiSkinFolder:String = 'base';
 	public var judgeCounterTxt:FlxText;
-	var rating:FlxSprite;
-	var comboNums:FlxSpriteGroup;
+
 	//Fat-Ass Custom Note Stuff
 	private var dodgeAnimations:Array<String> = ['dodgeLEFT', 'dodgeDOWN', 'dodgeUP', 'dodgeRIGHT'];
 	private var attackAnimations:Array<String> = ['attackLEFT', 'attackDOWN', 'attackUP', 'attackRIGHT'];
@@ -403,29 +402,29 @@ class PlayState extends MusicBeatState
 		ratingsData.push(new Rating('perfect'));
 		//ratingsData.push(new Rating('sick')); //default rating
 
-		var hitrating:Rating = new Rating('sick');
-		hitrating.ratingMod = 1;
-		hitrating.score = 300;
-		hitrating.noteSplash = true;
-		ratingsData.push(hitrating);
+		var rating:Rating = new Rating('sick');
+		rating.ratingMod = 1;
+		rating.score = 300;
+		rating.noteSplash = true;
+		ratingsData.push(rating);
 
-		var hitrating:Rating = new Rating('good');
-		hitrating.ratingMod = 0.7;
-		hitrating.score = 200;
-		hitrating.noteSplash = false;
-		ratingsData.push(hitrating);
+		var rating:Rating = new Rating('good');
+		rating.ratingMod = 0.7;
+		rating.score = 200;
+		rating.noteSplash = false;
+		ratingsData.push(rating);
 
-		var hitrating:Rating = new Rating('bad');
-		hitrating.ratingMod = 0.4;
-		hitrating.score = 100;
-		hitrating.noteSplash = false;
-		ratingsData.push(hitrating);
+		var rating:Rating = new Rating('bad');
+		rating.ratingMod = 0.4;
+		rating.score = 100;
+		rating.noteSplash = false;
+		ratingsData.push(rating);
 
-		var hitrating:Rating = new Rating('shit');
-		hitrating.ratingMod = 0;
-		hitrating.score = 50;
-		hitrating.noteSplash = false;
-		ratingsData.push(hitrating);
+		var rating:Rating = new Rating('shit');
+		rating.ratingMod = 0;
+		rating.score = 50;
+		rating.noteSplash = false;
+		ratingsData.push(rating);
 
 		// For the "Just the Two of Us" achievement
 		for (i in 0...keysArray.length)
@@ -1263,9 +1262,6 @@ class PlayState extends MusicBeatState
 		if(ClientPrefs.downScroll) {
 			botplayTxt.y = timeBarBG.y - 78;
 		}
-
-		rating = new FlxSprite();
-		comboNums = new FlxSpriteGroup();
 
 		strumLineNotes.cameras = [camHUD];
 		grpNoteSplashes.cameras = [camHUD];
@@ -4362,7 +4358,7 @@ class PlayState extends MusicBeatState
 		coolText.x = FlxG.width * 0.35;
 		//
 
-		
+		var rating:FlxSprite = new FlxSprite();
 		var score:Int = 350;
 
 		//tryna do MS based judgment due to popular demand
@@ -4371,7 +4367,7 @@ class PlayState extends MusicBeatState
 		totalNotesHit += daRating.ratingMod;
 		note.ratingMod = daRating.ratingMod;
 		if(!note.ratingDisabled) daRating.increase();
-		note.hitrating = daRating.name;
+		note.rating = daRating.name;
 		score = daRating.score;
 
 		if(daRating.noteSplash && !note.noteSplashDisabled)
@@ -4397,7 +4393,6 @@ class PlayState extends MusicBeatState
 			pixelShitPart1 = 'pixelUI/';
 			pixelShitPart2 = '-pixel';
 		}
-
 		
 		rating.loadGraphic(Paths.image(getUIFile(daRating.image)));
 		rating.cameras = [camHUD];
@@ -4482,9 +4477,9 @@ class PlayState extends MusicBeatState
 			numScore.screenCenter();
 			numScore.x = coolText.x + (43 * daLoop) - 90;
 			numScore.y += 80;
+
 			numScore.x += ClientPrefs.comboOffset[2];
 			numScore.y -= ClientPrefs.comboOffset[3];
-			comboNums.add(numScore);
 			
 			if (!ClientPrefs.comboStacking)
 				lastScore.push(numScore);
