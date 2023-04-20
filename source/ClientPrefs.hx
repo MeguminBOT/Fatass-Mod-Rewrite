@@ -73,8 +73,8 @@ class ClientPrefs {
 	public static var customNoteSound:Bool = true;
 	public static var customSoundEvent:Bool = true;
 	public static var customMechanicEvent:Bool = true;
-	public static var noteSkin:String = 'Fatass';
-	public static var uiSkin:String = 'Fatass';
+	public static var noteSkin:String = 'RhythmEngine';
+	public static var uiSkin:String = 'RhythmEngine';
 	public static var judgeCounter:Bool = true;
 	public static var strumlineOffsetY:Float = 0;
 	public static var strumlineOffsetX:Float = 0;

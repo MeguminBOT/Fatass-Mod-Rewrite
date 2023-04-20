@@ -37,9 +37,9 @@ class QOVisualsHUD extends MusicBeatSubstate
 
 	function getOptions()
 	{
-		var option:QOption = new QOption('UI Skin', 'uiSkin', 'string', 'Fatass',
+		var option:QOption = new QOption('UI Skin', 'uiSkin', 'string', 'RhythmEngine',
 			['Default', 
-			'Fatass',
+			'RhythmEngine',
 			'StepMania']);
 		optionsArray.push(option);
 

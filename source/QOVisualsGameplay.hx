@@ -37,9 +37,9 @@ class QOVisualsGameplay extends MusicBeatSubstate
 
 	function getOptions()
 	{
-		var option:QOption = new QOption('Note Skin', 'noteSkin', 'string', 'Fatass',
+		var option:QOption = new QOption('Note Skin', 'noteSkin', 'string', 'RhythmEngine',
 			['Default', 
-			'Fatass',
+			'RhythmEngine',
 			'StepMania']);
 		optionsArray.push(option);
 

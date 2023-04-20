@@ -36,9 +36,9 @@ class VisualsGameplay extends BaseOptionsMenu
 			"Changes the look of the notes. Doesn't affect custom notes.",
 			'noteSkin',
 			'string',
-			'Fatass',
+			'RhythmEngine',
 			['Default', 
-			'Fatass',
+			'RhythmEngine',
 			'StepMania']);
 		addOption(option);
 

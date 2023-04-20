@@ -36,9 +36,9 @@ class VisualsHUD extends BaseOptionsMenu
 			"Changes the look of the UI. Affects Combo, Ratings, Healthbar and Timebar.",
 			'uiSkin',
 			'string',
-			'Fatass',
+			'RhythmEngine',
 			['Default', 
-			'Fatass',
+			'RhythmEngine',
 			'StepMania']);
 		addOption(option);
 

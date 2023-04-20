@@ -26,13 +26,15 @@ using StringTools;
 
 class VisualOptionsState extends MusicBeatState
 {
-	var options:Array<String> = ['Gameplay Visuals', 'Song Event Visuals', 'UI Visuals'];
+	var options:Array<String> = ['Note Colors', 'Gameplay Visuals', 'Song Event Visuals', 'UI Visuals'];
 	private var grpOptions:FlxTypedGroup<Alphabet>;
 	private static var curSelected:Int = 0;
 	public static var menuBG:FlxSprite;
 
 	function openSelectedSubstate(label:String) {
 		switch(label) {
+			case 'Note Colors':
+				openSubState(new options.NotesSubState());
 			case 'Gameplay Visuals':
 				openSubState(new options.VisualsGameplay());
 			case 'Song Event Visuals':

@@ -105,7 +105,7 @@ class DiscordClient
 			details: details,
 			state: state,
 			largeImageKey: 'icon',
-			largeImageText: "Fat-Ass Mod Version: " + MainMenuState.fatassVersion,
+			largeImageText: "Rhythm Engine Version: " + MainMenuState.rhythmVersion,
 			smallImageKey : smallImageKey,
 			// Obtained times are in milliseconds so they are divided so Discord can use it
 			startTimestamp : Std.int(startTimestamp / 1000),

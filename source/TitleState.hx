@@ -131,7 +131,7 @@ class TitleState extends MusicBeatState
 			http.onData = function (data:String)
 			{
 				updateVersion = data.split('\n')[0].trim();
-				var curVersion:String = MainMenuState.fatassVersion.trim();
+				var curVersion:String = MainMenuState.rhythmVersion.trim();
 				trace('version online: ' + updateVersion + ', your version: ' + curVersion);
 				if(updateVersion != curVersion) {
 					trace('versions arent matching!');
@@ -607,9 +607,9 @@ class TitleState extends MusicBeatState
 				case 13:
 					deleteCoolText();
 				case 14:
-					addMoreText('The');
+					addMoreText('Rhythm');
 				case 15:
-					addMoreText('Fat-Ass');
+					addMoreText('Engine');
 				case 16:
 					addMoreText('Mod');
 				case 17:
