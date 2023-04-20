@@ -338,6 +338,7 @@ class PlayState extends MusicBeatState
 	public var opponentIsPlaying:Bool = false;
 	public var uiSkinFolder:String = 'base';
 	public var judgeCounterTxt:FlxText;
+	var opm:ObjectPositionManager;
 
 	//Fat-Ass Custom Note Stuff
 	private var dodgeAnimations:Array<String> = ['dodgeLEFT', 'dodgeDOWN', 'dodgeUP', 'dodgeRIGHT'];
@@ -1494,6 +1495,8 @@ class PlayState extends MusicBeatState
 		if (ClientPrefs.inputSystem == "Etterna") {
 			createMsText();
 		}
+		opm = new ObjectPositionManager(judgeCounterTxt, healthBar, healthBarBG, iconP1, iconP2, scoreTxt, botplayTxt);
+		opm.loadPositions();
 	}
 
 	#if (!flash && sys)
