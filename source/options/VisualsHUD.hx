@@ -49,6 +49,13 @@ class VisualsHUD extends BaseOptionsMenu
 		false);
 		addOption(option);
 
+		var option:Option = new Option('Hide Healtbar Icons',
+			'If checked, hides icons.',
+			'hideIcons',
+			'bool',
+			false);
+		addOption(option);
+
 		var option:Option = new Option('Hide HUD',
 			'If checked, hides most HUD elements.',
 			'hideHud',

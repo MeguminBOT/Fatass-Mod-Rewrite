@@ -78,6 +78,7 @@ class ClientPrefs {
 	public static var judgeCounter:Bool = true;
 	public static var strumlineOffsetY:Float = 0;
 	public static var strumlineOffsetX:Float = 0;
+	public static var hideIcons:Bool = false;
 
 	//Every key has two binds, add your key bind down here and then add your control on options/ControlsSubState.hx and Controls.hx
 	public static var keyBinds:Map<String, Array<FlxKey>> = [
@@ -162,6 +163,7 @@ class ClientPrefs {
 		FlxG.save.data.judgeCounter = judgeCounter;
 		FlxG.save.data.strumlineOffsetY = strumlineOffsetY;
 		FlxG.save.data.strumlineOffsetX = strumlineOffsetX;
+		FlxG.save.data.hideIcons = hideIcons;
 		
 		// Better Discord RPC
 		FlxG.save.data.discordRPC = discordRPC;
@@ -356,6 +358,10 @@ class ClientPrefs {
 		if(FlxG.save.data.strumlineOffsetX != null)
 		{
 			strumlineOffsetX = FlxG.save.data.strumlineOffsetX;
+		}
+		if(FlxG.save.data.hideIcons != null)
+		{
+			hideIcons = FlxG.save.data.hideIcons;
 		}
 
 		var save:FlxSave = new FlxSave();
