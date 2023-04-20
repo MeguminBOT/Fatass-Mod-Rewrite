@@ -370,6 +370,7 @@ class NoteOffsetState extends MusicBeatState
 		{
 			holdTime = 0;
 			barPercent = 0;
+			opm.loadDefaultPositions();
 			updateNoteDelay();
 		}
 

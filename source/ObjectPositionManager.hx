@@ -159,13 +159,19 @@ class ObjectPositionManager {
 		#end
 	}
 
-	
 	public function loadPositions():Void {
 		var objectPositions:Array<ObjectPosition> = getObjectPositionsFromJson("positions.json");
 		if (objectPositions != null) {
 			updateObjectPosition(objectPositions);
 		}
 	}
+
+	public function loadDefaultPositions():Void {
+        var objectPositions:Array<ObjectPosition> = getObjectPositionsFromJson("default_positions.json");
+        if (objectPositions != null) {
+            updateObjectPosition(objectPositions);
+        }
+    }
     
 	function loadJSONFromFile(fileName:String):String {
 		var rawJson = null;
@@ -194,7 +200,3 @@ class ObjectPositionManager {
 		}
 	}
 }
-
-
-
-
