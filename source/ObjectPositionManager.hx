@@ -1,23 +1,8 @@
 package;
 
-import flixel.FlxBasic;
-import flixel.FlxCamera;
-import flixel.FlxG;
-import flixel.FlxGame;
-import flixel.FlxObject;
 import flixel.FlxSprite;
-import flixel.FlxState;
-import flixel.FlxSubState;
-import flixel.group.FlxGroup.FlxTypedGroup;
-import flixel.group.FlxSpriteGroup;
-import flixel.input.mouse.FlxMouse;
-import flixel.math.FlxPoint;
 import flixel.text.FlxText;
-import flixel.tweens.FlxEase;
-import flixel.tweens.FlxTween;
 import flixel.ui.FlxBar;
-import flixel.util.FlxColor;
-import flixel.util.FlxStringUtil;
 import haxe.Json;
 import haxe.format.JsonParser;
 #if sys
@@ -136,7 +121,6 @@ class ObjectPositionManager {
 			var objectPositions:Array<ObjectPosition> = Json.parse(json);
 			return objectPositions;
 		} catch (e:Dynamic) {
-			trace('Error loading JSON file: ' + e);
 			return null;
 		}
 	}
@@ -146,7 +130,6 @@ class ObjectPositionManager {
 		var json:String = Json.stringify(objectPositions, null, "   ");
 		
 		saveJSONToFile(json, "positions.json");
-		trace("File saved: positions.json");
 	}
 
 	function saveJSONToFile(json:String, fileName:String):Void {
@@ -155,7 +138,6 @@ class ObjectPositionManager {
 		var file = sys.io.File.write(filePath, false);
 		file.writeString(json);
 		file.close();
-		trace('File saved successfully: ' + filePath);
 		#end
 	}
 
@@ -182,20 +164,16 @@ class ObjectPositionManager {
 				rawJson = File.getContent(formattedPath).trim();
 			}
 	
-			// Remove any trailing invalid characters
 			while (!rawJson.endsWith("}") && !rawJson.endsWith("]")) {
 				rawJson = rawJson.substr(0, rawJson.length - 1);
 			}
-			trace('Raw JSON content: ' + rawJson);
 	
 			var parsedJson = Json.parse(rawJson);
 			var formattedJson = Json.stringify(parsedJson, "  ");
-			trace('Formatted JSON content: ' + formattedJson);
 			#end
 			return rawJson;
 			
 		} catch (e:Dynamic) {
-			trace('Error loading JSON file: ' + e);
 			return null;
 		}
 	}
