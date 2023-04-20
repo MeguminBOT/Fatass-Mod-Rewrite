@@ -381,7 +381,6 @@ class NoteOffsetState extends MusicBeatState
 
 		if(controls.BACK)
 		{
-			if(zoomTween != null) zoomTween.cancel();
 			if(beatTween != null) beatTween.cancel();
 
 			persistentUpdate = false;
@@ -398,7 +397,6 @@ class NoteOffsetState extends MusicBeatState
 		super.update(elapsed);
 	}
 
-	var zoomTween:FlxTween;
 	var lastBeatHit:Int = -1;
 	override public function beatHit()
 	{
@@ -417,15 +415,6 @@ class NoteOffsetState extends MusicBeatState
 		
 		if(curBeat % 4 == 2)
 		{
-			FlxG.camera.zoom = 1.15;
-
-			if(zoomTween != null) zoomTween.cancel();
-			zoomTween = FlxTween.tween(FlxG.camera, {zoom: 1}, 1, {ease: FlxEase.circOut, onComplete: function(twn:FlxTween)
-				{
-					zoomTween = null;
-				}
-			});
-
 			beatText.alpha = 1;
 			beatText.y = 320;
 			beatText.velocity.y = -150;
