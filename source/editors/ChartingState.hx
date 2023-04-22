@@ -350,7 +350,7 @@ class ChartingState extends MusicBeatState
 
 		UI_box = new FlxUITabMenu(null, tabs, true);
 
-		UI_box.resize(300, 400);
+		UI_box.resize(300, 425);
 		UI_box.x = 640 + GRID_SIZE / 2;
 		UI_box.y = 25;
 		UI_box.scrollFactor.set();
@@ -1759,7 +1759,6 @@ class ChartingState extends MusicBeatState
 				}
 			}
 
-
 			if (FlxG.keys.justPressed.BACKSPACE) {
 				// Protect against lost data when quickly leaving the chart editor.
 				autosaveSong();
@@ -1774,8 +1773,6 @@ class ChartingState extends MusicBeatState
 			if(FlxG.keys.justPressed.Z && FlxG.keys.pressed.CONTROL) {
 				undo();
 			}
-
-
 
 			if(FlxG.keys.justPressed.Z && curZoom > 0 && !FlxG.keys.pressed.CONTROL) {
 				--curZoom;
@@ -1856,9 +1853,6 @@ class ChartingState extends MusicBeatState
 			}
 
 			//ARROW VORTEX SHIT NO DEADASS
-
-
-
 			if (FlxG.keys.pressed.W || FlxG.keys.pressed.S)
 			{
 				FlxG.sound.music.pause();
@@ -3159,7 +3153,10 @@ class ChartingState extends MusicBeatState
 		var extraCommentText:FlxText = new FlxText(10, 300, 150, "Extra Comment:");
 
 		// Create a "Save Metadata" button and set its click event handler
-		var saveMetaDataButton:FlxButton = new FlxButton(30, 360, "Save Metadata", onSaveMetadataButtonClick);
+		var saveMetaButtonText1:FlxText = new FlxText(10, 340, 1000, "The file saved from this button currently doesn't do anything", 8);
+		var saveMetaButtonText2:FlxText = new FlxText(10, 350, 1000, "It's just here to be used in the future.", 8);
+		var saveMetaButtonText3:FlxText = new FlxText(10, 360, 1000, "The Metadata gets saved in the chart aswell.", 8);
+		var saveMetaDataButton:FlxButton = new FlxButton(30, 380, "Save Metadata", onSaveMetadataButtonClick);
 
 		// Create a new UI group for the metadata tab and add it to the main UI box
 		var tab_group_metaData = new FlxUI(null, UI_box);
@@ -3180,6 +3177,9 @@ class ChartingState extends MusicBeatState
 		tab_group_metaData.add(flashingLightsInput);
 		tab_group_metaData.add(extraCommentText);
 		tab_group_metaData.add(extraCommentInput);
+		tab_group_metaData.add(saveMetaButtonText1);
+		tab_group_metaData.add(saveMetaButtonText2);
+		tab_group_metaData.add(saveMetaButtonText3);
 		tab_group_metaData.add(saveMetaDataButton);
 		UI_box.addGroup(tab_group_metaData);
 
@@ -3194,6 +3194,15 @@ class ChartingState extends MusicBeatState
 		blockPressWhileTypingOn.push(flashingLightsInput);
 		blockPressWhileTypingOn.push(extraCommentInput);
 
+		// Get the charts current metadata and prevent it from printing null when the user is starting to type.
+		artistNameInput.text = _song.artist != null ? _song.artist : '';
+		remixInput.text = _song.isRemix != null ? _song.isRemix : '';
+		modNameInput.text = _song.mod != null ? _song.mod : '';
+		charterNameInput.text = _song.charter != null ? _song.charter : '';
+		customNoteInput.text = _song.hasCustomNotes != null ? _song.hasCustomNotes : '';
+		customMechanicInput.text = _song.hasCustomMechanics != null ? _song.hasCustomMechanics : '';
+		flashingLightsInput.text = _song.hasFlashingLights != null ? _song.hasFlashingLights : '';
+		extraCommentInput.text = _song.extraComment != null ? _song.extraComment : '';
 	}
 
 	// Dumb function that handles button click
