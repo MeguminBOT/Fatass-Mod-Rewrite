@@ -65,7 +65,7 @@ class FreeplayState extends MusicBeatState
 	override function create()
 	{
 		FlxG.mouse.visible = true;
-		//Paths.clearStoredMemory();
+		Paths.clearStoredMemory();
 		//Paths.clearUnusedMemory();
 		
 		persistentUpdate = true;
