@@ -221,6 +221,7 @@ class FunkinLua {
 		set('customSoundEvent', ClientPrefs.customSoundEvent);
 		set('customMechanicEvent', ClientPrefs.customMechanicEvent);
 		set('customStrumPlacement', ClientPrefs.customStrumPlacement);
+		set('customSongScripts', ClientPrefs.customSongScripts);
 
 		#if windows
 		set('buildTarget', 'windows');

@@ -131,8 +131,15 @@ class GameplaySettingsSubState extends BaseOptionsMenu
 		addOption(option);
 
 		var option:Option = new Option('Custom Strumline Placement',
-			"Uncheck this if you don't want songs to move the strumline.\nThis is only for keeping the strumline on the right/middle(If middleScroll).\nDoes not disable any displacements of the strumline.\nOnly works on mods optimized for Rhythm Engine",
+			"Uncheck this if you don't want charts to move the strumline.\nThis is only for keeping the strumline on the right/middle(If middleScroll).\nDoes not disable any displacements of the strumline.\nOnly works on mods optimized for Rhythm Engine",
 			'customStrumPlacement',
+			'bool',
+			true);
+		addOption(option);
+		
+		var option:Option = new Option('Custom Song Scripts',
+			"Uncheck this if you don't want charts to use custom scripts at all.\nDoes only affect scripts that aren't needed.\nOnly works on mods optimized for Rhythm Engine",
+			'customSongScripts',
 			'bool',
 			true);
 		addOption(option);
