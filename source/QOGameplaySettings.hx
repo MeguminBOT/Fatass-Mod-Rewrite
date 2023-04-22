@@ -81,6 +81,9 @@ class QOGameplaySettings extends MusicBeatSubstate
 		var option:QOption = new QOption('Custom Mechanic Events', 'customMechanicEvent', 'bool', true);
 		optionsArray.push(option);
 
+		var option:QOption = new QOption('Custom Strumline Placement', 'customStrumPlacement', 'bool', true);
+		optionsArray.push(option);
+
 		var option:QOption = new QOption('Rating Offset', 'ratingOffset', 'int', 0);
 			option.displayFormat = '%v ms';
 			option.scrollSpeed = 20;
