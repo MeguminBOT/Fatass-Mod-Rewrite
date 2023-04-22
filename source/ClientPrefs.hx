@@ -73,6 +73,7 @@ class ClientPrefs {
 	public static var customNoteSound:Bool = true;
 	public static var customSoundEvent:Bool = true;
 	public static var customMechanicEvent:Bool = true;
+	public static var customStrumPlacement:Bool = true;
 	public static var noteSkin:String = 'RhythmEngine';
 	public static var uiSkin:String = 'RhythmEngine';
 	public static var judgeCounter:Bool = true;
@@ -158,6 +159,7 @@ class ClientPrefs {
 		FlxG.save.data.customNoteSound = customNoteSound;
 		FlxG.save.data.customSoundEvent = customSoundEvent;
 		FlxG.save.data.customMechanicEvent = customMechanicEvent;
+		FlxG.save.data.customStrumPlacement = customStrumPlacement;
 		FlxG.save.data.noteSkin = noteSkin;
 		FlxG.save.data.uiSkin = uiSkin;
 		FlxG.save.data.judgeCounter = judgeCounter;
@@ -338,6 +340,10 @@ class ClientPrefs {
 		if(FlxG.save.data.customMechanicEvent != null)
 		{
 			customMechanicEvent = FlxG.save.data.customMechanicEvent;
+		}
+		if(FlxG.save.data.customStrumPlacement != null)
+		{
+			customStrumPlacement = FlxG.save.data.customStrumPlacement;
 		}
 		if(FlxG.save.data.noteSkin != null)
 		{

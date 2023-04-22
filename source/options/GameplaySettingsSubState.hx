@@ -110,22 +110,29 @@ class GameplaySettingsSubState extends BaseOptionsMenu
 		option.onChange = onChangeHitsoundType;
 
 		var option:Option = new Option('Custom Note Sounds',
-			"Uncheck this if you don't want Custom Notes to play sounds.",
+			"Uncheck this if you don't want Custom Notes to play sounds.\nOnly works on mods optimized for Rhythm Engine",
 			'customNoteSound',
 			'bool',
 			true);
 		addOption(option);
 
 		var option:Option = new Option('Custom Sound Events',
-			"Uncheck this if you don't want charts to play sounds.",
+			"Uncheck this if you don't want charts to play sounds.\nOnly works on mods optimized for Rhythm Engine",
 			'customSoundEvent',
 			'bool',
 			true);
 		addOption(option);
 
 		var option:Option = new Option('Custom Mechanic Events',
-			"Uncheck this if you don't want custom mechanics like Unown in Monochrome.",
+			"Uncheck this if you don't want custom mechanics like Unown in Monochrome.\nOnly works on mods optimized for Rhythm Engine",
 			'customMechanicEvent',
+			'bool',
+			true);
+		addOption(option);
+
+		var option:Option = new Option('Custom Strumline Placement',
+			"Uncheck this if you don't want songs to move the strumline.\nThis is only for keeping the strumline on the right/middle(If middleScroll).\nDoes not disable any displacements of the strumline.\nOnly works on mods optimized for Rhythm Engine",
+			'customStrumPlacement',
 			'bool',
 			true);
 		addOption(option);
