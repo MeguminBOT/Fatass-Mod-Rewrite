@@ -209,11 +209,11 @@ class CustomizeUIState extends MusicBeatState
 
 		helpTxt = new FlxText(0, 0);
 		helpTxt.text = 
-		"Press and hold down the Left Mouse Button to move an object\nHold Shift+LMB or Shift+MScrollWheel to rotate the object\n\nPress TAB to Hide this text";
-		helpTxt.setFormat(Paths.font("rubik.ttf"), 32, FlxColor.WHITE, CENTER, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
+		"Press and hold down the Left Mouse Button to move an object\nHold Shift+LMB or Shift+MScrollWheel to rotate the object\n\nPress ACCEPT to hide this text";
+		helpTxt.setFormat(Paths.font("rubik.ttf"), 16, FlxColor.WHITE, CENTER, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
 		helpTxt.scrollFactor.set();
-		helpTxt.borderSize = 4;
-		helpTxt.x = 565;
+		helpTxt.borderSize = 2;
+		helpTxt.x = 400;
 		helpTxt.y = 250;
 		helpTxt.visible = true;
 		helpTxt.cameras = [camHUD];
@@ -288,25 +288,26 @@ class CustomizeUIState extends MusicBeatState
 			// }
 			else {
 				deselectObject();
-				selectedObjectPositionText.text = "";
 			}
 		}
 
 		if (selectedObject != null) {
-			selectedObjectPositionText.x = FlxG.mouse.x - 50;
-			selectedObjectPositionText.y = FlxG.mouse.y - 50;
+			selectedObjectPositionText.text = "X: " + selectedObject.x + "\n" + "Y: " + selectedObject.y;
+			selectedObjectPositionText.x = FlxG.mouse.x - 100;
+			selectedObjectPositionText.y = FlxG.mouse.y - 100;
 			if (FlxG.keys.pressed.SHIFT) {
+				selectedObjectPositionText.text = "Angle: " + selectedObject.angle;
 				if (FlxG.mouse.justMoved) {
-					selectedObjectPositionText.text = "Angle: " + selectedObject.angle;
 					var deltaAngle:Float = (FlxG.mouse.screenY - prevMouseY) * 5;
 					selectedObject.angle += deltaAngle;
+					selectedObject.angle = selectedObject.angle % 360;
 					moveSelectedObject(0, 0, deltaAngle);
 				} else if (FlxG.mouse.wheel != 0) {
 					var deltaAngle:Float = FlxG.mouse.wheel * 5;
 					selectedObject.angle += deltaAngle;
+					selectedObject.angle = selectedObject.angle % 360;
 				}
 			} else if (FlxG.mouse.justMoved) {
-				selectedObjectPositionText.text = "X: " + selectedObject.x + ", Y: " + selectedObject.y;
 				var deltaX:Float = FlxG.mouse.screenX - prevMouseX;
 				var deltaY:Float = FlxG.mouse.screenY - prevMouseY;
 				moveSelectedObject(deltaX, deltaY, 0);
@@ -315,6 +316,7 @@ class CustomizeUIState extends MusicBeatState
 
 		if (FlxG.mouse.justReleased) {
 			deselectObject();
+			selectedObjectPositionText.text = "";
 		}
 
 		if(controls.RESET)
@@ -333,7 +335,7 @@ class CustomizeUIState extends MusicBeatState
 			FlxG.mouse.visible = false;
 		}
 
-		if(FlxG.keys.pressed.TAB)
+		if(controls.ACCEPT)
 		{
 			holdTime = 0;
 			helpTxt.visible = !helpTxt.visible;
