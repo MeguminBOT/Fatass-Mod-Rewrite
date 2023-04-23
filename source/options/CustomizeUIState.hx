@@ -32,14 +32,15 @@ class CustomizeUIState extends MusicBeatState
 	public var camGame:FlxCamera;
 	public var camOther:FlxCamera;
 
+	var holdTime:Float = 0;
+	var lastBeatHit:Int = -1;
+
 	var barPercent:Float = 0;
 	var delayMin:Int = 0;
 	var delayMax:Int = 500;
 	var timeBarBG:FlxSprite;
 	var timeBar:FlxBar;
 	var timeTxt:FlxText;
-
-	//Fatass modifications
 	var health:Float = 1;
 	var botplaySine:Float = 0;
 
@@ -50,10 +51,10 @@ class CustomizeUIState extends MusicBeatState
 	var iconP2:HealthIcon;
 	var scoreTxt:FlxText;
 	var botplayTxt:FlxText;
-	// var rating:FlxSprite;
-	// var comboNums:FlxSpriteGroup;
 
+	var helpTxt:FlxText;
 	var selectedObject:FlxObject = null;
+	var selectedObjectPositionText:FlxText;
 	var prevMouseX:Float = 0;
 	var prevMouseY:Float = 0;
 	var opm:ObjectPositionManager;
@@ -206,6 +207,24 @@ class CustomizeUIState extends MusicBeatState
 		Conductor.changeBPM(128.0);
 		FlxG.sound.playMusic(Paths.music('offsetSong'), 1, true);
 
+		helpTxt = new FlxText(0, 0);
+		helpTxt.text = 
+		"Press and hold down the Left Mouse Button to move an object\nHold Shift+LMB or Shift+MScrollWheel to rotate the object\n\nPress TAB to Hide this text";
+		helpTxt.setFormat(Paths.font("rubik.ttf"), 32, FlxColor.WHITE, CENTER, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
+		helpTxt.scrollFactor.set();
+		helpTxt.borderSize = 4;
+		helpTxt.x = 565;
+		helpTxt.y = 250;
+		helpTxt.visible = true;
+		helpTxt.cameras = [camHUD];
+		add(helpTxt);
+
+		selectedObjectPositionText = new FlxText(-100, -100, 100, "");
+		selectedObjectPositionText.scrollFactor.x = 0;
+		selectedObjectPositionText.scrollFactor.y = 0;
+		selectedObjectPositionText.setFormat(Paths.font("rubik.ttf"), 16, FlxColor.WHITE, CENTER, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
+		add(selectedObjectPositionText);
+
 		super.create();
 		opm = new ObjectPositionManager(judgeCounterTxt, healthBar, healthBarBG, iconP1, iconP2, scoreTxt, botplayTxt);
 		opm.loadPositions();
@@ -218,7 +237,22 @@ class CustomizeUIState extends MusicBeatState
 		healthBar.updateBar();
 	}
 
-	var holdTime:Float = 0;
+	override public function beatHit()
+	{
+		super.beatHit();
+
+		if(lastBeatHit == curBeat)
+		{
+			return;
+		}
+
+		if(curBeat % 2 == 0)
+		{
+			boyfriend.dance();
+			gf.dance();
+		}
+		lastBeatHit = curBeat;
+	}
 
 	override public function update(elapsed:Float)
 	{
@@ -254,12 +288,16 @@ class CustomizeUIState extends MusicBeatState
 			// }
 			else {
 				deselectObject();
+				selectedObjectPositionText.text = "";
 			}
 		}
 
 		if (selectedObject != null) {
+			selectedObjectPositionText.x = FlxG.mouse.x - 50;
+			selectedObjectPositionText.y = FlxG.mouse.y - 50;
 			if (FlxG.keys.pressed.SHIFT) {
 				if (FlxG.mouse.justMoved) {
+					selectedObjectPositionText.text = "Angle: " + selectedObject.angle;
 					var deltaAngle:Float = (FlxG.mouse.screenY - prevMouseY) * 5;
 					selectedObject.angle += deltaAngle;
 					moveSelectedObject(0, 0, deltaAngle);
@@ -268,6 +306,7 @@ class CustomizeUIState extends MusicBeatState
 					selectedObject.angle += deltaAngle;
 				}
 			} else if (FlxG.mouse.justMoved) {
+				selectedObjectPositionText.text = "X: " + selectedObject.x + ", Y: " + selectedObject.y;
 				var deltaX:Float = FlxG.mouse.screenX - prevMouseX;
 				var deltaY:Float = FlxG.mouse.screenY - prevMouseY;
 				moveSelectedObject(deltaX, deltaY, 0);
@@ -294,6 +333,12 @@ class CustomizeUIState extends MusicBeatState
 			FlxG.mouse.visible = false;
 		}
 
+		if(FlxG.keys.pressed.TAB)
+		{
+			holdTime = 0;
+			helpTxt.visible = !helpTxt.visible;
+		}
+
 		var multP1:Float = FlxMath.lerp(1, iconP1.scale.x, CoolUtil.boundTo(1 - (elapsed * 9), 0, 1));
 		iconP1.scale.set(multP1, multP1);
 		iconP1.updateHitbox();
@@ -307,24 +352,6 @@ class CustomizeUIState extends MusicBeatState
 		prevMouseX = FlxG.mouse.screenX;
 		prevMouseY = FlxG.mouse.screenY;
 		super.update(elapsed);
-	}
-
-	var lastBeatHit:Int = -1;
-	override public function beatHit()
-	{
-		super.beatHit();
-
-		if(lastBeatHit == curBeat)
-		{
-			return;
-		}
-
-		if(curBeat % 2 == 0)
-		{
-			boyfriend.dance();
-			gf.dance();
-		}
-		lastBeatHit = curBeat;
 	}
 
 	function selectObject(obj:FlxObject):Void {
