@@ -263,11 +263,9 @@ class CustomizeUIState extends MusicBeatState
 					var deltaAngle:Float = (FlxG.mouse.screenY - prevMouseY) * 5;
 					selectedObject.angle += deltaAngle;
 					moveSelectedObject(0, 0, deltaAngle);
-					selectedObject.updateMotion();
 				} else if (FlxG.mouse.wheel != 0) {
 					var deltaAngle:Float = FlxG.mouse.wheel * 5;
 					selectedObject.angle += deltaAngle;
-					selectedObject.updateMotion();
 				}
 			} else if (FlxG.mouse.justMoved) {
 				var deltaX:Float = FlxG.mouse.screenX - prevMouseX;
