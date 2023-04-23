@@ -171,6 +171,7 @@ class ObjectPositionManager {
         var objectPositions:Array<ObjectPosition> = getObjectPositionsFromJson("default_positions.json");
         if (objectPositions != null) {
             updateObjectPosition(objectPositions);
+			savePositions();
         }
     }
     
