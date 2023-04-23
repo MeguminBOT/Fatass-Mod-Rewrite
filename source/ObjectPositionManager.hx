@@ -14,9 +14,10 @@ import sys.io.File;
 using StringTools;
 
 typedef ObjectPosition = {
-    var name:String;
-    var x:Float;
-    var y:Float;
+	var name:String;
+	var x:Float;
+	var y:Float;
+	var angle:Float;
 }
 
 class ObjectPositionManager {
@@ -62,37 +63,44 @@ class ObjectPositionManager {
             {
 				name: "judgeCounterTxt",
 				x: judgeCounterTxt.x,
-				y: judgeCounterTxt.y
+				y: judgeCounterTxt.y,
+				angle: judgeCounterTxt.angle
 			},
 			{
 				name: "healthBarBG",
 				x: healthBarBG.x,
-				y: healthBarBG.y
+				y: healthBarBG.y,
+				angle: healthBarBG.angle
 			},
 			{
 				name: "healthBar",
 				x: healthBar.x,
-				y: healthBar.y
+				y: healthBar.y,
+				angle: healthBar.angle
 			},
             {
 				name: "iconP1",
 				x: iconP1.x,
-				y: iconP1.y
+				y: iconP1.y,
+				angle: iconP1.angle
 			},
             {
 				name: "iconP2",
 				x: iconP2.x,
-				y: iconP2.y
+				y: iconP2.y,
+				angle: iconP2.angle
 			},
             {
 				name: "scoreTxt",
 				x: scoreTxt.x,
-				y: scoreTxt.y
+				y: scoreTxt.y,
+				angle: scoreTxt.angle
 			},
 			{
 				name: "botplayTxt",
 				x: botplayTxt.x,
-				y: botplayTxt.y
+				y: botplayTxt.y,
+				angle: botplayTxt.angle
 			},
 		];
 	}
@@ -103,30 +111,39 @@ class ObjectPositionManager {
 				case "judgeCounterTxt":
 					judgeCounterTxt.x = position.x;
 					judgeCounterTxt.y = position.y;
+					judgeCounterTxt.angle = position.angle;
 				case "healthBarBG":
 					healthBarBG.x = position.x;
 					healthBarBG.y = position.y;
+					healthBarBG.angle = position.angle;
 				case "healthBar":
 					healthBar.x = position.x;
 					healthBar.y = position.y;
+					healthBar.angle = position.angle;
 				case "iconP1":
 					iconP1.x = position.x;
 					iconP1.y = position.y;
+					iconP1.angle = position.angle;
 				case "iconP2":
 					iconP2.x = position.x;
 					iconP2.y = position.y;
+					iconP2.angle = position.angle;
 				case "scoreTxt":
 					scoreTxt.x = position.x;
 					scoreTxt.y = position.y;
+					scoreTxt.angle = position.angle;
 				case "botplayTxt":
 					botplayTxt.x = position.x;
 					botplayTxt.y = position.y;
+					botplayTxt.angle = position.angle;
 				// case "rating":
-				// 	rating.x = position.x;
-				// 	rating.y = position.y;
+				//     rating.x = position.x;
+				//     rating.y = position.y;
+				//     rating.angle = position.angle;
 				// case "comboNums":
-				// 	comboNums.x = position.x;
-				// 	comboNums.y = position.y;	
+				//     comboNums.x = position.x;
+				//     comboNums.y = position.y;
+				//     comboNums.angle = position.angle;    
 				default:
 			}
 		}

@@ -57,7 +57,7 @@ class CustomizeUIState extends MusicBeatState
 	var prevMouseX:Float = 0;
 	var prevMouseY:Float = 0;
 	var opm:ObjectPositionManager;
-	
+
 	override public function create()
 	{
 		FlxG.mouse.visible = true;
@@ -118,14 +118,14 @@ class CustomizeUIState extends MusicBeatState
 		add(gf);
 		add(boyfriend);
 		add(dad);
-		
+
 		timeTxt = new FlxText(0, 600, FlxG.width, "", 32);
 		timeTxt.setFormat(Paths.font("rubik.ttf"), 24, FlxColor.WHITE, CENTER, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
 		timeTxt.scrollFactor.set();
 		timeTxt.borderSize = 2;
 		timeTxt.visible = false;
 		timeTxt.cameras = [camHUD];
-		
+
 		timeBarBG = new FlxSprite(0, timeTxt.y + 8).loadGraphic(Paths.image('uiskins/default/base/timeBar'));
 		timeBarBG.setGraphicSize(Std.int(timeBarBG.width * 1.2));
 		timeBarBG.updateHitbox();
@@ -256,12 +256,27 @@ class CustomizeUIState extends MusicBeatState
 				deselectObject();
 			}
 		}
-		if (FlxG.mouse.justMoved && selectedObject != null) {
-			var deltaX:Float = FlxG.mouse.screenX - prevMouseX;
-			var deltaY:Float = FlxG.mouse.screenY - prevMouseY;
-			moveSelectedObject(deltaX, deltaY);
+
+		if (selectedObject != null) {
+			if (FlxG.keys.pressed.SHIFT) {
+				if (FlxG.mouse.justMoved) {
+					var deltaAngle:Float = (FlxG.mouse.screenY - prevMouseY) * 5;
+					selectedObject.angle += deltaAngle;
+					moveSelectedObject(0, 0, deltaAngle);
+					selectedObject.updateHitbox();
+				} else if (FlxG.mouse.wheel != 0) {
+					var deltaAngle:Float = FlxG.mouse.wheel * 5;
+					selectedObject.angle += deltaAngle;
+					selectedObject.updateHitbox();
+				}
+			} else if (FlxG.mouse.justMoved) {
+				var deltaX:Float = FlxG.mouse.screenX - prevMouseX;
+				var deltaY:Float = FlxG.mouse.screenY - prevMouseY;
+				moveSelectedObject(deltaX, deltaY, 0);
+				selectedObject.updateHitbox();
+			}
 		}
-		
+
 		if (FlxG.mouse.justReleased) {
 			deselectObject();
 		}
@@ -318,23 +333,25 @@ class CustomizeUIState extends MusicBeatState
 	function selectObject(obj:FlxObject):Void {
 		selectedObject = obj;
 	}
-	
+
 	function deselectObject():Void {
 		selectedObject = null;
 	}
-	
-	private function moveSelectedObject(deltaX:Float, deltaY:Float):Void {
+
+	private function moveSelectedObject(deltaX:Float, deltaY:Float, deltaAngle:Float):Void {
 		if (selectedObject != null) {
 			selectedObject.x += deltaX;
 			selectedObject.y += deltaY;
-	
+			selectedObject.angle += deltaAngle;
+
 			// Save the new position
 			var objectName:String = getObjectIdentifier(selectedObject);
 			if (objectName != null) {
 				var singleObjectPosition:Array<ObjectPosition> = [{
 					name: objectName,
 					x: selectedObject.x,
-					y: selectedObject.y
+					y: selectedObject.y,
+					angle: selectedObject.angle
 				}];
 				opm.updateObjectPosition(singleObjectPosition);
 				opm.savePositions();
@@ -357,7 +374,8 @@ class CustomizeUIState extends MusicBeatState
 }
 
 typedef ObjectPosition = {
-    var name:String;
-    var x:Float;
-    var y:Float;
+	var name:String;
+	var x:Float;
+	var y:Float;
+	var angle:Float;
 }

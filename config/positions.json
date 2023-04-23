@@ -1,35 +1,42 @@
 [
    {
+      "angle": 0,
       "x": 565,
       "y": 565,
       "name": "judgeCounterTxt"
    },
    {
+      "angle": 0,
       "x": 339.5,
       "y": 79.2,
       "name": "healthBarBG"
    },
    {
+      "angle": 0,
       "x": 343.5,
       "y": 83.2,
       "name": "healthBar"
    },
    {
+      "angle": 0,
       "x": 0,
       "y": 8.2,
       "name": "iconP1"
    },
    {
+      "angle": 0,
       "x": 0,
       "y": 8.2,
       "name": "iconP2"
    },
    {
+      "angle": 0,
       "x": 0,
       "y": 115.2,
       "name": "scoreTxt"
    },
    {
+      "angle": 0,
       "x": 400,
       "y": 530,
       "name": "botplayTxt"
