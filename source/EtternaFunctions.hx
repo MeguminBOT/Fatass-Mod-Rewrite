@@ -5,12 +5,12 @@ import FunkinLua;
 
 class EtternaFunctions
 {
-	public static var a1:Float = 0.254829592;
-	public static var a2:Float = -0.284496736;
-	public static var a3:Float = 1.421413741;
-	public static var a4:Float = -1.453152027;
-	public static var a5:Float = 1.061405429;
-	public static var p:Float = 0.3275911;
+	public static var a1 = 0.254829592;
+	public static var a2 = -0.284496736;
+	public static var a3 = 1.421413741;
+	public static var a4 = -1.453152027;
+	public static var a5 = 1.061405429;
+	public static var p = 0.3275911;
 	public static var curTotalNotesHit:Float = 0;
 	public static var counterUpdated:Int = 0;
 	public static var actualRatingHere:Float = 0.00;
@@ -112,25 +112,24 @@ class EtternaFunctions
 	public static function handleNoteDiff(diff:Float) {
 		var maxms = diff;
 		var ts:Float = 1;
-	
+
 		var max_points = 1.0;
-		var miss_weight = -1.0;
+		var miss_weight = -5.5;
 		var ridic = 5 * ts;
-		var max_boo_weight = 166;
-		var ts_pow:Float = 0.75;
-		var zero:Float = 65 * Math.pow(ts, ts_pow);
+		var max_boo_weight = 166 * (ts / PlayState.instance.playbackRate);
+		var ts_pow = 0.75;
+		var zero = 65 * (Math.pow(ts, ts_pow));
 		var power = 2.5;
-		var dev:Float = 22.7 * Math.pow(ts, ts_pow);
+		var dev = 22.7 * (Math.pow(ts, ts_pow));
 	
-		if (maxms <= ridic) {
+		if (maxms <= ridic)
 			return max_points;
-		} else if (maxms <= zero) {
+		else if (maxms <= zero)
 			return max_points * erf((zero - maxms) / dev);
-		} else if (maxms <= max_boo_weight) {
+		else if (maxms <= max_boo_weight)
 			return (maxms - zero) * miss_weight / (max_boo_weight - zero);
-		} else {
+		else
 			return miss_weight;
-		}
 	}
 
 	public static function showMsDiffOnScreen(diff:Float) {
@@ -155,15 +154,20 @@ class EtternaFunctions
 		}
 	}
 
-	public static function erf(x:Float) {
+	public static function erf(x:Float):Float {
 		var sign = 1;
-		if (x < 0) {
+		if (x < 0)
 			sign = -1;
-		}
 		x = Math.abs(x);
 		var t = 1.0 / (1.0 + p * x);
 		var y = 1.0 - (((((a5 * t + a4) * t) + a3) * t + a2) * t + a1) * t * Math.exp(-x * x);
 	
 		return sign * y;
+	}
+
+	public static function resetAccuracy() {
+		curTotalNotesHit = 0;
+		counterUpdated = 0;
+		actualRatingHere = 0.00;
 	}
 }

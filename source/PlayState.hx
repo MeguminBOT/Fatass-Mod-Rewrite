@@ -376,6 +376,7 @@ class PlayState extends MusicBeatState
 	{
 		//trace('Playback Rate: ' + playbackRate);
 		Paths.clearStoredMemory();
+		EtternaFunctions.resetAccuracy();
 
 		// for lua
 		instance = this;
@@ -2492,6 +2493,7 @@ class PlayState extends MusicBeatState
 
 	function startSong():Void
 	{
+		EtternaFunctions.resetAccuracy();
 		startingSong = false;
 
 		previousFrameTime = FlxG.game.ticks;
@@ -4284,6 +4286,7 @@ class PlayState extends MusicBeatState
 			}
 			transitioning = true;
 		}
+		EtternaFunctions.resetAccuracy();
 	}
 
 	#if ACHIEVEMENTS_ALLOWED
