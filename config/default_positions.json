@@ -40,5 +40,23 @@
       "x": 400,
       "y": 530,
       "name": "botplayTxt"
+   },
+   {
+      "x": 435,
+      "y": 675,
+      "angle": 0,
+      "name": "timeBarBG"
+   },
+   {
+      "x": 435,
+      "y": 680,
+      "angle": 0,
+      "name": "timeBar"
+   },
+   {
+      "x": 435,
+      "y": 670,
+      "angle": 0,
+      "name": "timeTxt"
    }
 ]

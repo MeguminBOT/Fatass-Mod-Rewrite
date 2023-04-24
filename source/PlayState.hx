@@ -1496,7 +1496,7 @@ class PlayState extends MusicBeatState
 		if (ClientPrefs.inputSystem == "Etterna") {
 			createMsText();
 		}
-		opm = new ObjectPositionManager(judgeCounterTxt, healthBar, healthBarBG, iconP1, iconP2, scoreTxt, botplayTxt);
+		opm = new ObjectPositionManager(judgeCounterTxt, healthBar, healthBarBG, iconP1, iconP2, scoreTxt, botplayTxt, timeTxt, timeBar, timeBarBG);
 		opm.loadPositions();
 	}
 

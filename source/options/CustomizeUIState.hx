@@ -35,14 +35,13 @@ class CustomizeUIState extends MusicBeatState
 	var holdTime:Float = 0;
 	var lastBeatHit:Int = -1;
 
-	var barPercent:Float = 0;
-	var delayMin:Int = 0;
-	var delayMax:Int = 500;
+	var STRUM_X = 42;
+	var STRUM_X_MIDDLESCROLL = -278;
+
 	var timeBarBG:FlxSprite;
 	var timeBar:FlxBar;
 	var timeTxt:FlxText;
 	var health:Float = 1;
-	var botplaySine:Float = 0;
 
 	var judgeCounterTxt:FlxText;
 	var healthBar:FlxBar;
@@ -120,31 +119,31 @@ class CustomizeUIState extends MusicBeatState
 		add(boyfriend);
 		add(dad);
 
-		timeTxt = new FlxText(0, 600, FlxG.width, "", 32);
+		var date = Date.now(); // Get current date and time
+		var minutes:String = Std.string(date.getMinutes()); // Get minutes as string
+		var seconds:String = Std.string(date.getSeconds()); // Get seconds as string
+		if (seconds.length == 1) seconds = "0" + seconds; // Add leading zero if seconds is a single digit number
+
+		timeTxt = new FlxText(STRUM_X + (FlxG.width / 2) - 248, 19, 400, "", 32);
 		timeTxt.setFormat(Paths.font("rubik.ttf"), 24, FlxColor.WHITE, CENTER, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
 		timeTxt.scrollFactor.set();
+		timeTxt.alpha = 1;
 		timeTxt.borderSize = 2;
-		timeTxt.visible = false;
-		timeTxt.cameras = [camHUD];
+		timeTxt.text = minutes + ":" + seconds; // Set text to display minutes and seconds from the users system clock
+		if(ClientPrefs.downScroll) timeTxt.y = FlxG.height - 44;
 
 		timeBarBG = new FlxSprite(0, timeTxt.y + 8).loadGraphic(Paths.image('uiskins/default/base/timeBar'));
-		timeBarBG.setGraphicSize(Std.int(timeBarBG.width * 1.2));
-		timeBarBG.updateHitbox();
-		timeBarBG.cameras = [camHUD];
-		timeBarBG.screenCenter(X);
-		timeBarBG.visible = false;
+		timeBarBG.x = timeTxt.x;
+		timeBarBG.y = timeTxt.y + (timeTxt.height / 4);
+		timeBarBG.scrollFactor.set();
+		timeBarBG.alpha = 1;
+		timeBarBG.color = FlxColor.BLACK;
 
-		timeBar = new FlxBar(0, timeBarBG.y + 4, LEFT_TO_RIGHT, Std.int(timeBarBG.width - 8), Std.int(timeBarBG.height - 8), this, 'barPercent', delayMin, delayMax);
+		timeBar = new FlxBar(timeBarBG.x + 4, timeBarBG.y + 4, LEFT_TO_RIGHT, Std.int(timeBarBG.width - 8), Std.int(timeBarBG.height - 8), this, 'health', 0, 2);
 		timeBar.scrollFactor.set();
-		timeBar.screenCenter(X);
 		timeBar.createFilledBar(0xFF000000, 0xFFFFFFFF);
-		timeBar.numDivisions = 800; //How much lag this causes?? Should i tone it down to idk, 400 or 200?
-		timeBar.visible = false;
+		timeBar.numDivisions = 400;
 		timeBar.cameras = [camHUD];
-
-		add(timeBarBG);
-		add(timeBar);
-		add(timeTxt);
 
 		judgeCounterTxt = new FlxText(0, 0);
         judgeCounterTxt.text = 'Perfect Sicks: 233' + '\nSicks: 46 ' + '\nGoods: 1 ' + '\nBads: 0' + '\nShits: 0';
@@ -203,6 +202,9 @@ class CustomizeUIState extends MusicBeatState
 		add(iconP2);
 		add(scoreTxt);
 		add(botplayTxt);
+		add(timeTxt);
+		add(timeBarBG);
+		add(timeBar);
 
 		Conductor.changeBPM(128.0);
 		FlxG.sound.playMusic(Paths.music('offsetSong'), 1, true);
@@ -226,7 +228,7 @@ class CustomizeUIState extends MusicBeatState
 		add(selectedObjectPositionText);
 
 		super.create();
-		opm = new ObjectPositionManager(judgeCounterTxt, healthBar, healthBarBG, iconP1, iconP2, scoreTxt, botplayTxt);
+		opm = new ObjectPositionManager(judgeCounterTxt, healthBar, healthBarBG, iconP1, iconP2, scoreTxt, botplayTxt, timeTxt, timeBar, timeBarBG);
 		opm.loadPositions();
 	}
 
@@ -280,6 +282,15 @@ class CustomizeUIState extends MusicBeatState
 			else if (botplayTxt.overlapsPoint(mousePos)) {
 				selectObject(botplayTxt);
 			}
+			else if (timeTxt.overlapsPoint(mousePos)) {
+				selectObject(timeTxt);
+			}
+			else if (timeBarBG.overlapsPoint(mousePos)) {
+				selectObject(timeBarBG);
+			}
+			else if (timeBar.overlapsPoint(mousePos)) {
+				selectObject(timeBar);
+			}
 			// else if (rating.overlapsPoint(mousePos)) {
 			// 	selectObject(rating);
 			// }
@@ -322,7 +333,6 @@ class CustomizeUIState extends MusicBeatState
 		if(controls.RESET)
 		{
 			holdTime = 0;
-			barPercent = 0;
 			opm.loadDefaultPositions();
 		}
 
@@ -393,6 +403,9 @@ class CustomizeUIState extends MusicBeatState
 		else if (obj == iconP2) return "iconP2";
 		else if (obj == scoreTxt) return "scoreTxt";
 		else if (obj == botplayTxt) return "botplayTxt";
+		else if (obj == timeTxt) return "timeTxt";
+		else if (obj == timeBarBG) return "timeBarBG";
+		else if (obj == timeBar) return "timeBar";
 		// else if (obj == rating) return "rating";
 		// else if (obj == comboNums) return "comboNums";
 		else return null;

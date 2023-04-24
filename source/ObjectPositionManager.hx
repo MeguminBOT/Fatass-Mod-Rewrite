@@ -33,6 +33,9 @@ class ObjectPositionManager {
 	var iconP2:HealthIcon;
 	var scoreTxt:FlxText;
 	var botplayTxt:FlxText;
+	var timeBar:FlxBar;
+	var timeBarBG:FlxSprite;
+	var timeTxt:FlxText;
 	// var rating:FlxSprite;
 	// var comboNums:FlxSpriteGroup;
 
@@ -43,7 +46,10 @@ class ObjectPositionManager {
 		iconP1:HealthIcon, 
 		iconP2:HealthIcon, 
 		scoreTxt:FlxText, 
-		botplayTxt:FlxText) {
+		botplayTxt:FlxText,
+		timeTxt:FlxText,
+		timeBar:FlxBar,
+		timeBarBG:FlxSprite) {
 
 		instance = this;
 		
@@ -54,6 +60,9 @@ class ObjectPositionManager {
 		this.iconP2 = iconP2;
 		this.scoreTxt = scoreTxt;
 		this.botplayTxt = botplayTxt;
+		this.timeTxt = timeTxt;
+		this.timeBar = timeBar;
+		this.timeBarBG = timeBarBG;
 		// this.rating = rating;
 		// this.comboNums = comboNums;
 	}
@@ -102,6 +111,24 @@ class ObjectPositionManager {
 				y: botplayTxt.y,
 				angle: botplayTxt.angle
 			},
+			{
+				name: "timeTxt",
+				x: timeTxt.x,
+				y: timeTxt.y,
+				angle: timeTxt.angle
+			},
+			{
+				name: "timeBarBG",
+				x: timeBarBG.x,
+				y: timeBarBG.y,
+				angle: timeBarBG.angle
+			},
+			{
+				name: "timeBar",
+				x: timeBar.x,
+				y: timeBar.y,
+				angle: timeBar.angle
+			},
 		];
 	}
 	
@@ -136,6 +163,18 @@ class ObjectPositionManager {
 					botplayTxt.x = position.x;
 					botplayTxt.y = position.y;
 					botplayTxt.angle = position.angle;
+				case "timeTxt":
+					timeTxt.x = position.x;
+					timeTxt.y = position.y;
+					timeTxt.angle = position.angle;
+				case "timeBarBG":
+					timeBarBG.x = position.x;
+					timeBarBG.y = position.y;
+					timeBarBG.angle = position.angle;
+				case "timeBar":
+					timeBar.x = position.x;
+					timeBar.y = position.y;
+					timeBar.angle = position.angle;
 				// case "rating":
 				//     rating.x = position.x;
 				//     rating.y = position.y;
