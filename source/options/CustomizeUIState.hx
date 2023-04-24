@@ -131,6 +131,7 @@ class CustomizeUIState extends MusicBeatState
 		timeTxt.borderSize = 2;
 		timeTxt.text = minutes + ":" + seconds; // Set text to display minutes and seconds from the users system clock
 		if(ClientPrefs.downScroll) timeTxt.y = FlxG.height - 44;
+		timeTxt.cameras = [camHUD];
 
 		timeBarBG = new FlxSprite(0, timeTxt.y + 8).loadGraphic(Paths.image('uiskins/default/base/timeBar'));
 		timeBarBG.x = timeTxt.x;
@@ -138,6 +139,7 @@ class CustomizeUIState extends MusicBeatState
 		timeBarBG.scrollFactor.set();
 		timeBarBG.alpha = 1;
 		timeBarBG.color = FlxColor.BLACK;
+		timeBarBG.cameras = [camHUD];
 
 		timeBar = new FlxBar(timeBarBG.x + 4, timeBarBG.y + 4, LEFT_TO_RIGHT, Std.int(timeBarBG.width - 8), Std.int(timeBarBG.height - 8), this, 'health', 0, 2);
 		timeBar.scrollFactor.set();
@@ -195,16 +197,16 @@ class CustomizeUIState extends MusicBeatState
 		}
 		botplayTxt.cameras = [camHUD];
 
-		add(judgeCounterTxt);
-		add(healthBar);
+		add(timeBarBG);
+		add(timeBar);
+		add(timeTxt);
 		add(healthBarBG);
+		add(healthBar);
 		add(iconP1);
 		add(iconP2);
 		add(scoreTxt);
 		add(botplayTxt);
-		add(timeBar);
-		add(timeBarBG);
-		add(timeTxt);
+		add(judgeCounterTxt);
 
 		Conductor.changeBPM(128.0);
 		FlxG.sound.playMusic(Paths.music('offsetSong'), 1, true);
