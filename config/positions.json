@@ -19,13 +19,13 @@
    },
    {
       "angle": 0,
-      "x": 0,
+      "x": 619,
       "y": 8.2,
       "name": "iconP1"
    },
    {
       "angle": 0,
-      "x": 0,
+      "x": 515,
       "y": 8.2,
       "name": "iconP2"
    },
@@ -42,21 +42,21 @@
       "name": "botplayTxt"
    },
    {
+      "angle": 0,
+      "x": 434,
+      "y": 669,
+      "name": "timeTxt"
+   },
+   {
+      "angle": 0,
       "x": 435,
       "y": 675,
-      "angle": 0,
       "name": "timeBarBG"
    },
    {
-      "x": 435,
-      "y": 680,
       "angle": 0,
+      "x": 438,
+      "y": 679,
       "name": "timeBar"
-   },
-   {
-      "x": 435,
-      "y": 670,
-      "angle": 0,
-      "name": "timeTxt"
    }
 ]

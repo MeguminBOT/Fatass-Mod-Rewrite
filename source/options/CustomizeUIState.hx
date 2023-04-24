@@ -196,15 +196,15 @@ class CustomizeUIState extends MusicBeatState
 		botplayTxt.cameras = [camHUD];
 
 		add(judgeCounterTxt);
-		add(healthBarBG);
 		add(healthBar);
+		add(healthBarBG);
 		add(iconP1);
 		add(iconP2);
 		add(scoreTxt);
 		add(botplayTxt);
-		add(timeTxt);
-		add(timeBarBG);
 		add(timeBar);
+		add(timeBarBG);
+		add(timeTxt);
 
 		Conductor.changeBPM(128.0);
 		FlxG.sound.playMusic(Paths.music('offsetSong'), 1, true);
