@@ -69,7 +69,6 @@ class DownloadModsState extends MusicBeatState
 {
     var modpacks:Array<DownloadMetadata>;
     var input:FlxUIInputText;
-    var index:Int = 0;
 
     override function create(){
         FlxG.mouse.visible = true;
@@ -78,12 +77,11 @@ class DownloadModsState extends MusicBeatState
         modpacks = Json.parse(File.getContent("mods/modpackDownloadList.json"));
 
         // Create UI elements for each modpack
-        var buttonGroup:FlxSpriteGroup = new FlxSpriteGroup();
-        for (metadata in modpacks) {
+        var buttonGroup:FlxTypedGroup<FlxButton> = new FlxTypedGroup<FlxButton>();
+        for (index => metadata in modpacks) {
             var button:FlxButton = new FlxButton(100, 200 + index * 50, metadata.modpack, function(){ downloadModpack(metadata); });
-            button.label.setFormat("rubik.ttf", 16, FlxColor.WHITE, "center");
+            button.label.setFormat("vcr.ttf", 16, FlxColor.WHITE, "center");
             buttonGroup.add(button);
-            index++;
         }
         add(buttonGroup);
 
@@ -113,12 +111,19 @@ class DownloadModsState extends MusicBeatState
             // Download and extract modpack
             var request = new Http(metadata.link);
             var progressBar:FlxBar;
+
+            progressBar = new FlxBar(0, 0, FlxG.width, 20, null, 0, 1, false);
+            add(progressBar);
+            var zipPath:String = "mods/modpacks/" + metadata.fileName;
+            final size:Int = 184805122;
+            
+
             request.onBytes = function(data:haxe.io.Bytes) {
-                var zipPath:String = "modpacks/" + metadata.fileName;
-                var savePath:String = Paths.mods();
-                progressBar = new FlxBar(0, 0, FlxG.width, 20, null, 0, 1, false);
-                add(progressBar);
-                ZipHandler.saveUncompressed(zipPath, savePath);
+                if (data.length == size){
+                    if(!FileSystem.exists('${zipPath.replace(metadata.fileName, "")}')) FileSystem.createDirectory('${zipPath.replace(metadata.fileName, "")}');
+                    File.saveBytes(zipPath, data);
+                    ZipHandler.saveUncompressed(zipPath, savePath);
+                }
             };
             request.onStatus = function(status:Int) {
                 if (progressBar == null) {
@@ -145,20 +150,31 @@ class DownloadModsState extends MusicBeatState
             // Download and extract modpack
             var request = new Http(url);
             var progressBar:FlxBar;
+            progressBar = new FlxBar(0, 0, FlxG.width, 20, null, 0, 1, false);
+            add(progressBar);
+            var zipPath:String = "mods/modpacks/" + fileName;
+            var savePath:String = Paths.mods();
+
+            //here, we're forced to variabalize it
+            var downloadedBytes:haxe.io.Bytes;
+
             request.onBytes = function(data:haxe.io.Bytes) {
-                var zipPath:String = "modpacks/" + fileName;
-                var savePath:String = Paths.mods();
-                progressBar = new FlxBar(0, 0, FlxG.width, 20, null, 0, 1, false);
-                add(progressBar);
-                ZipHandler.saveUncompressed(zipPath, savePath);
-                modpacks.push({ link: url, modpack: fileName.substr(0, fileName.lastIndexOf(".")), author: "", fileName: fileName });
+                downloadedBytes = data;
             };
+
             request.onStatus = function(status:Int) {
                 if (progressBar == null) {
                     progressBar = new FlxBar(0, 0, FlxG.width, 20, null, 0, 1, false);
                     add(progressBar);
                 }
                 progressBar.value = status / 100; // The value should be between 0 and 1
+
+                if (status == 100){
+                    File.saveBytes(savePath, downloadedBytes);
+                    ZipHandler.saveUncompressed(zipPath, savePath);
+                    modpacks.push({ link: url, modpack: fileName.substr(0, fileName.lastIndexOf(".")), author: "", fileName: fileName });
+                }
+
             };
             request.request(false);
             if (progressBar != null) {
