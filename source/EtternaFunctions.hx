@@ -2,6 +2,7 @@ package;
 
 import flixel.util.FlxColor;
 import FunkinLua;
+import HelperFunctions;
 
 class EtternaFunctions
 {
@@ -38,7 +39,7 @@ class EtternaFunctions
             	ratingName = 'MFC';
 			}
         	var ratingFull = Math.max(actualRatingHere * 100, 0);
-        	var ratingFullAsStr = EtternaFunctions.floatToStringPrecision(ratingFull, 3);
+        	var ratingFullAsStr = HelperFunctions.truncateFloat(ratingFull, 3);
 
         	var tempRatingNameVery = EtternaFunctions.accuracyToRatingString(ratingFull);
         	var finalScoreTxt = 'Score: ' + PlayState.instance.songScore + ' | Combo Breaks: ' + PlayState.instance.songMisses + ' | Accuracy: ' + ratingFullAsStr + '% | (' + ratingName + ') ' + tempRatingNameVery;
@@ -82,21 +83,6 @@ class EtternaFunctions
 		}
 	}
 	
-	public static function floatToStringPrecision(n:Float, prec:Int){
-		n = Math.round(n * Math.pow(10, prec));
-		var str = ''+n;
-		var len = str.length;
-		if(len <= prec){
-		  while(len < prec){
-			str = '0'+str;
-			len++;
-		  }
-		  return '0.'+str;
-		}
-		else{
-		  return str.substr(0, str.length-prec) + '.'+str.substr(str.length-prec);
-		}
-	}
 
 	public static function updateAccuracy(strumTime:Float, songPos:Float, rOffset:Int) {
 		var noteDiffSign:Float = strumTime - songPos + rOffset;
@@ -121,12 +107,12 @@ class EtternaFunctions
 		var zero = 65 * (Math.pow(ts, ts_pow));
 		var power = 2.5;
 		var dev = 22.7 * (Math.pow(ts, ts_pow));
-	
-		if (maxms <= ridic)
+
+		if (maxms <= ridic) // anything below this (judge scaled) threshold is counted as full pts
 			return max_points;
-		else if (maxms <= zero)
+		else if (maxms <= zero) // ma/pa region, exponential
 			return max_points * erf((zero - maxms) / dev);
-		else if (maxms <= max_boo_weight)
+		else if (maxms <= max_boo_weight) // cb region, linear
 			return (maxms - zero) * miss_weight / (max_boo_weight - zero);
 		else
 			return miss_weight;
@@ -137,7 +123,7 @@ class EtternaFunctions
 		if (diff > 399) {
 			msText.text = '';
 		} else {
-			msText.text = floatToStringPrecision(-diff, 3) + 'ms';
+			msText.text = HelperFunctions.truncateFloat(-diff, 3) + 'ms';
 		}
 		lastMsShowUp = Conductor.songPosition;
 		msTextVisible = true;
@@ -154,14 +140,18 @@ class EtternaFunctions
 		}
 	}
 
-	public static function erf(x:Float):Float {
+	public static function erf(x:Float):Float
+	{
+		// Save the sign of x
 		var sign = 1;
 		if (x < 0)
 			sign = -1;
 		x = Math.abs(x);
+
+		// A&S formula 7.1.26
 		var t = 1.0 / (1.0 + p * x);
 		var y = 1.0 - (((((a5 * t + a4) * t) + a3) * t + a2) * t + a1) * t * Math.exp(-x * x);
-	
+
 		return sign * y;
 	}
 
