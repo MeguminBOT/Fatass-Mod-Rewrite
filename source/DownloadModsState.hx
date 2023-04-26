@@ -22,6 +22,7 @@ import sys.FileSystem;
 import sys.io.File;
 import sys.thread.Thread;
 #end
+import CustomFadeTransition;
 
 using StringTools;
 
@@ -58,6 +59,7 @@ private class ZipHandler
         return file.data;
     }
 }
+
 private typedef DownloadMetadata = {
     var link:String;
     var modpack:String;
@@ -69,6 +71,9 @@ class DownloadModsState extends MusicBeatState
 {
     var modpacks:Array<DownloadMetadata>;
     var input:FlxUIInputText;
+    var downloadButton:FlxButton;
+    var urlRegex = ~/^(http|https):\/\/[a-z0-9\-\.]+\.[a-z]{2,}(\/.*)?$/i;
+    var url:String;
 
     override function create(){
         FlxG.mouse.visible = true;
@@ -88,17 +93,11 @@ class DownloadModsState extends MusicBeatState
         // Create input for custom modpack URL
         input = new FlxUIInputText(100, 500, 400, "Enter direct modpack URL");
         add(input);
-
+        
         // Create download button for custom modpack URL
-        var downloadButton:FlxButton = new FlxButton(550, 500, "Download");
-        add(downloadButton);
+        downloadButton = new FlxButton(550, 500, "Download", function(){ downloadCustomModpack(url); });
+		add(downloadButton);
 
-        var urlRegex = ~/^(http|https):\/\/[a-z0-9\-\.]+\.[a-z]{2,}(\/.*)?$/i;
-        if (urlRegex.match(input.text)) {
-            // show download button
-        } else {
-            // hide download button
-        }
 
         var bg = new FlxSprite().loadGraphic(Paths.image("menuBGBlue"));
         add(bg);
@@ -114,7 +113,9 @@ class DownloadModsState extends MusicBeatState
 
             progressBar = new FlxBar(0, 0, FlxG.width, 20, null, 0, 1, false);
             add(progressBar);
-            var zipPath:String = "mods/modpacks/" + metadata.fileName;
+            var directory:String = Paths.mods();
+            var savePath:String = directory + "modpacks/" + metadata.modpack;
+            var zipPath:String = directory + "modpacks/" + metadata.fileName;
             final size:Int = 184805122;
             
 
@@ -144,6 +145,8 @@ class DownloadModsState extends MusicBeatState
 
     private function downloadCustomModpack(url:String):Void {
         try {
+
+            url = input.text;
             // Extract file name from URL
             var fileName:String = url.substr(url.lastIndexOf("/") + 1);
         
@@ -152,8 +155,9 @@ class DownloadModsState extends MusicBeatState
             var progressBar:FlxBar;
             progressBar = new FlxBar(0, 0, FlxG.width, 20, null, 0, 1, false);
             add(progressBar);
-            var zipPath:String = "mods/modpacks/" + fileName;
-            var savePath:String = Paths.mods();
+            var directory:String = Paths.mods();
+            var savePath:String = directory + "modpacks/" + fileName;
+            var zipPath:String = directory + "modpacks/" + fileName;
 
             //here, we're forced to variabalize it
             var downloadedBytes:haxe.io.Bytes;
