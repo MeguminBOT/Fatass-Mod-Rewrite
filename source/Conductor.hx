@@ -126,7 +126,9 @@ class Conductor
 	}
 
 	static function getSectionBeats(song:SwagSong, section:Int) {
-		return (song.notes[section] != null) ? song.notes[section].sectionBeats : 4;
+		var val:Null<Float> = null;
+		if(song.notes[section] != null) val = song.notes[section].sectionBeats;
+		return val != null ? val : 4;
 	}
 
 	inline public static function calculateCrochet(bpm:Float) {
