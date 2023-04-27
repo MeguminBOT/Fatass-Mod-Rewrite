@@ -519,7 +519,7 @@ class PlayState extends MusicBeatState
 				case 'ugh' | 'guns' | 'stress':
 					curStage = 'tank';
 				//Fat-Ass additions
-				case 'monochrome-fatass-metal-cover' | 'monochrome':
+				case 'monochrome-fatass-metal-cover':
 					curStage = 'no-stage';
 				default:
 					curStage = 'stage';
@@ -3045,7 +3045,6 @@ class PlayState extends MusicBeatState
 	var limoSpeed:Float = 0;
 
 	function startUnown(timer:Int = 15, word:String = ''):Void {
-		if (!ClientPrefs.customMechanicEvent) {
 			canPause = false;
 			unowning = true;
 			persistentUpdate = true;
@@ -3057,7 +3056,6 @@ class PlayState extends MusicBeatState
 			unownState.cameras = [camHUD];
 			FlxG.autoPause = false;
 			openSubState(unownState);
-		}
 	}
 
 	public function wonUnown():Void {
@@ -4043,8 +4041,9 @@ class PlayState extends MusicBeatState
 			case 'Unown':
 				if (!ClientPrefs.customMechanicEvent || opponentChart || doubleChart) {
 					return;
+				} else {
+					startUnown(Std.parseInt(value1), value2);	
 				}
-			startUnown(Std.parseInt(value1), value2);	
 		}
 		callOnLuas('onEvent', [eventName, value1, value2]);
 	}
