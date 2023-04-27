@@ -70,6 +70,7 @@ class ClientPrefs {
 	public static var underlay:Float = 0;
 	public static var hitsoundType:String = 'hitsound_default';
 	public static var inputSystem:String = "Etterna";
+	public static var inputComplexity:String = "High";
 	public static var customNoteSound:Bool = true;
 	public static var customSoundEvent:Bool = true;
 	public static var customMechanicEvent:Bool = true;
@@ -157,6 +158,7 @@ class ClientPrefs {
 		FlxG.save.data.underlay = underlay;
 		FlxG.save.data.hitsoundType = hitsoundType;
 		FlxG.save.data.inputSystem = inputSystem;
+		FlxG.save.data.inputComplexity= inputComplexity;
 		FlxG.save.data.customNoteSound = customNoteSound;
 		FlxG.save.data.customSoundEvent = customSoundEvent;
 		FlxG.save.data.customMechanicEvent = customMechanicEvent;
@@ -330,6 +332,10 @@ class ClientPrefs {
 		if(FlxG.save.data.inputSystem != null)
 		{
 			inputSystem = FlxG.save.data.inputSystem;
+		}
+		if(FlxG.save.data.inputComplexity != null)
+		{
+			inputComplexity = FlxG.save.data.inputComplexity;
 		}
 		if(FlxG.save.data.customNoteSound != null)
 		{

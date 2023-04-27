@@ -108,14 +108,25 @@ class EtternaFunctions
 		var power = 2.5;
 		var dev = 22.7 * (Math.pow(ts, ts_pow));
 
-		if (maxms <= ridic) // anything below this (judge scaled) threshold is counted as full pts
-			return max_points;
-		else if (maxms <= zero) // ma/pa region, exponential
-			return max_points * erf((zero - maxms) / dev);
-		else if (maxms <= max_boo_weight) // cb region, linear
-			return (maxms - zero) * miss_weight / (max_boo_weight - zero);
-		else
-			return miss_weight;
+		if (ClientPrefs.inputComplexity == "Normal") {
+			if (maxms <= 45) // anything below this (judge scaled) threshold is counted as full pts
+				return max_points;
+			else if (maxms <= zero) // ma/pa region, exponential
+				return max_points * erf((zero - maxms) / dev);
+			else if (maxms <= max_boo_weight) // cb region, linear
+				return (maxms - zero) * miss_weight / (max_boo_weight - zero);
+			else
+				return miss_weight;
+		} else {
+			if (maxms <= ridic) // anything below this (judge scaled) threshold is counted as full pts
+				return max_points;
+			else if (maxms <= zero) // ma/pa region, exponential
+				return max_points * erf((zero - maxms) / dev);
+			else if (maxms <= max_boo_weight) // cb region, linear
+				return (maxms - zero) * miss_weight / (max_boo_weight - zero);
+			else
+				return miss_weight;
+		}
 	}
 
 	public static function showMsDiffOnScreen(diff:Float) {

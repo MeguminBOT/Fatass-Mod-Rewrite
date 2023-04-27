@@ -75,7 +75,15 @@ class GameplaySettingsSubState extends BaseOptionsMenu
 			'Etterna',
 			['Etterna', 'PsychEngine']);
 		addOption(option);
-
+	
+		var option:Option = new Option('Accuracy Complexity Level',
+			"Changes the complexity level of accuracy calculations, \nOnly works if Accuracy System is Etterna,\nHigh is the most accurate but also the harshest, purely based of Etterna.\nNormal is a mix between Psych default and Kade's Complex Accuracy.",
+			'inputComplexity',
+			'string',
+			'High',
+			['High', 'Normal']);
+		addOption(option);
+		
 		var option:Option = new Option('Hitsound Volume',
 			'Plays a sound whenever you hit a note. \nLike in osu!',
 			'hitsoundVolume',
@@ -223,3 +231,4 @@ class GameplaySettingsSubState extends BaseOptionsMenu
 		FlxG.sound.play(Paths.sound(ClientPrefs.hitsoundType), ClientPrefs.hitsoundVolume);
 	}
 }
+
