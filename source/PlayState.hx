@@ -3045,17 +3045,17 @@ class PlayState extends MusicBeatState
 	var limoSpeed:Float = 0;
 
 	function startUnown(timer:Int = 15, word:String = ''):Void {
-			canPause = false;
-			unowning = true;
-			persistentUpdate = true;
-			persistentDraw = true;
-			var realTimer = timer;
-			var unownState = new UnownSubState(realTimer, word);
-			unownState.win = wonUnown;
-			unownState.lose = die;
-			unownState.cameras = [camHUD];
-			FlxG.autoPause = false;
-			openSubState(unownState);
+		canPause = false;
+		unowning = true;
+		persistentUpdate = true;
+		persistentDraw = true;
+		var realTimer = timer;
+		var unownState = new UnownSubState(realTimer, word);
+		unownState.win = wonUnown;
+		unownState.lose = die;
+		unownState.cameras = [camHUD];
+		FlxG.autoPause = false;
+		openSubState(unownState);
 	}
 
 	public function wonUnown():Void {
