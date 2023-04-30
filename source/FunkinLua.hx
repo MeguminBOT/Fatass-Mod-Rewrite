@@ -121,6 +121,9 @@ class FunkinLua {
 		set('stepCrochet', Conductor.stepCrochet);
 		set('songLength', FlxG.sound.music.length);
 		set('songName', PlayState.SONG.song);
+		set('songArtist', PlayState.SONG.artist);
+		set('songCharter', PlayState.SONG.charter);
+		set('songMod', PlayState.SONG.mod);
 		set('songPath', Paths.formatToSongPath(PlayState.SONG.song));
 		set('startedCountdown', false);
 		set('curStage', PlayState.SONG.stage);

@@ -109,7 +109,7 @@ class EtternaFunctions
 		var dev = 22.7 * (Math.pow(ts, ts_pow));
 
 		if (ClientPrefs.inputComplexity == "Normal") {
-			if (maxms <= 45) // anything below this (judge scaled) threshold is counted as full pts
+			if (maxms <= 45) // Less harsh on Sicks and Perfects for accuracy. Will always award 100% points if below 45ms hit, the rest of the hit ratings are the same as High.
 				return max_points;
 			else if (maxms <= zero) // ma/pa region, exponential
 				return max_points * erf((zero - maxms) / dev);
@@ -118,7 +118,7 @@ class EtternaFunctions
 			else
 				return miss_weight;
 		} else {
-			if (maxms <= ridic) // anything below this (judge scaled) threshold is counted as full pts
+			if (maxms <= ridic) // Anything below this (judge scaled) threshold is counted as full pts must be under 22ms to get 100% points. This is the Complexity "High" setting.
 				return max_points;
 			else if (maxms <= zero) // ma/pa region, exponential
 				return max_points * erf((zero - maxms) / dev);
