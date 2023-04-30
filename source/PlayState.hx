@@ -217,6 +217,7 @@ class PlayState extends MusicBeatState
 	public var camHUD:FlxCamera;
 	public var camGame:FlxCamera;
 	public var camOther:FlxCamera;
+	public var camStatic:FlxCamera;
 	public var cameraSpeed:Float = 1;
 
 	var dialogue:Array<String> = ['blah blah blah', 'coolswag'];
@@ -457,12 +458,20 @@ class PlayState extends MusicBeatState
 		camGame = new FlxCamera();
 		camHUD = new FlxCamera();
 		camOther = new FlxCamera();
+
+		// Mainly added to prevent UI stuff from being zoomed in when modcharts use camOther to zoomTween. 
+		// As stuff like pauseMenu renders the last created camera.
+		// While we're at it, we've made an option that allows people to make the HUD render to camStatic as well.
+		camStatic = new FlxCamera();
+	
 		camHUD.bgColor.alpha = 0;
 		camOther.bgColor.alpha = 0;
+		camStatic.bgColor.alpha = 0;
 
 		FlxG.cameras.reset(camGame);
 		FlxG.cameras.add(camHUD, false);
 		FlxG.cameras.add(camOther, false);
+		FlxG.cameras.add(camStatic, false);
 		grpNoteSplashes = new FlxTypedGroup<NoteSplash>();
 
 		FlxG.cameras.setDefaultDrawTarget(camGame, true);
@@ -1268,22 +1277,35 @@ class PlayState extends MusicBeatState
 		strumLineNotes.cameras = [camHUD];
 		grpNoteSplashes.cameras = [camHUD];
 		notes.cameras = [camHUD];
-		healthBar.cameras = [camHUD];
-		healthBarBG.cameras = [camHUD];
-		iconP1.cameras = [camHUD];
-		iconP2.cameras = [camHUD];
-		scoreTxt.cameras = [camHUD];
-		botplayTxt.cameras = [camHUD];
-		timeBar.cameras = [camHUD];
-		timeBarBG.cameras = [camHUD];
-		timeTxt.cameras = [camHUD];
+		if (ClientPrefs.staticHUD) {
+			healthBar.cameras = [camStatic];
+			healthBarBG.cameras = [camStatic];
+			iconP1.cameras = [camStatic];
+			iconP2.cameras = [camStatic];
+			scoreTxt.cameras = [camStatic];
+			botplayTxt.cameras = [camStatic];
+			timeBar.cameras = [camStatic];
+			timeBarBG.cameras = [camStatic];
+			timeTxt.cameras = [camStatic];
+
+		} else {
+			healthBar.cameras = [camHUD];
+			healthBarBG.cameras = [camHUD];
+			iconP1.cameras = [camHUD];
+			iconP2.cameras = [camHUD];
+			scoreTxt.cameras = [camHUD];
+			botplayTxt.cameras = [camHUD];
+			timeBar.cameras = [camHUD];
+			timeBarBG.cameras = [camHUD];
+			timeTxt.cameras = [camHUD];
+		}
 		doof.cameras = [camHUD];
 		//Fat-Ass Mod Stuff
 		laneunderlay.cameras = [camHUD];
 		laneunderlayOpponent.cameras = [camHUD];
 		hiddenPlayfield.cameras = [camOther];
 		hiddenPlayfieldOpponent.cameras = [camOther];
-		judgeCounterTxt.cameras = [camOther];
+		judgeCounterTxt.cameras = [camStatic];
 
 		// if (SONG.song == 'South')
 		// FlxG.camera.alpha = 0.7;
@@ -1407,7 +1429,7 @@ class PlayState extends MusicBeatState
 
 				case 'ugh' | 'guns' | 'stress':
 					tankIntro();
-
+	
 				default:
 					startCountdown();
 			}
@@ -4001,6 +4023,10 @@ class PlayState extends MusicBeatState
 						}
 				}
 				reloadHealthBarColors();
+
+			case 'Change Icon':
+				iconP1.changeIcon(value1);
+				iconP2.changeIcon(value2);
 
 			case 'BG Freaks Expression':
 				if(bgGirls != null) bgGirls.swapDanceType();

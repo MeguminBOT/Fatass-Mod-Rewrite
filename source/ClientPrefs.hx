@@ -82,6 +82,7 @@ class ClientPrefs {
 	public static var strumlineOffsetY:Float = 0;
 	public static var strumlineOffsetX:Float = 0;
 	public static var hideIcons:Bool = false;
+	public static var staticHUD:Bool = false;
 
 	//Every key has two binds, add your key bind down here and then add your control on options/ControlsSubState.hx and Controls.hx
 	public static var keyBinds:Map<String, Array<FlxKey>> = [
@@ -170,6 +171,7 @@ class ClientPrefs {
 		FlxG.save.data.strumlineOffsetY = strumlineOffsetY;
 		FlxG.save.data.strumlineOffsetX = strumlineOffsetX;
 		FlxG.save.data.hideIcons = hideIcons;
+		FlxG.save.data.staticHUD = staticHUD;
 		
 		// Better Discord RPC
 		FlxG.save.data.discordRPC = discordRPC;
@@ -381,7 +383,10 @@ class ClientPrefs {
 		{
 			hideIcons = FlxG.save.data.hideIcons;
 		}
-
+		if(FlxG.save.data.staticHUD != null)
+		{
+			staticHUD = FlxG.save.data.staticHUD;
+		}
 		var save:FlxSave = new FlxSave();
 		save.bind('fatass_controls_v2', CoolUtil.getSavePath());
 		if(save != null && save.data.customControls != null) {

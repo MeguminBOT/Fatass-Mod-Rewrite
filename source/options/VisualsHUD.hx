@@ -82,6 +82,13 @@ class VisualsHUD extends BaseOptionsMenu
 		option.changeValue = 0.1;
 		option.decimals = 1;
 		addOption(option);
+
+		var option:Option = new Option('Static HUD objects',
+			"If checked, the HUD won't be affected by events that uses camHUD camera. May break some charts.\nAffects all objects that can be moved using CustomizeUI",
+			'staticHUD',
+			'bool',
+			false);
+		addOption(option);
 		
 		#if !mobile
 		var option:Option = new Option('FPS Counter',
