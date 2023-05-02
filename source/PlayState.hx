@@ -2204,10 +2204,6 @@ class PlayState extends MusicBeatState
 		if(ret != FunkinLua.Function_Stop) {
 			var enemyAlpha:Float = 1;
 			var playerAlpha:Float = 1;
-			if (SONG.song.toLowerCase() == 'monochrome-fatass-metal-cover') {
-				enemyAlpha = 0;
-				playerAlpha = 0;
-			}
 			if (skipCountdown || startOnTime > 0) skipArrowStartTween = true;
 			if (skipCountdown || startOnTime > 0) skipArrowStartTween = true;
 
@@ -2508,11 +2504,6 @@ class PlayState extends MusicBeatState
 			setSongTime(startOnTime - 500);
 		}
 		startOnTime = 0;
-		
-		if (SONG.song.toLowerCase() == 'monochrome-fatass-metal-cover') {
-			dad.animation.play('fadeIn', true);
-			dad.visible = true;
-		}
 
 		if(paused) {
 			//trace('Oopsie doopsie! Paused sound');
@@ -2522,10 +2513,6 @@ class PlayState extends MusicBeatState
 
 		// Song duration in a float, useful for the time left feature
 		songLength = FlxG.sound.music.length;
-		if (SONG.song.toLowerCase() != 'monochrome-fatass-metal-cover') {
-			FlxTween.tween(timeBar, {alpha: 1}, 0.5, {ease: FlxEase.circOut});
-			FlxTween.tween(timeTxt, {alpha: 1}, 0.5, {ease: FlxEase.circOut});
-		}
 		FlxTween.tween(timeBar, {alpha: 1}, 0.5, {ease: FlxEase.circOut});
 		FlxTween.tween(timeTxt, {alpha: 1}, 0.5, {ease: FlxEase.circOut});
 
@@ -3578,21 +3565,19 @@ class PlayState extends MusicBeatState
 	public var isDead:Bool = false; //Don't mess with this on Lua!!!
 
 	public function die():Void {
-		if (SONG.song.toLowerCase() == 'monochrome-fatass-metal-cover') {
-			boyfriend.stunned = true;
-			deathCounter++;
-			paused = true;
+		boyfriend.stunned = true;
+		deathCounter++;
+		paused = true;
 
-			vocals.stop();
-			FlxG.sound.music.stop();
+		vocals.stop();
+		FlxG.sound.music.stop();
 
-			isDead = true;
-			isMonoDead = true;
-			dad.debugMode = true;
-			dad.playAnim('fadeOut', true);
-			dad.animation.finishCallback = function (name:String) {
-				remove(dad);
-			}
+		isDead = true;
+		isMonoDead = true;
+		dad.debugMode = true;
+		dad.playAnim('fadeOut', true);
+		dad.animation.finishCallback = function (name:String) {
+			remove(dad);
 		}
 	}
 
@@ -5373,40 +5358,6 @@ class PlayState extends MusicBeatState
 	override function beatHit()
 	{
 		super.beatHit();
-
-		switch (SONG.song.toLowerCase()) {
-			case 'monochrome-fatass-metal-cover':
-				switch (curBeat) {
-					case 28:
-						FlxTween.tween(healthBar, {alpha: 0.4}, 3, {ease: FlxEase.linear});
-						FlxTween.tween(healthBarBG, {alpha: 0.4}, 3, {ease: FlxEase.linear});
-						FlxTween.tween(scoreTxt, {alpha: 0.4}, 3, {ease: FlxEase.linear});
-						FlxTween.tween(iconP1, {alpha: 1}, 3, {ease: FlxEase.linear});
-						FlxTween.tween(iconP2, {alpha: 1}, 3, {ease: FlxEase.linear});
-						for (i in playerStrums) {
-							FlxTween.tween(i, {alpha: 0.7}, 3, {ease: FlxEase.linear});
-						}
-					case 392:
-						dad.debugMode = true;
-						dad.playAnim('fadeOut', true);
-						FlxTween.tween(healthBar, {alpha: 0}, 1, {ease: FlxEase.linear});
-						FlxTween.tween(healthBarBG, {alpha: 0}, 1, {ease: FlxEase.linear});
-						FlxTween.tween(scoreTxt, {alpha: 0}, 1, {ease: FlxEase.linear});
-						FlxTween.tween(iconP1, {alpha: 0}, 1, {ease: FlxEase.linear});
-						FlxTween.tween(iconP2, {alpha: 0}, 1, {ease: FlxEase.linear});
-						for (i in playerStrums) {
-							FlxTween.tween(i, {alpha: 0}, 1, {ease: FlxEase.linear});
-						}
-					case 224:
-						/*if (ClientPrefs.hellMode)
-							startUnown(16, 'abcdefghijklmnopqrstuvwxyz');
-						else
-							startUnown(8);*/
-					case 232:
-						/*if (!ClientPrefs.hellMode)
-							startUnown(8);*/
-				}
-		}
 
 		if(lastBeatHit >= curBeat) {
 			//trace('BEAT HIT: ' + curBeat + ', LAST HIT: ' + lastBeatHit);
