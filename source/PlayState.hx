@@ -507,9 +507,6 @@ class PlayState extends MusicBeatState
 					curStage = 'schoolEvil';
 				case 'ugh' | 'guns' | 'stress':
 					curStage = 'tank';
-				//Fat-Ass additions
-				case 'monochrome-fatass-metal-cover':
-					curStage = 'no-stage';
 				default:
 					curStage = 'stage';
 			}
