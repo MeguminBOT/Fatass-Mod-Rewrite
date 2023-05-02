@@ -4,6 +4,7 @@ package;
 import sys.io.File;
 import sys.FileSystem;
 #end
+import flixel.util.FlxColor;
 import lime.utils.Assets;
 import openfl.utils.Assets as OpenFlAssets;
 import haxe.Json;
@@ -38,7 +39,7 @@ class CategoryData {
 
 	// Load a single category file from JSON
 	public static function loadCategoryFile(fileName:String):CategoryFile {
-		return Json.parse(FileSystem.getContent(fileName));
+		return Json.parse(File.getContent(fileName));
 	}
 
 	// Load all category files from the categories directory
@@ -52,6 +53,15 @@ class CategoryData {
 				categories.push(categoryData);
 			}
 		}
+		// Add the "All Songs" category entry
+		var allSongsCategory:CategoryData = new CategoryData({
+			categoryName: "All Songs",
+			categoryCharacter: "dad",
+			color: FlxColor.fromRGB(255, 255, 255),
+			weekFiles: []
+		}, "");
+		categories.unshift(allSongsCategory);
+	
 		return categories;
 	}
 }
