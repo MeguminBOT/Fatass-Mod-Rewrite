@@ -339,6 +339,7 @@ class PlayState extends MusicBeatState
 	public var opponentIsPlaying:Bool = false;
 	public var uiSkinFolder:String = 'base';
 	public var judgeCounterTxt:FlxText;
+	public var msTimings:Array<FlxText>;
 	var opm:ObjectPositionManager;
 
 	//Fat-Ass Custom Note Stuff
@@ -351,27 +352,6 @@ class PlayState extends MusicBeatState
 	var isMonoDead:Bool = false;
 	var keyboardTimer:Int = 8;
 	var keyboard:FlxSprite;
-
-	public function createMsText() {
-		
-		var msText:ModchartText = new ModchartText(500, 200, '', 400);
-		modchartTexts.set('msText', msText);
-		msText.cameras = [camHUD];
-		msText.screenCenter();
-		msText.size = 26;
-		msText.borderSize = 2;
-		msText.borderColor = 0xff000000;
-		msText.font = Paths.font('rubik.ttf');
-		msText.x = 325;
-		msText.y += 75;
-		msText.x += ClientPrefs.comboOffset[0];
-		msText.y -= ClientPrefs.comboOffset[1];
-		msText.acceleration.y = 550 * playbackRate * playbackRate;
-		msText.velocity.y -= FlxG.random.int(140, 175) * playbackRate;
-		msText.velocity.x -= FlxG.random.int(0, 10) * playbackRate;
-		EtternaFunctions.msText = msText;
-		add(EtternaFunctions.msText);
-	}
 
 	override public function create()
 	{
@@ -1515,9 +1495,6 @@ class PlayState extends MusicBeatState
 		CustomFadeTransition.nextCamera = camOther;
 		if(eventNotes.length < 1) checkEventNote();
 
-		if (ClientPrefs.inputSystem == "Etterna") {
-			createMsText();
-		}
 		opm = new ObjectPositionManager(judgeCounterTxt, healthBar, healthBarBG, iconP1, iconP2, scoreTxt, botplayTxt, timeTxt, timeBar, timeBarBG);
 		opm.loadPositions();
 	}
@@ -4449,8 +4426,17 @@ class PlayState extends MusicBeatState
 		comboSpr.y += 60;
 		comboSpr.velocity.x += FlxG.random.int(1, 10) * playbackRate;
 
+		for (i in msTimings) remove(i);
+
+		var msTimings:FlxText = new FlxText(playerStrums.members[1].x + playerStrums.members[1].width / 2, playerStrums.members[0].y - 40, '' + Math.round(Conductor.songPosition - note.strumTime) + ' ms');
+		msTimings.cameras = [camOther];
+		msTimings.y += 3;
+		msTimings.setFormat(Paths.font("rubik.ttf"), 16, FlxColor.WHITE, CENTER, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
+		FlxTween.tween(msTimings, {y: msTimings.y - 3}, 0.01, {ease: FlxEase.bounceOut});
+
 		insert(members.indexOf(strumLineNotes), rating);
-		
+		add(msTimings);
+
 		if (!ClientPrefs.comboStacking)
 		{
 			if (lastRating != null) lastRating.kill();
@@ -4556,6 +4542,10 @@ class PlayState extends MusicBeatState
 		// add(coolText);
 
 		FlxTween.tween(rating, {alpha: 0}, 0.2 / playbackRate, {
+			startDelay: Conductor.crochet * 0.001 / playbackRate
+		});
+
+		FlxTween.tween(msTimings, {alpha: 0}, 0.2 / playbackRate, {
 			startDelay: Conductor.crochet * 0.001 / playbackRate
 		});
 
