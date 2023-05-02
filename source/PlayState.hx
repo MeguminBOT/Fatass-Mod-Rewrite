@@ -327,7 +327,7 @@ class PlayState extends MusicBeatState
 	// stores the last combo score objects in an array
 	public static var lastScore:Array<FlxSprite> = [];
 
-	//Fat-Ass Stuff
+	//Rhythm Engine Stuff
 	public static var mirrorMode:Bool = false;
 	public static var hiddenMode:Bool = false;
 	public var hiddenPlayfield:FlxSprite;
@@ -342,7 +342,7 @@ class PlayState extends MusicBeatState
 	public var msTimings:Array<FlxText>;
 	var opm:ObjectPositionManager;
 
-	//Fat-Ass Custom Note Stuff
+	//Rhythm Engine Custom Note Stuff
 	private var dodgeAnimations:Array<String> = ['dodgeLEFT', 'dodgeDOWN', 'dodgeUP', 'dodgeRIGHT'];
 	private var attackAnimations:Array<String> = ['attackLEFT', 'attackDOWN', 'attackUP', 'attackRIGHT'];
 	var bulletNoteHit:FlxSound;
@@ -425,13 +425,13 @@ class PlayState extends MusicBeatState
 		practiceMode = ClientPrefs.getGameplaySetting('practice', false);
 		cpuControlled = ClientPrefs.getGameplaySetting('botplay', false);
 
-		// Fat-Ass Gameplay settings
+		// Rhythm Engine Gameplay settings
 		hiddenMode = ClientPrefs.getGameplaySetting('hiddenmode', false);
 		mirrorMode = ClientPrefs.getGameplaySetting('mirrormode', false);
 		opponentChart = ClientPrefs.getGameplaySetting('opponentplay', false);
 		doubleChart = ClientPrefs.getGameplaySetting('doubleplay', false);
 
-		// Fat-Ass SFX
+		// Rhythm Engine SFX
 		bulletNoteHit = FlxG.sound.load(Paths.sound('bulletNoteHit'));
 
 		// var gameCam:FlxCamera = FlxG.camera;
@@ -1068,7 +1068,7 @@ class PlayState extends MusicBeatState
 		if(ClientPrefs.downScroll) strumLine.y = FlxG.height - 150 + ClientPrefs.strumlineOffsetY;
 		strumLine.scrollFactor.set();
 
-		//Fat-Ass Mod: Hidden Mode
+		//Rhythm Engine Mod: Hidden Mode
 		hiddenPlayfieldOpponent = new FlxSprite().loadGraphic(Paths.image('playfieldOverlay'));
 		hiddenPlayfieldOpponent.alpha = 1;
 		hiddenPlayfieldOpponent.scrollFactor.set();
@@ -1078,7 +1078,7 @@ class PlayState extends MusicBeatState
 		hiddenPlayfield.scrollFactor.set();
 		hiddenPlayfield.y = -175;
 
-		//Fat-Ass Mod: Lane Underlay
+		//Rhythm Engine Mod: Lane Underlay
 		laneunderlayOpponent = new FlxSprite(0, 0).makeGraphic(110 * 4 + 50, FlxG.height * 2);
 		laneunderlayOpponent.alpha = ClientPrefs.underlay;
 		laneunderlayOpponent.color = FlxColor.BLACK;
@@ -1089,7 +1089,7 @@ class PlayState extends MusicBeatState
 		laneunderlay.color = FlxColor.BLACK;
 		laneunderlay.scrollFactor.set();
 
-		//Fat-Ass Mod: Judgement Counter
+		//Rhythm Engine Mod: Judgement Counter
 		judgeCounterTxt = new FlxText(0, 0);
 		judgeCounterTxt.setFormat(Paths.font("rubik.ttf"), 16, FlxColor.WHITE, CENTER, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
 		judgeCounterTxt.scrollFactor.set();
@@ -1279,7 +1279,7 @@ class PlayState extends MusicBeatState
 			judgeCounterTxt.cameras = [camHUD];
 		}
 		doof.cameras = [camHUD];
-		//Fat-Ass Mod Stuff
+		//Rhythm Engine Mod Stuff
 		laneunderlay.cameras = [camHUD];
 		laneunderlayOpponent.cameras = [camHUD];
 		hiddenPlayfield.cameras = [camOther];
@@ -2208,7 +2208,7 @@ class PlayState extends MusicBeatState
 			generateStaticArrows(0);
 			generateStaticArrows(1);
 
-			//Fat-Ass Mod: Lane Underlay
+			//Rhythm Engine Mod: Lane Underlay
 			laneunderlay.x = playerStrums.members[0].x - 25;
 			laneunderlayOpponent.x = opponentStrums.members[0].x - 25;
 			laneunderlay.screenCenter(Y);
@@ -4023,7 +4023,7 @@ class PlayState extends MusicBeatState
 					FunkinLua.setVarInArray(this, value1, value2);
 				}
 			
-			// Fat-Ass Events
+			// Rhythm Engine Events
 			case 'Unown':
 				if (!ClientPrefs.customMechanicEvent || opponentChart || doubleChart) {
 					return;
@@ -4996,7 +4996,7 @@ class PlayState extends MusicBeatState
 					}
 				}
 
-				// Fat-Ass Generic Note Types
+				// Rhythm Engine Generic Note Types
 				if(note.noteType == 'Dodge Note') {
 					if(boyfriend.animOffsets.exists('dodge')) {
 						boyfriend.playAnim('dodge', true);
@@ -5026,7 +5026,7 @@ class PlayState extends MusicBeatState
 					}
 				}
 
-				// Fat-Ass Specific Note Types
+				// Rhythm Engine Specific Note Types
 				if(note.noteType == 'Bullet Note') {
 					if (ClientPrefs.customNoteSound) {
 						bulletNoteHit.play();
