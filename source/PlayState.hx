@@ -215,9 +215,10 @@ class PlayState extends MusicBeatState
 	public var iconP1:HealthIcon;
 	public var iconP2:HealthIcon;
 	public var camHUD:FlxCamera;
+	public var camStatic:FlxCamera;
 	public var camGame:FlxCamera;
 	public var camOther:FlxCamera;
-	public var camStatic:FlxCamera;
+	public var camMisc:FlxCamera;
 	public var cameraSpeed:Float = 1;
 
 	var dialogue:Array<String> = ['blah blah blah', 'coolswag'];
@@ -456,22 +457,21 @@ class PlayState extends MusicBeatState
 
 		// var gameCam:FlxCamera = FlxG.camera;
 		camGame = new FlxCamera();
+		camStatic = new FlxCamera();
 		camHUD = new FlxCamera();
 		camOther = new FlxCamera();
-
-		// Mainly added to prevent UI stuff from being zoomed in when modcharts use camOther to zoomTween. 
-		// As stuff like pauseMenu renders the last created camera.
-		// While we're at it, we've made an option that allows people to make the HUD render to camStatic as well.
-		camStatic = new FlxCamera();
+		camMisc = new FlxCamera(); // Mainly added to prevent UI stuff from being zoomed in when modcharts use camOther to zoomTween. 
 	
 		camHUD.bgColor.alpha = 0;
 		camOther.bgColor.alpha = 0;
 		camStatic.bgColor.alpha = 0;
+		camMisc.bgColor.alpha = 0;
 
 		FlxG.cameras.reset(camGame);
+		FlxG.cameras.add(camStatic, false);
 		FlxG.cameras.add(camHUD, false);
 		FlxG.cameras.add(camOther, false);
-		FlxG.cameras.add(camStatic, false);
+		FlxG.cameras.add(camMisc, false);
 		grpNoteSplashes = new FlxTypedGroup<NoteSplash>();
 
 		FlxG.cameras.setDefaultDrawTarget(camGame, true);
@@ -1285,7 +1285,8 @@ class PlayState extends MusicBeatState
 			timeBarBG.cameras = [camStatic];
 			timeTxt.cameras = [camStatic];
 			judgeCounterTxt.cameras = [camStatic];
-
+			laneunderlay.cameras = [camStatic];
+			laneunderlayOpponent.cameras = [camStatic];
 		} else {
 			healthBar.cameras = [camHUD];
 			healthBarBG.cameras = [camHUD];
@@ -1297,11 +1298,12 @@ class PlayState extends MusicBeatState
 			timeBarBG.cameras = [camHUD];
 			timeTxt.cameras = [camHUD];
 			judgeCounterTxt.cameras = [camHUD];
+			laneunderlay.cameras = [camHUD];
+			laneunderlayOpponent.cameras = [camHUD];
 		}
 		doof.cameras = [camHUD];
 		//Rhythm Engine Mod Stuff
-		laneunderlay.cameras = [camHUD];
-		laneunderlayOpponent.cameras = [camHUD];
+
 		hiddenPlayfield.cameras = [camOther];
 		hiddenPlayfieldOpponent.cameras = [camOther];
 
@@ -3586,19 +3588,21 @@ class PlayState extends MusicBeatState
 	public var isDead:Bool = false; //Don't mess with this on Lua!!!
 
 	public function die():Void {
-		boyfriend.stunned = true;
-		deathCounter++;
-		paused = true;
+		if (!cpuControlled) {
+			boyfriend.stunned = true;
+			deathCounter++;
+			paused = true;
 
-		vocals.stop();
-		FlxG.sound.music.stop();
+			vocals.stop();
+			FlxG.sound.music.stop();
 
-		isDead = true;
-		isMonoDead = true;
-		dad.debugMode = true;
-		dad.playAnim('fadeOut', true);
-		dad.animation.finishCallback = function (name:String) {
-			remove(dad);
+			isDead = true;
+			isMonoDead = true;
+			dad.debugMode = true;
+			dad.playAnim('fadeOut', true);
+			dad.animation.finishCallback = function (name:String) {
+				remove(dad);
+			}
 		}
 	}
 
