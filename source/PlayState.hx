@@ -1264,6 +1264,7 @@ class PlayState extends MusicBeatState
 			timeBar.cameras = [camStatic];
 			timeBarBG.cameras = [camStatic];
 			timeTxt.cameras = [camStatic];
+			judgeCounterTxt.cameras = [camStatic];
 
 		} else {
 			healthBar.cameras = [camHUD];
@@ -1275,6 +1276,7 @@ class PlayState extends MusicBeatState
 			timeBar.cameras = [camHUD];
 			timeBarBG.cameras = [camHUD];
 			timeTxt.cameras = [camHUD];
+			judgeCounterTxt.cameras = [camHUD];
 		}
 		doof.cameras = [camHUD];
 		//Fat-Ass Mod Stuff
@@ -1282,7 +1284,6 @@ class PlayState extends MusicBeatState
 		laneunderlayOpponent.cameras = [camHUD];
 		hiddenPlayfield.cameras = [camOther];
 		hiddenPlayfieldOpponent.cameras = [camOther];
-		judgeCounterTxt.cameras = [camStatic];
 
 		// if (SONG.song == 'South')
 		// FlxG.camera.alpha = 0.7;
