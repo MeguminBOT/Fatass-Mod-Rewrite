@@ -22,10 +22,10 @@ class EtternaFunctions
 
 	public static function updateMsText() {
 		var curSongPos = Conductor.songPosition;
-    	// if (curSongPos - lastMsShowUp > msDiffTimeLimit && msTextVisible) {
-    	//     msText.text = '';
-       	// 	msTextVisible = false;
-		// }
+    	if (curSongPos - lastMsShowUp > msDiffTimeLimit && msTextVisible) {
+    	    msText.text = '';
+       		msTextVisible = false;
+		}
 
     	if (PlayState.instance.ratingName == '?') {
         	var beforeScoreTxt = 'Score: 0 | Combo Breaks: 0 | Accuracy: 0.00% | N/A';
@@ -88,7 +88,7 @@ class EtternaFunctions
 		var noteDiffSign:Float = strumTime - songPos + rOffset;
 		var noteDiffAbs:Float = Math.abs(noteDiffSign);
 		var totalNotesForNow = handleNoteDiff(noteDiffAbs);
-		//showMsDiffOnScreen(noteDiffSign);
+		showMsDiffOnScreen(noteDiffSign);
 		curTotalNotesHit = curTotalNotesHit + totalNotesForNow;
 		counterUpdated = counterUpdated + 1;
 		actualRatingHere = curTotalNotesHit / counterUpdated;
@@ -129,27 +129,27 @@ class EtternaFunctions
 		}
 	}
 
-	// public static function showMsDiffOnScreen(diff:Float) {
-	// 	msText.color = ratingTextColor(diff);
-	// 	if (diff > 399) {
-	// 		msText.text = '';
-	// 	} else {
-	// 		msText.text = HelperFunctions.truncateFloat(-diff, 3) + 'ms';
-	// 	}
-	// 	lastMsShowUp = Conductor.songPosition;
-	// 	msTextVisible = true;
-	// }
+	public static function showMsDiffOnScreen(diff:Float) {
+		msText.color = ratingTextColor(diff);
+		if (diff > 399) {
+			msText.text = '';
+		} else {
+			msText.text = HelperFunctions.truncateFloat(-diff, 3) + 'ms';
+		}
+		lastMsShowUp = Conductor.songPosition;
+		msTextVisible = true;
+	}
 
-	// public static function ratingTextColor(diff:Float):FlxColor {
-	// 	var absDiff = Math.abs(diff);
-	// 	if (absDiff < 46.0) {
-	// 		return 0xff00FFFF;
-	// 	} else if (absDiff < 91.0) {
-	// 		return 0xff008000;
-	// 	} else {
-	// 		return 0xffFF0000;
-	// 	}
-	// }
+	public static function ratingTextColor(diff:Float):FlxColor {
+		var absDiff = Math.abs(diff);
+		if (absDiff < 46.0) {
+			return 0xff00FFFF;
+		} else if (absDiff < 91.0) {
+			return 0xff008000;
+		} else {
+			return 0xffFF0000;
+		}
+	}
 
 	public static function erf(x:Float):Float
 	{
