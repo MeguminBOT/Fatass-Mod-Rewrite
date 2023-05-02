@@ -339,7 +339,8 @@ class PlayState extends MusicBeatState
 	public var opponentIsPlaying:Bool = false;
 	public var uiSkinFolder:String = 'base';
 	public var judgeCounterTxt:FlxText;
-	public var msTimings:Array<FlxText>;
+	public var currentTimingShown:FlxText = null;
+	var timeShown = 0;
 	var opm:ObjectPositionManager;
 
 	//Rhythm Engine Custom Note Stuff
@@ -4409,16 +4410,60 @@ class PlayState extends MusicBeatState
 		comboSpr.y += 60;
 		comboSpr.velocity.x += FlxG.random.int(1, 10) * playbackRate;
 
-		for (i in msTimings) remove(i);
+		var msHits:Array<Float> = [];
+		var msTiming = HelperFunctions.truncateFloat(noteDiff / playbackRate, 3);
+		currentTimingShown = new FlxText(0, 0, 0, "0ms");
+		currentTimingShown.cameras = [camHUD];
+		currentTimingShown.setFormat(Paths.font("rubik.ttf"), 32, FlxColor.WHITE, CENTER, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
+		currentTimingShown.text = msTiming + "ms";
+		currentTimingShown.screenCenter();
+		currentTimingShown.x = comboSpr.x + 100;
+		currentTimingShown.y = rating.y + 100;
+		currentTimingShown.acceleration.y = 600;
+		currentTimingShown.velocity.y -= 150;
+		currentTimingShown.velocity.x += comboSpr.velocity.x;
+		timeShown = 0;
 
-		var msTimings:FlxText = new FlxText(playerStrums.members[1].x + playerStrums.members[1].width / 2, playerStrums.members[0].y - 40, '' + Math.round(Conductor.songPosition - note.strumTime) + ' ms');
-		msTimings.cameras = [camOther];
-		msTimings.y += 3;
-		msTimings.setFormat(Paths.font("rubik.ttf"), 16, FlxColor.WHITE, CENTER, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
-		FlxTween.tween(msTimings, {y: msTimings.y - 3}, 0.01, {ease: FlxEase.bounceOut});
+		if (currentTimingShown != null)
+			remove(currentTimingShown);
+		
+		switch (daRating.name) {
+			case 'shit' | 'bad':
+				currentTimingShown.color = FlxColor.RED;
+			case 'good':
+				currentTimingShown.color = FlxColor.GREEN;
+			case 'sick' | 'perfect':
+				currentTimingShown.color = FlxColor.CYAN;
+		}
+
+		if (msTiming >= 0.03) {
+			// Remove Outliers
+			msHits.shift();
+			msHits.shift();
+			msHits.shift();
+			msHits.pop();
+			msHits.pop();
+			msHits.pop();
+			msHits.push(msTiming);
+
+			var msTotal = 0.0;
+
+			for (i in msHits)
+				msTotal += i;
+
+			HelperFunctions.truncateFloat(msTotal / msHits.length, 2);
+		}
+
+		if (currentTimingShown.alpha != 1) {
+			currentTimingShown.alpha = 1;
+		}
+
+		if (!cpuControlled) {
+			add(currentTimingShown);
+		}
 
 		insert(members.indexOf(strumLineNotes), rating);
-		add(msTimings);
+		
 
 		if (!ClientPrefs.comboStacking)
 		{
@@ -4439,6 +4484,7 @@ class PlayState extends MusicBeatState
 			comboSpr.setGraphicSize(Std.int(comboSpr.width * daPixelZoom * 0.85));
 		}
 
+		currentTimingShown.updateHitbox();
 		comboSpr.updateHitbox();
 		rating.updateHitbox();
 
@@ -4525,11 +4571,11 @@ class PlayState extends MusicBeatState
 		// add(coolText);
 
 		FlxTween.tween(rating, {alpha: 0}, 0.2 / playbackRate, {
-			startDelay: Conductor.crochet * 0.001 / playbackRate
+			startDelay: Conductor.crochet * 0.001 / playbackRate,
 		});
 
-		FlxTween.tween(msTimings, {alpha: 0}, 0.2 / playbackRate, {
-			startDelay: Conductor.crochet * 0.001 / playbackRate
+		FlxTween.tween(currentTimingShown, {alpha: 0}, 0.050 / playbackRate, {
+			startDelay: Conductor.crochet * 0.001 / playbackRate,
 		});
 
 		FlxTween.tween(comboSpr, {alpha: 0}, 0.2 / playbackRate, {
@@ -4537,7 +4583,7 @@ class PlayState extends MusicBeatState
 			{
 				coolText.destroy();
 				comboSpr.destroy();
-
+				currentTimingShown.destroy();
 				rating.destroy();
 			},
 			startDelay: Conductor.crochet * 0.002 / playbackRate
