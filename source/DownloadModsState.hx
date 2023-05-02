@@ -23,6 +23,7 @@ import sys.io.File;
 import sys.thread.Thread;
 #end
 import CustomFadeTransition;
+import Controls;
 
 using StringTools;
 
@@ -78,17 +79,21 @@ class DownloadModsState extends MusicBeatState
     override function create(){
         FlxG.mouse.visible = true;
 
-        // Load modpack metadata from JSON file
-        modpacks = Json.parse(File.getContent("mods/modpackDownloadList.json"));
-
-        // Create UI elements for each modpack
-        var buttonGroup:FlxTypedGroup<FlxButton> = new FlxTypedGroup<FlxButton>();
-        for (index => metadata in modpacks) {
-            var button:FlxButton = new FlxButton(100, 200 + index * 50, metadata.modpack, function(){ downloadModpack(metadata); });
-            button.label.setFormat("vcr.ttf", 16, FlxColor.WHITE, "center");
-            buttonGroup.add(button);
-        }
-        add(buttonGroup);
+        // Load modpack metadata from server
+        var http = new Http("https://raw.githubusercontent.com/MeguminBOT/Rhythm-Engine-Wiki/main/modpackDownloadList.json");
+        http.onData = function(data:String) {
+            modpacks = Json.parse(data);
+        
+            // Create UI elements for each modpack
+            var buttonGroup:FlxTypedGroup<FlxButton> = new FlxTypedGroup<FlxButton>();
+            for (index => metadata in modpacks) {
+                var button:FlxButton = new FlxButton(100, 200 + index * 50, metadata.modpack, function(){ downloadModpack(metadata); });
+                button.label.setFormat("vcr.ttf", 16, FlxColor.WHITE, "center");
+                buttonGroup.add(button);
+            }
+            add(buttonGroup);
+        };
+        http.request();
 
         // Create input for custom modpack URL
         input = new FlxUIInputText(100, 500, 400, "Enter direct modpack URL");
@@ -114,10 +119,9 @@ class DownloadModsState extends MusicBeatState
             progressBar = new FlxBar(0, 0, FlxG.width, 20, null, 0, 1, false);
             add(progressBar);
             var directory:String = Paths.mods();
-            var savePath:String = directory + "modpacks/" + metadata.modpack;
-            var zipPath:String = directory + "modpacks/" + metadata.fileName;
+            var savePath:String = directory + metadata.modpack;
+            var zipPath:String = directory + metadata.fileName;
             final size:Int = 184805122;
-            
 
             request.onBytes = function(data:haxe.io.Bytes) {
                 if (data.length == size){
@@ -188,4 +192,14 @@ class DownloadModsState extends MusicBeatState
             trace("Error downloading custom modpack: " + e);
         }
     }
+    override function update(elapsed:Float)
+	{
+		if(controls.BACK)
+		{
+			{
+				MusicBeatState.switchState(new MainMenuState());
+			}
+		}
+		super.update(elapsed);
+	}
 }
