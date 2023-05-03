@@ -153,41 +153,54 @@ class DownloadModsState extends MusicBeatState
 
 	private function downloadCustomModpack(url:String):Void {
 		try {
-
+	        // Get url from the text input field and get the filename from the URL
 			url = input.text;
-			// Extract file name from URL
 			var fileName:String = url.substr(url.lastIndexOf("/") + 1);
-		
+	
 			// Download and extract modpack
 			var request = new Http(url);
 			var progressBar:FlxBar;
 			progressBar = new FlxBar(0, 0, FlxG.width, 20, null, 0, 1, false);
 			add(progressBar);
+	
 			var directory:String = Paths.mods();
-			var savePath:String = directory + "modpacks/" + fileName;
-			var zipPath:String = directory + "modpacks/" + fileName;
-
-			//here, we're forced to variabalize it
-			var downloadedBytes:haxe.io.Bytes;
-
-			request.onBytes = function(data:haxe.io.Bytes) {
-				downloadedBytes = data;
-			};
-
+			var savePath:String = directory + fileName;
+			var zipPath:String = directory + fileName;
+	
 			request.onStatus = function(status:Int) {
 				if (progressBar == null) {
 					progressBar = new FlxBar(0, 0, FlxG.width, 20, null, 0, 1, false);
 					add(progressBar);
 				}
 				progressBar.value = status / 100; // The value should be between 0 and 1
-
-				if (status == 100){
-					File.saveBytes(savePath, downloadedBytes);
-					ZipHandler.saveUncompressed(zipPath, savePath);
-					modpacks.push({ link: url, modpack: fileName.substr(0, fileName.lastIndexOf(".")), author: "", fileName: fileName });
-				}
-
 			};
+
+			request.onBytes = function(data:haxe.io.Bytes) {
+				if (request.responseHeaders.exists("Content-Length")) {
+					var size:Int = Std.parseInt(request.responseHeaders.get("Content-Length"));
+					if (data.length == size){
+						if(!FileSystem.exists('${zipPath.replace(fileName, "")}')) FileSystem.createDirectory('${zipPath.replace(fileName, "")}');
+						File.saveBytes(zipPath, data);
+						
+						// Check if the MIME type is application/zip or not
+						if (request.responseHeaders.exists("Content-Type")) {
+							var mimeType:String = request.responseHeaders.get("Content-Type");
+							if (mimeType == "application/zip" || mimeType == "application/octet-stream") {
+								ZipHandler.saveUncompressed(zipPath, savePath);
+							} else {
+								// Handle the error here
+								trace("Invalid MIME type: " + mimeType);
+							}
+						} else {
+							// Handle the error here
+							trace("Content-Type header not found");
+						}
+						
+						FileSystem.deleteFile(zipPath);
+					}
+				}
+			};
+
 			request.request(false);
 			if (progressBar != null) {
 				remove(progressBar);
@@ -196,6 +209,7 @@ class DownloadModsState extends MusicBeatState
 			trace("Error downloading custom modpack: " + e);
 		}
 	}
+
 	override function update(elapsed:Float)
 	{
 		if(controls.BACK)
