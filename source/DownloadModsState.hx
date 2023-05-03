@@ -75,6 +75,7 @@ class DownloadModsState extends MusicBeatState
 	var downloadButton:FlxButton;
 	var urlRegex = ~/^(http|https):\/\/[a-z0-9\-\.]+\.[a-z]{2,}(\/.*)?$/i;
 	var url:String;
+	private var blockPressWhileTypingOn:Array<FlxUIInputText> = [];
 
 	override function create(){
 		FlxG.mouse.visible = true;
@@ -98,7 +99,7 @@ class DownloadModsState extends MusicBeatState
 		// Create input for custom modpack URL
 		input = new FlxUIInputText(100, 500, 400, "Enter direct modpack URL");
 		add(input);
-		
+		blockPressWhileTypingOn.push(input);
 		// Create download button for custom modpack URL
 		downloadButton = new FlxButton(550, 500, "Download", function(){ downloadCustomModpack(url); });
 		add(downloadButton);
@@ -212,6 +213,17 @@ class DownloadModsState extends MusicBeatState
 
 	override function update(elapsed:Float)
 	{
+		var blockInput:Bool = false;
+		for (inputText in blockPressWhileTypingOn) {
+			if(inputText.hasFocus) {
+				FlxG.sound.muteKeys = [];
+				FlxG.sound.volumeDownKeys = [];
+				FlxG.sound.volumeUpKeys = [];
+				blockInput = true;
+				break;
+			}
+		}
+		
 		if(controls.BACK)
 		{
 			{
