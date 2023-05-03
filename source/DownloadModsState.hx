@@ -71,11 +71,11 @@ private typedef DownloadMetadata = {
 class DownloadModsState extends MusicBeatState
 {
 	var modpacks:Array<DownloadMetadata>;
-	var input:FlxUIInputText;
-	var downloadButton:FlxButton;
-	var urlRegex = ~/^(http|https):\/\/[a-z0-9\-\.]+\.[a-z]{2,}(\/.*)?$/i;
-	var url:String;
-	private var blockPressWhileTypingOn:Array<FlxUIInputText> = [];
+	//var input:FlxUIInputText;
+	//var downloadButton:FlxButton;
+	//var urlRegex = ~/^(http|https):\/\/[a-z0-9\-\.]+\.[a-z]{2,}(\/.*)?$/i;
+	//var url:String;
+	//private var blockPressWhileTypingOn:Array<FlxUIInputText> = [];
 
 	override function create(){
 		FlxG.mouse.visible = true;
@@ -96,6 +96,7 @@ class DownloadModsState extends MusicBeatState
 		};
 		http.request();
 
+		/* 	
 		// Create input for custom modpack URL
 		input = new FlxUIInputText(100, 500, 400, "Enter direct modpack URL");
 		add(input);
@@ -103,8 +104,8 @@ class DownloadModsState extends MusicBeatState
 
 		// Create download button for custom modpack URL
 		downloadButton = new FlxButton(550, 500, "Download", function(){ downloadCustomModpack(url); });
-		add(downloadButton);
-
+		add(downloadButton); 
+		*/
 
 		var bg = new FlxSprite().loadGraphic(Paths.image("menuBGBlue"));
 		add(bg);
@@ -152,10 +153,10 @@ class DownloadModsState extends MusicBeatState
 			trace("Error downloading modpack: " + e);
 		}
 	}
-
+	/* 
 	private function downloadCustomModpack(url:String):Void {
 		try {
-	        // Get url from the text input field and get the filename from the URL
+			// Get url from the text input field and get the filename from the URL
 			url = input.text;
 			var fileName:String = url.substr(url.lastIndexOf("/") + 1);
 	
@@ -210,11 +211,13 @@ class DownloadModsState extends MusicBeatState
 		} catch (e:Dynamic) {
 			trace("Error downloading custom modpack: " + e);
 		}
-	}
+	} 
+	*/
 
 	override function update(elapsed:Float)
 	{
 		var blockInput:Bool = false;
+		/*
 		for (input in blockPressWhileTypingOn) {
 			if(input.hasFocus) {
 				FlxG.sound.muteKeys = [];
@@ -223,7 +226,8 @@ class DownloadModsState extends MusicBeatState
 				blockInput = true;
 				break;
 			}
-		}
+		} 
+		*/
 
 		if (!blockInput)
 		{
