@@ -100,6 +100,7 @@ class DownloadModsState extends MusicBeatState
 		input = new FlxUIInputText(100, 500, 400, "Enter direct modpack URL");
 		add(input);
 		blockPressWhileTypingOn.push(input);
+
 		// Create download button for custom modpack URL
 		downloadButton = new FlxButton(550, 500, "Download", function(){ downloadCustomModpack(url); });
 		add(downloadButton);
@@ -214,8 +215,8 @@ class DownloadModsState extends MusicBeatState
 	override function update(elapsed:Float)
 	{
 		var blockInput:Bool = false;
-		for (inputText in blockPressWhileTypingOn) {
-			if(inputText.hasFocus) {
+		for (input in blockPressWhileTypingOn) {
+			if(input.hasFocus) {
 				FlxG.sound.muteKeys = [];
 				FlxG.sound.volumeDownKeys = [];
 				FlxG.sound.volumeUpKeys = [];
@@ -223,11 +224,14 @@ class DownloadModsState extends MusicBeatState
 				break;
 			}
 		}
-		
-		if(controls.BACK)
+
+		if (!blockInput)
 		{
+			if(controls.BACK)
 			{
-				MusicBeatState.switchState(new MainMenuState());
+				{
+					MusicBeatState.switchState(new MainMenuState());
+				}
 			}
 		}
 		super.update(elapsed);
