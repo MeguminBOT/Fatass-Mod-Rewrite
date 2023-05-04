@@ -17,6 +17,11 @@ import flixel.util.FlxColor;
 import haxe.Http;
 import haxe.Json;
 import haxe.zip.Entry;
+import openfl.display.Bitmap;
+import openfl.display.BitmapData;
+import openfl.display.Loader;
+import openfl.events.Event;
+import openfl.net.URLRequest;
 #if sys
 import sys.FileSystem;
 import sys.io.File;
@@ -66,6 +71,7 @@ private typedef DownloadMetadata = {
 	var modpack:String;
 	var author:String;
 	var fileName:String;
+	var logo:String;
 }
 
 class DownloadModsState extends MusicBeatState
@@ -79,20 +85,43 @@ class DownloadModsState extends MusicBeatState
 
 	override function create(){
 		FlxG.mouse.visible = true;
-
+	
 		// Load modpack metadata from server
 		var http = new Http("https://raw.githubusercontent.com/MeguminBOT/Rhythm-Engine-Wiki/main/modpackDownloadList.json");
 		http.onData = function(data:String) {
 			modpacks = Json.parse(data);
-		
+	
 			// Create UI elements for each modpack
 			var buttonGroup:FlxTypedGroup<FlxButton> = new FlxTypedGroup<FlxButton>();
+			var logoGroup:FlxSpriteGroup = new FlxSpriteGroup();
+			var rowLength:Int = 10; // number of objects per row
+			var rowIndex:Int = 0;
+			var colIndex:Int = 0;
 			for (index => metadata in modpacks) {
-				var button:FlxButton = new FlxButton(100, 200 + index * 50, metadata.modpack, function(){ downloadModpack(metadata); });
-				button.label.setFormat("vcr.ttf", 16, FlxColor.WHITE, "center");
+				var button:FlxButton = new FlxButton(50 + colIndex * 150, 50 + rowIndex * 50, 'Download', function(){ downloadModpack(metadata); });
+				button.label.setFormat("rubik.ttf", 8, FlxColor.WHITE, "center");
 				buttonGroup.add(button);
+	
+				var loader = new Loader();
+				loader.contentLoaderInfo.addEventListener(Event.COMPLETE, function(event:Event){
+					var bitmap:Bitmap = event.target.content;
+					var sprite:FlxSprite = new FlxSprite(0, 0, bitmap.bitmapData);
+					sprite.scale.x = 0.5;
+					sprite.scale.y = 0.5;
+					sprite.x = button.x + 50;
+					sprite.y = button.y + (button.height - sprite.height) / 2;
+					logoGroup.add(sprite);
+				});
+				loader.load(new URLRequest(metadata.logo));
+	
+				rowIndex++;
+				if (rowIndex >= rowLength) {
+					colIndex++;
+					rowIndex = 0;
+				}
 			}
 			add(buttonGroup);
+			add(logoGroup);
 		};
 		http.request();
 
