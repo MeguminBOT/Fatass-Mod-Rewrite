@@ -4962,6 +4962,16 @@ class PlayState extends MusicBeatState
 								boyfriend.playAnim('hurt', true);
 								boyfriend.specialAnim = true;
 							}
+						case 'Static Note':
+							if(boyfriend.animation.getByName('hurt') != null) {
+								boyfriend.playAnim('hurt', true);
+								boyfriend.specialAnim = true;
+							}
+						case 'Glitch Note':
+							if(boyfriend.animation.getByName('hurt') != null) {
+								boyfriend.playAnim('hurt', true);
+								boyfriend.specialAnim = true;
+							}
 					}
 				}
 
@@ -5021,11 +5031,6 @@ class PlayState extends MusicBeatState
 						dad.playAnim('attack', true);
 						dad.specialAnim = true;
 					}
-
-					if(gf != null && gf.animOffsets.exists('scared')) {
-						gf.playAnim('scared', true);
-						gf.specialAnim = true;
-					}
 				}
 
 				if(note.noteType == 'Heal Note') {
@@ -5054,10 +5059,6 @@ class PlayState extends MusicBeatState
 					boyfriend.specialAnim = true;
 					dad.playAnim(attackAnim, true);
 					dad.specialAnim = true;
-					if(gf != null && gf.animOffsets.exists('scared')) {
-						gf.playAnim('scared', true);
-						gf.specialAnim = true;
-					}
 				}
 			}
 

@@ -170,7 +170,7 @@ class Note extends FlxSprite
 				case 'Dodge Note':
 					mustPress;
 					reloadNote('DODGE');
-					noteSplashTexture = 'CUSTOMnoteSplashes';
+					noteSplashTexture = 'DODGEnoteSplashes';
 					colorSwap.hue = 0;
 					colorSwap.saturation = 0;
 					colorSwap.brightness = 0;
@@ -212,6 +212,35 @@ class Note extends FlxSprite
 						missHealth = 0.3;
 					}
 					hitCausesMiss = false;
+				case 'Glitch Note':
+					ignoreNote = mustPress;
+					reloadNote('GLITCH');
+					noteSplashTexture = 'GLITCHnoteSplashes';
+					colorSwap.hue = 0;
+					colorSwap.saturation = 0;
+					colorSwap.brightness = 0;
+					lowPriority = false;
+					if(isSustainNote) {
+						missHealth = 0.1;
+					} else {
+						missHealth = 0.3;
+					}
+					hitCausesMiss = true;
+				case 'Static Note':
+					ignoreNote = mustPress;
+					reloadNote('STATIC');
+					noteSplashTexture = 'STATICnoteSplashes';
+					colorSwap.hue = 0;
+					colorSwap.saturation = 0;
+					colorSwap.brightness = 0;
+					lowPriority = false;
+					if(isSustainNote) {
+						missHealth = 0.1;
+					} else {
+						missHealth = 0.3;
+					}
+					hitCausesMiss = true;
+					
 			}
 			noteType = value;
 		}
