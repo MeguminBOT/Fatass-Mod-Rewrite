@@ -386,11 +386,11 @@ class QOGameplaySettings extends MusicBeatSubstate
 	}
 	function onChangeHitsoundVolume()
 	{
-		FlxG.sound.play(Paths.sound(ClientPrefs.hitsoundType), ClientPrefs.hitsoundVolume);
+		FlxG.sound.play(Paths.sound('hitsounds/' + ClientPrefs.hitsoundType), ClientPrefs.hitsoundVolume);
 	}
 
 	function onChangeHitsoundType()
 	{
-		FlxG.sound.play(Paths.sound(ClientPrefs.hitsoundType), ClientPrefs.hitsoundVolume);
+		FlxG.sound.play(Paths.sound('hitsounds/' + ClientPrefs.hitsoundType), ClientPrefs.hitsoundVolume);
 	}
 }
