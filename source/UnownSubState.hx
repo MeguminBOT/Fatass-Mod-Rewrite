@@ -40,23 +40,27 @@ class UnownSubState extends MusicBeatSubstate
 		'NIGHTMARE',
 		'GET OUT',
 		'HOPELESS',
-		'RUN STREAMER',
 		'NOT WELCOME',
 		'NO MORE',
 		'CAN YOU SEE',
 		'WHERE',
 		'HELP',
-		'FATASS',
 		'GOODBYE',
 		'IT FAILED',
 		'I SEE YOU',
-		'METAL',
-		'DEVIL HORNS',
-		'BAH BAH',
-		'TING TANG',
-		'WALLA BING BANG',
-		'RIP AND TEAR',
-		'DOOM'
+		'FUTILE',
+		'FORSAKEN',
+		'CEASE',
+		'GIVE UP',
+		'HIDEOUS',
+		'ABOMINABLE',
+		'SUFFER',
+		'LOST',
+		'FORGOTTEN',
+		'NEVER ENDING',
+		'NIGHTMARE',
+		'MEMORIES',
+		'HURRY'
 	];
 	var onePercentWords:Array<String> = [
 		'NICE COCK',
@@ -66,24 +70,17 @@ class UnownSubState extends MusicBeatSubstate
 		'RATIO',
 		"GOO",
 		'POGGERS',
-		'BUSSY'
+		'BUSSY',
+		'RUN STREAMER'
 	];
 	var zeropointonePercentWords:Array<String> = [
-		'WANNA WORK ON MY FNF MOD',
-		'IM IN A FUCKING WHEEL CHAIR',
-		'I GUESS YOU ARE MY LITTLE POGCHAMP',
 		'HI SHUBS',
 		'HI ASH',
 		'HI LULU',
 		'HI LILY',
 		'HI ROXBEIGE',
-		'MY BUSSY IS POGGING'
-	];
-
-	var fuckYouWords:Array<String> = [
-		'FUCK YOU',
-		'COPE SEETHE',
-		'VAGINA MOUTH'
+		'MY BUSSY IS POGGING',
+		'ZEROPOINTONEWORD'
 	];
 
 	var lines:FlxTypedGroup<FlxSprite>;
