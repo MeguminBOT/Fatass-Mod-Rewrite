@@ -56,19 +56,19 @@ class QOGameplaySettings extends MusicBeatSubstate
 			option.onChange = onChangeHitsoundVolume;
 		optionsArray.push(option);
 		
-		var option:QOption = new QOption('Hitsound Type', 'hitsoundType', 'string', 'hitsound_default', 
-			['hitsound_default', 
-			'hitsound_default with kick',
-			'hitsound_ping pong',
-			'hitsound_click',
-			'hitsound_tsuzumi drum',
-			'hitsound_drop',
-			'hitsound_kick muddy',
-			'hitsound_kick bassy1',
-			'hitsound_kick bassy2',
-			'hitsound_kick bassy3',
-			'hitsound_osu default soft',
-			'hitsound_osu default normal']);
+		var option:QOption = new QOption('Hitsound Type', 'hitsoundType', 'string', 'default', 
+			['default', 
+			'default with kick',
+			'ping pong',
+			'click',
+			'tsuzumi drum',
+			'drop',
+			'kick muddy',
+			'kick bassy1',
+			'kick bassy2',
+			'kick bassy3',
+			'osu soft',
+			'osu normal']);
 			option.onChange = onChangeHitsoundType;
 		optionsArray.push(option);
 

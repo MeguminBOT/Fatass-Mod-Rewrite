@@ -68,7 +68,7 @@ class ClientPrefs {
 
 	//Fat-Ass Features
 	public static var underlay:Float = 0;
-	public static var hitsoundType:String = 'hitsound_default';
+	public static var hitsoundType:String = 'default';
 	public static var inputSystem:String = "Etterna";
 	public static var inputComplexity:String = "High";
 	public static var customNoteSound:Bool = true;
