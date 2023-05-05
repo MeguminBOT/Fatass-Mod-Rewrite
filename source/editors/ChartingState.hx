@@ -2802,9 +2802,9 @@ class ChartingState extends MusicBeatState
 			changeBPM: false,
 			mustHitSection: true,
 			gfSection: false,
-			sectionNotes: [],
+			altAnim: false,
 			typeOfSection: 0,
-			altAnim: false
+			sectionNotes: []
 		};
 
 		_song.notes.push(sec);
