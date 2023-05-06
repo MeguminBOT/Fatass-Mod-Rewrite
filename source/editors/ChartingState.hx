@@ -3149,7 +3149,7 @@ class ChartingState extends MusicBeatState
 		var charterNameText:FlxText = new FlxText(10, 140, 150, "Charter:");
 		var customNoteText:FlxText = new FlxText(10, 180, 150, "Custom Notes:");
 		var customMechanicText:FlxText = new FlxText(10, 220, 150, "Custom Mechanics:");
-		var flashingLightsText:FlxText = new FlxText(10, 260, 150, "Custom Notes:");
+		var flashingLightsText:FlxText = new FlxText(10, 260, 150, "Flashing Lights:");
 		var extraCommentText:FlxText = new FlxText(10, 300, 150, "Extra Comment:");
 
 		// Create a "Save Metadata" button and set its click event handler
