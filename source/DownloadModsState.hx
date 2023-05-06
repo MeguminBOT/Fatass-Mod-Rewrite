@@ -98,12 +98,12 @@ class DownloadModsState extends MusicBeatState
 			var rowIndex:Int = 0;
 			var colIndex:Int = 0;
 			for (index => metadata in modpacks) {
-				var button:FlxButton = new FlxButton(50 + colIndex * 150, 50 + rowIndex * 50, 'Download', function(){ downloadModpack(metadata); });
+				var button:FlxButton = new FlxButton(50 + colIndex * 150, 50 + rowIndex * 50, 'Download', function() { downloadModpack(metadata); });
 				button.label.setFormat("rubik.ttf", 8, FlxColor.WHITE, "center");
 				buttonGroup.add(button);
 	
 				var loader = new Loader();
-				loader.contentLoaderInfo.addEventListener(Event.COMPLETE, function(event:Event){
+				loader.contentLoaderInfo.addEventListener(Event.COMPLETE, function(event:Event) {
 					var bitmap:Bitmap = event.target.content;
 					var sprite:FlxSprite = new FlxSprite(0, 0, bitmap.bitmapData);
 					sprite.scale.x = 0.5;
@@ -165,7 +165,7 @@ class DownloadModsState extends MusicBeatState
 			request.onBytes = function(data:haxe.io.Bytes) {
 				if (request.responseHeaders.exists("Content-Length")) {
 					var size:Int = Std.parseInt(request.responseHeaders.get("Content-Length"));
-					if (data.length == size){
+					if (data.length == size) {
 						if(!FileSystem.exists('${zipPath.replace(metadata.fileName, "")}')) FileSystem.createDirectory('${zipPath.replace(metadata.fileName, "")}');
 						File.saveBytes(zipPath, data);
 						ZipHandler.saveUncompressed(zipPath, savePath);
