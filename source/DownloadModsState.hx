@@ -85,7 +85,10 @@ class DownloadModsState extends MusicBeatState
 
 	override function create(){
 		FlxG.mouse.visible = true;
-	
+
+		var bg = new FlxSprite().loadGraphic(Paths.image("menuBG"));
+		add(bg);
+
 		// Load modpack metadata from server
 		var http = new Http("https://raw.githubusercontent.com/MeguminBOT/Rhythm-Engine-Wiki/main/modpackDownloadList.json");
 		http.onData = function(data:String) {
@@ -135,10 +138,6 @@ class DownloadModsState extends MusicBeatState
 		downloadButton = new FlxButton(550, 500, "Download", function(){ downloadCustomModpack(url); });
 		add(downloadButton); 
 		*/
-
-		var bg = new FlxSprite().loadGraphic(Paths.image("menuBG"));
-		add(bg);
-
 		super.create();
 	}
 
