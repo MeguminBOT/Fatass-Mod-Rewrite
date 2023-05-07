@@ -143,44 +143,46 @@ class DownloadModsState extends MusicBeatState
 	}
 
 	private function downloadModpack(metadata:DownloadMetadata):Void {
-		try {
-			// Download and extract modpack
-			var request = new Http(metadata.link);
-			var progressBar:FlxBar;
-	
-			progressBar = new FlxBar(0, 0, FlxG.width, 20, null, 0, 1, false);
-			add(progressBar);
-			var directory:String = Paths.mods();
-			var savePath:String = directory + metadata.modpack;
-			var zipPath:String = directory + metadata.fileName;
+		Thread.create(function() {
+			try {
+				// Download and extract modpack
+				var request = new Http(metadata.link);
+				var progressBar:FlxBar;
+		
+				progressBar = new FlxBar(0, 0, FlxG.width, 20, null, 0, 1, false);
+				add(progressBar);
+				var directory:String = Paths.mods();
+				var savePath:String = directory + 'modpack_' + metadata.modpack;
+				var zipPath:String = directory + metadata.fileName;
 
-			request.onStatus = function(status:Int) {
-				if (progressBar == null) {
-					progressBar = new FlxBar(0, 0, FlxG.width, 20, null, 0, 1, false);
-					add(progressBar);
-				}
-				progressBar.value = status / 100; // The value should be between 0 and 1
-			};
-	
-			request.onBytes = function(data:haxe.io.Bytes) {
-				if (request.responseHeaders.exists("Content-Length")) {
-					var size:Int = Std.parseInt(request.responseHeaders.get("Content-Length"));
-					if (data.length == size) {
-						if(!FileSystem.exists('${zipPath.replace(metadata.fileName, "")}')) FileSystem.createDirectory('${zipPath.replace(metadata.fileName, "")}');
-						File.saveBytes(zipPath, data);
-						ZipHandler.saveUncompressed(zipPath, savePath);
-						FileSystem.deleteFile(zipPath);
+				request.onStatus = function(status:Int) {
+					if (progressBar == null) {
+						progressBar = new FlxBar(0, 0, FlxG.width, 20, null, 0, 1, false);
+						add(progressBar);
 					}
+					progressBar.value = status / 100; // The value should be between 0 and 1
+				};
+		
+				request.onBytes = function(data:haxe.io.Bytes) {
+					if (request.responseHeaders.exists("Content-Length")) {
+						var size:Int = Std.parseInt(request.responseHeaders.get("Content-Length"));
+						if (data.length == size) {
+							if(!FileSystem.exists('${zipPath.replace(metadata.fileName, "")}')) FileSystem.createDirectory('${zipPath.replace(metadata.fileName, "")}');
+							File.saveBytes(zipPath, data);
+							ZipHandler.saveUncompressed(zipPath, savePath);
+							FileSystem.deleteFile(zipPath);
+						}
+					}
+				};
+				
+				request.request(false);
+				if (progressBar != null) {
+					remove(progressBar);
 				}
-			};
-			
-			request.request(false);
-			if (progressBar != null) {
-				remove(progressBar);
+			} catch (e:Dynamic) {
+				trace("Error downloading modpack: " + e);
 			}
-		} catch (e:Dynamic) {
-			trace("Error downloading modpack: " + e);
-		}
+		});
 	}
 	/* 
 	private function downloadCustomModpack(url:String):Void {
