@@ -121,13 +121,9 @@ class FunkinLua {
 		set('stepCrochet', Conductor.stepCrochet);
 		set('songLength', FlxG.sound.music.length);
 		set('songName', PlayState.SONG.song);
-		set('songArtist', PlayState.SONG.artist);
-		set('songCharter', PlayState.SONG.charter);
-		set('songMod', PlayState.SONG.mod);
 		set('songPath', Paths.formatToSongPath(PlayState.SONG.song));
 		set('startedCountdown', false);
 		set('curStage', PlayState.SONG.stage);
-
 		set('isStoryMode', PlayState.isStoryMode);
 		set('difficulty', PlayState.storyDifficulty);
 
@@ -193,7 +189,7 @@ class FunkinLua {
 		set('boyfriendName', PlayState.SONG.player1);
 		set('dadName', PlayState.SONG.player2);
 		set('gfName', PlayState.SONG.gfVersion);
-
+		
 		// Some settings, no jokes
 		set('downscroll', ClientPrefs.downScroll);
 		set('middlescroll', ClientPrefs.middleScroll);
@@ -212,20 +208,35 @@ class FunkinLua {
 		set('scriptName', scriptName);
 		set('currentModDirectory', Paths.currentModDirectory);
 
-		//Fat-Ass Stuff
+		//Rhythm Engine ClientPrefs
 		set('hitsoundVolume', ClientPrefs.hitsoundVolume);
 		set('hitsoundType', ClientPrefs.hitsoundType);
 		set('uiSkinFolder', PlayState.instance.uiSkinFolder);
 		set('noteSkin', ClientPrefs.noteSkin);
 		set('uiSkin', ClientPrefs.uiSkin);
-
-		//Fat-Ass Stuff: Modcharts
+		set('strumlineOffsetX', ClientPrefs.strumlineOffsetX);
+		set('strumlineOffsetY', ClientPrefs.strumlineOffsetY);
+		set('judgeCounter', ClientPrefs.judgeCounter);
+		set('hideIcons', ClientPrefs.hideIcons);
+		set('staticHUD', ClientPrefs.staticHUD);
 		set('customNoteSound', ClientPrefs.customNoteSound);
 		set('customSoundEvent', ClientPrefs.customSoundEvent);
 		set('customMechanicEvent', ClientPrefs.customMechanicEvent);
 		set('customStrumPlacement', ClientPrefs.customStrumPlacement);
 		set('customSongScripts', ClientPrefs.customSongScripts);
 
+		//Rhythm Engine Stuff: Gameplay Modifiers
+		set('opponentIsPlaying', PlayState.instance.opponentIsPlaying);
+		set('hiddenMode', PlayState.instance.hiddenMode);
+		set('mirrorMode', PlayState.instance.mirrorMode);
+		set('opponentChart', PlayState.instance.opponentChart);
+		set('doubleChart', PlayState.instance.doubleChart);
+
+		//Rhythm Engine Stuff: Song/Week shit
+		set('songArtist', PlayState.SONG.artist);
+		set('songCharter', PlayState.SONG.charter);
+		set('songMod', PlayState.SONG.mod);
+		
 		#if windows
 		set('buildTarget', 'windows');
 		#elseif linux
