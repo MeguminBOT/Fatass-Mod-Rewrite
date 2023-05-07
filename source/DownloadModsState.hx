@@ -99,7 +99,7 @@ class DownloadModsState extends MusicBeatState
 			var colIndex:Int = 0;
 			for (index => metadata in modpacks) {
 				var button:FlxButton = new FlxButton(50 + colIndex * 150, 50 + rowIndex * 50, 'Download', function() { downloadModpack(metadata); });
-				button.label.setFormat("rubik.ttf", 8, FlxColor.WHITE, "center");
+				button.label.setFormat("rubik.ttf", 8, FlxColor.BLACK, "center");
 				buttonGroup.add(button);
 	
 				var loader = new Loader();
@@ -136,7 +136,7 @@ class DownloadModsState extends MusicBeatState
 		add(downloadButton); 
 		*/
 
-		var bg = new FlxSprite().loadGraphic(Paths.image("menuBGBlue"));
+		var bg = new FlxSprite().loadGraphic(Paths.image("menuBG"));
 		add(bg);
 
 		super.create();
