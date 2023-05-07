@@ -225,12 +225,6 @@ class FunkinLua {
 		set('customStrumPlacement', ClientPrefs.customStrumPlacement);
 		set('customSongScripts', ClientPrefs.customSongScripts);
 
-		//Rhythm Engine Stuff: Gameplay Modifiers
-		set('opponentIsPlaying', PlayState.instance.opponentIsPlaying);
-		set('hiddenMode', PlayState.instance.hiddenMode);
-		set('mirrorMode', PlayState.instance.mirrorMode);
-		set('opponentChart', PlayState.instance.opponentChart);
-		set('doubleChart', PlayState.instance.doubleChart);
 
 		//Rhythm Engine Stuff: Song/Week shit
 		set('songArtist', PlayState.SONG.artist);
