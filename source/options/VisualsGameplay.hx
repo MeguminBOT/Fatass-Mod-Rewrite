@@ -39,7 +39,8 @@ class VisualsGameplay extends BaseOptionsMenu
 			'RhythmEngine',
 			['Default', 
 			'RhythmEngine',
-			'StepMania']);
+			'StepMania',
+			'RhythmEngine_Bars']);
 		addOption(option);
 
 		var option:Option = new Option('Note Splashes',

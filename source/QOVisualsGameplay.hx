@@ -40,7 +40,8 @@ class QOVisualsGameplay extends MusicBeatSubstate
 		var option:QOption = new QOption('Note Skin', 'noteSkin', 'string', 'RhythmEngine',
 			['Default', 
 			'RhythmEngine',
-			'StepMania']);
+			'StepMania',
+			'RhythmEngine_Bars']);
 		optionsArray.push(option);
 
 		var option:QOption = new QOption('Note Splashes', 'noteSplashes', 'bool', true);
