@@ -1242,16 +1242,13 @@ class PlayState extends MusicBeatState
 		healthBarBG.sprTracker = healthBar;
 
 		iconP1 = new HealthIcon(boyfriend.healthIcon, true);
-		iconP1.y = healthBar.y - 75;
 		iconP1.visible = !ClientPrefs.hideIcons;
 		iconP1.alpha = ClientPrefs.healthBarAlpha;
 		add(iconP1);
 
 		iconP2 = new HealthIcon(dad.healthIcon, false);
-		iconP2.y = healthBar.y - 75;
 		iconP2.visible = !ClientPrefs.hideIcons;
 		iconP2.alpha = ClientPrefs.healthBarAlpha;
-
 		add(iconP2);
 		reloadHealthBarColors();
 
@@ -1508,6 +1505,8 @@ class PlayState extends MusicBeatState
 		}
 		opm = new ObjectPositionManager(judgeCounterTxt, healthBar, healthBarBG, scoreTxt, botplayTxt, timeTxt, timeBar, timeBarBG);
 		opm.loadPositions();
+		iconP1.y = healthBar.y - 75;
+		iconP2.y = healthBar.y - 75;
 	}
 
 	#if (!flash && sys)
@@ -3252,6 +3251,8 @@ class PlayState extends MusicBeatState
 
 		var iconOffset:Int = 26;
 
+		iconP1.y = healthBar.y - 75;
+		iconP2.y = healthBar.y - 75;
 		iconP1.x = (opponentChart ? -593 : 0) + healthBar.x + (healthBar.width * (FlxMath.remapToRange(healthBar.percent, 0, (opponentChart ? -100 : 100), 100, 0) * 0.01)) + (150 * iconP1.scale.x - 150) / 2 - iconOffset;
 		iconP2.x = (opponentChart ? -593 : 0) + healthBar.x + (healthBar.width * (FlxMath.remapToRange(healthBar.percent, 0, (opponentChart ? -100 : 100), 100, 0) * 0.01)) - (150 * iconP2.scale.x) / 2 - iconOffset * 2;
 
@@ -5611,6 +5612,7 @@ class PlayState extends MusicBeatState
 			// Rating FC
 			ratingFC = "";
 			// if (perfects > 0) ratingFC = "PFC";
+			if (perfects > 0) ratingFC = "PFC";
 			if (sicks > 0) ratingFC = "SFC";
 			if (goods > 0) ratingFC = "GFC";
 			if (bads > 0 || shits > 0) ratingFC = "FC";
