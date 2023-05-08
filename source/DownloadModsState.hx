@@ -89,7 +89,7 @@ class DownloadModsState extends MusicBeatState
 		var bg = new FlxSprite().loadGraphic(Paths.image("menuBG"));
 		add(bg);
 
-		// Load modpack metadata from server
+		// Load modpack metadata from github repository.
 		var http = new Http("https://raw.githubusercontent.com/MeguminBOT/Rhythm-Engine-Wiki/main/modpackDownloadList.json");
 		http.onData = function(data:String) {
 			modpacks = Json.parse(data);
@@ -144,31 +144,66 @@ class DownloadModsState extends MusicBeatState
 	private function downloadModpack(metadata:DownloadMetadata):Void {
 		Thread.create(function() {
 			try {
-				// Download and extract modpack
+				// User pressed a download button, initiate the download.
 				var request = new Http(metadata.link);
+				
+				// Tracks and stores the number of bytes received.
+				var receivedBytes:Int = 0;
+            	var totalBytes:Int = 0; 
+
+				// Create progress bar.
 				var progressBar:FlxBar;
-		
-				progressBar = new FlxBar(0, 0, FlxG.width, 20, null, 0, 1, false);
+				progressBar = new FlxBar(0, 0, FlxG.width, 20, null, totalBytes, 100, false);
 				add(progressBar);
+
+				// Create progress text.
+				var progressTxt:FlxText = new FlxText(0, 250, FlxG.width, "");
+				progressTxt.setFormat("rubik.ttf", 16, FlxColor.BLACK, "center");
+           		add(progressTxt);
+
+				// Path variables.
 				var directory:String = Paths.mods();
 				var savePath:String = directory + 'modpack_' + metadata.modpack;
 				var zipPath:String = directory + metadata.fileName;
 
-				request.onStatus = function(status:Int) {
-					if (progressBar == null) {
-						progressBar = new FlxBar(0, 0, FlxG.width, 20, null, 0, 1, false);
-						add(progressBar);
-					}
-					progressBar.value = status / 100; // The value should be between 0 and 1
-				};
-		
+				// When data is received.
 				request.onBytes = function(data:haxe.io.Bytes) {
+
+					// Check if the HTTP Header for Content Length exists.
 					if (request.responseHeaders.exists("Content-Length")) {
-						var size:Int = Std.parseInt(request.responseHeaders.get("Content-Length"));
-						if (data.length == size) {
+						
+						// Get the total bytes from the HTTP Header.
+						totalBytes = Std.parseInt(request.responseHeaders.get("Content-Length")); 
+ 						
+						// Add the number of received bytes to the total.
+						receivedBytes += data.length;
+
+						// Update the progress bar based on received bytes.
+						progressBar.value = receivedBytes; 
+
+						// Update the progress text based on received bytes.
+						var downloadedMB:Float = Math.round((receivedBytes / 1000000) * 100) / 100;
+						var totalMB:Float = Math.round((totalBytes / 1000000) * 100) / 100;
+						if(downloadedMB < totalMB) {
+							progressTxt.text = "Downloading: " + downloadedMB + "MB / " + totalMB + "MB";
+						} else {
+							progressTxt.text = "Download complete: " + downloadedMB + "MB / " + totalMB + "MB";
+						}
+
+						// When all the bytes is received.
+						if (data.length == totalBytes) {
+
+							// Check if path exists otherwise create it.
 							if(!FileSystem.exists('${zipPath.replace(metadata.fileName, "")}')) FileSystem.createDirectory('${zipPath.replace(metadata.fileName, "")}');
+
+							// Saves the bytes downloaded.
 							File.saveBytes(zipPath, data);
+							progressTxt.text = "Saving: " + zipPath + " (" + downloadedMB + "MB)";
+
+							// Uncompress the ZIP file.
 							ZipHandler.saveUncompressed(zipPath, savePath);
+
+							// Delete the ZIP file.
 							FileSystem.deleteFile(zipPath);
 						}
 					}
