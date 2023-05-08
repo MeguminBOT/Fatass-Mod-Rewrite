@@ -224,8 +224,8 @@ class CustomizeUIState extends MusicBeatState
 		add(timeTxt);
 		add(healthBarBG);
 		add(healthBar);
-		add(iconP1);
-		add(iconP2);
+		// add(iconP1);
+		// add(iconP2);
 		add(scoreTxt);
 		add(botplayTxt);
 		add(judgeCounterTxt);
@@ -273,7 +273,7 @@ class CustomizeUIState extends MusicBeatState
 		UI_box.visible = true;
 
 		tipTxt = new FlxText(UI_box.x, UI_box.y + UI_box.height + 8, 0, "", 16);
-		tipTxt.setFormat(Paths.font("rubik.ttf"), 12, FlxColor.WHITE, LEFT/*, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK*/);
+		tipTxt.setFormat(Paths.font("rubik.ttf"), 12, FlxColor.WHITE, LEFT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
 		tipTxt.borderSize = 2;
 		tipTxt.scrollFactor.set();
 		tipTxt.text = "'Enter' toggles the help text and UI Box.\n'TAB' toggles the UI Box and this text.\n'R' will reset to default positions";
@@ -309,7 +309,7 @@ class CustomizeUIState extends MusicBeatState
 		});
 		tab_group_general.add(downscrollPreset);
 
-		// Text for Custom Presets
+		/* // Text for Custom Presets
 		var customPresetTxt:FlxText = new FlxText(10, 110, 150, "Load Custom Presets:");
 		tab_group_general.add(customPresetTxt);
 
@@ -323,10 +323,10 @@ class CustomizeUIState extends MusicBeatState
 		var etternaPreset:FlxButton = new FlxButton(10, 150, "Etterna", function() {
 			opm.loadDownscrollPositions();
 		});
-		tab_group_general.add(etternaPreset);
+		tab_group_general.add(etternaPreset); */
 
 		// Checkbox to link Healthbar and Healthbar BG together.
-		healthBarLinkToggle = new FlxUICheckBox(10, 200, null, null, "Link Healthbar Objects", 100,
+		healthBarLinkToggle = new FlxUICheckBox(10, 75, null, null, "Link Healthbar Objects", 100,
 			function() {
 				healthBarLinked = healthBarLinkToggle.checked;
 			}
@@ -334,12 +334,17 @@ class CustomizeUIState extends MusicBeatState
 		tab_group_general.add(healthBarLinkToggle);
 
 		// Checkbox to link Healthbar and Healthbar BG together.
-		timeBarLinkToggle = new FlxUICheckBox(10, 250, null, null, "Link Timebar Objects", 100,
+		timeBarLinkToggle = new FlxUICheckBox(10, 100, null, null, "Link Timebar Objects", 100,
 			function() {
 				timeBarLinked = timeBarLinkToggle.checked;
 			}
 		);
 		tab_group_general.add(timeBarLinkToggle);
+
+		// Text for Upscroll & Downscroll Presets
+		var upcomingFeatures:FlxText = new FlxText(10, 150, 250, "");
+		upcomingFeatures.text = "Planned features include:\n* Resize UI\n* Change shape of time/healthbar\nProper Icons/Ratings/Combo support\n* Splitting scoreTxt into multiple objects";
+		tab_group_general.add(upcomingFeatures);
 
 		UI_box.addGroup(tab_group_general);
 	}
