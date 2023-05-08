@@ -19,18 +19,6 @@
    },
    {
       "angle": 0,
-      "x": 619,
-      "y": 8.2,
-      "name": "iconP1"
-   },
-   {
-      "angle": 0,
-      "x": 515,
-      "y": 8.2,
-      "name": "iconP2"
-   },
-   {
-      "angle": 0,
       "x": 0,
       "y": 115.2,
       "name": "scoreTxt"

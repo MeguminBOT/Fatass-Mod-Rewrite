@@ -10,6 +10,7 @@ import haxe.format.JsonParser;
 import sys.FileSystem;
 import sys.io.File;
 #end
+import ClientPrefs;
 
 using StringTools;
 
@@ -29,8 +30,8 @@ class ObjectPositionManager {
 	var judgeCounterTxt:FlxText;
 	var healthBar:FlxBar;
 	var healthBarBG:FlxSprite;
-	var iconP1:HealthIcon;
-	var iconP2:HealthIcon;
+	// var iconP1:HealthIcon;
+	// var iconP2:HealthIcon;
 	var scoreTxt:FlxText;
 	var botplayTxt:FlxText;
 	var timeBar:FlxBar;
@@ -43,8 +44,8 @@ class ObjectPositionManager {
 		(judgeCounterTxt:FlxText, 
 		healthBar:FlxBar, 
 		healthBarBG:FlxSprite, 
-		iconP1:HealthIcon, 
-		iconP2:HealthIcon, 
+		//iconP1:HealthIcon, 
+		//iconP2:HealthIcon, 
 		scoreTxt:FlxText, 
 		botplayTxt:FlxText,
 		timeTxt:FlxText,
@@ -56,8 +57,8 @@ class ObjectPositionManager {
 		this.judgeCounterTxt = judgeCounterTxt;
 		this.healthBar = healthBar;
 		this.healthBarBG = healthBarBG;
-		this.iconP1 = iconP1;
-		this.iconP2 = iconP2;
+		// this.iconP1 = iconP1;
+		// this.iconP2 = iconP2;
 		this.scoreTxt = scoreTxt;
 		this.botplayTxt = botplayTxt;
 		this.timeTxt = timeTxt;
@@ -87,18 +88,18 @@ class ObjectPositionManager {
 				y: healthBar.y,
 				angle: healthBar.angle
 			},
-            {
-				name: "iconP1",
-				x: iconP1.x,
-				y: iconP1.y,
-				angle: iconP1.angle
-			},
-            {
-				name: "iconP2",
-				x: iconP2.x,
-				y: iconP2.y,
-				angle: iconP2.angle
-			},
+            // {
+			// 	name: "iconP1",
+			// 	x: iconP1.x,
+			// 	y: iconP1.y,
+			// 	angle: iconP1.angle
+			// },
+            // {
+			// 	name: "iconP2",
+			// 	x: iconP2.x,
+			// 	y: iconP2.y,
+			// 	angle: iconP2.angle
+			// },
             {
 				name: "scoreTxt",
 				x: scoreTxt.x,
@@ -147,14 +148,14 @@ class ObjectPositionManager {
 					healthBar.x = position.x;
 					healthBar.y = position.y;
 					healthBar.angle = position.angle;
-				case "iconP1":
-					iconP1.x = position.x;
-					iconP1.y = position.y;
-					iconP1.angle = position.angle;
-				case "iconP2":
-					iconP2.x = position.x;
-					iconP2.y = position.y;
-					iconP2.angle = position.angle;
+				// case "iconP1":
+				// 	iconP1.x = position.x;
+				// 	iconP1.y = position.y;
+				// 	iconP1.angle = position.angle;
+				// case "iconP2":
+				// 	iconP2.x = position.x;
+				// 	iconP2.y = position.y;
+				// 	iconP2.angle = position.angle;
 				case "scoreTxt":
 					scoreTxt.x = position.x;
 					scoreTxt.y = position.y;
@@ -204,7 +205,7 @@ class ObjectPositionManager {
 		var objectPositions:Array<ObjectPosition> = createObjectPositionsArray();
 		var json:String = Json.stringify(objectPositions, null, "   ");
 		
-		saveJSONToFile(json, "positions.json");
+		saveJSONToFile(json, "user_positions.json");
 	}
 
 	function saveJSONToFile(json:String, fileName:String):Void {
@@ -217,14 +218,30 @@ class ObjectPositionManager {
 	}
 
 	public function loadPositions():Void {
-		var objectPositions:Array<ObjectPosition> = getObjectPositionsFromJson("positions.json");
+		var objectPositions:Array<ObjectPosition> = getObjectPositionsFromJson("user_positions.json");
 		if (objectPositions != null) {
 			updateObjectPosition(objectPositions);
 		}
 	}
 
 	public function loadDefaultPositions():Void {
-        var objectPositions:Array<ObjectPosition> = getObjectPositionsFromJson("default_positions.json");
+		if (ClientPrefs.downScroll == false) {
+        	loadUpscrollPositions();
+		} else {
+			loadDownscrollPositions();
+		}
+    }
+
+	public function loadUpscrollPositions():Void {
+        var objectPositions:Array<ObjectPosition> = getObjectPositionsFromJson("default_positions_upscroll.json");
+        if (objectPositions != null) {
+            updateObjectPosition(objectPositions);
+			savePositions();
+        }
+    }
+
+	public function loadDownscrollPositions():Void {
+        var objectPositions:Array<ObjectPosition> = getObjectPositionsFromJson("default_positions_downscroll.json");
         if (objectPositions != null) {
             updateObjectPosition(objectPositions);
 			savePositions();

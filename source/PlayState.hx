@@ -1251,6 +1251,7 @@ class PlayState extends MusicBeatState
 		iconP2.y = healthBar.y - 75;
 		iconP2.visible = !ClientPrefs.hideIcons;
 		iconP2.alpha = ClientPrefs.healthBarAlpha;
+
 		add(iconP2);
 		reloadHealthBarColors();
 
@@ -1505,7 +1506,7 @@ class PlayState extends MusicBeatState
 		if (ClientPrefs.inputSystem == "Etterna") {
 			createMsText();
 		}
-		opm = new ObjectPositionManager(judgeCounterTxt, healthBar, healthBarBG, iconP1, iconP2, scoreTxt, botplayTxt, timeTxt, timeBar, timeBarBG);
+		opm = new ObjectPositionManager(judgeCounterTxt, healthBar, healthBarBG, scoreTxt, botplayTxt, timeTxt, timeBar, timeBarBG);
 		opm.loadPositions();
 	}
 
@@ -3530,6 +3531,12 @@ class PlayState extends MusicBeatState
 
 		if (ClientPrefs.inputSystem == "Etterna") {
 			EtternaFunctions.updateMsText();
+		}
+		if (healthBar.angle < -1 || healthBar.angle > 1) {
+			iconP1.alpha = 0;
+			iconP2.alpha = 0;
+			iconP1.visible = false;
+			iconP2.visible = false;
 		}
 	}
 

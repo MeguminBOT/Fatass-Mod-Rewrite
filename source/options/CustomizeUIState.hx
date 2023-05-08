@@ -16,7 +16,18 @@ import flixel.math.FlxPoint;
 import flixel.text.FlxText;
 import flixel.tweens.FlxEase;
 import flixel.tweens.FlxTween;
+import flixel.addons.ui.FlxInputText;
+import flixel.addons.ui.FlxUI9SliceSprite;
+import flixel.addons.ui.FlxUI;
+import flixel.addons.ui.FlxUICheckBox;
+import flixel.addons.ui.FlxUIInputText;
+import flixel.addons.ui.FlxUINumericStepper;
+import flixel.addons.ui.FlxUISlider;
+import flixel.addons.ui.FlxUITabMenu;
+import flixel.addons.ui.FlxUITooltip.FlxUITooltipStyle;
 import flixel.ui.FlxBar;
+import flixel.ui.FlxButton;
+import flixel.ui.FlxSpriteButton;
 import flixel.util.FlxColor;
 import flixel.util.FlxStringUtil;
 
@@ -51,15 +62,26 @@ class CustomizeUIState extends MusicBeatState
 	var scoreTxt:FlxText;
 	var botplayTxt:FlxText;
 
+	var helpBG:FlxSprite;
 	var helpTxt:FlxText;
+	var UI_box:FlxUITabMenu;
+	var tipTxt:FlxText;
+
+	var healthBarLinkToggle:FlxUICheckBox;
+	var healthBarLinked:Bool = false;
+	var timeBarLinkToggle:FlxUICheckBox;
+	var timeBarLinked:Bool = false;
+	
 	var selectedObject:FlxObject = null;
 	var selectedObjectPositionText:FlxText;
 	var prevMouseX:Float = 0;
 	var prevMouseY:Float = 0;
 	var opm:ObjectPositionManager;
 
+
 	override public function create()
 	{
+
 		FlxG.mouse.visible = true;
 		// Cameras
 		camGame = new FlxCamera();
@@ -168,17 +190,17 @@ class CustomizeUIState extends MusicBeatState
 		healthBar.scrollFactor.set();
 		healthBar.cameras = [camHUD];
 
-		var iconOffset:Int = 26;
+		// var iconOffset:Int = 26;
 
-		iconP1 = new HealthIcon(boyfriend.healthIcon, true);
-		iconP1.x = healthBar.x + (healthBar.width * (FlxMath.remapToRange(healthBar.percent, 0, 100, 100, 0) * 0.01)) + (150 * iconP1.scale.x - 150) / 2 - iconOffset;
-		iconP1.y = healthBar.y - 75;
-		iconP1.cameras = [camHUD];
+		// iconP1 = new HealthIcon(boyfriend.healthIcon, true);
+		// iconP1.x = healthBar.x + (healthBar.width * (FlxMath.remapToRange(healthBar.percent, 0, 100, 100, 0) * 0.01)) + (150 * iconP1.scale.x - 150) / 2 - iconOffset;
+		// iconP1.y = healthBar.y - 75;
+		// iconP1.cameras = [camHUD];
 
-		iconP2 = new HealthIcon(dad.healthIcon, false);
-		iconP2.x = healthBar.x + (healthBar.width * (FlxMath.remapToRange(healthBar.percent, 0, 100, 100, 0) * 0.01)) - (150 * iconP2.scale.x) / 2 - iconOffset * 2;
-		iconP2.y = healthBar.y - 75;
-		iconP2.cameras = [camHUD];
+		// iconP2 = new HealthIcon(dad.healthIcon, false);
+		// iconP2.x = healthBar.x + (healthBar.width * (FlxMath.remapToRange(healthBar.percent, 0, 100, 100, 0) * 0.01)) - (150 * iconP2.scale.x) / 2 - iconOffset * 2;
+		// iconP2.y = healthBar.y - 75;
+		// iconP2.cameras = [camHUD];
 
 		reloadHealthBarColors();
 
@@ -211,9 +233,19 @@ class CustomizeUIState extends MusicBeatState
 		Conductor.changeBPM(128.0);
 		FlxG.sound.playMusic(Paths.music('offsetSong'), 1, true);
 
+		helpBG = new FlxSprite().makeGraphic(FlxG.width, FlxG.height, FlxColor.BLACK);
+		helpBG.alpha = 0.7;
+		helpBG.visible = true;
+		helpBG.cameras = [camHUD];
+		add(helpBG);
+
 		helpTxt = new FlxText(0, 0);
 		helpTxt.text = 
-		"Press and hold down the Left Mouse Button to move an object\nHold Shift+LMB or Shift+MScrollWheel to rotate the object\n\nPress ACCEPT to hide this text";
+		"How to use:
+		\nPress and hold down the Left Mouse Button to move an object.\nHold Shift+LMB or Shift+MScrollWheel to rotate the object.\nPress ENTER to get started.
+		\nNOTE: Currently, if you rotate healthbar,\nthen character icons will be hidden due to temporary issue.
+		\nYou can toggle this text by pressing ENTER again.
+		\nPressing TAB will toggle the UI Menu on the right side.";
 		helpTxt.setFormat(Paths.font("rubik.ttf"), 16, FlxColor.WHITE, CENTER, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
 		helpTxt.scrollFactor.set();
 		helpTxt.borderSize = 2;
@@ -229,9 +261,87 @@ class CustomizeUIState extends MusicBeatState
 		selectedObjectPositionText.setFormat(Paths.font("rubik.ttf"), 16, FlxColor.WHITE, CENTER, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
 		add(selectedObjectPositionText);
 
+		var tabs = [
+			{name: "General", label: 'General'},
+		];
+
+		UI_box = new FlxUITabMenu(null, tabs, true);
+		UI_box.resize(300, 425);
+		UI_box.x = 950;
+		UI_box.y = 25;
+		UI_box.scrollFactor.set();
+		UI_box.visible = true;
+
+		tipTxt = new FlxText(UI_box.x, UI_box.y + UI_box.height + 8, 0, "", 16);
+		tipTxt.setFormat(Paths.font("rubik.ttf"), 12, FlxColor.WHITE, LEFT/*, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK*/);
+		tipTxt.borderSize = 2;
+		tipTxt.scrollFactor.set();
+		tipTxt.text = "'Enter' toggles the help text and UI Box.\n'TAB' toggles the UI Box and this text.\n'R' will reset to default positions";
+		add(tipTxt);
+
+		add(UI_box);
+		addGeneralUI();
+
 		super.create();
-		opm = new ObjectPositionManager(judgeCounterTxt, healthBar, healthBarBG, iconP1, iconP2, scoreTxt, botplayTxt, timeTxt, timeBar, timeBarBG);
+
+		opm = new ObjectPositionManager(judgeCounterTxt, healthBar, healthBarBG, scoreTxt, botplayTxt, timeTxt, timeBar, timeBarBG);
 		opm.loadPositions();
+	}
+
+	function addGeneralUI():Void
+	{
+		var tab_group_general = new FlxUI(null, UI_box);
+		tab_group_general.name = "General";
+
+		// Text for Upscroll & Downscroll Presets
+		var defaultPresetTxt:FlxText = new FlxText(10, 10, 150, "Load Default Presets:");
+		tab_group_general.add(defaultPresetTxt);
+
+		// Button to load default preset for Upscroll
+		var upscrollPreset:FlxButton = new FlxButton(10, 25, "Upscroll", function() {
+			opm.loadUpscrollPositions();
+		});
+		tab_group_general.add(upscrollPreset);
+
+		// Button to load default preset for Downscroll
+		var downscrollPreset:FlxButton = new FlxButton(10, 50, "Downscroll", function() {
+			opm.loadDownscrollPositions();
+		});
+		tab_group_general.add(downscrollPreset);
+
+		// Text for Custom Presets
+		var customPresetTxt:FlxText = new FlxText(10, 110, 150, "Load Custom Presets:");
+		tab_group_general.add(customPresetTxt);
+
+		// Button to load custom preset osu!Mania
+		var osuManiaPreset:FlxButton = new FlxButton(10, 125, "osu!Mania", function() {
+			opm.loadUpscrollPositions();
+		});
+		tab_group_general.add(osuManiaPreset);
+
+		// Button to load custom preset Etterna
+		var etternaPreset:FlxButton = new FlxButton(10, 150, "Etterna", function() {
+			opm.loadDownscrollPositions();
+		});
+		tab_group_general.add(etternaPreset);
+
+		// Checkbox to link Healthbar and Healthbar BG together.
+		healthBarLinkToggle = new FlxUICheckBox(10, 200, null, null, "Link Healthbar Objects", 100,
+			function() {
+				healthBarLinked = healthBarLinkToggle.checked;
+			}
+		);
+		tab_group_general.add(healthBarLinkToggle);
+
+		// Checkbox to link Healthbar and Healthbar BG together.
+		timeBarLinkToggle = new FlxUICheckBox(10, 250, null, null, "Link Timebar Objects", 100,
+			function() {
+				timeBarLinked = timeBarLinkToggle.checked;
+			}
+		);
+		tab_group_general.add(timeBarLinkToggle);
+
+		UI_box.addGroup(tab_group_general);
 	}
 
 	public function reloadHealthBarColors() {
@@ -254,13 +364,14 @@ class CustomizeUIState extends MusicBeatState
 		{
 			boyfriend.dance();
 			gf.dance();
+			dad.dance();
 		}
 		lastBeatHit = curBeat;
 	}
 
 	override public function update(elapsed:Float)
 	{
-		if (FlxG.mouse.justPressed) {
+		if (!UI_box.visible && FlxG.mouse.justPressed) {
 			var mousePos:FlxPoint = FlxG.mouse.getScreenPosition(camHUD);
 			
 			if (judgeCounterTxt.overlapsPoint(mousePos)) {
@@ -272,12 +383,12 @@ class CustomizeUIState extends MusicBeatState
 			else if (healthBar.overlapsPoint(mousePos)) {
 				selectObject(healthBar);
 			}
-			else if (iconP1.overlapsPoint(mousePos)) {
-				selectObject(iconP1);
-			}
-			else if (iconP2.overlapsPoint(mousePos)) {
-				selectObject(iconP2);
-			}
+			// else if (iconP1.overlapsPoint(mousePos)) {
+			// 	selectObject(iconP1);
+			// }
+			// else if (iconP2.overlapsPoint(mousePos)) {
+			// 	selectObject(iconP2);
+			// }
 			else if (scoreTxt.overlapsPoint(mousePos)) {
 				selectObject(scoreTxt);
 			}
@@ -332,14 +443,12 @@ class CustomizeUIState extends MusicBeatState
 			selectedObjectPositionText.text = "";
 		}
 
-		if(controls.RESET)
-		{
+		if(controls.RESET) {
 			holdTime = 0;
 			opm.loadDefaultPositions();
 		}
 
-		if(controls.BACK)
-		{
+		if(controls.BACK) {
 			persistentUpdate = false;
 			CustomFadeTransition.nextCamera = camOther;
 			MusicBeatState.switchState(new options.OptionsState());
@@ -347,24 +456,44 @@ class CustomizeUIState extends MusicBeatState
 			FlxG.mouse.visible = false;
 		}
 
-		if(controls.ACCEPT)
-		{
+		if(FlxG.keys.justPressed.ENTER) {
 			holdTime = 0;
+			helpBG.visible = !helpBG.visible;
+			tipTxt.visible = !tipTxt.visible;
+			UI_box.visible = !UI_box.visible;
 			helpTxt.visible = !helpTxt.visible;
 		}
 
-		var multP1:Float = FlxMath.lerp(1, iconP1.scale.x, CoolUtil.boundTo(1 - (elapsed * 9), 0, 1));
-		iconP1.scale.set(multP1, multP1);
-		iconP1.updateHitbox();
+		if(FlxG.keys.justPressed.TAB) {
+			holdTime = 0;
+			UI_box.visible = !UI_box.visible;
+			tipTxt.visible = !tipTxt.visible;
+		}
 
-		var multP2:Float = FlxMath.lerp(1, iconP2.scale.x, CoolUtil.boundTo(1 - (elapsed * 9), 0, 1));
-		iconP2.scale.set(multP2, multP2);
-		iconP2.updateHitbox();
+		// var multP1:Float = FlxMath.lerp(1, iconP1.scale.x, CoolUtil.boundTo(1 - (elapsed * 9), 0, 1));
+		// iconP1.scale.set(multP1, multP1);
+		// iconP1.updateHitbox();
+
+		// var multP2:Float = FlxMath.lerp(1, iconP2.scale.x, CoolUtil.boundTo(1 - (elapsed * 9), 0, 1));
+		// iconP2.scale.set(multP2, multP2);
+		// iconP2.updateHitbox();
 
 		Conductor.songPosition = FlxG.sound.music.time;
 
 		prevMouseX = FlxG.mouse.screenX;
 		prevMouseY = FlxG.mouse.screenY;
+
+		// Links the bar objects to be moved at the same time when the "Link (object)Bar" is checked.
+		if (healthBarLinked) {
+			healthBar.x = healthBarBG.x + 4;
+			healthBar.y = healthBarBG.y + 4;
+			healthBar.angle = healthBarBG.angle;
+		}
+		if (timeBarLinked) {
+			timeBar.x = timeBarBG.x + 4;
+			timeBar.y = timeBarBG.y + 4;
+			timeBar.angle = timeBarBG.angle;
+		}
 		super.update(elapsed);
 	}
 
@@ -401,8 +530,8 @@ class CustomizeUIState extends MusicBeatState
 		if (obj == judgeCounterTxt) return "judgeCounterTxt";
 		else if (obj == healthBarBG) return "healthBarBG";
 		else if (obj == healthBar) return "healthBar";
-		else if (obj == iconP1) return "iconP1";
-		else if (obj == iconP2) return "iconP2";
+		// else if (obj == iconP1) return "iconP1";
+		// else if (obj == iconP2) return "iconP2";
 		else if (obj == scoreTxt) return "scoreTxt";
 		else if (obj == botplayTxt) return "botplayTxt";
 		else if (obj == timeTxt) return "timeTxt";

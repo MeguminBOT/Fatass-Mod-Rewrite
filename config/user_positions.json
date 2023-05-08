@@ -1,0 +1,50 @@
+[
+   {
+      "x": 570,
+      "y": 59,
+      "angle": 0,
+      "name": "judgeCounterTxt"
+   },
+   {
+      "x": 339.5,
+      "y": 643.2,
+      "angle": 0,
+      "name": "healthBarBG"
+   },
+   {
+      "x": 343.5,
+      "y": 647.2,
+      "angle": 0,
+      "name": "healthBar"
+   },
+   {
+      "x": 0,
+      "y": 675,
+      "angle": 0,
+      "name": "scoreTxt"
+   },
+   {
+      "x": 390,
+      "y": 400,
+      "angle": 0,
+      "name": "botplayTxt"
+   },
+   {
+      "x": 430,
+      "y": 20,
+      "angle": 0,
+      "name": "timeTxt"
+   },
+   {
+      "x": 436,
+      "y": 26,
+      "angle": 0,
+      "name": "timeBarBG"
+   },
+   {
+      "x": 440,
+      "y": 30,
+      "angle": 0,
+      "name": "timeBar"
+   }
+]
