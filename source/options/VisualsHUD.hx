@@ -29,23 +29,30 @@ class VisualsHUD extends BaseOptionsMenu
 	public function new()
 	{
 		title = 'UI Visuals';
-		description = 'Options for Menu and Gameplay UI';
+		description = 'Options for Gameplay UI';
 		rpcTitle = 'UI Visuals Settings Menu'; //for Discord Rich Presence
 
 		var option:Option = new Option('UI Skin:',
 			"Changes the look of the UI. Affects Combo, Ratings, Healthbar and Timebar.",
 			'uiSkin',
 			'string',
-			'RhythmEngine',
+			'Rhythm Engine',
 			['Default', 
-			'RhythmEngine',
-			'StepMania']);
+			'Rhythm Engine',
+			'StepMania Classic']);
 		addOption(option);
 
 		var option:Option = new Option('Judgement Counter',
 			'Displays how many hits you got of each judgement rating',
 			'judgeCounter',
 			'bool',
+		false);
+		addOption(option);
+
+		var option:Option = new Option('Static HUD',
+		"If checked, the HUD won't be affected by events that uses camHUD camera. May break some charts.\nAffects all objects that can be moved using CustomizeUI",
+		'staticHUD',
+		'bool',
 		false);
 		addOption(option);
 
@@ -83,13 +90,6 @@ class VisualsHUD extends BaseOptionsMenu
 		option.decimals = 1;
 		addOption(option);
 
-		var option:Option = new Option('Static HUD objects',
-			"If checked, the HUD won't be affected by events that uses camHUD camera. May break some charts.\nAffects all objects that can be moved using CustomizeUI",
-			'staticHUD',
-			'bool',
-			false);
-		addOption(option);
-		
 		#if !mobile
 		var option:Option = new Option('FPS Counter',
 			'If unchecked, hides FPS Counter.',

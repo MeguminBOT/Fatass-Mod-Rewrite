@@ -36,11 +36,12 @@ class VisualsGameplay extends BaseOptionsMenu
 			"Changes the look of the notes. Doesn't affect custom notes.",
 			'noteSkin',
 			'string',
-			'RhythmEngine',
+			'Rhythm Engine',
 			['Default', 
-			'RhythmEngine',
-			'StepMania',
-			'RhythmEngine_Bars']);
+			'Rhythm Engine',
+			'Rhythm Engine Circles',
+			'Rhythm Engine Bars',
+			'StepMania Classic']);
 		addOption(option);
 
 		var option:Option = new Option('Note Splashes',

@@ -70,14 +70,14 @@ class ClientPrefs {
 	public static var underlay:Float = 0;
 	public static var hitsoundType:String = 'default';
 	public static var inputSystem:String = "Etterna";
-	public static var inputComplexity:String = "High";
+	public static var inputComplexity:String = "Normal";
 	public static var customNoteSound:Bool = true;
 	public static var customSoundEvent:Bool = true;
 	public static var customMechanicEvent:Bool = true;
 	public static var customStrumPlacement:Bool = true;
 	public static var customSongScripts:Bool = true;
-	public static var noteSkin:String = 'RhythmEngine';
-	public static var uiSkin:String = 'RhythmEngine';
+	public static var noteSkin:String = 'Rhythm Engine';
+	public static var uiSkin:String = 'Rhythm Engine';
 	public static var judgeCounter:Bool = true;
 	public static var strumlineOffsetY:Float = 0;
 	public static var strumlineOffsetX:Float = 0;
