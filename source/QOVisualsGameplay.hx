@@ -37,17 +37,27 @@ class QOVisualsGameplay extends MusicBeatSubstate
 
 	function getOptions()
 	{
-		var option:QOption = new QOption('Note Skin', 'noteSkin', 'string', 'RhythmEngine',
+		var option:QOption = new QOption('Note Skin', 
+			'noteSkin', 
+			'string', 
+			'Rhythm Engine',
 			['Default', 
-			'RhythmEngine',
-			'StepMania',
-			'RhythmEngine_Bars']);
+			'Rhythm Engine',
+			'Rhythm Engine Circles',
+			'Rhythm Engine Bars',
+			'StepMania Classic']);
 		optionsArray.push(option);
 
-		var option:QOption = new QOption('Note Splashes', 'noteSplashes', 'bool', true);
+		var option:QOption = new QOption('Note Splashes', 
+			'noteSplashes', 
+			'bool', 
+			true);
 		optionsArray.push(option);
 
-		var option:QOption = new QOption('Lane Transparency', 'underlay', 'float', true);
+		var option:QOption = new QOption('Lane Transparency', 
+			'underlay', 
+			'float', 
+			true);
 		option.displayFormat = '%v';
 		option.scrollSpeed = 100;
 		option.changeValue = 0.1;
@@ -56,17 +66,26 @@ class QOVisualsGameplay extends MusicBeatSubstate
 		option.maxValue = 1;
 		optionsArray.push(option);
 
-		var option:QOption = new QOption('Opponent Notes', 'opponentStrums', 'bool', true);
+		var option:QOption = new QOption('Opponent Notes', 
+			'opponentStrums', 
+			'bool', 
+			true);
 		optionsArray.push(option);
 
-		var option:QOption = new QOption('Strumline Y Offset', 'strumlineOffsetY', 'float', 0);
+		var option:QOption = new QOption('Strumline Y Offset', 
+			'strumlineOffsetY', 
+			'float', 
+			0);
 		option.scrollSpeed = 10;
 		option.changeValue = 0.1;
 		option.minValue = -100;
 		option.maxValue = 100;
 		optionsArray.push(option);
 
-		var option:QOption = new QOption('Strumline X Offset', 'strumlineOffsetX', 'float', 0);
+		var option:QOption = new QOption('Strumline X Offset', 
+			'strumlineOffsetX', 
+			'float', 
+			0);
 		option.scrollSpeed = 10;
 		option.changeValue = 0.1;
 		option.minValue = -100;

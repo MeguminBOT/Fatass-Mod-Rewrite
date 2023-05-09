@@ -37,19 +37,31 @@ class QOVisualsHUD extends MusicBeatSubstate
 
 	function getOptions()
 	{
-		var option:QOption = new QOption('UI Skin', 'uiSkin', 'string', 'RhythmEngine',
+		var option:QOption = new QOption('UI Skin', 
+			'uiSkin', 
+			'string', 
+			'Rhythm Engine',
 			['Default', 
-			'RhythmEngine',
-			'StepMania']);
+			'Rhythm Engine',
+			'StepMania Classic']);
 		optionsArray.push(option);
 
-		var option:QOption = new QOption('Judgement Counter', 'judgeCounter', 'bool', false);
+		var option:QOption = new QOption('Judgement Counter', 
+			'judgeCounter', 
+			'bool', 
+			false);
 		optionsArray.push(option);
 
-		var option:QOption = new QOption('Hide Healtbar Icons', 'hideIcons', 'bool', false);
+		var option:QOption = new QOption('Hide Healtbar Icons', 
+			'hideIcons', 
+			'bool', 
+			false);
 		optionsArray.push(option);
 
-		var option:QOption = new QOption('Hide HUD', 'hideHud', 'bool', false);
+		var option:QOption = new QOption('Hide HUD', 
+			'hideHud', 
+			'bool', 
+			false);
 		optionsArray.push(option);
 	}
 

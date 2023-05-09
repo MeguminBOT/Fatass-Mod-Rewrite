@@ -37,26 +37,41 @@ class QOGameplaySettings extends MusicBeatSubstate
 
 	function getOptions()
 	{
-		var option:QOption = new QOption('Downscroll', 'downScroll', 'bool', false);
+		var option:QOption = new QOption('Downscroll', 
+			'downScroll', 
+			'bool', 
+			false);
 		optionsArray.push(option);
 
-		var option:QOption = new QOption('Middlescroll', 'middleScroll', 'bool', false);
+		var option:QOption = new QOption('Middlescroll', 
+			'middleScroll', 
+			'bool', 
+			false);
 		optionsArray.push(option);
 
-		var option:QOption = new QOption('Ghost Tapping', 'ghostTapping', 'bool', true);
+		var option:QOption = new QOption('Ghost Tapping', 
+			'ghostTapping', 
+			'bool', 
+			true);
 		optionsArray.push(option);
 
-		var option:QOption = new QOption('Hitsound Volume', 'hitsoundVolume', 'percent', 0);
-			option.displayFormat = '%v';
-			option.scrollSpeed = 1.6;
-			option.minValue = 0.0;
-			option.maxValue = 1;
-			option.changeValue = 0.1;
-			option.decimals = 1;
-			option.onChange = onChangeHitsoundVolume;
+		var option:QOption = new QOption('Hitsound Volume', 
+			'hitsoundVolume', 
+			'percent', 
+			0);
+		option.displayFormat = '%v';
+		option.scrollSpeed = 1.6;
+		option.minValue = 0.0;
+		option.maxValue = 1;
+		option.changeValue = 0.1;
+		option.decimals = 1;
+		option.onChange = onChangeHitsoundVolume;
 		optionsArray.push(option);
 		
-		var option:QOption = new QOption('Hitsound Type', 'hitsoundType', 'string', 'default', 
+		var option:QOption = new QOption('Hitsound Type', 
+			'hitsoundType', 
+			'string', 
+			'default', 
 			['default', 
 			'default with kick',
 			'ping pong',
@@ -69,36 +84,57 @@ class QOGameplaySettings extends MusicBeatSubstate
 			'kick bassy3',
 			'osu soft',
 			'osu normal']);
-			option.onChange = onChangeHitsoundType;
+		option.onChange = onChangeHitsoundType;
 		optionsArray.push(option);
 
-		var option:QOption = new QOption('Custom Note Sounds', 'customNoteSound', 'bool', true);
+		var option:QOption = new QOption('Custom Note Sounds', 
+			'customNoteSound', 
+			'bool', 
+			true);
 		optionsArray.push(option);
 
-		var option:QOption = new QOption('Custom Sound Events', 'customSoundEvent', 'bool', true);
+		var option:QOption = new QOption('Custom Sound Events', 
+			'customSoundEvent', 
+			'bool', 
+			true);
 		optionsArray.push(option);
 
-		var option:QOption = new QOption('Custom Mechanic Events', 'customMechanicEvent', 'bool', true);
+		var option:QOption = new QOption('Custom Mechanic Events', 
+			'customMechanicEvent', 
+			'bool', 
+			true);
 		optionsArray.push(option);
 
-		var option:QOption = new QOption('Custom Strumline Placement', 'customStrumPlacement', 'bool', true);
+		var option:QOption = new QOption('Custom Strumline Placement', 
+			'customStrumPlacement', 
+			'bool', 
+			true);
 		optionsArray.push(option);
 
-		var option:QOption = new QOption('Custom Song Scripts', 'customSongScripts', 'bool', true);
+		var option:QOption = new QOption('Custom Song Scripts', 
+			'customSongScripts', 
+			'bool', 
+			true);
 		optionsArray.push(option);
 
-		var option:QOption = new QOption('Rating Offset', 'ratingOffset', 'int', 0);
-			option.displayFormat = '%v ms';
-			option.scrollSpeed = 20;
-			option.minValue = -30;
-			option.maxValue = 30;
+		var option:QOption = new QOption('Rating Offset', 
+			'ratingOffset', 
+			'int', 
+			0);
+		option.displayFormat = '%v ms';
+		option.scrollSpeed = 20;
+		option.minValue = -30;
+		option.maxValue = 30;
 		optionsArray.push(option);
 
-		var option:QOption = new QOption('Safe Frames', 'safeFrames', 'float', 10);
-			option.scrollSpeed = 5;
-			option.minValue = 2;
-			option.maxValue = 10;
-			option.changeValue = 0.1;
+		var option:QOption = new QOption('Safe Frames', 
+			'safeFrames', 
+			'float', 
+			10);
+		option.scrollSpeed = 5;
+		option.minValue = 2;
+		option.maxValue = 10;
+		option.changeValue = 0.1;
 		optionsArray.push(option);
 	}
 	
