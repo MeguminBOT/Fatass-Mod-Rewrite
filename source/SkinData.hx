@@ -3,6 +3,8 @@
 import sys.FileSystem;
 #end
 
+using StringTools;
+
 class SkinData {
     public static function getNoteFile(file:String, folder:String, skin:String = 'Default') {
         skin = Paths.formatToSongPath(skin);
