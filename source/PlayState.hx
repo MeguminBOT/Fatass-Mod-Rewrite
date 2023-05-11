@@ -5017,15 +5017,10 @@ class PlayState extends MusicBeatState
 
 				// Rhythm Engine Generic Note Types
 				if(note.noteType == 'Dodge Note') {
-					if(boyfriend.animOffsets.exists('dodge')) {
-						boyfriend.playAnim('dodge', true);
-						boyfriend.specialAnim = true;
-					}
-
-					if(dad.animOffsets.exists('attack')) {
-						dad.playAnim('attack', true);
-						dad.specialAnim = true;
-					}
+					boyfriend.playAnim(dodgeAnim, true);
+					boyfriend.specialAnim = true;
+					dad.playAnim(attackAnim, true);
+					dad.specialAnim = true;
 				}
 
 				if(note.noteType == 'Heal Note') {
