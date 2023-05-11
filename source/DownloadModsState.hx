@@ -16,12 +16,19 @@ import flixel.ui.FlxButton;
 import flixel.util.FlxColor;
 import haxe.Http;
 import haxe.Json;
+import haxe.Timer;
 import haxe.zip.Entry;
 import openfl.display.Bitmap;
 import openfl.display.BitmapData;
 import openfl.display.Loader;
 import openfl.events.Event;
+import openfl.events.EventDispatcher;
+import openfl.events.IEventDispatcher;
+import openfl.events.IOErrorEvent;
+import openfl.events.ProgressEvent;
 import openfl.net.URLRequest;
+import openfl.net.URLLoader;
+import openfl.net.URLLoaderDataFormat;
 #if sys
 import sys.FileSystem;
 import sys.io.File;
@@ -62,6 +69,7 @@ private class ZipHandler
 		file.compressed = false;
 		file.dataSize = file.fileSize;
 		file.data = s;
+
 		return file.data;
 	}
 }
@@ -76,14 +84,26 @@ private typedef DownloadMetadata = {
 
 class DownloadModsState extends MusicBeatState
 {
+	// UI Stuff.
 	var modpacks:Array<DownloadMetadata>;
+	var progressBar:FlxBar;
+	var progressTxt:FlxText;
+	var blockInput:Bool = false;
+
+	// Download stuff.
+	var receivedBytes:Int = 0;
+	var totalBytes:Int = 0;
+	var downloadedMB:Float;
+	var totalMB:Float;
+	var percent:Int;
+
 	//var input:FlxUIInputText;
 	//var downloadButton:FlxButton;
 	//var urlRegex = ~/^(http|https):\/\/[a-z0-9\-\.]+\.[a-z]{2,}(\/.*)?$/i;
 	//var url:String;
 	//private var blockPressWhileTypingOn:Array<FlxUIInputText> = [];
 
-	override function create(){
+	override function create() {
 		FlxG.mouse.visible = true;
 
 		var bg = new FlxSprite().loadGraphic(Paths.image("menuBG"));
@@ -94,10 +114,10 @@ class DownloadModsState extends MusicBeatState
 		http.onData = function(data:String) {
 			modpacks = Json.parse(data);
 	
-			// Create UI elements for each modpack
+			// Create UI elements for each modpack.
 			var buttonGroup:FlxTypedGroup<FlxButton> = new FlxTypedGroup<FlxButton>();
 			var logoGroup:FlxSpriteGroup = new FlxSpriteGroup();
-			var rowLength:Int = 10; // number of objects per row
+			var rowLength:Int = 10; // number of objects per row.
 			var rowIndex:Int = 0;
 			var colIndex:Int = 0;
 			for (index => metadata in modpacks) {
@@ -128,6 +148,13 @@ class DownloadModsState extends MusicBeatState
 		};
 		http.request();
 
+		// Create progress bar.
+		progressBar = new FlxBar(0, 0, FlxG.width, 20, null, totalBytes, 100, false);
+
+		// Create progress text.
+		progressTxt = new FlxText(0, 250, FlxG.width, "");
+		progressTxt.setFormat("rubik.ttf", 16, FlxColor.WHITE, CENTER, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
+			
 		/* 	
 		// Create input for custom modpack URL
 		input = new FlxUIInputText(100, 500, 400, "Enter direct modpack URL");
@@ -142,82 +169,62 @@ class DownloadModsState extends MusicBeatState
 	}
 
 	private function downloadModpack(metadata:DownloadMetadata):Void {
-		Thread.create(function() {
-			try {
-				// User pressed a download button, initiate the download.
-				var request = new Http(metadata.link);
-				
-				// Tracks and stores the number of bytes received.
-				var receivedBytes:Int = 0;
-            	var totalBytes:Int = 0; 
+		try {
+			// Create the URLRequest object with the download link.
+			var request = new URLRequest(metadata.link);
+		
+			// Create the URLLoader object to load the data.
+			var urlLoader = new URLLoader();
+			urlLoader.dataFormat = URLLoaderDataFormat.BINARY;
 
-				// Create progress bar.
-				var progressBar:FlxBar;
-				progressBar = new FlxBar(0, 0, FlxG.width, 20, null, totalBytes, 100, false);
-				add(progressBar);
+			// Path variables.
+			var directory = Paths.mods();
+			var savePath = directory + 'modpack_' + metadata.modpack;
+			var zipPath:String = directory + metadata.fileName;
 
-				// Create progress text.
-				var progressTxt:FlxText = new FlxText(0, 250, FlxG.width, "");
-				progressTxt.setFormat("rubik.ttf", 16, FlxColor.BLACK, "center");
-           		add(progressTxt);
+			// Add progress indicators.
+			add(progressBar);
+			add(progressTxt);
+		
+			// Listen for progress events.
+			urlLoader.addEventListener(ProgressEvent.PROGRESS, function(event:Dynamic) {
+				receivedBytes = event.bytesLoaded;
+				totalBytes = event.bytesTotal;
+				downloadedMB = Math.round((receivedBytes / 1000000) * 100) / 100;
+				totalMB = Math.round((totalBytes / 1000000) * 100) / 100;
+				percent = Math.round((receivedBytes / totalBytes) * 100);
 
-				// Path variables.
-				var directory:String = Paths.mods();
-				var savePath:String = directory + 'modpack_' + metadata.modpack;
-				var zipPath:String = directory + metadata.fileName;
-
-				// When data is received.
-				request.onBytes = function(data:haxe.io.Bytes) {
-
-					// Check if the HTTP Header for Content Length exists.
-					if (request.responseHeaders.exists("Content-Length")) {
-						
-						// Get the total bytes from the HTTP Header.
-						totalBytes = Std.parseInt(request.responseHeaders.get("Content-Length")); 
- 						
-						// Add the number of received bytes to the total.
-						receivedBytes += data.length;
-
-						// Update the progress bar based on received bytes.
-						progressBar.value = receivedBytes; 
-
-						// Update the progress text based on received bytes.
-						var downloadedMB:Float = Math.round((receivedBytes / 1000000) * 100) / 100;
-						var totalMB:Float = Math.round((totalBytes / 1000000) * 100) / 100;
-						if(downloadedMB < totalMB) {
-							progressTxt.text = "Downloading: " + downloadedMB + "MB / " + totalMB + "MB";
-						} else {
-							progressTxt.text = "Download complete: " + downloadedMB + "MB / " + totalMB + "MB";
-						}
-
-						// When all the bytes is received.
-						if (data.length == totalBytes) {
-
-							// Check if path exists otherwise create it.
-							if(!FileSystem.exists('${zipPath.replace(metadata.fileName, "")}')) FileSystem.createDirectory('${zipPath.replace(metadata.fileName, "")}');
-
-							// Saves the bytes downloaded.
-							File.saveBytes(zipPath, data);
-							progressTxt.text = "Saving: " + zipPath + " (" + downloadedMB + "MB)";
-
-							// Uncompress the ZIP file.
-							ZipHandler.saveUncompressed(zipPath, savePath);
-
-							// Delete the ZIP file.
-							FileSystem.deleteFile(zipPath);
-						}
-					}
-				};
-				
-				request.request(false);
-				if (progressBar != null) {
-					remove(progressBar);
+				progressBar.value = percent;
+				if (percent < 100) {
+					progressTxt.text = "Downloading... " + Std.string(downloadedMB) + " MB" + "/" + Std.string(totalMB) + " MB";
+				} else {
+					progressTxt.text = "Completed download of: " + metadata.modpack + " (" + totalMB + " MB)";
 				}
-			} catch (e:Dynamic) {
-				trace("Error downloading modpack: " + e);
-			}
-		});
+				blockInput = true;
+			});
+			
+			// Listen for completion event.
+			urlLoader.addEventListener(Event.COMPLETE, function(event:Event) {
+				var data:haxe.io.Bytes = untyped urlLoader.data;
+				if(!FileSystem.exists('${zipPath.replace(metadata.fileName, "")}')) FileSystem.createDirectory('${zipPath.replace(metadata.fileName, "")}');
+				File.saveBytes(zipPath, data);
+				ZipHandler.saveUncompressed(zipPath, savePath);
+				blockInput = false;
+			});
+		
+			// Listen for error event.
+			urlLoader.addEventListener(IOErrorEvent.IO_ERROR, function(event:IOErrorEvent) {
+				trace("Error downloading modpack: " + event.text);
+			});
+		
+			// Start the download.
+			urlLoader.load(request);
+		} catch (e:Dynamic) {
+			trace("Error downloading modpack: " + e);
+			progressTxt.text = "Error downloading modpack";
+		}
 	}
+	
 	/* 
 	private function downloadCustomModpack(url:String):Void {
 		try {
@@ -281,7 +288,6 @@ class DownloadModsState extends MusicBeatState
 
 	override function update(elapsed:Float)
 	{
-		var blockInput:Bool = false;
 		/*
 		for (input in blockPressWhileTypingOn) {
 			if(input.hasFocus) {
