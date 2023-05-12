@@ -1,7 +1,7 @@
 [
    {
-      "x": 570,
-      "y": 59,
+      "x": 565,
+      "y": 65,
       "angle": 0,
       "name": "judgeCounterTxt"
    },
@@ -18,14 +18,26 @@
       "name": "healthBar"
    },
    {
+      "x": 619,
+      "y": 572.2,
+      "angle": 0,
+      "name": "iconP1"
+   },
+   {
+      "x": 515,
+      "y": 572.2,
+      "angle": 0,
+      "name": "iconP2"
+   },
+   {
       "x": 0,
       "y": 675,
       "angle": 0,
       "name": "scoreTxt"
    },
    {
-      "x": 390,
-      "y": 400,
+      "x": 400,
+      "y": 170,
       "angle": 0,
       "name": "botplayTxt"
    },

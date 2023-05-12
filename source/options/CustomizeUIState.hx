@@ -48,7 +48,7 @@ class CustomizeUIState extends MusicBeatState
 
 	var STRUM_X = 42;
 	var STRUM_X_MIDDLESCROLL = -278;
-
+	
 	var timeBarBG:FlxSprite;
 	var timeBar:FlxBar;
 	var timeTxt:FlxText;
@@ -71,13 +71,14 @@ class CustomizeUIState extends MusicBeatState
 	var healthBarLinked:Bool = false;
 	var timeBarLinkToggle:FlxUICheckBox;
 	var timeBarLinked:Bool = false;
-	
+	var iconLinkToggle:FlxUICheckBox;
+	var iconLinked:Bool = false;
+
 	var selectedObject:FlxObject = null;
 	var selectedObjectPositionText:FlxText;
 	var prevMouseX:Float = 0;
 	var prevMouseY:Float = 0;
 	var opm:ObjectPositionManager;
-
 
 	override public function create()
 	{
@@ -170,7 +171,7 @@ class CustomizeUIState extends MusicBeatState
 		timeBar.cameras = [camHUD];
 
 		judgeCounterTxt = new FlxText(0, 0);
-        judgeCounterTxt.text = 'Perfect Sicks: 233' + '\nSicks: 46 ' + '\nGoods: 1 ' + '\nBads: 0' + '\nShits: 0';
+		judgeCounterTxt.text = 'Perfect Sicks: 233' + '\nSicks: 46 ' + '\nGoods: 1 ' + '\nBads: 0' + '\nShits: 0';
 		judgeCounterTxt.setFormat(Paths.font("rubik.ttf"), 16, FlxColor.WHITE, CENTER, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
 		judgeCounterTxt.scrollFactor.set();
 		judgeCounterTxt.borderSize = 1.25;
@@ -190,17 +191,17 @@ class CustomizeUIState extends MusicBeatState
 		healthBar.scrollFactor.set();
 		healthBar.cameras = [camHUD];
 
-		// var iconOffset:Int = 26;
+		var iconOffset:Int = 26;
 
-		// iconP1 = new HealthIcon(boyfriend.healthIcon, true);
-		// iconP1.x = healthBar.x + (healthBar.width * (FlxMath.remapToRange(healthBar.percent, 0, 100, 100, 0) * 0.01)) + (150 * iconP1.scale.x - 150) / 2 - iconOffset;
-		// iconP1.y = healthBar.y - 75;
-		// iconP1.cameras = [camHUD];
+		iconP1 = new HealthIcon(boyfriend.healthIcon, true);
+		iconP1.x = healthBar.x + (healthBar.width * (FlxMath.remapToRange(healthBar.percent, 0, 100, 100, 0) * 0.01)) + (150 * iconP1.scale.x - 150) / 2 - iconOffset;
+		iconP1.y = healthBar.y - 75;
+		iconP1.cameras = [camHUD];
 
-		// iconP2 = new HealthIcon(dad.healthIcon, false);
-		// iconP2.x = healthBar.x + (healthBar.width * (FlxMath.remapToRange(healthBar.percent, 0, 100, 100, 0) * 0.01)) - (150 * iconP2.scale.x) / 2 - iconOffset * 2;
-		// iconP2.y = healthBar.y - 75;
-		// iconP2.cameras = [camHUD];
+		iconP2 = new HealthIcon(dad.healthIcon, false);
+		iconP2.x = healthBar.x + (healthBar.width * (FlxMath.remapToRange(healthBar.percent, 0, 100, 100, 0) * 0.01)) - (150 * iconP2.scale.x) / 2 - iconOffset * 2;
+		iconP2.y = healthBar.y - 75;
+		iconP2.cameras = [camHUD];
 
 		reloadHealthBarColors();
 
@@ -224,8 +225,8 @@ class CustomizeUIState extends MusicBeatState
 		add(timeTxt);
 		add(healthBarBG);
 		add(healthBar);
-		// add(iconP1);
-		// add(iconP2);
+		add(iconP1);
+		add(iconP2);
 		add(scoreTxt);
 		add(botplayTxt);
 		add(judgeCounterTxt);
@@ -245,7 +246,7 @@ class CustomizeUIState extends MusicBeatState
 		\nPress and hold down the Left Mouse Button to move an object.\nHold Shift+LMB or Shift+MScrollWheel to rotate the object.\nPress ENTER to get started.
 		\nNOTE: Currently, if you rotate healthbar,\nthen character icons will be hidden due to temporary issue.
 		\nYou can toggle this text by pressing ENTER again.
-		\nPressing TAB will toggle the UI Menu on the right side.";
+		\nPressing TAB will toggle the UI Menu on the right side.\nMoving objects are disabled when the TAB menu or this text is shown.";
 		helpTxt.setFormat(Paths.font("rubik.ttf"), 16, FlxColor.WHITE, CENTER, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
 		helpTxt.scrollFactor.set();
 		helpTxt.borderSize = 2;
@@ -284,7 +285,7 @@ class CustomizeUIState extends MusicBeatState
 
 		super.create();
 
-		opm = new ObjectPositionManager(judgeCounterTxt, healthBar, healthBarBG, scoreTxt, botplayTxt, timeTxt, timeBar, timeBarBG);
+		opm = new ObjectPositionManager(judgeCounterTxt, healthBar, healthBarBG, iconP1, iconP2, scoreTxt, botplayTxt, timeTxt, timeBar, timeBarBG);
 		opm.loadPositions();
 	}
 
@@ -341,8 +342,16 @@ class CustomizeUIState extends MusicBeatState
 		);
 		tab_group_general.add(timeBarLinkToggle);
 
+		// Checkbox to link IconP1 and IconP2 together.
+		iconLinkToggle = new FlxUICheckBox(10, 125, null, null, "Link Icon Objects", 100,
+			function() {
+				iconLinked = iconLinkToggle.checked;
+			}
+		);
+		tab_group_general.add(iconLinkToggle);
+
 		// Text for Upscroll & Downscroll Presets
-		var upcomingFeatures:FlxText = new FlxText(10, 150, 250, "");
+		var upcomingFeatures:FlxText = new FlxText(10, 300, 250, "");
 		upcomingFeatures.text = "Planned features include:\n* Resize UI\n* Change shape of time/healthbar\nProper Icons/Ratings/Combo support\n* Splitting scoreTxt into multiple objects";
 		tab_group_general.add(upcomingFeatures);
 
@@ -388,12 +397,12 @@ class CustomizeUIState extends MusicBeatState
 			else if (healthBar.overlapsPoint(mousePos)) {
 				selectObject(healthBar);
 			}
-			// else if (iconP1.overlapsPoint(mousePos)) {
-			// 	selectObject(iconP1);
-			// }
-			// else if (iconP2.overlapsPoint(mousePos)) {
-			// 	selectObject(iconP2);
-			// }
+			else if (iconP1.overlapsPoint(mousePos)) {
+			 	selectObject(iconP1);
+			}
+			else if (iconP2.overlapsPoint(mousePos)) {
+				selectObject(iconP2);
+			}
 			else if (scoreTxt.overlapsPoint(mousePos)) {
 				selectObject(scoreTxt);
 			}
@@ -464,8 +473,6 @@ class CustomizeUIState extends MusicBeatState
 		if(FlxG.keys.justPressed.ENTER) {
 			holdTime = 0;
 			helpBG.visible = !helpBG.visible;
-			tipTxt.visible = !tipTxt.visible;
-			UI_box.visible = !UI_box.visible;
 			helpTxt.visible = !helpTxt.visible;
 		}
 
@@ -475,20 +482,20 @@ class CustomizeUIState extends MusicBeatState
 			tipTxt.visible = !tipTxt.visible;
 		}
 
-		// var multP1:Float = FlxMath.lerp(1, iconP1.scale.x, CoolUtil.boundTo(1 - (elapsed * 9), 0, 1));
-		// iconP1.scale.set(multP1, multP1);
-		// iconP1.updateHitbox();
+		var multP1:Float = FlxMath.lerp(1, iconP1.scale.x, CoolUtil.boundTo(1 - (elapsed * 9), 0, 1));
+		iconP1.scale.set(multP1, multP1);
+		iconP1.updateHitbox();
 
-		// var multP2:Float = FlxMath.lerp(1, iconP2.scale.x, CoolUtil.boundTo(1 - (elapsed * 9), 0, 1));
-		// iconP2.scale.set(multP2, multP2);
-		// iconP2.updateHitbox();
+		var multP2:Float = FlxMath.lerp(1, iconP2.scale.x, CoolUtil.boundTo(1 - (elapsed * 9), 0, 1));
+		iconP2.scale.set(multP2, multP2);
+		iconP2.updateHitbox();
 
 		Conductor.songPosition = FlxG.sound.music.time;
 
 		prevMouseX = FlxG.mouse.screenX;
 		prevMouseY = FlxG.mouse.screenY;
 
-		// Links the bar objects to be moved at the same time when the "Link (object)Bar" is checked.
+		// Links certain objects to be moved at the same time when the "Link <Object>" is checked.
 		if (healthBarLinked) {
 			healthBar.x = healthBarBG.x + 4;
 			healthBar.y = healthBarBG.y + 4;
@@ -498,6 +505,11 @@ class CustomizeUIState extends MusicBeatState
 			timeBar.x = timeBarBG.x + 4;
 			timeBar.y = timeBarBG.y + 4;
 			timeBar.angle = timeBarBG.angle;
+		}
+		if (iconLinked) {
+			iconP1.x = iconP2.x + 104;
+			iconP1.y = iconP2.y;
+			iconP1.angle = iconP2.angle;
 		}
 		super.update(elapsed);
 	}
@@ -535,8 +547,8 @@ class CustomizeUIState extends MusicBeatState
 		if (obj == judgeCounterTxt) return "judgeCounterTxt";
 		else if (obj == healthBarBG) return "healthBarBG";
 		else if (obj == healthBar) return "healthBar";
-		// else if (obj == iconP1) return "iconP1";
-		// else if (obj == iconP2) return "iconP2";
+		else if (obj == iconP1) return "iconP1";
+		else if (obj == iconP2) return "iconP2";
 		else if (obj == scoreTxt) return "scoreTxt";
 		else if (obj == botplayTxt) return "botplayTxt";
 		else if (obj == timeTxt) return "timeTxt";
