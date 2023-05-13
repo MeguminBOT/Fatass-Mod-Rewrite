@@ -33,9 +33,6 @@ class EtternaFunctions
 		{
         	var ratingName = PlayState.instance.ratingFC;
 
-        	if (ratingName == 'SFC') {
-            	ratingName = 'MFC';
-			}
         	var ratingFull = Math.max(actualRatingHere * 100, 0);
         	var ratingFullAsStr = HelperFunctions.truncateFloat(ratingFull, 3);
 
@@ -130,7 +127,7 @@ class EtternaFunctions
 		if (diff > 399) {
 			msText.text = '';
 		} else {
-			msText.text = HelperFunctions.truncateFloat(-diff, 3) + 'ms';
+			msText.text = HelperFunctions.truncateFloat(-diff / PlayState.instance.playbackRate, 3) + 'ms';
 		}
 		lastMsShowUp = Conductor.songPosition;
 		msTextVisible = true;
