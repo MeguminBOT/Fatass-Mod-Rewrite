@@ -82,15 +82,14 @@ class EtternaFunctions
 			return 'D';
 		}
 	}
-	
 
 	public static function updateAccuracy(strumTime:Float, songPos:Float, rOffset:Int) {
 		var noteDiffSign:Float = strumTime - songPos + rOffset;
 		var noteDiffAbs:Float = Math.abs(noteDiffSign);
 		var totalNotesForNow = handleNoteDiff(noteDiffAbs);
 		showMsDiffOnScreen(noteDiffSign);
-		curTotalNotesHit = curTotalNotesHit + totalNotesForNow;
-		counterUpdated = counterUpdated + 1;
+		curTotalNotesHit = PlayState.instance.totalNotesHit + totalNotesForNow;
+		counterUpdated = PlayState.instance.totalPlayed + 1;
 		actualRatingHere = curTotalNotesHit / counterUpdated;
 		PlayState.instance.ratingPercent = Math.max(0, actualRatingHere);
 	}
@@ -98,7 +97,6 @@ class EtternaFunctions
 	public static function handleNoteDiff(diff:Float) {
 		var maxms = diff;
 		var ts:Float = 1;
-
 		var max_points = 1.0;
 		var miss_weight = -5.5;
 		var ridic = 5 * ts;
