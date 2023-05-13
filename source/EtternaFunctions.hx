@@ -6,14 +6,12 @@ import HelperFunctions;
 
 class EtternaFunctions
 {
-	public static var a1 = 0.254829592;
-	public static var a2 = -0.284496736;
-	public static var a3 = 1.421413741;
-	public static var a4 = -1.453152027;
-	public static var a5 = 1.061405429;
-	public static var p = 0.3275911;
-	public static var curTotalNotesHit:Float = 0;
-	public static var counterUpdated:Int = 0;
+	public static var a1:Float = 0.254829592;
+	public static var a2:Float = -0.284496736;
+	public static var a3:Float = 1.421413741;
+	public static var a4:Float = -1.453152027;
+	public static var a5:Float = 1.061405429;
+	public static var p:Float = 0.3275911;
 	public static var actualRatingHere:Float = 0.00;
 	public static var msDiffTimeLimit:Int = 500;
 	public static var lastMsShowUp:Float = 0;
@@ -88,9 +86,9 @@ class EtternaFunctions
 		var noteDiffAbs:Float = Math.abs(noteDiffSign);
 		var totalNotesForNow = handleNoteDiff(noteDiffAbs);
 		showMsDiffOnScreen(noteDiffSign);
-		curTotalNotesHit = PlayState.instance.totalNotesHit + totalNotesForNow;
-		counterUpdated = PlayState.instance.totalPlayed + 1;
-		actualRatingHere = curTotalNotesHit / counterUpdated;
+		PlayState.instance.totalNotesHit = PlayState.instance.totalNotesHit + totalNotesForNow;
+		PlayState.instance.totalPlayed = PlayState.instance.totalPlayed + 1;
+		actualRatingHere = PlayState.instance.totalNotesHit / PlayState.instance.totalPlayed;
 		PlayState.instance.ratingPercent = Math.max(0, actualRatingHere);
 	}
 
@@ -162,11 +160,5 @@ class EtternaFunctions
 		var y = 1.0 - (((((a5 * t + a4) * t) + a3) * t + a2) * t + a1) * t * Math.exp(-x * x);
 
 		return sign * y;
-	}
-
-	public static function resetAccuracy() {
-		curTotalNotesHit = 0;
-		counterUpdated = 0;
-		actualRatingHere = 0.00;
 	}
 }
