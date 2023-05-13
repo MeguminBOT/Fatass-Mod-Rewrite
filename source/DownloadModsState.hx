@@ -121,7 +121,7 @@ class DownloadModsState extends MusicBeatState
 			var rowIndex:Int = 0;
 			var colIndex:Int = 0;
 			for (index => metadata in modpacks) {
-				var button:FlxButton = new FlxButton(50 + colIndex * 150, 50 + rowIndex * 50, 'Download', function() { downloadModpack(metadata); });
+				var button:FlxButton = new FlxButton(50 + colIndex * 150, 50 + rowIndex * 65, 'Download', function() { downloadModpack(metadata); });
 				button.label.setFormat("rubik.ttf", 8, FlxColor.BLACK, "center");
 				buttonGroup.add(button);
 	
