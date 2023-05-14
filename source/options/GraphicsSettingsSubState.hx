@@ -43,7 +43,7 @@ class GraphicsSettingsSubState extends BaseOptionsMenu
 		addOption(option);
 
 		var option:Option = new Option('Disable Stages',
-			'If checked, disables stages from loading,\nImproves performance.',
+			"If checked, disables stages from loading.\nDoesn't prevent song specific scripts from loading assets to the stage.\nImproves performance.",
 			'disableStages',
 			'bool',
 			false);
