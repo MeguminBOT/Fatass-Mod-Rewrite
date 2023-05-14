@@ -1,3 +1,9 @@
+/*----------- ModularUI -----------*/
+/*----------- CustomizeUI Menu -----------*/
+
+/*----------- by AutisticLulu -----------*/
+/*----------- for Rhythm Engine -----------*/
+
 package options;
 
 import flixel.FlxBasic;
@@ -33,27 +39,57 @@ import flixel.util.FlxStringUtil;
 
 using StringTools;
 
+typedef ObjectPosition = {
+	var name:String;
+	var x:Float;
+	var y:Float;
+	var angle:Float;
+}
+
 class CustomizeUIState extends MusicBeatState
 {
-	var boyfriend:Character;
-	var gf:Character;
-	var dad:Character;
-
+	// Cameras.
 	public var camHUD:FlxCamera;
 	public var camGame:FlxCamera;
 	public var camOther:FlxCamera;
 
-	var holdTime:Float = 0;
+	// For character idle animations.
 	var lastBeatHit:Int = -1;
 
+	// Characters.
+	var boyfriend:Character;
+	var gf:Character;
+	var dad:Character;
+
+	// Stage.
+	var stageBG:BGSprite;
+	var stageFront:BGSprite;
+
+	// Copied vars and offsets from PlayState to ensure correct positions.
 	var STRUM_X = 42;
 	var STRUM_X_MIDDLESCROLL = -278;
-	
-	var timeBarBG:FlxSprite;
-	var timeBar:FlxBar;
-	var timeTxt:FlxText;
+	var iconOffset:Int = 26;
+	var multP1:Float;
+	var multP2:Float;
 	var health:Float = 1;
+	
+	// Help Text.
+	var helpBG:FlxSprite;
+	var helpTxt:FlxText;
 
+	// UI Tab Box.
+	var UI_box:FlxUITabMenu;
+	var tipTxt:FlxText;
+	var healthBarLinkToggle:FlxUICheckBox;
+	var timeBarLinkToggle:FlxUICheckBox;
+	var iconLinkToggle:FlxUICheckBox;
+
+	// Bools for linking movable objects.
+	var healthBarLinked:Bool = false;
+	var timeBarLinked:Bool = false;
+	var iconLinked:Bool = false;
+
+	// Moveable Objects.
 	var judgeCounterTxt:FlxText;
 	var healthBar:FlxBar;
 	var healthBarBG:FlxSprite;
@@ -61,30 +97,39 @@ class CustomizeUIState extends MusicBeatState
 	var iconP2:HealthIcon;
 	var scoreTxt:FlxText;
 	var botplayTxt:FlxText;
+	var timeTxt:FlxText;
+	var timeBarBG:FlxSprite;
+	var timeBar:FlxBar;
 
-	var helpBG:FlxSprite;
-	var helpTxt:FlxText;
-	var UI_box:FlxUITabMenu;
-	var tipTxt:FlxText;
-
-	var healthBarLinkToggle:FlxUICheckBox;
-	var healthBarLinked:Bool = false;
-	var timeBarLinkToggle:FlxUICheckBox;
-	var timeBarLinked:Bool = false;
-	var iconLinkToggle:FlxUICheckBox;
-	var iconLinked:Bool = false;
-
+	// Handling of Objects.
+	var objectName:String;
 	var selectedObject:FlxObject = null;
 	var selectedObjectPositionText:FlxText;
+	var singleObjectPosition:Array<ObjectPosition>;
+	
+	// Mouse Variables.
+	var mousePos:FlxPoint;
 	var prevMouseX:Float = 0;
 	var prevMouseY:Float = 0;
+	var deltaX:Float;
+	var deltaY:Float;
+	var deltaAngle:Float;
+
+	// Instance of ModularUI's Object Position Manager
 	var opm:ObjectPositionManager;
 
 	override public function create()
 	{
-
+		// Show mouse pointer.
 		FlxG.mouse.visible = true;
-		// Cameras
+
+		// Pause Main Menu Music
+		FlxG.sound.pause();
+
+		// Force updating
+		persistentUpdate = true;
+
+		// Camera Setup.
 		camGame = new FlxCamera();
 		camHUD = new FlxCamera();
 		camOther = new FlxCamera();
@@ -99,63 +144,50 @@ class CustomizeUIState extends MusicBeatState
 		CustomFadeTransition.nextCamera = camOther;
 		FlxG.camera.scroll.set(120, 130);
 
-		persistentUpdate = true;
-		FlxG.sound.pause();
-		// Stage
-		var bg:BGSprite = new BGSprite('stageback', -600, -200, 0.9, 0.9);
-		add(bg);
+		// Week 1 Stage.
+		stageBG = new BGSprite('stageback', -600, -200, 0.9, 0.9);
+		add(stageBG);
 
-		var stageFront:BGSprite = new BGSprite('stagefront', -650, 600, 0.9, 0.9);
+		stageFront = new BGSprite('stagefront', -650, 600, 0.9, 0.9);
 		stageFront.setGraphicSize(Std.int(stageFront.width * 1.1));
 		stageFront.updateHitbox();
 		add(stageFront);
 
-		if(!ClientPrefs.lowQuality) {
-			var stageLight:BGSprite = new BGSprite('stage_light', -125, -100, 0.9, 0.9);
-			stageLight.setGraphicSize(Std.int(stageLight.width * 1.1));
-			stageLight.updateHitbox();
-			add(stageLight);
-			var stageLight:BGSprite = new BGSprite('stage_light', 1225, -100, 0.9, 0.9);
-			stageLight.setGraphicSize(Std.int(stageLight.width * 1.1));
-			stageLight.updateHitbox();
-			stageLight.flipX = true;
-			add(stageLight);
-
-			var stageCurtains:BGSprite = new BGSprite('stagecurtains', -500, -300, 1.3, 1.3);
-			stageCurtains.setGraphicSize(Std.int(stageCurtains.width * 0.9));
-			stageCurtains.updateHitbox();
-			add(stageCurtains);
-		}
-
-		// Characters
+		// Characters.
 		gf = new Character(400, 130, 'gf');
 		gf.x += gf.positionArray[0];
 		gf.y += gf.positionArray[1];
 		gf.scrollFactor.set(0.95, 0.95);
+
 		boyfriend = new Character(770, 100, 'bf', true);
 		boyfriend.x += boyfriend.positionArray[0];
 		boyfriend.y += boyfriend.positionArray[1];
+
 		dad = new Character(100, 100, 'dad');
 		dad.x += dad.positionArray[0];
 		dad.y += dad.positionArray[1];
+
 		add(gf);
 		add(boyfriend);
 		add(dad);
 
-		var date = Date.now(); // Get current date and time
-		var minutes:String = Std.string(date.getMinutes()); // Get minutes as string
-		var seconds:String = Std.string(date.getSeconds()); // Get seconds as string
-		if (seconds.length == 1) seconds = "0" + seconds; // Add leading zero if seconds is a single digit number
+		// Get current date and time.
+		var date = Date.now();
+		var minutes:String = Std.string(date.getMinutes());
+		var seconds:String = Std.string(date.getSeconds());
+		if (seconds.length == 1) seconds = "0" + seconds; // Add leading zero if seconds is a single digit number.
 
+		// Timebar Text Object.
 		timeTxt = new FlxText(STRUM_X + (FlxG.width / 2) - 248, 19, 400, "", 32);
 		timeTxt.setFormat(Paths.font("rubik.ttf"), 24, FlxColor.WHITE, CENTER, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
 		timeTxt.scrollFactor.set();
 		timeTxt.alpha = 1;
 		timeTxt.borderSize = 2;
-		timeTxt.text = minutes + ":" + seconds; // Set text to display minutes and seconds from the users system clock
+		timeTxt.text = minutes + ":" + seconds; // Sets the timebar text to display minutes and seconds from the users system clock.
 		if(ClientPrefs.downScroll) timeTxt.y = FlxG.height - 44;
 		timeTxt.cameras = [camHUD];
 
+		// Timebar Sprite Object.
 		timeBarBG = new FlxSprite(0, timeTxt.y + 8).loadGraphic(Paths.image('uiskins/default/base/timeBar'));
 		timeBarBG.x = timeTxt.x;
 		timeBarBG.y = timeTxt.y + (timeTxt.height / 4);
@@ -164,12 +196,14 @@ class CustomizeUIState extends MusicBeatState
 		timeBarBG.color = FlxColor.BLACK;
 		timeBarBG.cameras = [camHUD];
 
+		// Timebar Object.
 		timeBar = new FlxBar(timeBarBG.x + 4, timeBarBG.y + 4, LEFT_TO_RIGHT, Std.int(timeBarBG.width - 8), Std.int(timeBarBG.height - 8), this, 'health', 0, 2);
 		timeBar.scrollFactor.set();
 		timeBar.createFilledBar(0xFF000000, 0xFFFFFFFF);
 		timeBar.numDivisions = 400;
 		timeBar.cameras = [camHUD];
 
+		// Judgement Counter Object.
 		judgeCounterTxt = new FlxText(0, 0);
 		judgeCounterTxt.text = 'Perfect Sicks: 233' + '\nSicks: 46 ' + '\nGoods: 1 ' + '\nBads: 0' + '\nShits: 0';
 		judgeCounterTxt.setFormat(Paths.font("rubik.ttf"), 16, FlxColor.WHITE, CENTER, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
@@ -179,6 +213,7 @@ class CustomizeUIState extends MusicBeatState
 		judgeCounterTxt.y = 565;
 		judgeCounterTxt.cameras = [camHUD];
 
+		// Healthbar Sprite Object.
 		healthBarBG = new FlxSprite().loadGraphic(Paths.image('uiskins/default/base/healthBar'));
 		healthBarBG.y = FlxG.height * 0.89;
 		healthBarBG.screenCenter(X);
@@ -186,31 +221,32 @@ class CustomizeUIState extends MusicBeatState
 		if(ClientPrefs.downScroll) healthBarBG.y = 0.11 * FlxG.height;
 		healthBarBG.cameras = [camHUD];
 
+		// Healthbar Object.
 		healthBar = new FlxBar(healthBarBG.x + 4, healthBarBG.y + 4, RIGHT_TO_LEFT, Std.int(healthBarBG.width - 8), Std.int(healthBarBG.height - 8), this,
 			'health', 0, 2);
 		healthBar.scrollFactor.set();
 		healthBar.cameras = [camHUD];
 
-		var iconOffset:Int = 26;
-
+		// BF Icon Object.
 		iconP1 = new HealthIcon(boyfriend.healthIcon, true);
 		iconP1.x = healthBar.x + (healthBar.width * (FlxMath.remapToRange(healthBar.percent, 0, 100, 100, 0) * 0.01)) + (150 * iconP1.scale.x - 150) / 2 - iconOffset;
 		iconP1.y = healthBar.y - 75;
 		iconP1.cameras = [camHUD];
 
+		// Dad Icon Object.
 		iconP2 = new HealthIcon(dad.healthIcon, false);
 		iconP2.x = healthBar.x + (healthBar.width * (FlxMath.remapToRange(healthBar.percent, 0, 100, 100, 0) * 0.01)) - (150 * iconP2.scale.x) / 2 - iconOffset * 2;
 		iconP2.y = healthBar.y - 75;
 		iconP2.cameras = [camHUD];
 
-		reloadHealthBarColors();
-
+		// Score Text Object.
 		scoreTxt = new FlxText(0, healthBarBG.y + 36, FlxG.width, "Score: 1024000 | Misses: 0 | Rating: Very Good (99.84%) - GFC", 20);
 		scoreTxt.setFormat(Paths.font("rubik.ttf"), 16, FlxColor.WHITE, CENTER, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
 		scoreTxt.scrollFactor.set();
 		scoreTxt.borderSize = 1.25;
 		scoreTxt.cameras = [camHUD];
 
+		// Botplay Text Object.
 		botplayTxt = new FlxText(400, timeBarBG.y + 55, FlxG.width - 800, "BOTPLAY", 32);
 		botplayTxt.setFormat(Paths.font("rubik.ttf"), 24, FlxColor.WHITE, CENTER, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
 		botplayTxt.scrollFactor.set();
@@ -220,6 +256,7 @@ class CustomizeUIState extends MusicBeatState
 		}
 		botplayTxt.cameras = [camHUD];
 
+		// Add objects to the screen.
 		add(timeBarBG);
 		add(timeBar);
 		add(timeTxt);
@@ -231,15 +268,14 @@ class CustomizeUIState extends MusicBeatState
 		add(botplayTxt);
 		add(judgeCounterTxt);
 
-		Conductor.changeBPM(128.0);
-		FlxG.sound.playMusic(Paths.music('offsetSong'), 1, true);
-
+		// Darken the screen to make text more readable.
 		helpBG = new FlxSprite().makeGraphic(FlxG.width, FlxG.height, FlxColor.BLACK);
 		helpBG.alpha = 0.7;
 		helpBG.visible = true;
 		helpBG.cameras = [camHUD];
 		add(helpBG);
 
+		// Help text on how to use the ModularUI.
 		helpTxt = new FlxText(0, 0);
 		helpTxt.text = 
 		"How to use:
@@ -256,12 +292,14 @@ class CustomizeUIState extends MusicBeatState
 		helpTxt.cameras = [camHUD];
 		add(helpTxt);
 
+		// Text showing current position.
 		selectedObjectPositionText = new FlxText(-100, -100, 100, "");
 		selectedObjectPositionText.scrollFactor.x = 0;
 		selectedObjectPositionText.scrollFactor.y = 0;
 		selectedObjectPositionText.setFormat(Paths.font("rubik.ttf"), 16, FlxColor.WHITE, CENTER, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
 		add(selectedObjectPositionText);
 
+		// Create UI Tab Box.
 		var tabs = [
 			{name: "General", label: 'General'},
 		];
@@ -283,14 +321,22 @@ class CustomizeUIState extends MusicBeatState
 		add(UI_box);
 		addGeneralUI();
 
+		// Miscellaneous.
+		reloadHealthBarColors();
+		Conductor.changeBPM(128.0);
+		FlxG.sound.playMusic(Paths.music('offsetSong'), 1, true);
+
 		super.create();
 
+		// Create instance of ModularUI's Object Position Manager.
 		opm = new ObjectPositionManager(judgeCounterTxt, healthBar, healthBarBG, iconP1, iconP2, scoreTxt, botplayTxt, timeTxt, timeBar, timeBarBG);
-		opm.loadPositions();
+		opm.loadPositions(); // Loads positions from config/user_positions.json.
 	}
 
+	// UI Tab Box items
 	function addGeneralUI():Void
 	{
+		// Tab setup.
 		var tab_group_general = new FlxUI(null, UI_box);
 		tab_group_general.name = "General";
 
@@ -298,35 +344,19 @@ class CustomizeUIState extends MusicBeatState
 		var defaultPresetTxt:FlxText = new FlxText(10, 10, 150, "Load Default Presets:");
 		tab_group_general.add(defaultPresetTxt);
 
-		// Button to load default preset for Upscroll
+		// Button to force load default preset for Upscroll
 		var upscrollPreset:FlxButton = new FlxButton(10, 25, "Upscroll", function() {
 			opm.loadUpscrollPositions();
 		});
 		tab_group_general.add(upscrollPreset);
 
-		// Button to load default preset for Downscroll
+		// Button to force load default preset for Downscroll
 		var downscrollPreset:FlxButton = new FlxButton(10, 50, "Downscroll", function() {
 			opm.loadDownscrollPositions();
 		});
 		tab_group_general.add(downscrollPreset);
 
-		/* // Text for Custom Presets
-		var customPresetTxt:FlxText = new FlxText(10, 110, 150, "Load Custom Presets:");
-		tab_group_general.add(customPresetTxt);
-
-		// Button to load custom preset osu!Mania
-		var osuManiaPreset:FlxButton = new FlxButton(10, 125, "osu!Mania", function() {
-			opm.loadUpscrollPositions();
-		});
-		tab_group_general.add(osuManiaPreset);
-
-		// Button to load custom preset Etterna
-		var etternaPreset:FlxButton = new FlxButton(10, 150, "Etterna", function() {
-			opm.loadDownscrollPositions();
-		});
-		tab_group_general.add(etternaPreset); */
-
-		// Checkbox to link Healthbar and Healthbar BG together.
+		// Checkbox to link Healthbar and Healthbar Sprite together.
 		healthBarLinkToggle = new FlxUICheckBox(10, 75, null, null, "Link Healthbar Objects", 100,
 			function() {
 				healthBarLinked = healthBarLinkToggle.checked;
@@ -334,7 +364,7 @@ class CustomizeUIState extends MusicBeatState
 		);
 		tab_group_general.add(healthBarLinkToggle);
 
-		// Checkbox to link Healthbar and Healthbar BG together.
+		// Checkbox to link Timebar and Timebar Sprite together.
 		timeBarLinkToggle = new FlxUICheckBox(10, 100, null, null, "Link Timebar Objects", 100,
 			function() {
 				timeBarLinked = timeBarLinkToggle.checked;
@@ -342,7 +372,7 @@ class CustomizeUIState extends MusicBeatState
 		);
 		tab_group_general.add(timeBarLinkToggle);
 
-		// Checkbox to link IconP1 and IconP2 together.
+		// Checkbox to link Dad and BF icons together.
 		iconLinkToggle = new FlxUICheckBox(10, 125, null, null, "Link Icon Objects", 100,
 			function() {
 				iconLinked = iconLinkToggle.checked;
@@ -350,7 +380,7 @@ class CustomizeUIState extends MusicBeatState
 		);
 		tab_group_general.add(iconLinkToggle);
 
-		// Text for Upscroll & Downscroll Presets
+		// Text showing upcoming features.
 		var upcomingFeatures:FlxText = new FlxText(10, 300, 250, "");
 		upcomingFeatures.text = "Planned features include:\n* Resize UI\n* Change shape of time/healthbar\nProper Icons/Ratings/Combo support\n* Splitting scoreTxt into multiple objects";
 		tab_group_general.add(upcomingFeatures);
@@ -358,6 +388,7 @@ class CustomizeUIState extends MusicBeatState
 		UI_box.addGroup(tab_group_general);
 	}
 
+	// Sets healthbar colors to Dad/BF icons.
 	public function reloadHealthBarColors() {
 		healthBar.createFilledBar(FlxColor.fromRGB(dad.healthColorArray[0], dad.healthColorArray[1], dad.healthColorArray[2]),
 			FlxColor.fromRGB(boyfriend.healthColorArray[0], boyfriend.healthColorArray[1], boyfriend.healthColorArray[2]));
@@ -365,6 +396,7 @@ class CustomizeUIState extends MusicBeatState
 		healthBar.updateBar();
 	}
 
+	// Characters idle dance.
 	override public function beatHit()
 	{
 		super.beatHit();
@@ -385,9 +417,14 @@ class CustomizeUIState extends MusicBeatState
 
 	override public function update(elapsed:Float)
 	{
-		if (!UI_box.visible && FlxG.mouse.justPressed) {
-			var mousePos:FlxPoint = FlxG.mouse.getScreenPosition(camHUD);
+		// If the UI Tab Box is hidden and the user presses the left mouse button.
+		if (!UI_box.visible && FlxG.mouse.justPressed) { 
+
+			// Get mouse pointer's position on the screen.
+			mousePos = FlxG.mouse.getScreenPosition(camHUD); 
 			
+			/* There's probably a much more efficient way to handle this, but it works for now. */
+			// Determine which object to select.
 			if (judgeCounterTxt.overlapsPoint(mousePos)) {
 				selectObject(judgeCounterTxt);
 			}
@@ -418,51 +455,91 @@ class CustomizeUIState extends MusicBeatState
 			else if (timeBar.overlapsPoint(mousePos)) {
 				selectObject(timeBar);
 			}
-			// else if (rating.overlapsPoint(mousePos)) {
-			// 	selectObject(rating);
-			// }
-			// else if (comboNums.overlapsPoint(mousePos)) {
-			// 	selectObject(comboNums);
-			// }
 			else {
 				deselectObject();
 			}
 		}
 
+		// Check if there's a selected object
 		if (selectedObject != null) {
+
+			// Display the selected object's current position.
 			selectedObjectPositionText.text = "X: " + selectedObject.x + "\n" + "Y: " + selectedObject.y;
+
+			// Set the position of the text to follow the mouse cursor.
 			selectedObjectPositionText.x = FlxG.mouse.x - 100;
 			selectedObjectPositionText.y = FlxG.mouse.y - 100;
+
+			// While SHIFT key is pressed, rotation functionality is enabled.
 			if (FlxG.keys.pressed.SHIFT) {
+
+				// Display the selected object's current angle.
 				selectedObjectPositionText.text = "Angle: " + selectedObject.angle;
+
+				// Rotate the selected object by moving the mouse.
 				if (FlxG.mouse.justMoved) {
-					var deltaAngle:Float = (FlxG.mouse.screenY - prevMouseY) * 5;
+					deltaAngle = (FlxG.mouse.screenY - prevMouseY) * 5;
 					selectedObject.angle += deltaAngle;
 					selectedObject.angle = selectedObject.angle % 360;
 					moveSelectedObject(0, 0, deltaAngle);
+
+				// Rotate the selected object using mouse scroll wheel.
 				} else if (FlxG.mouse.wheel != 0) {
-					var deltaAngle:Float = FlxG.mouse.wheel * 5;
+					deltaAngle = FlxG.mouse.wheel * 5;
 					selectedObject.angle += deltaAngle;
 					selectedObject.angle = selectedObject.angle % 360;
 				}
+
+			// Move the selected object by moving the mouse.	
 			} else if (FlxG.mouse.justMoved) {
-				var deltaX:Float = FlxG.mouse.screenX - prevMouseX;
-				var deltaY:Float = FlxG.mouse.screenY - prevMouseY;
+				deltaX = FlxG.mouse.screenX - prevMouseX;
+				deltaY = FlxG.mouse.screenY - prevMouseY;
 				moveSelectedObject(deltaX, deltaY, 0);
 			}
 		}
 
+		// If "Link Healthbar Objects" is checked, move both the Healthbar and Healthbar Sprite at the same time.
+		if (healthBarLinked) {
+			healthBar.x = healthBarBG.x + 4;
+			healthBar.y = healthBarBG.y + 4;
+			healthBar.angle = healthBarBG.angle;
+		}
+
+		// If "Link Timebar Objects" is checked, move both the Timebar and Timebar Sprite at the same time.
+		if (timeBarLinked) {
+			timeBar.x = timeBarBG.x + 4;
+			timeBar.y = timeBarBG.y + 4;
+			timeBar.angle = timeBarBG.angle;
+		}
+
+		// If "Link Icon Objects" is checked, move Dad and BF icons at the same time.
+		if (iconLinked) {
+			iconP1.x = iconP2.x + 104;
+			iconP1.y = iconP2.y;
+			iconP1.angle = iconP2.angle;
+		}
+
+		// When the user releases left mouse button.
 		if (FlxG.mouse.justReleased) {
+
+			// Deselect object
 			deselectObject();
+
+			// Stop displaying the selected object's current position.
 			selectedObjectPositionText.text = "";
 		}
 
+		// When the user presses the RESET button.
 		if(controls.RESET) {
-			holdTime = 0;
+
+			// Get default positions from JSON.
 			opm.loadDefaultPositions();
 		}
 
+		// When the user presses the BACK button.
 		if(controls.BACK) {
+
+			// Go back to the options menu.
 			persistentUpdate = false;
 			CustomFadeTransition.nextCamera = camOther;
 			MusicBeatState.switchState(new options.OptionsState());
@@ -470,79 +547,87 @@ class CustomizeUIState extends MusicBeatState
 			FlxG.mouse.visible = false;
 		}
 
+		// When the user presses the ENTER key.
 		if(FlxG.keys.justPressed.ENTER) {
-			holdTime = 0;
+
+			// Toggle Help Information.
 			helpBG.visible = !helpBG.visible;
 			helpTxt.visible = !helpTxt.visible;
 		}
 
+		// When the user presses the TAB key.
 		if(FlxG.keys.justPressed.TAB) {
-			holdTime = 0;
+
+			// Toggle the UI Tab Box.
 			UI_box.visible = !UI_box.visible;
 			tipTxt.visible = !tipTxt.visible;
 		}
 
-		var multP1:Float = FlxMath.lerp(1, iconP1.scale.x, CoolUtil.boundTo(1 - (elapsed * 9), 0, 1));
+		// Positioning for BF icon based on health.
+		multP1 = FlxMath.lerp(1, iconP1.scale.x, CoolUtil.boundTo(1 - (elapsed * 9), 0, 1));
 		iconP1.scale.set(multP1, multP1);
 		iconP1.updateHitbox();
 
-		var multP2:Float = FlxMath.lerp(1, iconP2.scale.x, CoolUtil.boundTo(1 - (elapsed * 9), 0, 1));
+		// Positioning for Dad icon based on health.
+		multP2 = FlxMath.lerp(1, iconP2.scale.x, CoolUtil.boundTo(1 - (elapsed * 9), 0, 1));
 		iconP2.scale.set(multP2, multP2);
 		iconP2.updateHitbox();
 
-		Conductor.songPosition = FlxG.sound.music.time;
-
+		/* Set the previous mouse position to be the current mouse position before any updates are made. 
+		This is done so that we can calculate the change in the mouse position from the previous frame to the current frame. */
 		prevMouseX = FlxG.mouse.screenX;
 		prevMouseY = FlxG.mouse.screenY;
 
-		// Links certain objects to be moved at the same time when the "Link <Object>" is checked.
-		if (healthBarLinked) {
-			healthBar.x = healthBarBG.x + 4;
-			healthBar.y = healthBarBG.y + 4;
-			healthBar.angle = healthBarBG.angle;
-		}
-		if (timeBarLinked) {
-			timeBar.x = timeBarBG.x + 4;
-			timeBar.y = timeBarBG.y + 4;
-			timeBar.angle = timeBarBG.angle;
-		}
-		if (iconLinked) {
-			iconP1.x = iconP2.x + 104;
-			iconP1.y = iconP2.y;
-			iconP1.angle = iconP2.angle;
-		}
+		// For the onBeat function.
+		Conductor.songPosition = FlxG.sound.music.time;
+
 		super.update(elapsed);
 	}
 
+	// Select Object function.
 	function selectObject(obj:FlxObject):Void {
 		selectedObject = obj;
 	}
 
+	// Deselect Object function.
 	function deselectObject():Void {
 		selectedObject = null;
 	}
 
+	// Move Object Function.
 	private function moveSelectedObject(deltaX:Float, deltaY:Float, deltaAngle:Float):Void {
+
+		// Check if there's a selected object.
 		if (selectedObject != null) {
+
+			// Move the object by the given deltas.
 			selectedObject.x += deltaX;
 			selectedObject.y += deltaY;
 			selectedObject.angle += deltaAngle;
 
-			// Save the new position
-			var objectName:String = getObjectIdentifier(selectedObject);
+			// Save the new position of the object.
+			objectName = getObjectIdentifier(selectedObject);
 			if (objectName != null) {
-				var singleObjectPosition:Array<ObjectPosition> = [{
+
+				// Create an array for a single object to store the updated position of the object.
+				singleObjectPosition = [{
 					name: objectName,
 					x: selectedObject.x,
 					y: selectedObject.y,
 					angle: selectedObject.angle
 				}];
+
+				// Update the position of the object in the Object Position Manager.
 				opm.updateObjectPosition(singleObjectPosition);
+
+				// Save position to config/user_positions.json.
 				opm.savePositions();
 			}
 		}
 	}
 
+	/* There's probably a much more efficient way to handle this, but it works for now. */
+	// Identify the object.
 	private function getObjectIdentifier(obj:FlxObject):String {
 		if (obj == judgeCounterTxt) return "judgeCounterTxt";
 		else if (obj == healthBarBG) return "healthBarBG";
@@ -554,15 +639,7 @@ class CustomizeUIState extends MusicBeatState
 		else if (obj == timeTxt) return "timeTxt";
 		else if (obj == timeBarBG) return "timeBarBG";
 		else if (obj == timeBar) return "timeBar";
-		// else if (obj == rating) return "rating";
-		// else if (obj == comboNums) return "comboNums";
 		else return null;
 	}
 }
 
-typedef ObjectPosition = {
-	var name:String;
-	var x:Float;
-	var y:Float;
-	var angle:Float;
-}
