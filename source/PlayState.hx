@@ -972,7 +972,11 @@ class PlayState extends MusicBeatState
 
 		// STAGE SCRIPTS
 		#if (MODS_ALLOWED && LUA_ALLOWED)
-		startLuasOnFolder('stages/' + curStage + '.lua');
+		if (ClientPrefs.disableStages) {
+
+		} else {
+			startLuasOnFolder('stages/' + curStage + '.lua');
+		}
 		#end
 
 		var gfVersion:String = SONG.gfVersion;
