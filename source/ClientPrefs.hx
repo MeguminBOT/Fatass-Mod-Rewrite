@@ -55,7 +55,8 @@ class ClientPrefs {
 		'hiddenmode' => false,
 		'mirrormode' => false,
 		'opponentplay' => false,
-		'doubleplay' => false
+		'doubleplay' => false,
+		'doubleplaytype' => 'Player'
 	];
 
 	public static var comboOffset:Array<Int> = [0, 0, 0, 0];

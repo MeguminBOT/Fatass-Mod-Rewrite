@@ -225,6 +225,9 @@ class FunkinLua {
 		set('customStrumPlacement', ClientPrefs.customStrumPlacement);
 		set('customSongScripts', ClientPrefs.customSongScripts);
 
+		//Rhythm Engine Gameplay Modifiers
+		set('doubleChart', PlayState.doubleChart);
+		set('doubleChartType', PlayState.doubleChartType);
 
 		//Rhythm Engine Stuff: Song/Week shit
 		set('songArtist', PlayState.SONG.artist);

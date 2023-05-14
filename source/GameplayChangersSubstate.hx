@@ -95,6 +95,15 @@ class GameplayChangersSubstate extends MusicBeatSubstate
 		var option:GameplayOption = new GameplayOption('Play Both Charts', 'doubleplay', 'bool', false);
 		optionsArray.push(option);
 
+		var option:GameplayOption = new GameplayOption('Both Charts Priority ', 'doubleplaytype', 'string', 'Player', 
+		[
+			'Player',
+			'Opponent',
+			'Note Amount', 
+			'Unmodified'
+		]);
+		optionsArray.push(option);
+
 		var option:GameplayOption = new GameplayOption('Instakill on Miss', 'instakill', 'bool', false);
 		optionsArray.push(option);
 

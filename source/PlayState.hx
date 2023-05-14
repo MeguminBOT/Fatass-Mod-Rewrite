@@ -337,7 +337,8 @@ class PlayState extends MusicBeatState
 	public var laneunderlayOpponent:FlxSprite;
 	public static var opponentChart:Bool = false;
 	public static var doubleChart:Bool = false;
-	public var opponentIsPlaying:Bool = false;
+	public static var doubleChartType:String = 'Player';
+	public static var opponentIsPlaying:Bool = false;
 	public var uiSkinFolder:String = 'base';
 	public var judgeCounterTxt:FlxText;
 	var opm:ObjectPositionManager;
@@ -450,6 +451,7 @@ class PlayState extends MusicBeatState
 		mirrorMode = ClientPrefs.getGameplaySetting('mirrormode', false);
 		opponentChart = ClientPrefs.getGameplaySetting('opponentplay', false);
 		doubleChart = ClientPrefs.getGameplaySetting('doubleplay', false);
+		doubleChartType = ClientPrefs.getGameplaySetting('doubleplaytype', 'Player');
 
 		// Rhythm Engine SFX
 		bulletNoteHit = FlxG.sound.load(Paths.sound('bulletNoteHit'));
@@ -1150,7 +1152,7 @@ class PlayState extends MusicBeatState
 				add(hiddenPlayfieldOpponent);
 			}
 		}
-		if (!ClientPrefs.middleScroll)
+		if (!ClientPrefs.middleScroll && !doubleChart)
 		{
 			add(laneunderlayOpponent);
 		}
@@ -2399,9 +2401,9 @@ class PlayState extends MusicBeatState
 						if(ClientPrefs.middleScroll && !note.mustPress) {
 							note.alpha *= 0.35;
 						}
-						if (doubleChart && !note.mustPress) {
-							note.alpha = 0;
-						}
+						// if (doubleChart && !note.mustPress) {
+						// 	note.alpha = 0;
+						// }
 					}
 				});
 				callOnLuas('onCountdownTick', [swagCounter]);
@@ -2633,12 +2635,40 @@ class PlayState extends MusicBeatState
 
 		for (section in noteData)
 		{
+			var mustHitBfSide:Bool = true;
+			if (doubleChart) {
+				var bfNoteAmount:Int = 0;
+				var dadNoteAmount:Int = 0;
+				var notes = section.sectionNotes.copy();
+				for (note in notes) {
+					if (section.mustHitSection ? note[1] <= 3 : note[1] > 3) {
+						bfNoteAmount++;
+					} else {
+						dadNoteAmount++;
+					}	
+				}
+				switch doubleChartType {
+					case 'Player': mustHitBfSide = bfNoteAmount > 0;
+					case 'Opponent': mustHitBfSide = dadNoteAmount == 0;
+					case 'Note Amount': mustHitBfSide = bfNoteAmount >= dadNoteAmount;
+				}
+			}
+
 			for (songNotes in section.sectionNotes)
 			{
 				var daStrumTime:Float = songNotes[0];
 				var daNoteData:Int = Std.int(songNotes[1] % 4);
 
 				var gottaHitNote:Bool = section.mustHitSection;
+				
+				if (songNotes[1] > 3 && !opponentChart)	
+				{	
+					gottaHitNote = !section.mustHitSection;
+				}	
+				else if (songNotes[1] <= 3 && opponentChart)	
+				{	
+					gottaHitNote = !section.mustHitSection;
+				}
 				
 				if (mirrorMode)
 				{
@@ -2654,18 +2684,6 @@ class PlayState extends MusicBeatState
 							daNoteData = 0;
 					}
 				}
-				if (!doubleChart) {
-					if (songNotes[1] > 3 && !opponentChart)
-					{
-						gottaHitNote = !section.mustHitSection;
-					}
-					else if (songNotes[1] <= 3 && opponentChart)
-					{
-						gottaHitNote = !section.mustHitSection;
-					}
-				} else {
-					gottaHitNote = true;
-				}
 
 				var oldNote:Note;
 				if (unspawnNotes.length > 0)
@@ -2674,7 +2692,18 @@ class PlayState extends MusicBeatState
 					oldNote = null;
 
 				var swagNote:Note = new Note(daStrumTime, daNoteData, oldNote);
-				swagNote.mustPress = gottaHitNote;
+				swagNote.noteOriginDad = !gottaHitNote;
+				if (doubleChart) {
+					swagNote.mustPress = true;
+					var ignoreNote:Bool = (doubleChartType != 'Unmodified') ? mustHitBfSide != gottaHitNote : false;
+					if (songNotes[3] == 'doubleChartIgnoreNote' || ignoreNote) {
+						swagNote.mustPress = false;
+						swagNote.noteOriginDad = gottaHitNote;
+					}
+				} else {
+					swagNote.mustPress = gottaHitNote;
+				}
+
 				swagNote.sustainLength = songNotes[2];
 				swagNote.gfNote = (section.gfSection && (songNotes[1]<4));
 				swagNote.noteType = songNotes[3];
@@ -2694,7 +2723,18 @@ class PlayState extends MusicBeatState
 						oldNote = unspawnNotes[Std.int(unspawnNotes.length - 1)];
 
 						var sustainNote:Note = new Note(daStrumTime + (Conductor.stepCrochet * susNote) + (Conductor.stepCrochet / FlxMath.roundDecimal(songSpeed, 2)), daNoteData, oldNote, true);
-						sustainNote.mustPress = gottaHitNote;
+						sustainNote.noteOriginDad = !gottaHitNote;
+						if (doubleChart) {
+							sustainNote.mustPress = true;
+							var ignoreNote:Bool = (doubleChartType != 'Unmodified') ? mustHitBfSide != gottaHitNote : false;
+							if (songNotes[3] == 'doubleChartIgnoreNote' || ignoreNote) {
+								sustainNote.mustPress = false;
+								sustainNote.noteOriginDad = gottaHitNote;
+							}
+						} else {
+							sustainNote.mustPress = gottaHitNote;
+						}
+					
 						sustainNote.gfNote = (section.gfSection && (songNotes[1]<4));
 						sustainNote.noteType = swagNote.noteType;
 						sustainNote.scrollFactor.set();
@@ -2865,7 +2905,7 @@ class PlayState extends MusicBeatState
 			var targetAlpha:Float = 1;
 			if (player < 1)
 			{
-				if(!ClientPrefs.opponentStrums || PlayState.doubleChart) targetAlpha = 0;
+				if(!ClientPrefs.opponentStrums || doubleChart) targetAlpha = 0;
 				else if(ClientPrefs.middleScroll || doubleChart) targetAlpha = 0.35;
 			}
 
@@ -2884,7 +2924,7 @@ class PlayState extends MusicBeatState
 
 			if (player == 1)
 			{
-				if (!opponentChart || opponentChart && (ClientPrefs.middleScroll || doubleChart)) {
+				if ((opponentChart ? ClientPrefs.middleScroll : true) || doubleChart) {
 					playerStrums.add(babyArrow);
 				}
 				else 
@@ -2901,7 +2941,7 @@ class PlayState extends MusicBeatState
 						babyArrow.x += FlxG.width / 2 + 25;
 					}
 				}
-				if (!opponentChart || opponentChart && (ClientPrefs.middleScroll || doubleChart)) {
+				if ((opponentChart ? ClientPrefs.middleScroll : true) || doubleChart) {
 					opponentStrums.add(babyArrow);
 				}
 				else 
@@ -3080,12 +3120,16 @@ class PlayState extends MusicBeatState
 	}
 	
 	override public function update(elapsed:Float)
-		{
-			if (doubleChart) {
+	{
+		if (doubleChart) {
+			if (SONG.notes != null) {
 				opponentIsPlaying = !SONG.notes[curSection].mustHitSection;
-			} else if (opponentChart) {
-				opponentIsPlaying = true;
 			}
+		} else if (opponentChart) {
+			opponentIsPlaying = true;
+		} else {
+			opponentIsPlaying = false;
+		}
 		/*if (FlxG.keys.justPressed.NINE)
 		{
 			iconP1.swapOldIcon();
@@ -4814,7 +4858,13 @@ class PlayState extends MusicBeatState
 		if(daNote.gfNote) {
 			char = gf;
 		}
-		if (opponentIsPlaying) char = dad;
+		if (doubleChart) {
+			char = daNote.noteOriginDad ? dad : boyfriend;
+		} 
+		else if (opponentIsPlaying) 
+		{
+			char = dad;
+		}
 
 		if(char != null && !daNote.noMissAnimation && char.hasMissAnimations)
 		{
@@ -4887,11 +4937,16 @@ class PlayState extends MusicBeatState
 				camZooming = true;
 		}
 
-		var char:Character = opponentIsPlaying ? dad : boyfriend;
-		if(note.noteType == 'Hey!' && char.animOffsets.exists('hey')) {
-			char.playAnim('hey', true);
-			char.specialAnim = true;
-			char.heyTimer = 0.6;
+		var opponentChar:Character = dad;
+		if (doubleChart) {
+			opponentChar = note.noteOriginDad ? boyfriend : dad;
+		} else if (opponentIsPlaying) {
+			opponentChar = boyfriend;
+		}
+		if(note.noteType == 'Hey!' && opponentChar.animOffsets.exists('hey')) {
+			opponentChar.playAnim('hey', true);
+			opponentChar.specialAnim = true;
+			opponentChar.heyTimer = 0.6;
 		} else if(!note.noAnimation) {
 			var altAnim:String = note.animSuffix;
 
@@ -4902,21 +4957,15 @@ class PlayState extends MusicBeatState
 				}
 			}
 
-			var char:Character = dad;
 			var animToPlay:String = singAnimations[Std.int(Math.abs(note.noteData))] + altAnim;
 			if(note.gfNote) {
-				char = gf;
+				opponentChar = gf;
 			}
-			
-			if (char != null) {
-				if(opponentIsPlaying) {
-					boyfriend.playAnim(animToPlay, true);
-					boyfriend.holdTimer = 0;
-				}
-				else {
-					char.playAnim(animToPlay, true);
-					char.holdTimer = 0;
-				}
+
+			if (opponentChar != null) {
+
+				opponentChar.playAnim(animToPlay, true);
+				opponentChar.holdTimer = 0;
 			}
 		}
 
@@ -5012,11 +5061,19 @@ class PlayState extends MusicBeatState
 				var dodgeAnim:String = dodgeAnimations[Std.int(Math.abs(note.noteData))];
 				var attackAnim:String = attackAnimations[Std.int(Math.abs(note.noteData))];
 
-				var char:Character = opponentIsPlaying ? dad : boyfriend;
+				var char:Character = boyfriend;
+
 				if(note.gfNote && gf != null)
 				{
 					char = gf;
 				}
+
+				if (doubleChart) {
+					char = note.noteOriginDad ? dad : boyfriend;
+				} else if (opponentIsPlaying) {
+					char = dad;
+				}
+
 				char.playAnim(animToPlay + note.animSuffix, true);
 				char.holdTimer = 0;
 
