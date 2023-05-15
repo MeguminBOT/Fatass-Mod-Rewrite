@@ -2650,7 +2650,7 @@ class PlayState extends MusicBeatState
 				switch doubleChartType {
 					case 'Player': mustHitBfSide = bfNoteAmount > 0;
 					case 'Opponent': mustHitBfSide = dadNoteAmount == 0;
-					case 'Note Amount': mustHitBfSide = bfNoteAmount >= dadNoteAmount;
+					case 'Density': mustHitBfSide = bfNoteAmount >= dadNoteAmount;
 				}
 			}
 

@@ -228,6 +228,7 @@ class FunkinLua {
 		//Rhythm Engine Gameplay Modifiers
 		set('doubleChart', PlayState.doubleChart);
 		set('doubleChartType', PlayState.doubleChartType);
+		set('opponentChart', PlayState.opponentChart);
 
 		//Rhythm Engine Stuff: Song/Week shit
 		set('songArtist', PlayState.SONG.artist);
