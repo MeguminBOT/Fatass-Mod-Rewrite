@@ -114,6 +114,8 @@ class CustomizeUIState extends MusicBeatState
 	var deltaX:Float;
 	var deltaY:Float;
 	var deltaAngle:Float;
+	var deltaScaleX:Float;
+	var deltaScaleY:Float;
 
 	// Instance of ModularUI's Object Position Manager
 	var opm:ObjectPositionManager;
@@ -462,41 +464,215 @@ class CustomizeUIState extends MusicBeatState
 
 		// Check if there's a selected object
 		if (selectedObject != null) {
+			switch(selectedObject) {
+				case "judgeCounterTxt":
+					// Display the selected object's current position.
+					selectedObjectPositionText.text = "X: " + selectedObject.x + "\n" + "Y: " + selectedObject.y;
 
-			// Display the selected object's current position.
-			selectedObjectPositionText.text = "X: " + selectedObject.x + "\n" + "Y: " + selectedObject.y;
+					// Set the position of the text to follow the mouse cursor.
+					selectedObjectPositionText.x = FlxG.mouse.x - 100;
+					selectedObjectPositionText.y = FlxG.mouse.y - 100;
 
-			// Set the position of the text to follow the mouse cursor.
-			selectedObjectPositionText.x = FlxG.mouse.x - 100;
-			selectedObjectPositionText.y = FlxG.mouse.y - 100;
+					// While SHIFT key is pressed, rotation functionality is enabled.
+					if (FlxG.keys.pressed.SHIFT) {
 
-			// While SHIFT key is pressed, rotation functionality is enabled.
-			if (FlxG.keys.pressed.SHIFT) {
+						// Display the selected object's current angle.
+						selectedObjectPositionText.text = "Angle: " + selectedObject.angle;
 
-				// Display the selected object's current angle.
-				selectedObjectPositionText.text = "Angle: " + selectedObject.angle;
+						// Rotate the selected object by moving the mouse.
+						if (FlxG.mouse.justMoved) {
+							deltaAngle = (FlxG.mouse.screenY - prevMouseY) * 5;
+							selectedObject.angle += deltaAngle;
+							selectedObject.angle = selectedObject.angle % 360;
+							moveSelectedObject(0, 0, deltaAngle);
 
-				// Rotate the selected object by moving the mouse.
-				if (FlxG.mouse.justMoved) {
-					deltaAngle = (FlxG.mouse.screenY - prevMouseY) * 5;
-					selectedObject.angle += deltaAngle;
-					selectedObject.angle = selectedObject.angle % 360;
-					moveSelectedObject(0, 0, deltaAngle);
+						// Rotate the selected object using mouse scroll wheel.
+						} else if (FlxG.mouse.wheel != 0) {
+							deltaAngle = FlxG.mouse.wheel * 5;
+							selectedObject.angle += deltaAngle;
+							selectedObject.angle = selectedObject.angle % 360;
+						}
+					}
+					// Move the selected object by moving the mouse.	
+					else if (FlxG.mouse.justMoved) {
+						deltaX = FlxG.mouse.screenX - prevMouseX;
+						deltaY = FlxG.mouse.screenY - prevMouseY;
+						moveSelectedObject(deltaX, deltaY, 0);
+					} 
+					else if (FlxG.keys.pressed.ALT) {
 
-				// Rotate the selected object using mouse scroll wheel.
-				} else if (FlxG.mouse.wheel != 0) {
-					deltaAngle = FlxG.mouse.wheel * 5;
-					selectedObject.angle += deltaAngle;
-					selectedObject.angle = selectedObject.angle % 360;
-				}
+						// Display the selected object's current scale.
+						selectedObjectPositionText.text = "Scale X: " + selectedObject.scale.x + "\n" + "Scale Y: " + selectedObject.scale.y;
 
-			// Move the selected object by moving the mouse.	
-			} else if (FlxG.mouse.justMoved) {
-				deltaX = FlxG.mouse.screenX - prevMouseX;
-				deltaY = FlxG.mouse.screenY - prevMouseY;
-				moveSelectedObject(deltaX, deltaY, 0);
+						// Scale the selected object by moving the mouse.
+						if (FlxG.mouse.justMoved) {
+							deltaScaleX = (FlxG.mouse.screenY - prevMouseY) * 0.1;
+							deltaScaleY = deltaScaleX;
+							selectedObject.scale.x += deltaScaleX;
+							selectedObject.scale.y = selectedObject.scale.x;
+							moveSelectedObject(deltaScaleX, deltaScaleY, 0);
+						}
+					}
+
+				case "scoreTxt":
+					selectedObjectPositionText.text = "X: " + selectedObject.x + "\n" + "Y: " + selectedObject.y;
+					selectedObjectPositionText.x = FlxG.mouse.x - 100;
+					selectedObjectPositionText.y = FlxG.mouse.y - 100;
+
+					if (FlxG.keys.pressed.SHIFT) {
+
+						selectedObjectPositionText.text = "Angle: " + selectedObject.angle;
+
+						if (FlxG.mouse.justMoved) {
+							deltaAngle = (FlxG.mouse.screenY - prevMouseY) * 5;
+							selectedObject.angle += deltaAngle;
+							selectedObject.angle = selectedObject.angle % 360;
+							moveSelectedObject(0, 0, deltaAngle);
+
+						} else if (FlxG.mouse.wheel != 0) {
+							deltaAngle = FlxG.mouse.wheel * 5;
+							selectedObject.angle += deltaAngle;
+							selectedObject.angle = selectedObject.angle % 360;
+						}
+					}
+
+					else if (FlxG.mouse.justMoved) {
+						deltaX = FlxG.mouse.screenX - prevMouseX;
+						deltaY = FlxG.mouse.screenY - prevMouseY;
+						moveSelectedObject(deltaX, deltaY, 0);
+					} 
+					else if (FlxG.keys.pressed.ALT) {
+
+						selectedObjectPositionText.text = "Scale X: " + selectedObject.scale.x + "\n" + "Scale Y: " + selectedObject.scale.y;
+
+						if (FlxG.mouse.justMoved) {
+							deltaScaleX = (FlxG.mouse.screenY - prevMouseY) * 0.1;
+							deltaScaleY = deltaScaleX;
+							selectedObject.scale.x += deltaScaleX;
+							selectedObject.scale.y = selectedObject.scale.x;
+							moveSelectedObject(deltaScaleX, deltaScaleY, 0);
+						}
+					}
+
+				case "botplayTxt":
+					selectedObjectPositionText.text = "X: " + selectedObject.x + "\n" + "Y: " + selectedObject.y;
+					selectedObjectPositionText.x = FlxG.mouse.x - 100;
+					selectedObjectPositionText.y = FlxG.mouse.y - 100;
+
+					if (FlxG.keys.pressed.SHIFT) {
+
+						selectedObjectPositionText.text = "Angle: " + selectedObject.angle;
+
+						if (FlxG.mouse.justMoved) {
+							deltaAngle = (FlxG.mouse.screenY - prevMouseY) * 5;
+							selectedObject.angle += deltaAngle;
+							selectedObject.angle = selectedObject.angle % 360;
+							moveSelectedObject(0, 0, deltaAngle);
+
+						} else if (FlxG.mouse.wheel != 0) {
+							deltaAngle = FlxG.mouse.wheel * 5;
+							selectedObject.angle += deltaAngle;
+							selectedObject.angle = selectedObject.angle % 360;
+						}
+					}
+
+					else if (FlxG.mouse.justMoved) {
+						deltaX = FlxG.mouse.screenX - prevMouseX;
+						deltaY = FlxG.mouse.screenY - prevMouseY;
+						moveSelectedObject(deltaX, deltaY, 0);
+					} 
+					else if (FlxG.keys.pressed.ALT) {
+
+						selectedObjectPositionText.text = "Scale X: " + selectedObject.scale.x + "\n" + "Scale Y: " + selectedObject.scale.y;
+
+						if (FlxG.mouse.justMoved) {
+							deltaScaleX = (FlxG.mouse.screenY - prevMouseY) * 0.1;
+							deltaScaleY = deltaScaleX;
+							selectedObject.scale.x += deltaScaleX;
+							selectedObject.scale.y = selectedObject.scale.x;
+							moveSelectedObject(deltaScaleX, deltaScaleY, 0);
+						}
+					}
+
+				case "timeTxt":
+					selectedObjectPositionText.text = "X: " + selectedObject.x + "\n" + "Y: " + selectedObject.y;
+					selectedObjectPositionText.x = FlxG.mouse.x - 100;
+					selectedObjectPositionText.y = FlxG.mouse.y - 100;
+
+					if (FlxG.keys.pressed.SHIFT) {
+
+						selectedObjectPositionText.text = "Angle: " + selectedObject.angle;
+
+						if (FlxG.mouse.justMoved) {
+							deltaAngle = (FlxG.mouse.screenY - prevMouseY) * 5;
+							selectedObject.angle += deltaAngle;
+							selectedObject.angle = selectedObject.angle % 360;
+							moveSelectedObject(0, 0, deltaAngle);
+
+						} else if (FlxG.mouse.wheel != 0) {
+							deltaAngle = FlxG.mouse.wheel * 5;
+							selectedObject.angle += deltaAngle;
+							selectedObject.angle = selectedObject.angle % 360;
+						}
+					}
+
+					else if (FlxG.mouse.justMoved) {
+						deltaX = FlxG.mouse.screenX - prevMouseX;
+						deltaY = FlxG.mouse.screenY - prevMouseY;
+						moveSelectedObject(deltaX, deltaY, 0);
+					} 
+					else if (FlxG.keys.pressed.ALT) {
+
+						selectedObjectPositionText.text = "Scale X: " + selectedObject.scale.x + "\n" + "Scale Y: " + selectedObject.scale.y;
+
+						if (FlxG.mouse.justMoved) {
+							deltaScaleX = (FlxG.mouse.screenY - prevMouseY) * 0.1;
+							deltaScaleY = deltaScaleX;
+							selectedObject.scale.x += deltaScaleX;
+							selectedObject.scale.y = selectedObject.scale.x;
+							moveSelectedObject(deltaScaleX, deltaScaleY, 0);
+						}
+					}
+		
+				default:
+					// Display the selected object's current position.
+					selectedObjectPositionText.text = "X: " + selectedObject.x + "\n" + "Y: " + selectedObject.y;
+		
+					// Set the position of the text to follow the mouse cursor.
+					selectedObjectPositionText.x = FlxG.mouse.x - 100;
+					selectedObjectPositionText.y = FlxG.mouse.y - 100;
+		
+					// While SHIFT key is pressed, rotation functionality is enabled.
+					if (FlxG.keys.pressed.SHIFT) {
+		
+						// Display the selected object's current angle.
+						selectedObjectPositionText.text = "Angle: " + selectedObject.angle;
+		
+						// Rotate the selected object by moving the mouse.
+						if (FlxG.mouse.justMoved) {
+							deltaAngle = (FlxG.mouse.screenY - prevMouseY) * 5;
+							selectedObject.angle += deltaAngle;
+							selectedObject.angle = selectedObject.angle % 360;
+							moveSelectedObject(0, 0, deltaAngle);
+		
+						// Rotate the selected object using mouse scroll wheel.
+						} else if (FlxG.mouse.wheel != 0) {
+							deltaAngle = FlxG.mouse.wheel * 5;
+							selectedObject.angle += deltaAngle;
+							selectedObject.angle = selectedObject.angle % 360;
+						}
+		
+					// Move the selected object by moving the mouse.	
+					} else if (FlxG.mouse.justMoved) {
+						deltaX = FlxG.mouse.screenX - prevMouseX;
+						deltaY = FlxG.mouse.screenY - prevMouseY;
+						moveSelectedObject(deltaX, deltaY, 0);
+					}
 			}
 		}
+		
+
+
 
 		// If "Link Healthbar Objects" is checked, move both the Healthbar and Healthbar Sprite at the same time.
 		if (healthBarLinked) {
@@ -595,7 +771,7 @@ class CustomizeUIState extends MusicBeatState
 	}
 
 	// Move Object Function.
-	private function moveSelectedObject(deltaX:Float, deltaY:Float, deltaAngle:Float):Void {
+	private function moveSelectedObject(deltaX:Float, deltaY:Float, deltaAngle:Float, deltaScaleX:Float, deltaScaleY:Float):Void {
 
 		// Check if there's a selected object.
 		if (selectedObject != null) {
@@ -604,24 +780,78 @@ class CustomizeUIState extends MusicBeatState
 			selectedObject.x += deltaX;
 			selectedObject.y += deltaY;
 			selectedObject.angle += deltaAngle;
+			selectedObject.scale.x += deltaScaleX;
+			selectedObject.scale.y += deltaScaleY;
 
 			// Save the new position of the object.
 			objectName = getObjectIdentifier(selectedObject);
-			if (objectName != null) {
+			switch(objectName) {
+				case "judgeCounterTxt":
+					singleObjectPosition = [{
+						name: objectName,
+						x: selectedObject.x,
+						y: selectedObject.y,
+						angle: selectedObject.angle,
+						scaleX: selectedObject.scale.x,
+						scaleY: selectedObject.scale.y
+					}];
 
-				// Create an array for a single object to store the updated position of the object.
-				singleObjectPosition = [{
-					name: objectName,
-					x: selectedObject.x,
-					y: selectedObject.y,
-					angle: selectedObject.angle
-				}];
+					// Update the position of the object in the Object Position Manager.
+					opm.updateObjectPosition(singleObjectPosition);
 
-				// Update the position of the object in the Object Position Manager.
-				opm.updateObjectPosition(singleObjectPosition);
+					// Save position to config/user_positions.json.
+					opm.savePositions();
 
-				// Save position to config/user_positions.json.
-				opm.savePositions();
+				case "scoreTxt":
+					singleObjectPosition = [{
+						name: objectName,
+						x: selectedObject.x,
+						y: selectedObject.y,
+						angle: selectedObject.angle,
+						scaleX: selectedObject.scale.x,
+						scaleY: selectedObject.scale.y
+					}];
+					opm.updateObjectPosition(singleObjectPosition);
+					opm.savePositions();
+
+				case "botplayTxt":
+					singleObjectPosition = [{
+						name: objectName,
+						x: selectedObject.x,
+						y: selectedObject.y,
+						angle: selectedObject.angle,
+						scaleX: selectedObject.scale.x,
+						scaleY: selectedObject.scale.y
+					}];
+					opm.updateObjectPosition(singleObjectPosition);
+					opm.savePositions();
+
+				case "timeTxt":
+					// Create an array for a single object to store the updated position of the object.
+					singleObjectPosition = [{
+						name: objectName,
+						x: selectedObject.x,
+						y: selectedObject.y,
+						angle: selectedObject.angle,
+						scaleX: selectedObject.scale.x,
+						scaleY: selectedObject.scale.y
+					}];
+					opm.updateObjectPosition(singleObjectPosition);
+					opm.savePositions();
+
+				default:
+					if (objectName != null) {
+
+						// Create an array for a single object to store the updated position of the object.
+						singleObjectPosition = [{
+							name: objectName,
+							x: selectedObject.x,
+							y: selectedObject.y,
+							angle: selectedObject.angle
+						}];
+						opm.updateObjectPosition(singleObjectPosition);
+						opm.savePositions();
+					}
 			}
 		}
 	}
@@ -642,4 +872,3 @@ class CustomizeUIState extends MusicBeatState
 		else return null;
 	}
 }
-

@@ -25,6 +25,8 @@ typedef ObjectPosition = {
 	var x:Float;
 	var y:Float;
 	var angle:Float;
+	var scaleX:Float;
+	var scaleY:Float;
 }
 
 class ObjectPositionManager {
@@ -78,7 +80,9 @@ class ObjectPositionManager {
 				name: "judgeCounterTxt",
 				x: judgeCounterTxt.x,
 				y: judgeCounterTxt.y,
-				angle: judgeCounterTxt.angle
+				angle: judgeCounterTxt.angle,
+				scaleX: judgeCounterTxt.scale.x,
+				scaleY: judgeCounterTxt.scale.y
 			},
 			{
 				name: "healthBarBG",
@@ -108,19 +112,25 @@ class ObjectPositionManager {
 				name: "scoreTxt",
 				x: scoreTxt.x,
 				y: scoreTxt.y,
-				angle: scoreTxt.angle
+				angle: scoreTxt.angle,
+				scaleX: scoreTxt.scale.x,
+				scaleY: scoreTxt.scale.y
 			},
 			{
 				name: "botplayTxt",
 				x: botplayTxt.x,
 				y: botplayTxt.y,
-				angle: botplayTxt.angle
+				angle: botplayTxt.angle,
+				scaleX: botplayTxt.scale.x,
+				scaleY: botplayTxt.scale.y
 			},
 			{
 				name: "timeTxt",
 				x: timeTxt.x,
 				y: timeTxt.y,
-				angle: timeTxt.angle
+				angle: timeTxt.angle,
+				scaleX: timeTxt.scale.x,
+				scaleY: timeTxt.scale.y
 			},
 			{
 				name: "timeBarBG",
@@ -146,6 +156,8 @@ class ObjectPositionManager {
 					judgeCounterTxt.x = position.x;
 					judgeCounterTxt.y = position.y;
 					judgeCounterTxt.angle = position.angle;
+					judgeCounterTxt.scale.x = position.scaleX;
+					judgeCounterTxt.scale.y = position.scaleY;
 				case "healthBarBG":
 					healthBarBG.x = position.x;
 					healthBarBG.y = position.y;
@@ -166,14 +178,20 @@ class ObjectPositionManager {
 					scoreTxt.x = position.x;
 					scoreTxt.y = position.y;
 					scoreTxt.angle = position.angle;
+					scoreTxt.scale.x = position.scaleX;
+					scoreTxt.scale.y = position.scaleY;
 				case "botplayTxt":
 					botplayTxt.x = position.x;
 					botplayTxt.y = position.y;
 					botplayTxt.angle = position.angle;
+					botplayTxt.scale.x = position.scaleX;
+					botplayTxt.scale.y = position.scaleY;
 				case "timeTxt":
 					timeTxt.x = position.x;
 					timeTxt.y = position.y;
 					timeTxt.angle = position.angle;
+					timeTxt.scale.x = position.scaleX;
+					timeTxt.scale.y = position.scaleY;
 				case "timeBarBG":
 					timeBarBG.x = position.x;
 					timeBarBG.y = position.y;
