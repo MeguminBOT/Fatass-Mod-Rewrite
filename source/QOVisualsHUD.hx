@@ -58,6 +58,19 @@ class QOVisualsHUD extends MusicBeatSubstate
 			false);
 		optionsArray.push(option);
 
+		var option:QOption = new QOption('Static HUD',
+			'staticHUD',
+			'bool',
+			false);
+		optionsArray.push(option);
+
+		var option:QOption = new QOption('Hide Healtbar Icons',
+			'hideIcons',
+			'bool',
+			false);
+		optionsArray.push(option);
+
+
 		var option:QOption = new QOption('Hide HUD', 
 			'hideHud', 
 			'bool', 
