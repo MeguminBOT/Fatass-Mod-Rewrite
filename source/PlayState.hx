@@ -4444,7 +4444,14 @@ class PlayState extends MusicBeatState
 		note.ratingMod = daRating.ratingMod;
 		if(!note.ratingDisabled) daRating.increase();
 		note.rating = daRating.name;
-		score = daRating.score;
+		if (ClientPrefs.inputSystem == "Etterna") {
+			var scorePercentage:Float = EtternaFunctions.handleNoteDiff(noteDiff);
+			score = daRating.score;
+			score = Math.floor(score * scorePercentage);
+		} else {
+			score = daRating.score;
+		}
+		
 
 		if(daRating.noteSplash && !note.noteSplashDisabled)
 		{
