@@ -3,6 +3,7 @@ package;
 import flixel.util.FlxColor;
 import FunkinLua;
 import HelperFunctions;
+import sys.thread.Thread;
 
 class EtternaFunctions
 {
@@ -79,14 +80,16 @@ class EtternaFunctions
 	}
 
 	public static function updateAccuracy(strumTime:Float, songPos:Float, rOffset:Int) {
-		var noteDiffSign:Float = strumTime - songPos + rOffset;
-		var noteDiffAbs:Float = Math.abs(noteDiffSign);
-		var totalNotesForNow = handleNoteDiff(noteDiffAbs);
-		showMsDiffOnScreen(noteDiffSign);
-		PlayState.instance.totalNotesHit = PlayState.instance.totalNotesHit + totalNotesForNow;
-		PlayState.instance.totalPlayed = PlayState.instance.totalPlayed + 1;
-		actualRatingHere = PlayState.instance.totalNotesHit / PlayState.instance.totalPlayed;
-		PlayState.instance.ratingPercent = Math.max(0, actualRatingHere);
+		var thread:Thread = Thread.create(function() {
+			var noteDiffSign:Float = strumTime - songPos + rOffset;
+			var noteDiffAbs:Float = Math.abs(noteDiffSign);
+			var totalNotesForNow = handleNoteDiff(noteDiffAbs);
+			showMsDiffOnScreen(noteDiffSign);
+			PlayState.instance.totalNotesHit = PlayState.instance.totalNotesHit + totalNotesForNow;
+			PlayState.instance.totalPlayed = PlayState.instance.totalPlayed + 1;
+			actualRatingHere = PlayState.instance.totalNotesHit / PlayState.instance.totalPlayed;
+			PlayState.instance.ratingPercent = Math.max(0, actualRatingHere);
+		});
 	}
 
 	public static function handleNoteDiff(diff:Float) {
@@ -111,7 +114,7 @@ class EtternaFunctions
 			else
 				return miss_weight;
 		} else {
-			if (maxms <= ridic) // Anything below this (judge scaled) threshold is counted as full pts must be under 22ms to get 100% points. This is the Complexity "High" setting.
+			if (maxms <= ridic) // Anything below this (judge scaled) threshold is counted as full pts must be under 5ms to get 100% points. This is the Complexity "High" setting.
 				return max_points;
 			else if (maxms <= zero) // ma/pa region, exponential
 				return max_points * erf((zero - maxms) / dev);
