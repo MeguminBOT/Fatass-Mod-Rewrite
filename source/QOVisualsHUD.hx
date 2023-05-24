@@ -46,21 +46,15 @@ class QOVisualsHUD extends MusicBeatSubstate
 			'StepMania Classic']);
 		optionsArray.push(option);
 
-		var option:QOption = new QOption('Judgement Counter', 
-			'judgeCounter', 
-			'bool', 
-			false);
-		optionsArray.push(option);
-
-		var option:QOption = new QOption('Hide Healtbar Icons', 
-			'hideIcons', 
-			'bool', 
-			false);
-		optionsArray.push(option);
-
 		var option:QOption = new QOption('Static HUD',
 			'staticHUD',
 			'bool',
+			false);
+		optionsArray.push(option);
+
+		var option:QOption = new QOption('Judgement Counter', 
+			'judgeCounter', 
+			'bool', 
 			false);
 		optionsArray.push(option);
 
@@ -69,7 +63,6 @@ class QOVisualsHUD extends MusicBeatSubstate
 			'bool',
 			false);
 		optionsArray.push(option);
-
 
 		var option:QOption = new QOption('Hide HUD', 
 			'hideHud', 

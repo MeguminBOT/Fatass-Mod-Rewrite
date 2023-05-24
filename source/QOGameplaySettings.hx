@@ -55,6 +55,20 @@ class QOGameplaySettings extends MusicBeatSubstate
 			true);
 		optionsArray.push(option);
 
+		var option:QOption = new QOption('Accuracy System',
+			'inputSystem',
+			'string',
+			'Etterna',
+			['Etterna', 'PsychEngine']);
+		optionsArray.push(option);
+
+		var option:QOption = new QOption('Accuracy Complexity Level',
+			'inputComplexity',
+			'string',
+			'High',
+			['High', 'Normal']);
+		optionsArray.push(option);
+
 		var option:QOption = new QOption('Hitsound Volume', 
 			'hitsoundVolume', 
 			'percent', 
@@ -125,6 +139,46 @@ class QOGameplaySettings extends MusicBeatSubstate
 		option.scrollSpeed = 20;
 		option.minValue = -30;
 		option.maxValue = 30;
+		optionsArray.push(option);
+
+		var option:QOption = new QOption('Perfect Sick Hit Window',
+			'perfectWindow',
+			'int',
+			22);
+		option.displayFormat = '%vms';
+		option.scrollSpeed = 15;
+		option.minValue = 4.5;
+		option.maxValue = 22;
+		optionsArray.push(option);
+
+		var option:QOption = new QOption('Sick Hit Window',
+			'sickWindow',
+			'int',
+			45);
+		option.displayFormat = '%vms';
+		option.scrollSpeed = 15;
+		option.minValue = 9;
+		option.maxValue = 45;
+		optionsArray.push(option);
+
+		var option:QOption = new QOption('Good Hit Window',
+			'goodWindow',
+			'int',
+			90);
+		option.displayFormat = '%vms';
+		option.scrollSpeed = 30;
+		option.minValue = 18;
+		option.maxValue = 90;
+		optionsArray.push(option);
+
+		var option:QOption = new QOption('Bad Hit Window',
+			'badWindow',
+			'int',
+			135);
+		option.displayFormat = '%vms';
+		option.scrollSpeed = 60;
+		option.minValue = 27;
+		option.maxValue = 135;
 		optionsArray.push(option);
 
 		var option:QOption = new QOption('Safe Frames', 
