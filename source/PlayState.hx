@@ -1481,6 +1481,18 @@ class PlayState extends MusicBeatState
 			}
 		}
 
+		// Cache popupScore sprites
+		precacheList.set(getUIFile('perfect'), 'image');
+		precacheList.set(getUIFile('sick'), 'image');
+		precacheList.set(getUIFile('good'), 'image');
+		precacheList.set(getUIFile('bad'), 'image');
+		precacheList.set(getUIFile('shit'), 'image');
+
+		var numScoreCache:Array<Int> = [];
+		for (i in numScoreCache) {
+			precacheList.set(getUIFile('num' + Std.int(i)), 'image');
+		}
+		
 		if (PauseSubState.songName != null) {
 			precacheList.set(PauseSubState.songName, 'music');
 		} else if(ClientPrefs.pauseMusic != 'None') {
@@ -1500,11 +1512,9 @@ class PlayState extends MusicBeatState
 			FlxG.stage.addEventListener(KeyboardEvent.KEY_UP, onKeyRelease);
 		}
 		callOnLuas('onCreatePost', []);
-
 		super.create();
 
 		cacheCountdown();
-		cachePopUpScore();
 		for (key => type in precacheList)
 		{
 			//trace('Key $key is type $type');
@@ -4396,28 +4406,6 @@ class PlayState extends MusicBeatState
 	public var showCombo:Bool = false;
 	public var showComboNum:Bool = true;
 	public var showRating:Bool = true;
-
-	private function cachePopUpScore()
-	{
-		var pixelShitPart1:String = '';
-		var pixelShitPart2:String = '';
-		if (isPixelStage)
-		{
-			pixelShitPart1 = 'pixelUI/';
-			pixelShitPart2 = '-pixel';
-		}
-
-		Paths.image(pixelShitPart1 + "perfect" + pixelShitPart2);
-		Paths.image(pixelShitPart1 + "sick" + pixelShitPart2);
-		Paths.image(pixelShitPart1 + "good" + pixelShitPart2);
-		Paths.image(pixelShitPart1 + "bad" + pixelShitPart2);
-		Paths.image(pixelShitPart1 + "shit" + pixelShitPart2);
-		Paths.image(pixelShitPart1 + "combo" + pixelShitPart2);
-		
-		for (i in 0...10) {
-			Paths.image(pixelShitPart1 + 'num' + i + pixelShitPart2);
-		}
-	}
 
 	private function popUpScore(note:Note = null):Void
 	{
