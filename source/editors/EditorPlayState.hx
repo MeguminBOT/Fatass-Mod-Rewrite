@@ -34,6 +34,7 @@ class EditorPlayState extends MusicBeatState
 
 	public var notes:FlxTypedGroup<Note>;
 	public var unspawnNotes:Array<Note> = [];
+	public var uiSkinFolder:String = 'base';
 
 	var generatedMusic:Bool = false;
 	var vocals:FlxSound;
@@ -165,6 +166,8 @@ class EditorPlayState extends MusicBeatState
 			FlxG.stage.addEventListener(KeyboardEvent.KEY_DOWN, onKeyPress);
 			FlxG.stage.addEventListener(KeyboardEvent.KEY_UP, onKeyRelease);
 		}
+		setUISkin(); //Sets the UI skin onCreate
+
 		super.create();
 	}
 
@@ -501,7 +504,7 @@ class EditorPlayState extends MusicBeatState
 
 		keyShit();
 		scoreTxt.text = 'Hits: ' + songHits + ' | Misses: ' + songMisses;
-		sectionTxt.text = 'Beat: ' + curSection;
+		sectionTxt.text = 'Section: ' + curSection;
 		beatTxt.text = 'Beat: ' + curBeat;
 		stepTxt.text = 'Step: ' + curStep;
 		super.update(elapsed);
@@ -798,7 +801,6 @@ class EditorPlayState extends MusicBeatState
 		var coolText:FlxText = new FlxText(0, 0, 0, placement, 32);
 		coolText.x = COMBO_X;
 		coolText.y = COMBO_Y;
-		//
 
 		var rating:FlxSprite = new FlxSprite();
 		//var score:Int = 350;
@@ -835,16 +837,7 @@ class EditorPlayState extends MusicBeatState
 				daRating = 'bad';
 			*/
 
-		var pixelShitPart1:String = "";
-		var pixelShitPart2:String = '';
-
-		if (PlayState.isPixelStage)
-		{
-			pixelShitPart1 = 'pixelUI/';
-			pixelShitPart2 = '-pixel';
-		}
-
-		rating.loadGraphic(Paths.image(pixelShitPart1 + daRating + pixelShitPart2));
+		rating.loadGraphic(Paths.image(getUIFile(daRating)));
 		rating.screenCenter();
 		rating.x = coolText.x - 40;
 		rating.y -= 60;
@@ -855,7 +848,7 @@ class EditorPlayState extends MusicBeatState
 		rating.x += ClientPrefs.comboOffset[0];
 		rating.y -= ClientPrefs.comboOffset[1];
 
-		var comboSpr:FlxSprite = new FlxSprite().loadGraphic(Paths.image(pixelShitPart1 + 'combo' + pixelShitPart2));
+		var comboSpr:FlxSprite = new FlxSprite().loadGraphic(Paths.image(getUIFile('combo')));
 		comboSpr.screenCenter();
 		comboSpr.x = coolText.x;
 		comboSpr.acceleration.y = 600;
@@ -895,7 +888,7 @@ class EditorPlayState extends MusicBeatState
 		var daLoop:Int = 0;
 		for (i in seperatedScore)
 		{
-			var numScore:FlxSprite = new FlxSprite().loadGraphic(Paths.image(pixelShitPart1 + 'num' + Std.int(i) + pixelShitPart2));
+			var numScore:FlxSprite = new FlxSprite().loadGraphic(Paths.image(getUIFile('num' + Std.int(i))));
 			numScore.screenCenter();
 			numScore.x = coolText.x + (43 * daLoop) - 90;
 			numScore.y += 80;
@@ -1035,6 +1028,21 @@ class EditorPlayState extends MusicBeatState
 		var splash:NoteSplash = grpNoteSplashes.recycle(NoteSplash);
 		splash.setupNoteSplash(x, y, data, skin, hue, sat, brt);
 		grpNoteSplashes.add(splash);
+	}
+
+	function getUIFile(file:String)
+	{
+		// Handles which skin to load from
+		return SkinData.getUIFile(file, uiSkinFolder, ClientPrefs.uiSkin);
+	}
+	function setUISkin():Void
+	{
+		// Wheter to load Base or Pixel assets
+		uiSkinFolder = PlayState.isPixelStage ? 'pixel' : 'base';
+		if (PlayState.SONG.uiSkin != null && PlayState.SONG.uiSkin.length > 0 && PlayState.SONG.uiSkin != 'default' && PlayState.SONG.uiSkin != 'base' && PlayState.SONG.uiSkin != 'pixel')
+		{
+			uiSkinFolder = PlayState.SONG.uiSkin;
+		}
 	}
 	
 	override function destroy() {
