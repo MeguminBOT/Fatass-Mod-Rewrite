@@ -992,9 +992,7 @@ class PlayState extends MusicBeatState
 
 		// STAGE SCRIPTS
 		#if (MODS_ALLOWED && LUA_ALLOWED)
-		if (ClientPrefs.disableStages) {
-
-		} else {
+		if (!ClientPrefs.disableStages) {
 			startLuasOnFolder('stages/' + curStage + '.lua');
 		}
 		#end
