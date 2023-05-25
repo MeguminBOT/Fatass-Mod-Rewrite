@@ -5623,7 +5623,11 @@ class PlayState extends MusicBeatState
 		setOnLuas('score', songScore);
 		setOnLuas('misses', songMisses);
 		setOnLuas('hits', songHits);
-		judgeCounterTxt.text = 'Perfect Sicks: ' + perfects + '\nSicks: ' + sicks + '\nGoods: ' + goods + '\nBads: ' + bads + '\nShits: ' + shits;
+		if (ClientPrefs.uiSkin == 'StepMania Classic') {
+			judgeCounterTxt.text = 'Marvelous: ' + perfects + '\nPerfect: ' + sicks + '\nGoods: ' + goods + '\nBads: ' + bads + '\nMiss: ' + shits;
+		} else {
+			judgeCounterTxt.text = 'Perfect: ' + perfects + '\nSicks: ' + sicks + '\nGoods: ' + goods + '\nBads: ' + bads + '\nShits: ' + shits;
+		}
 
 		var ret:Dynamic = callOnLuas('onRecalculateRating', [], false);
 		if(ret != FunkinLua.Function_Stop)
@@ -5655,13 +5659,23 @@ class PlayState extends MusicBeatState
 			}
 
 			// Rating FC
-			ratingFC = "";
-			if (perfects > 0) ratingFC = "PFC";
-			if (sicks > 0) ratingFC = "SFC";
-			if (goods > 0) ratingFC = "GFC";
-			if (bads > 0 || shits > 0) ratingFC = "FC";
-			if (songMisses > 0 && songMisses < 10) ratingFC = "SDCB";
-			else if (songMisses >= 10) ratingFC = "Clear";
+			if (ClientPrefs.uiSkin == 'StepMania Classic') {
+				ratingFC = "";
+				if (perfects > 0) ratingFC = "MFC";
+				if (sicks > 0) ratingFC = "PFC";
+				if (goods > 0) ratingFC = "GFC";
+				if (bads > 0 || shits > 0) ratingFC = "FC";
+				if (songMisses > 0 && songMisses < 10) ratingFC = "SDCB";
+				else if (songMisses >= 10) ratingFC = "Clear";
+			} else {
+				ratingFC = "";
+				if (perfects > 0) ratingFC = "PFC";
+				if (sicks > 0) ratingFC = "SFC";
+				if (goods > 0) ratingFC = "GFC";
+				if (bads > 0 || shits > 0) ratingFC = "FC";
+				if (songMisses > 0 && songMisses < 10) ratingFC = "SDCB";
+				else if (songMisses >= 10) ratingFC = "Clear";
+			}
 		}
 		updateScore(badHit); // score will only update after rating is calculated, if it's a badHit, it shouldn't bounce -Ghost
 		setOnLuas('rating', ratingPercent);
