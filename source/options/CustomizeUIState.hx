@@ -205,8 +205,8 @@ class CustomizeUIState extends MusicBeatState
 
 		// Judgement Counter Object.
 		judgeCounterTxt = new FlxText(0, 0);
-		judgeCounterTxt.text = 'Perfect Sicks: 233' + '\nSicks: 46 ' + '\nGoods: 1 ' + '\nBads: 0' + '\nShits: 0';
-		judgeCounterTxt.setFormat(Paths.font("rubik.ttf"), 16, FlxColor.WHITE, CENTER, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
+		judgeCounterTxt.text = 'Perfects: 233' + '\nSicks: 46 ' + '\nGoods: 1 ' + '\nBads: 0' + '\nShits: 0';
+		judgeCounterTxt.setFormat(Paths.font("rubik.ttf"), 16, FlxColor.WHITE, LEFT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
 		judgeCounterTxt.scrollFactor.set();
 		judgeCounterTxt.borderSize = 1.25;
 		judgeCounterTxt.x = 565;

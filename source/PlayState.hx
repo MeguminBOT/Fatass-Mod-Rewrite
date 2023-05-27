@@ -1132,7 +1132,7 @@ class PlayState extends MusicBeatState
 
 		//Rhythm Engine Mod: Judgement Counter
 		judgeCounterTxt = new FlxText(0, 0);
-		judgeCounterTxt.setFormat(Paths.font("rubik.ttf"), 16, FlxColor.WHITE, CENTER, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
+		judgeCounterTxt.setFormat(Paths.font("rubik.ttf"), 16, FlxColor.WHITE, LEFT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
 		judgeCounterTxt.scrollFactor.set();
 		judgeCounterTxt.borderSize = 1.25;
 		judgeCounterTxt.visible = ClientPrefs.judgeCounter;
