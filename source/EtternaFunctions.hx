@@ -29,12 +29,10 @@ class EtternaFunctions
     	if (PlayState.instance.ratingName == '?') {
         	var beforeScoreTxt = 'Score: 0 | Combo Breaks: 0 | Accuracy: 0.00% | N/A';
         	PlayState.instance.scoreTxt.text = beforeScoreTxt;
-		}
-		else
-		{
+		} else {
         	var ratingName = PlayState.instance.ratingFC;
 
-        	var ratingFull = Math.max(actualRatingHere * 100, 0);
+        	var ratingFull = Math.min(actualRatingHere * 100, 1) Math.max(actualRatingHere * 100, 0);
         	var ratingFullAsStr = HelperFunctions.truncateFloat(ratingFull, 3);
 
         	var tempRatingNameVery = EtternaFunctions.accuracyToRatingString(ratingFull);
@@ -88,8 +86,8 @@ class EtternaFunctions
 			PlayState.instance.totalNotesHit = PlayState.instance.totalNotesHit + totalNotesForNow;
 			PlayState.instance.totalPlayed = PlayState.instance.totalPlayed + 1;
 			actualRatingHere = PlayState.instance.totalNotesHit / PlayState.instance.totalPlayed;
-			PlayState.instance.ratingPercent = Math.max(0, actualRatingHere);
-		});
+			PlayState.instance.ratingPercent = Math.min(1, Math.max(0, actualRatingHere));
+		});										
 	}
 
 	public static function handleNoteDiff(diff:Float) {
@@ -104,26 +102,20 @@ class EtternaFunctions
 		var power = 2.5;
 		var dev = 22.7 * (Math.pow(ts, ts_pow));
 
-		if (ClientPrefs.inputComplexity == "Normal") {
-			if (maxms <= 45) // Less harsh on Sicks and Perfects for accuracy. Will always award 100% points if below 45ms hit, the rest of the hit ratings are the same as High.
-				return max_points;
-			else if (maxms <= zero) // ma/pa region, exponential
-				return max_points * erf((zero - maxms) / dev);
-			else if (maxms <= max_boo_weight) // cb region, linear
-				return (maxms - zero) * miss_weight / (max_boo_weight - zero);
-			else
-				return miss_weight;
+		var isNormalComplexity = ClientPrefs.inputComplexity == "Normal";
+		var isHighComplexity = !isNormalComplexity;
+
+		if ((isNormalComplexity && maxms <= 45) || (isHighComplexity && maxms <= ridic)) {
+			return max_points;
+		} else if (maxms <= zero) {
+			return max_points * erf((zero - maxms) / dev);
+		} else if (maxms <= max_boo_weight) {
+			return (maxms - zero) * miss_weight / (max_boo_weight - zero);
 		} else {
-			if (maxms <= ridic) // Anything below this (judge scaled) threshold is counted as full pts must be under 5ms to get 100% points. This is the Complexity "High" setting.
-				return max_points;
-			else if (maxms <= zero) // ma/pa region, exponential
-				return max_points * erf((zero - maxms) / dev);
-			else if (maxms <= max_boo_weight) // cb region, linear
-				return (maxms - zero) * miss_weight / (max_boo_weight - zero);
-			else
-				return miss_weight;
+			return miss_weight;
 		}
 	}
+
 
 	public static function showMsDiffOnScreen(diff:Float) {
 		msText.color = ratingTextColor(diff);
