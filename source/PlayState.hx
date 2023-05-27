@@ -1138,8 +1138,6 @@ class PlayState extends MusicBeatState
 		judgeCounterTxt.visible = ClientPrefs.judgeCounter;
 		judgeCounterTxt.x = 565;
 		judgeCounterTxt.y = 565;
-		//judgeCounterTxt.x += ClientPrefs.comboOffset[4]; // Moveable in Adjust Combo menu, currently wack so disabling for now
-		//judgeCounterTxt.y -= ClientPrefs.comboOffset[5]; // Moveable in Adjust Combo menu, currently wack so disabling for now
 		add(judgeCounterTxt);
 
 		if (hiddenMode)
@@ -5619,69 +5617,70 @@ class PlayState extends MusicBeatState
 	public var ratingName:String = '?';
 	public var ratingPercent:Float;
 	public var ratingFC:String;
+
 	public function RecalculateRating(badHit:Bool = false) {
+		updateScoreLuas();
+		updateJudgeCounter();
+	
+		var ret:Dynamic = callOnLuas('onRecalculateRating', [], false);
+		if (ret != FunkinLua.Function_Stop) {
+			calculateRatingNameAndPercent();
+			getRatingRank();
+		}
+	
+		updateScore(badHit);
+		updateRatingLuas();
+	}
+	
+	public function updateScoreLuas():Void {
 		setOnLuas('score', songScore);
 		setOnLuas('misses', songMisses);
 		setOnLuas('hits', songHits);
-		if (ClientPrefs.uiSkin == 'StepMania Classic') {
-			judgeCounterTxt.text = 'Marvelous: ' + perfects + '\nPerfect: ' + sicks + '\nGoods: ' + goods + '\nBads: ' + bads + '\nMiss: ' + shits;
-		} else {
-			judgeCounterTxt.text = 'Perfect: ' + perfects + '\nSicks: ' + sicks + '\nGoods: ' + goods + '\nBads: ' + bads + '\nShits: ' + shits;
-		}
+	}
 
-		var ret:Dynamic = callOnLuas('onRecalculateRating', [], false);
-		if(ret != FunkinLua.Function_Stop)
-		{
-			if(totalPlayed < 1) //Prevent divide by 0
-				ratingName = '?';
-			else
-			{
-				// Rating Percent
-				ratingPercent = Math.min(1, Math.max(0, totalNotesHit / totalPlayed));
-				//trace((totalNotesHit / totalPlayed) + ', Total: ' + totalPlayed + ', notes hit: ' + totalNotesHit);
-
-				// Rating Name
-				if(ratingPercent >= 1)
-				{
-					ratingName = ratingStuff[ratingStuff.length-1][0]; //Uses last string
-				}
-				else
-				{
-					for (i in 0...ratingStuff.length-1)
-					{
-						if(ratingPercent < ratingStuff[i][1])
-						{
-							ratingName = ratingStuff[i][0];
-							break;
-						}
-					}
-				}
-			}
-
-			// Rating FC
-			if (ClientPrefs.uiSkin == 'StepMania Classic') {
-				ratingFC = "";
-				if (perfects > 0) ratingFC = "MFC";
-				if (sicks > 0) ratingFC = "PFC";
-				if (goods > 0) ratingFC = "GFC";
-				if (bads > 0 || shits > 0) ratingFC = "FC";
-				if (songMisses > 0 && songMisses < 10) ratingFC = "SDCB";
-				else if (songMisses >= 10) ratingFC = "Clear";
-			} else {
-				ratingFC = "";
-				if (perfects > 0) ratingFC = "PFC";
-				if (sicks > 0) ratingFC = "SFC";
-				if (goods > 0) ratingFC = "GFC";
-				if (bads > 0 || shits > 0) ratingFC = "FC";
-				if (songMisses > 0 && songMisses < 10) ratingFC = "SDCB";
-				else if (songMisses >= 10) ratingFC = "Clear";
-			}
-		}
-		updateScore(badHit); // score will only update after rating is calculated, if it's a badHit, it shouldn't bounce -Ghost
+	public function updateRatingLuas():Void {
 		setOnLuas('rating', ratingPercent);
 		setOnLuas('ratingName', ratingName);
 		setOnLuas('ratingFC', ratingFC);
 	}
+	
+	public function updateJudgeCounter():Void {
+		judgeCounterTxt.text = ClientPrefs.uiSkin == 'StepMania Classic' ?
+			'Marvelous: ' + perfects + '\nPerfect: ' + sicks + '\nGoods: ' + goods + '\nBads: ' + bads + '\nMiss: ' + shits :
+			'Perfect: ' + perfects + '\nSicks: ' + sicks + '\nGoods: ' + goods + '\nBads: ' + bads + '\nShits: ' + shits;
+	}
+	
+	public function calculateRatingNameAndPercent():Void {
+		if (totalPlayed < 1) { // Prevent divide by 0
+			ratingName = '?';
+		} else {
+			ratingPercent = Math.min(1, Math.max(0, totalNotesHit / totalPlayed));
+	
+			if (ratingPercent >= 1) {
+				ratingName = ratingStuff[ratingStuff.length - 1][0]; // Uses last string
+			} else {
+				for (i in 0...ratingStuff.length - 1) {
+					if (ratingPercent < ratingStuff[i][1]) {
+						ratingName = ratingStuff[i][0];
+						break;
+					}
+				}
+			}
+		}
+	}
+	
+	public function getRatingRank():Void {
+		var isStepManiaClassic:Bool = ClientPrefs.uiSkin == 'StepMania Classic';
+	
+		ratingFC = "";
+		if (perfects > 0) ratingFC = isStepManiaClassic ? "MFC" : "PFC";
+		if (sicks > 0) ratingFC = isStepManiaClassic ? "PFC" : "SFC";
+		if (goods > 0) ratingFC = "GFC";
+		if (bads > 0 || shits > 0) ratingFC = "FC";
+		if (songMisses > 0 && songMisses < 10) ratingFC = "SDCB";
+		else if (songMisses >= 10) ratingFC = "Clear";
+	}
+	
 
 	#if ACHIEVEMENTS_ALLOWED
 	private function checkForAchievement(achievesToCheck:Array<String> = null):String
