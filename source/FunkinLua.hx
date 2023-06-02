@@ -211,7 +211,6 @@ class FunkinLua {
 		//Rhythm Engine ClientPrefs
 		set('hitsoundVolume', ClientPrefs.hitsoundVolume);
 		set('hitsoundType', ClientPrefs.hitsoundType);
-		set('uiSkinFolder', PlayState.instance.uiSkinFolder);
 		set('noteSkin', ClientPrefs.noteSkin);
 		set('uiSkin', ClientPrefs.uiSkin);
 		set('strumlineOffsetX', ClientPrefs.strumlineOffsetX);
@@ -224,11 +223,19 @@ class FunkinLua {
 		set('customMechanicEvent', ClientPrefs.customMechanicEvent);
 		set('customStrumPlacement', ClientPrefs.customStrumPlacement);
 		set('customSongScripts', ClientPrefs.customSongScripts);
+		set('underlay', ClientPrefs.underlay);
+		set('disableStages', ClientPrefs.disableStages);
+
+		//PlayState stuff
+		set('uiSkinFolder', PlayState.instance.uiSkinFolder);
 
 		//Rhythm Engine Gameplay Modifiers
+		set('hiddenMode',  PlayState.hiddenMode);
+		set('mirrorMode', PlayState.mirrorMode);
 		set('doubleChart', PlayState.doubleChart);
 		set('doubleChartType', PlayState.doubleChartType);
 		set('opponentChart', PlayState.opponentChart);
+		set('opponentIsPlaying', PlayState.opponentIsPlaying);
 
 		//Rhythm Engine Stuff: Song/Week shit
 		set('songArtist', PlayState.SONG.artist);
