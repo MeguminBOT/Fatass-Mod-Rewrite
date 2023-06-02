@@ -32,7 +32,7 @@ class EtternaFunctions
 		} else {
         	var ratingName = PlayState.instance.ratingFC;
 
-        	var ratingFull = Math.min(actualRatingHere * 100, 1) Math.max(actualRatingHere * 100, 0);
+        	var ratingFull = Math.max(actualRatingHere * 100, 0);
         	var ratingFullAsStr = HelperFunctions.truncateFloat(ratingFull, 3);
 
         	var tempRatingNameVery = EtternaFunctions.accuracyToRatingString(ratingFull);
