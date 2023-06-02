@@ -353,10 +353,10 @@ class PlayState extends MusicBeatState
 	var isMonoDead:Bool = false;
 	var keyboardTimer:Int = 8;
 	var keyboard:FlxSprite;
+	public var msText:ModchartText;
 
 	public function createMsText() {
-		
-		var msText:ModchartText = new ModchartText(500, 200, '', 400);
+		msText = new ModchartText(500, 200, '', 400);
 		modchartTexts.set('msText', msText);
 		msText.cameras = [camHUD];
 		msText.screenCenter();
@@ -364,10 +364,12 @@ class PlayState extends MusicBeatState
 		msText.borderSize = 2;
 		msText.borderColor = 0xff000000;
 		msText.font = Paths.font('rubik.ttf');
-		msText.x = 325;
-		msText.y += 75;
-		msText.x += ClientPrefs.comboOffset[0];
-		msText.y -= ClientPrefs.comboOffset[1];
+		if (!ClientPrefs.popupScoreLocked) {
+			msText.x = 325;
+			msText.y += 75;
+			msText.x += ClientPrefs.comboOffset[0];
+			msText.y -= ClientPrefs.comboOffset[1];
+		}
 		msText.acceleration.y = 550 * playbackRate * playbackRate;
 		msText.velocity.y -= FlxG.random.int(140, 175) * playbackRate;
 		msText.velocity.x -= FlxG.random.int(0, 10) * playbackRate;
@@ -4485,8 +4487,17 @@ class PlayState extends MusicBeatState
 		rating.velocity.y -= FlxG.random.int(140, 175) * playbackRate;
 		rating.velocity.x -= FlxG.random.int(0, 10) * playbackRate;
 		rating.visible = (!ClientPrefs.hideHud && showRating);
-		rating.x += ClientPrefs.comboOffset[0];
-		rating.y -= ClientPrefs.comboOffset[1];
+		if (ClientPrefs.popupScoreLocked) {
+			rating.x = playerStrums.members[0].x + 100;
+			rating.y -= 15;
+			if (ClientPrefs.inputSystem == 'Etterna') 
+				msText.screenCenter();
+				msText.x = playerStrums.members[0].x + 30;
+				msText.y += 75;
+		} else {
+			rating.x += ClientPrefs.comboOffset[0];
+			rating.y -= ClientPrefs.comboOffset[1];
+		}
 
 		insert(members.indexOf(strumLineNotes), rating);
 		
@@ -4543,9 +4554,14 @@ class PlayState extends MusicBeatState
 			numScore.screenCenter();
 			numScore.x = numScoreX;
 			numScore.y += numScoreY;
-			numScore.x += ClientPrefs.comboOffset[2];
-			numScore.y -= ClientPrefs.comboOffset[3];
-			
+			if (ClientPrefs.popupScoreLocked) {
+				numScore.x += playerStrums.members[0].x - 200;
+				numScore.y -= 40;
+			} else {
+				numScore.x += ClientPrefs.comboOffset[2];
+				numScore.y -= ClientPrefs.comboOffset[3];
+			}
+
 			if (!ClientPrefs.comboStacking)
 				lastScore.push(numScore);
 

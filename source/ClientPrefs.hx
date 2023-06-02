@@ -85,6 +85,7 @@ class ClientPrefs {
 	public static var hideIcons:Bool = false;
 	public static var staticHUD:Bool = false;
 	public static var disableStages:Bool = false;
+	public static var popupScoreLocked:Bool = false;
 
 	//Every key has two binds, add your key bind down here and then add your control on options/ControlsSubState.hx and Controls.hx
 	public static var keyBinds:Map<String, Array<FlxKey>> = [
@@ -175,6 +176,7 @@ class ClientPrefs {
 		FlxG.save.data.hideIcons = hideIcons;
 		FlxG.save.data.staticHUD = staticHUD;
 		FlxG.save.data.disableStages = disableStages;
+		FlxG.save.data.popupScoreLocked = popupScoreLocked;
 		
 		// Better Discord RPC
 		FlxG.save.data.discordRPC = discordRPC;
@@ -393,6 +395,10 @@ class ClientPrefs {
 		if(FlxG.save.data.disableStages != null)
 		{
 			disableStages = FlxG.save.data.disableStages;
+		}
+		if(FlxG.save.data.popupScoreLocked != null)
+		{
+			popupScoreLocked = FlxG.save.data.popupScoreLocked;
 		}
 		var save:FlxSave = new FlxSave();
 		save.bind('fatass_controls_v2', CoolUtil.getSavePath());
