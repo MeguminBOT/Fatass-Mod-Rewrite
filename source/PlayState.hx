@@ -333,8 +333,8 @@ class PlayState extends MusicBeatState
 	public static var hiddenMode:Bool = false;
 	public var hiddenPlayfield:FlxSprite;
 	public var hiddenPlayfieldOpponent:FlxSprite;
-	public var laneunderlay:FlxSprite;
-	public var laneunderlayOpponent:FlxSprite;
+	public var laneUnderlay:FlxSprite;
+	public var laneUnderlayOpponent:FlxSprite;
 	public static var opponentChart:Bool = false;
 	public static var doubleChart:Bool = false;
 	public static var doubleChartType:String = 'Player';
@@ -1120,15 +1120,15 @@ class PlayState extends MusicBeatState
 		hiddenPlayfield.y = -175;
 
 		//Rhythm Engine Mod: Lane Underlay
-		laneunderlayOpponent = new FlxSprite(0, 0).makeGraphic(110 * 4 + 50, FlxG.height * 2);
-		laneunderlayOpponent.alpha = ClientPrefs.underlay;
-		laneunderlayOpponent.color = FlxColor.BLACK;
-		laneunderlayOpponent.scrollFactor.set();
+		laneUnderlayOpponent = new FlxSprite(0, 0).makeGraphic(110 * 4 + 50, FlxG.height * 2);
+		laneUnderlayOpponent.alpha = ClientPrefs.underlay;
+		laneUnderlayOpponent.color = FlxColor.BLACK;
+		laneUnderlayOpponent.scrollFactor.set();
 
-		laneunderlay = new FlxSprite(0, 0).makeGraphic(110 * 4 + 50, FlxG.height * 2);
-		laneunderlay.alpha = ClientPrefs.underlay;
-		laneunderlay.color = FlxColor.BLACK;
-		laneunderlay.scrollFactor.set();
+		laneUnderlay = new FlxSprite(0, 0).makeGraphic(110 * 4 + 50, FlxG.height * 2);
+		laneUnderlay.alpha = ClientPrefs.underlay;
+		laneUnderlay.color = FlxColor.BLACK;
+		laneUnderlay.scrollFactor.set();
 
 		//Rhythm Engine Mod: Judgement Counter
 		judgeCounterTxt = new FlxText(0, 0);
@@ -1150,9 +1150,9 @@ class PlayState extends MusicBeatState
 		}
 		if (!ClientPrefs.middleScroll && !doubleChart)
 		{
-			add(laneunderlayOpponent);
+			add(laneUnderlayOpponent);
 		}
-		add(laneunderlay);
+		add(laneUnderlay);
 
 		var showTime:Bool = (ClientPrefs.timeBarType != 'Disabled');
 		timeTxt = new FlxText(STRUM_X + (FlxG.width / 2) - 248, 19, 400, "", 32);
@@ -1302,8 +1302,8 @@ class PlayState extends MusicBeatState
 			timeBarBG.cameras = [camStatic];
 			timeTxt.cameras = [camStatic];
 			judgeCounterTxt.cameras = [camStatic];
-			laneunderlay.cameras = [camStatic];
-			laneunderlayOpponent.cameras = [camStatic];
+			laneUnderlay.cameras = [camStatic];
+			laneUnderlayOpponent.cameras = [camStatic];
 		} else {
 			healthBar.cameras = [camHUD];
 			healthBarBG.cameras = [camHUD];
@@ -1315,8 +1315,8 @@ class PlayState extends MusicBeatState
 			timeBarBG.cameras = [camHUD];
 			timeTxt.cameras = [camHUD];
 			judgeCounterTxt.cameras = [camHUD];
-			laneunderlay.cameras = [camHUD];
-			laneunderlayOpponent.cameras = [camHUD];
+			laneUnderlay.cameras = [camHUD];
+			laneUnderlayOpponent.cameras = [camHUD];
 		}
 		doof.cameras = [camHUD];
 		//Rhythm Engine Mod Stuff
@@ -2251,10 +2251,10 @@ class PlayState extends MusicBeatState
 			generateStaticArrows(1);
 
 			//Rhythm Engine Mod: Lane Underlay
-			laneunderlay.x = playerStrums.members[0].x - 25;
-			laneunderlayOpponent.x = opponentStrums.members[0].x - 25;
-			laneunderlay.screenCenter(Y);
-			laneunderlayOpponent.screenCenter(Y);
+			laneUnderlay.x = playerStrums.members[0].x - 25;
+			laneUnderlayOpponent.x = opponentStrums.members[0].x - 25;
+			laneUnderlay.screenCenter(Y);
+			laneUnderlayOpponent.screenCenter(Y);
 
 			//hiddenPlayfield.x = playerStrums.members[0].x - 25;
 			//hiddenPlayfieldOpponent.x = opponentStrums.members[0].x - 25;
@@ -4211,7 +4211,6 @@ class PlayState extends MusicBeatState
 			});
 		}
 	}
-
 
 	public var transitioning = false;
 	public function endSong():Void
