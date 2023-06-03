@@ -52,6 +52,12 @@ class QOVisualsHUD extends MusicBeatSubstate
 			false);
 		optionsArray.push(option);
 
+		var option:QOption = new QOption('Lock Rating/Combo',
+			'popupScoreLocked',
+			'bool',
+		false);
+		optionsArray.push(option);
+
 		var option:QOption = new QOption('Judgement Counter', 
 			'judgeCounter', 
 			'bool', 
