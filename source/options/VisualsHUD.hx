@@ -50,16 +50,16 @@ class VisualsHUD extends BaseOptionsMenu
 		addOption(option);
 
 		var option:Option = new Option('Lock Rating/Combo',
-		"If checked, locks the popup of combo and ratings to the x-axis of the strumline.",
-		'popupScoreLocked',
-		'bool',
+			"If checked, locks the popup of combo and ratings to the x-axis of the strumline.",
+			'popupScoreLocked',
+			'bool',
 		false);
 		addOption(option);
 
 		var option:Option = new Option('Static HUD',
-		"If checked, the HUD won't be affected by events that uses camHUD camera. May break some charts.\nAffects all objects that can be moved using CustomizeUI",
-		'staticHUD',
-		'bool',
+			"If checked, the HUD won't be affected by events that uses camHUD camera. May break some charts.\nAffects all objects that can be moved using CustomizeUI",
+			'staticHUD',
+			'bool',
 		false);
 		addOption(option);
 
