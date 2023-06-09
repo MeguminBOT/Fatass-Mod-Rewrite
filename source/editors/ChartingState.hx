@@ -66,6 +66,7 @@ class ChartingState extends MusicBeatState
 		'Instakill Note',
 		'Dodge Note',
 		'Bullet Note',
+		'Static Note',
 		'Heal Note',
 		'GF Sing',
 		'No Animation'
@@ -2682,8 +2683,8 @@ class ChartingState extends MusicBeatState
 				var text:String = 'Event: ' + note.eventName + ' (' + Math.floor(note.strumTime) + ' ms)' + '\nValue 1: ' + note.eventVal1 + '\nValue 2: ' + note.eventVal2;
 				if(note.eventLength > 1) text = note.eventLength + ' Events:\n' + note.eventName;
 
-				var daText:AttachedFlxText = new AttachedFlxText(0, 0, 400, text, 12);
-				daText.setFormat(Paths.font("rubik.ttf"), 8, FlxColor.WHITE, RIGHT, FlxTextBorderStyle.OUTLINE_FAST, FlxColor.BLACK);
+				var daText:AttachedFlxText = new AttachedFlxText(0, 0, 400, text, 24);
+				daText.setFormat(Paths.font("rubik.ttf"), 12, FlxColor.WHITE, RIGHT, FlxTextBorderStyle.OUTLINE_FAST, FlxColor.BLACK);
 				daText.xAdd = -410;
 				daText.borderSize = 1;
 				if(note.eventLength > 1) daText.yAdd += 8;
