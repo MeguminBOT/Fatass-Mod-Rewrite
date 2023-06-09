@@ -2,40 +2,30 @@ package;
 
 import flixel.FlxG;
 import flixel.FlxSprite;
-import flixel.addons.ui.FlxUIInputText;
-import flixel.graphics.FlxGraphic;
+//import flixel.addons.ui.FlxUIInputText;
 import flixel.group.FlxGroup.FlxTypedGroup;
 import flixel.group.FlxSpriteGroup;
-import flixel.math.FlxPoint;
-import flixel.math.FlxRect;
 import flixel.text.FlxText;
-import flixel.tweens.FlxEase;
-import flixel.tweens.FlxTween;
 import flixel.ui.FlxBar;
 import flixel.ui.FlxButton;
 import flixel.util.FlxColor;
 import haxe.Http;
 import haxe.Json;
-import haxe.Timer;
 import haxe.zip.Entry;
 import openfl.display.Bitmap;
 import openfl.display.BitmapData;
 import openfl.display.Loader;
 import openfl.events.Event;
-import openfl.events.EventDispatcher;
-import openfl.events.IEventDispatcher;
 import openfl.events.IOErrorEvent;
 import openfl.events.ProgressEvent;
+import openfl.events.HTTPStatusEvent;
 import openfl.net.URLRequest;
 import openfl.net.URLLoader;
 import openfl.net.URLLoaderDataFormat;
 #if sys
 import sys.FileSystem;
 import sys.io.File;
-import sys.thread.Thread;
 #end
-import CustomFadeTransition;
-import Controls;
 
 using StringTools;
 
@@ -163,6 +153,14 @@ class DownloadModsState extends MusicBeatState
 			add(logoGroup);
 			add(textGroup);
 		};
+
+		// Error Message shown when there's an error with GitHub or the user has no internet connection.
+		http.onError = function(errorMsg:String) {
+			trace("Error connecting to GitHub Repo:\n" + errorMsg);
+			progressTxt.text = "Error connecting to GitHub Repo.\nGitHub might be experiencing some problems\nor there's a problem with your internet connection.\nPlease try again later\n" + errorMsg;
+			add(progressTxt);
+		};
+
 		http.request();
 
 		// Create progress bar.
@@ -202,7 +200,7 @@ class DownloadModsState extends MusicBeatState
 			// Add progress indicators.
 			add(progressBar);
 			add(progressTxt);
-		
+
 			// Listen for progress events.
 			urlLoader.addEventListener(ProgressEvent.PROGRESS, function(event:Dynamic) {
 				receivedBytes = event.bytesLoaded;
@@ -228,19 +226,36 @@ class DownloadModsState extends MusicBeatState
 				ZipHandler.saveUncompressed(zipPath, savePath);
 				blockInput = false;
 				urlLoader.close();
+				remove(progressTxt);
+				remove(progressBar);
 			});
 		
 			// Listen for error event.
 			urlLoader.addEventListener(IOErrorEvent.IO_ERROR, function(event:IOErrorEvent) {
 				trace("Error downloading modpack:\n" + event.text);
 				progressTxt.text = "IOErrorEvent: Error downloading modpack:\n" + metadata.modpack + "\n" + event.text;
+				blockInput = false;
+				remove(progressBar);
 			});
-		
+
+			// Listen for HTTP status event.
+			urlLoader.addEventListener(HTTPStatusEvent.HTTP_STATUS, function(event:HTTPStatusEvent) {
+				if (event.status > 400) {
+					trace("Error accessing modpack:\n" + event.status);
+					progressTxt.text = "HTTPStatusEvent: Error accessing modpack:\n" + metadata.modpack + "\nStatus code: " + event.status;
+				}
+				blockInput = false;
+				remove(progressBar);
+			});
+
 			// Start the download.
 			urlLoader.load(request);
+
 		} catch (e:Dynamic) {
-			trace("Dynamic: Error downloading modpack:\n" + e);
-			progressTxt.text = "Dynamic: Error downloading modpack:\n" + metadata.modpack + "\n" + e;
+			trace("Unexpected: Error downloading modpack:\n" + e);
+			progressTxt.text = "Unexpected: Error downloading modpack:\n" + metadata.modpack + "\n" + e;
+			blockInput = false;
+			remove(progressBar);
 		}
 	}
 	
