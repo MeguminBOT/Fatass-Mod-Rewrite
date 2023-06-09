@@ -62,7 +62,7 @@ private class ZipHandler
 
 		var c = new haxe.zip.Uncompress(-15);
 		var s = haxe.io.Bytes.alloc(file.fileSize);
-		var r = c.execute(file.data,0,s,0);
+		var r = c.execute(file.data, 0, s, 0);
 		c.close();
 		if( !r.done || r.read != file.data.length || r.write != file.fileSize )
 			throw 'Invalid compressed data for ${file.fileName}';
@@ -80,6 +80,7 @@ private typedef DownloadMetadata = {
 	var author:String;
 	var fileName:String;
 	var logo:String;
+	var updated:String;
 }
 
 class DownloadModsState extends MusicBeatState
@@ -110,22 +111,36 @@ class DownloadModsState extends MusicBeatState
 		add(bg);
 
 		// Load modpack metadata from github repository.
-		var http = new Http("https://raw.githubusercontent.com/MeguminBOT/Rhythm-Engine-Wiki/main/modpackDownloadList.json");
+		var http = new Http("https://raw.githubusercontent.com/MeguminBOT/Rhythm-Engine-Wiki/main/packList/modpackDownloadList.json");
 		http.onData = function(data:String) {
 			modpacks = Json.parse(data);
 	
-			// Create UI elements for each modpack.
+			// Create UI elements.
 			var buttonGroup:FlxTypedGroup<FlxButton> = new FlxTypedGroup<FlxButton>();
 			var logoGroup:FlxSpriteGroup = new FlxSpriteGroup();
-			var rowLength:Int = 10; // number of objects per row.
+			var textGroup:FlxTypedGroup<FlxText> = new FlxTypedGroup<FlxText>();
+			var rowLength:Int = 10;
 			var rowIndex:Int = 0;
 			var colIndex:Int = 0;
+
+			// Add UI elements for each modpack found.
 			for (index => metadata in modpacks) {
+
+				// Download button.
 				var button:FlxButton = new FlxButton(50 + colIndex * 150, 50 + rowIndex * 65, 'Download', function() { downloadModpack(metadata); });
 				button.label.setFormat("rubik.ttf", 8, FlxColor.BLACK, "center");
 				buttonGroup.add(button);
+
+				// Text Object showing if it's a new or updated modpack.
+				var updatedTxt:FlxText = new FlxText(0, 0, button.width, "");
+				updatedTxt.text = metadata.updated;
+				updatedTxt.setFormat("rubik.ttf", 16, FlxColor.WHITE, CENTER, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
+				updatedTxt.x = button.x;
+				updatedTxt.y = button.y - updatedTxt.height;
+				textGroup.add(updatedTxt);
 	
-				var loader = new Loader();
+				// Modpack Logo
+				var loader:Loader = new Loader();
 				loader.contentLoaderInfo.addEventListener(Event.COMPLETE, function(event:Event) {
 					var bitmap:Bitmap = event.target.content;
 					var sprite:FlxSprite = new FlxSprite(0, 0, bitmap.bitmapData);
@@ -136,7 +151,8 @@ class DownloadModsState extends MusicBeatState
 					logoGroup.add(sprite);
 				});
 				loader.load(new URLRequest(metadata.logo));
-	
+
+				// Rows and columns.
 				rowIndex++;
 				if (rowIndex >= rowLength) {
 					colIndex++;
@@ -145,6 +161,7 @@ class DownloadModsState extends MusicBeatState
 			}
 			add(buttonGroup);
 			add(logoGroup);
+			add(textGroup);
 		};
 		http.request();
 
@@ -210,18 +227,20 @@ class DownloadModsState extends MusicBeatState
 				File.saveBytes(zipPath, data);
 				ZipHandler.saveUncompressed(zipPath, savePath);
 				blockInput = false;
+				urlLoader.close();
 			});
 		
 			// Listen for error event.
 			urlLoader.addEventListener(IOErrorEvent.IO_ERROR, function(event:IOErrorEvent) {
-				trace("Error downloading modpack: " + event.text);
+				trace("Error downloading modpack:\n" + event.text);
+				progressTxt.text = "IOErrorEvent: Error downloading modpack:\n" + metadata.modpack + "\n" + event.text;
 			});
 		
 			// Start the download.
 			urlLoader.load(request);
 		} catch (e:Dynamic) {
-			trace("Error downloading modpack: " + e);
-			progressTxt.text = "Error downloading modpack";
+			trace("Dynamic: Error downloading modpack:\n" + e);
+			progressTxt.text = "Dynamic: Error downloading modpack:\n" + metadata.modpack + "\n" + e;
 		}
 	}
 	
@@ -299,9 +318,11 @@ class DownloadModsState extends MusicBeatState
 			}
 		} 
 		*/
+		if (blockInput) {
+			FlxG.mouse.visible = false;
 
-		if (!blockInput)
-		{
+		} else if (!blockInput) {
+			FlxG.mouse.visible = true;
 			if(controls.BACK)
 			{
 				{
