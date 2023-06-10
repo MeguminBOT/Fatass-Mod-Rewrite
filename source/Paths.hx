@@ -1,6 +1,8 @@
 package;
 
 import openfl.display3D.textures.RectangleTexture;
+import lime.media.vorbis.VorbisFile;
+import lime.media.AudioBuffer;
 import animateatlas.AtlasFrameMaker;
 import flixel.math.FlxPoint;
 import flixel.graphics.frames.FlxFrame.FlxFrameAngle;
@@ -384,27 +386,60 @@ class Paths
 
 	// completely rewritten asset loading? fuck!
 	public static var currentTrackedAssets:Map<String, FlxGraphic> = [];
-
 	public static var currentTrackedSounds:Map<String, Sound> = [];
-	public static function returnSound(path:String, key:String, ?library:String) {
+	public static function returnSound(path:String, key:String, ?library:String, stream:Bool = false) {
+		var sound:Sound = null;
+		var file:String = null;
+
 		#if MODS_ALLOWED
-		var file:String = modsSounds(path, key);
-		if(FileSystem.exists(file)) {
-			if(!currentTrackedSounds.exists(file)) {
-				currentTrackedSounds.set(file, Sound.fromFile(file));
-			}
-			localTrackedAssets.push(key);
+		file = modsSounds(path, key);
+		if (currentTrackedSounds.exists(file))
+		{
+			localTrackedAssets.push(file);
 			return currentTrackedSounds.get(file);
 		}
+		else if (FileSystem.exists(file))
+		{
+			#if lime_vorbis
+			if (stream)
+				sound = Sound.fromAudioBuffer(AudioBuffer.fromVorbisFile(VorbisFile.fromFile(file)));
+			else
+			#end
+			sound = Sound.fromFile(file);
+		}
+		else
 		#end
-		// I hate this so god damn much
-		var gottenPath:String = getPath('$path/$key.$SOUND_EXT', SOUND, library);
-		gottenPath = gottenPath.substring(gottenPath.indexOf(':') + 1, gottenPath.length);
-		// trace(gottenPath);
-		if(!currentTrackedSounds.exists(gottenPath))
-			currentTrackedSounds.set(gottenPath, Sound.fromFile('./${gottenPath}'));
-		localTrackedAssets.push(gottenPath);
-		return currentTrackedSounds.get(gottenPath);
+		{
+			// I hate this so god damn much
+			var gottenPath:String = getPath('$path/$key.$SOUND_EXT', SOUND, library);
+			file = gottenPath.substring(gottenPath.indexOf(':') + 1, gottenPath.length);
+			if (path == 'songs')
+				gottenPath = 'songs:' + gottenPath;
+			if (currentTrackedSounds.exists(file))
+			{
+				localTrackedAssets.push(file);
+				return currentTrackedSounds.get(file);
+			}
+			else if (OpenFlAssets.exists(gottenPath, SOUND))
+			{
+				#if lime_vorbis
+				if (stream)
+					sound = OpenFlAssets.getMusic(gottenPath);
+				else
+				#end
+				sound = OpenFlAssets.getSound(gottenPath);
+			}
+		}
+
+		if (sound != null)
+		{
+			localTrackedAssets.push(file);
+			currentTrackedSounds.set(file, sound);
+			return sound;
+		}
+
+		trace('oh no its returning null NOOOO ($file)');
+		return null;
 	}
 
 	#if MODS_ALLOWED
