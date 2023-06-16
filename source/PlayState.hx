@@ -3915,11 +3915,9 @@ class PlayState extends MusicBeatState
 
 			case 'Add Camera Zoom':
 				if(ClientPrefs.camZooms && FlxG.camera.zoom < 1.35) {
-					var camZoom:Float = Std.parseFloat(value1);
-					var hudZoom:Float = Std.parseFloat(value2);
-					if(Math.isNaN(camZoom)) camZoom = 0.015;
-					if(Math.isNaN(hudZoom)) hudZoom = 0.03;
-
+					var camZoom:Float = Math.isNaN(Std.parseFloat(value1)) ? 0.015 : Std.parseFloat(value1);
+					var hudZoom:Float = Math.isNaN(Std.parseFloat(value2)) ? 0.03 : Std.parseFloat(value2);
+				
 					FlxG.camera.zoom += camZoom;
 					camHUD.zoom += hudZoom;
 				}
