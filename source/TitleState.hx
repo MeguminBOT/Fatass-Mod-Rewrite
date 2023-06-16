@@ -106,7 +106,7 @@ class TitleState extends MusicBeatState
 		#if CHECK_FOR_UPDATES
 		if(ClientPrefs.checkForUpdates && !closedState) {
 			trace('checking for update');
-			var http = new haxe.Http("https://raw.githubusercontent.com/MeguminBOT/PsychEngine-TheFatAssModCompilation/main/gitVersion.txt");
+			var http = new haxe.Http("https://raw.githubusercontent.com/MeguminBOT/Rhythm-Engine-Wiki/main/engineVersion.txt");
 
 			http.onData = function (data:String)
 			{
@@ -483,8 +483,6 @@ class TitleState extends MusicBeatState
 					addMoreText('Rhythm');
 				case 15:
 					addMoreText('Engine');
-				case 16:
-					addMoreText('Mod');
 				case 17:
 					skipIntro();
 			}

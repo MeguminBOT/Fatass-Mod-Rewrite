@@ -22,7 +22,7 @@ using StringTools;
 
 class MainMenuState extends MusicBeatState
 {
-	public static var rhythmVersion:String = '3.0-AlphaV1'; //This is also used for Discord RPC
+	public static var rhythmVersion:String = '1.0'; //This is also used for Discord RPC
 	public static var psychEngineVersion:String = '0.6.3';
 	public static var curSelected:Int = 0;
 
