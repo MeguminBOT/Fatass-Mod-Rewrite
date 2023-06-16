@@ -3955,15 +3955,17 @@ class PlayState extends MusicBeatState
 				}
 
 			case 'Camera Follow Pos':
-				if (camFollow != null) {
-					var val1: Float = Std.parseFloat(value1);
-					var val2: Float = Std.parseFloat(value2);
-				
+				if(camFollow != null)
+				{
+					var val1:Float = Std.parseFloat(value1);
+					var val2:Float = Std.parseFloat(value2);
+					if(Math.isNaN(val1)) val1 = 0;
+					if(Math.isNaN(val2)) val2 = 0;
+
 					isCameraOnForcedPos = false;
-				
-					if (!Math.isNaN(val1) || !Math.isNaN(val2)) {
-						camFollow.x = Math.isNaN(val1) ? 0 : val1;
-						camFollow.y = Math.isNaN(val2) ? 0 : val2;
+					if(!Math.isNaN(Std.parseFloat(value1)) || !Math.isNaN(Std.parseFloat(value2))) {
+						camFollow.x = val1;
+						camFollow.y = val2;
 						isCameraOnForcedPos = true;
 					}
 				}
@@ -3996,14 +3998,18 @@ class PlayState extends MusicBeatState
 				var targetsArray:Array<FlxCamera> = [camGame, camHUD];
 				for (i in 0...targetsArray.length) {
 					var split:Array<String> = valuesArray[i].split(',');
-					var duration:Float = Std.parseFloat(split[0].trim());
-					var intensity:Float = Std.parseFloat(split[1].trim());
-			
-					if (!Math.isNaN(duration) && !Math.isNaN(intensity) && duration > 0 && intensity != 0) {
+					var duration:Float = 0;
+					var intensity:Float = 0;
+					if(split[0] != null) duration = Std.parseFloat(split[0].trim());
+					if(split[1] != null) intensity = Std.parseFloat(split[1].trim());
+					if(Math.isNaN(duration)) duration = 0;
+					if(Math.isNaN(intensity)) intensity = 0;
+
+					if(duration > 0 && intensity != 0) {
 						targetsArray[i].shake(intensity, duration);
 					}
 				}
-			
+
 			case 'Change Character':
 				var charType:Int = 0;
 				switch(value1.toLowerCase().trim()) {
@@ -4081,24 +4087,29 @@ class PlayState extends MusicBeatState
 				if(bgGirls != null) bgGirls.swapDanceType();
 
 			case 'Change Scroll Speed':
-				if (songSpeedType == "constant") return;
-				
-				var val1:Float = Math.isNaN(Std.parseFloat(value1)) ? 1 : Std.parseFloat(value1);
-				var val2:Float = Math.isNaN(Std.parseFloat(value2)) ? 0 : Std.parseFloat(value2);
-			
+				if (songSpeedType == "constant")
+					return;
+				var val1:Float = Std.parseFloat(value1);
+				var val2:Float = Std.parseFloat(value2);
+				if(Math.isNaN(val1)) val1 = 1;
+				if(Math.isNaN(val2)) val2 = 0;
+
 				var newValue:Float = SONG.speed * ClientPrefs.getGameplaySetting('scrollspeed', 1) * val1;
-			
-				if (val2 <= 0) {
+
+				if(val2 <= 0)
+				{
 					songSpeed = newValue;
-				} else {
-					songSpeedTween = FlxTween.tween(this, {songSpeed: newValue}, val2 / playbackRate, {
-						ease: FlxEase.linear,
-						onComplete: function (twn:FlxTween) {
+				}
+				else
+				{
+					songSpeedTween = FlxTween.tween(this, {songSpeed: newValue}, val2 / playbackRate, {ease: FlxEase.linear, onComplete:
+						function (twn:FlxTween)
+						{
 							songSpeedTween = null;
 						}
 					});
 				}
-			
+
 			case 'Set Property':
 				var killMe:Array<String> = value1.split('.');
 				if(killMe.length > 1) {
