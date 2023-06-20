@@ -407,7 +407,7 @@ class ClientPrefs {
 		}
 
 		var save:FlxSave = new FlxSave();
-		save.bind('fatass_controls_v2', CoolUtil.getSavePath());
+		save.bind('rhythmengine_controls_v2', CoolUtil.getSavePath());
 		if(save != null && save.data.customControls != null) {
 			var loadedControls:Map<String, Array<FlxKey>> = save.data.customControls;
 			for (control => keys in loadedControls) {
