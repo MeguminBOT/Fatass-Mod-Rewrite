@@ -1525,7 +1525,8 @@ class FunkinLua {
 		Lua_helper.add_callback(lua, "addCharacterToList", function(name:String, type:String) {
 			var charType:Int = 0;
 			switch(type.toLowerCase()) {
-				case 'dad': charType = 1;
+				case 'bf' | 'boyfriend': charType = 0;
+				case 'dad' | 'opponent': charType = 1;
 				case 'gf' | 'girlfriend': charType = 2;
 			}
 			PlayState.instance.addCharacterToList(name, charType);
