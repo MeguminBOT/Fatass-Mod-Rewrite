@@ -100,7 +100,7 @@ class GameplayChangersSubstate extends MusicBeatSubstate
 			'Player',
 			'Opponent',
 			'Density', 
-			'None'
+			'Unmodified'
 		]);
 		optionsArray.push(option);
 
