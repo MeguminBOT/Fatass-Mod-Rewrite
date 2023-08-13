@@ -1,23 +1,18 @@
-package;
+package menus;
 
-import flash.text.TextField;
+#if desktop
+import Discord.DiscordClient;
+#end
 import flixel.FlxG;
 import flixel.FlxSprite;
-import flixel.addons.display.FlxGridOverlay;
-import flixel.addons.transition.FlxTransitionableState;
-import flixel.addons.ui.FlxButtonPlus;
-import flixel.group.FlxGroup.FlxTypedGroup;
 import flixel.math.FlxMath;
 import flixel.text.FlxText;
 import flixel.util.FlxColor;
 import flixel.tweens.FlxTween;
 import lime.utils.Assets;
-import flixel.sound.FlxSound;
-import openfl.utils.Assets as OpenFlAssets;
 import sys.io.File;
 import sys.FileSystem;
 import haxe.Json;
-import haxe.format.JsonParser;
 import openfl.display.BitmapData;
 import flash.geom.Rectangle;
 import flixel.ui.FlxButton;
@@ -73,7 +68,7 @@ class ModsMenuState extends MusicBeatState
 		#end
 
 		bg = new FlxSprite().loadGraphic(Paths.image('menuDesat'));
-		bg.antialiasing = ClientPrefs.globalAntialiasing;
+		bg.antialiasing = ClientPrefs.data.antialiasing;
 		add(bg);
 		bg.screenCenter();
 

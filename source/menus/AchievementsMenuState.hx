@@ -1,15 +1,13 @@
-package;
+package menus;
 
-import flash.text.TextField;
+#if desktop
+import Discord.DiscordClient;
+#end
 import flixel.FlxG;
 import flixel.FlxSprite;
-import flixel.addons.display.FlxGridOverlay;
 import flixel.group.FlxGroup.FlxTypedGroup;
-import flixel.math.FlxMath;
 import flixel.text.FlxText;
 import flixel.util.FlxColor;
-import lime.utils.Assets;
-import flixel.FlxSubState;
 import Achievements;
 
 using StringTools;
@@ -33,7 +31,7 @@ class AchievementsMenuState extends MusicBeatState
 		menuBG.setGraphicSize(Std.int(menuBG.width * 1.1));
 		menuBG.updateHitbox();
 		menuBG.screenCenter();
-		menuBG.antialiasing = ClientPrefs.globalAntialiasing;
+		menuBG.antialiasing = ClientPrefs.data.antialiasing;
 		add(menuBG);
 
 		grpOptions = new FlxTypedGroup<Alphabet>();

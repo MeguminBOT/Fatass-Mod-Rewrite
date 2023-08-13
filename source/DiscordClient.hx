@@ -105,7 +105,7 @@ class DiscordClient
 			details: details,
 			state: state,
 			largeImageKey: 'icon',
-			largeImageText: "Rhythm Engine Version: " + MainMenuState.rhythmVersion,
+			largeImageText: "Rhythm Engine Version:" + menus.MainMenuState.rhythmVersion,
 			smallImageKey : smallImageKey,
 			// Obtained times are in milliseconds so they are divided so Discord can use it
 			startTimestamp : Std.int(startTimestamp / 1000),

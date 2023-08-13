@@ -2,15 +2,8 @@ package editors;
 
 import flixel.FlxG;
 import flixel.FlxSprite;
-import flixel.addons.display.FlxGridOverlay;
-import flixel.addons.transition.FlxTransitionableState;
-import flixel.group.FlxGroup.FlxTypedGroup;
-import flixel.math.FlxMath;
 import flixel.text.FlxText;
 import flixel.util.FlxColor;
-import flixel.sound.FlxSound;
-import flixel.addons.ui.FlxInputText;
-import flixel.addons.ui.FlxUI9SliceSprite;
 import flixel.addons.ui.FlxUI;
 import flixel.addons.ui.FlxUICheckBox;
 import flixel.addons.ui.FlxUIInputText;
@@ -22,12 +15,13 @@ import openfl.events.Event;
 import openfl.events.IOErrorEvent;
 import flash.net.FileFilter;
 import haxe.Json;
-import DialogueBoxPsych;
-import lime.system.Clipboard;
 import Alphabet;
 #if sys
 import sys.io.File;
 #end
+
+import cutscenes.DialogueBoxPsych;
+import cutscenes.DialogueCharacter;
 
 using StringTools;
 
@@ -69,7 +63,7 @@ class DialogueEditorState extends MusicBeatState
 		box = new FlxSprite(70, 370);
 		box.frames = Paths.getSparrowAtlas('speech_bubble');
 		box.scrollFactor.set();
-		box.antialiasing = ClientPrefs.globalAntialiasing;
+		box.antialiasing = ClientPrefs.data.antialiasing;
 		box.animation.addByPrefix('normal', 'speech bubble normal', 24);
 		box.animation.addByPrefix('angry', 'AHH speech bubble', 24);
 		box.animation.addByPrefix('center', 'speech bubble middle', 24);

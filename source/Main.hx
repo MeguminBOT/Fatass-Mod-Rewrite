@@ -83,6 +83,7 @@ class Main extends Sprite
 			game.height = Math.ceil(stageHeight / game.zoom);
 		}
 	
+		Controls.instance = new Controls();
 		ClientPrefs.loadDefaultKeys();
 		addChild(new FlxGame(game.width, game.height, game.initialState, #if (flixel < "5.0.0") game.zoom, #end game.framerate, game.framerate, game.skipSplash, game.startFullscreen));
 
@@ -92,7 +93,7 @@ class Main extends Sprite
 		Lib.current.stage.align = "tl";
 		Lib.current.stage.scaleMode = StageScaleMode.NO_SCALE;
 		if(fpsVar != null) {
-			fpsVar.visible = ClientPrefs.showFPS;
+			fpsVar.visible = ClientPrefs.data.showFPS;
 		}
 		#end
 

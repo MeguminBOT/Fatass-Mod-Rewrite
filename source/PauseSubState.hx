@@ -1,19 +1,18 @@
 package;
 
-import Controls.Control;
 import flixel.FlxG;
 import flixel.FlxSprite;
-import flixel.FlxSubState;
 import flixel.addons.transition.FlxTransitionableState;
 import flixel.group.FlxGroup.FlxTypedGroup;
-import flixel.input.keyboard.FlxKey;
-import flixel.sound.FlxSound;
+import flixel.system.FlxSound;
 import flixel.text.FlxText;
 import flixel.tweens.FlxEase;
 import flixel.tweens.FlxTween;
 import flixel.util.FlxColor;
-import flixel.FlxCamera;
 import flixel.util.FlxStringUtil;
+
+import menus.StoryMenuState;
+import menus.FreeplayState;
 
 class PauseSubState extends MusicBeatSubstate
 {
@@ -65,7 +64,7 @@ class PauseSubState extends MusicBeatSubstate
 		if(songName != null) {
 			pauseMusic.loadEmbedded(Paths.music(songName), true, true);
 		} else if (songName != 'None') {
-			pauseMusic.loadEmbedded(Paths.music(Paths.formatToSongPath(ClientPrefs.pauseMusic)), true, true);
+			pauseMusic.loadEmbedded(Paths.music(Paths.formatToSongPath(ClientPrefs.data.pauseMusic)), true, true);
 		}
 		pauseMusic.volume = 0;
 		pauseMusic.play(false, FlxG.random.int(0, Std.int(pauseMusic.length / 2)));
@@ -190,7 +189,7 @@ class PauseSubState extends MusicBeatSubstate
 				}
 		}
 
-		if (accepted && (cantUnpause <= 0 || !ClientPrefs.controllerMode))
+		if (accepted && (cantUnpause <= 0 || !controls.controllerMode))
 		{
 			if (menuItems == difficultyChoices)
 			{

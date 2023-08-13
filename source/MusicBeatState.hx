@@ -26,12 +26,13 @@ class MusicBeatState extends FlxUIState
 
 	private var curDecStep:Float = 0;
 	private var curDecBeat:Float = 0;
-	private var controls(get, never):Controls;
+	public var controls(get, never):Controls;
+	private function get_controls()
+	{
+		return Controls.instance;
+	}
 
 	public static var camBeat:FlxCamera;
-
-	inline function get_controls():Controls
-		return PlayerSettings.player1.controls;
 
 	override function create() {
 		camBeat = FlxG.camera;
@@ -114,7 +115,7 @@ class MusicBeatState extends FlxUIState
 	{
 		var lastChange = Conductor.getBPMFromSeconds(Conductor.songPosition);
 
-		var shit = ((Conductor.songPosition - ClientPrefs.noteOffset) - lastChange.songTime) / lastChange.stepCrochet;
+		var shit = ((Conductor.songPosition - ClientPrefs.data.noteOffset) - lastChange.songTime) / lastChange.stepCrochet;
 		curDecStep = lastChange.stepTime + shit;
 		curStep = lastChange.stepTime + Math.floor(shit);
 	}
